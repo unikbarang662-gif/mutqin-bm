@@ -25,7 +25,6 @@
         .login-footer { margin-top: 15px; color: #666; font-size: 12px; }
         .login-footer a { color: var(--gold); text-decoration: none; font-size: 12px; }
 
-        /* APP */
         .app-container { display: none; min-height: 100vh; }
         .sidebar { width: 260px; background: linear-gradient(180deg, #0a1a2e, #0d2840); border-right: 2px solid rgba(212,160,55,0.3); position: fixed; height: 100vh; z-index: 100; }
         .sidebar-header { padding: 20px; text-align: center; border-bottom: 2px solid rgba(212,160,55,0.2); }
@@ -80,7 +79,6 @@
         .toast-success { background: linear-gradient(135deg, #10b981, #059669); }
         .toast-error { background: linear-gradient(135deg, #ef4444, #dc2626); }
 
-        /* CERTIFICATE */
         .cert-page-container { max-width: 900px; margin: 0 auto; }
         .certificate-wrapper { background: #f5f0e1; border: 8px solid #c9a84c; border-radius: 4px; padding: 8px; }
         .certificate-border-inner { border: 3px solid #c9a84c; padding: 40px 45px; position: relative; background: #f5f0e1; }
@@ -116,10 +114,8 @@
 </head>
 <body>
 
-<!-- LOGIN PAGE -->
 <div id="loginPage" class="login-page">
     <div class="login-box">
-        <!-- EXACT LOGO SVG -->
         <svg viewBox="0 0 500 620" xmlns="http://www.w3.org/2000/svg" width="280" height="350">
             <defs>
                 <linearGradient id="gG" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -144,128 +140,74 @@
                     <stop offset="50%" style="stop-color:#ffe066"/>
                     <stop offset="100%" style="stop-color:#c9a84c"/>
                 </linearGradient>
-                <filter id="glow"><feGaussianBlur stdDeviation="2" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
             </defs>
-
-            <!-- OUTER ARCH - mosque shape with gold border -->
             <path d="M75 260 L75 130 Q75 45 250 45 Q425 45 425 130 L425 260 Q425 278 405 278 L95 278 Q75 278 75 260Z" fill="url(#gG2)" stroke="url(#gG)" stroke-width="5"/>
-            <!-- Inner gold trim -->
             <path d="M82 255 L82 135 Q82 55 250 55 Q418 55 418 135 L418 255 Q418 268 400 268 L100 268 Q82 268 82 255Z" fill="none" stroke="url(#gG)" stroke-width="2"/>
-            <!-- Inner arch decoration -->
             <path d="M95 248 L95 142 Q95 65 250 65 Q405 65 405 142 L405 248 Q405 258 393 258 L107 258 Q95 258 95 248Z" fill="none" stroke="url(#gG)" stroke-width="1" opacity="0.4"/>
-
-            <!-- CRESCENT MOON at top -->
-            <path d="M238 30 Q218 30 212 48 Q206 66 222 72 Q214 56 224 42 Q232 33 238 30Z" fill="url(#gG)" filter="url(#glow)"/>
-            <!-- STAR next to crescent -->
-            <polygon points="262,22 266,34 278,34 268,41 272,53 262,46 252,53 256,41 246,34 258,34" fill="url(#gG)" filter="url(#glow)"/>
-
-            <!-- SCATTERED STARS inside arch -->
+            <path d="M238 30 Q218 30 212 48 Q206 66 222 72 Q214 56 224 42 Q232 33 238 30Z" fill="url(#gG)"/>
+            <polygon points="262,22 266,34 278,34 268,41 272,53 262,46 252,53 256,41 246,34 258,34" fill="url(#gG)"/>
             <g fill="#f4d03f" opacity="0.7">
                 <circle cx="145" cy="95" r="3"/><circle cx="175" cy="78" r="2.5"/><circle cx="200" cy="105" r="2"/>
                 <circle cx="250" cy="72" r="3.5"/><circle cx="300" cy="105" r="2"/><circle cx="325" cy="78" r="2.5"/>
                 <circle cx="355" cy="95" r="3"/><circle cx="125" cy="120" r="2"/><circle cx="375" cy="120" r="2"/>
                 <circle cx="160" cy="130" r="1.5"/><circle cx="340" cy="130" r="1.5"/>
                 <circle cx="140" cy="150" r="1.5"/><circle cx="360" cy="150" r="1.5"/>
-                <!-- Sparkle stars -->
-                <g transform="translate(135,105)" fill="#ffe066"><path d="M0,-4 L1,-1 L4,-1 L1.5,1 L2.5,4 L0,2 L-2.5,4 L-1.5,1 L-4,-1 L-1,-1Z" opacity="0.6"/></g>
-                <g transform="translate(365,105)" fill="#ffe066"><path d="M0,-4 L1,-1 L4,-1 L1.5,1 L2.5,4 L0,2 L-2.5,4 L-1.5,1 L-4,-1 L-1,-1Z" opacity="0.6"/></g>
-                <g transform="translate(120,140)" fill="#ffe066"><path d="M0,-3 L0.8,-0.8 L3,-0.8 L1.2,0.8 L2,3 L0,1.5 L-2,3 L-1.2,0.8 L-3,-0.8 L-0.8,-0.8Z" opacity="0.4"/></g>
-                <g transform="translate(380,140)" fill="#ffe066"><path d="M0,-3 L0.8,-0.8 L3,-0.8 L1.2,0.8 L2,3 L0,1.5 L-2,3 L-1.2,0.8 L-3,-0.8 L-0.8,-0.8Z" opacity="0.4"/></g>
             </g>
-
-            <!-- INNER SHIELD SHAPE behind book -->
-            <path d="M170 175 Q170 120 250 100 Q330 120 330 175 Q330 210 300 230 Q270 245 250 250 Q230 245 200 230 Q170 210 170 175Z" fill="rgba(212,160,55,0.08)" stroke="url(#gG)" stroke-width="1.5" opacity="0.5"/>
-
-            <!-- OPEN QURAN BOOK in center - stylized -->
             <g transform="translate(250, 170)">
-                <!-- Book base glow -->
                 <ellipse cx="0" cy="5" rx="65" ry="25" fill="url(#bookGold)" opacity="0.15"/>
-                <!-- Golden pages - layered -->
                 <path d="M-55 8 Q-28 -8 0 -18 Q28 -8 55 8 Q28 22 0 28 Q-28 22 -55 8Z" fill="url(#bookGold)" opacity="0.25"/>
                 <path d="M-48 6 Q-24 -6 0 -14 Q24 -6 48 6 Q24 18 0 24 Q-24 18 -48 6Z" fill="url(#bookGold)" opacity="0.35"/>
                 <path d="M-42 4 Q-20 -5 0 -11 Q20 -5 42 4 Q20 15 0 20 Q-20 15 -42 4Z" fill="url(#bookGold)" opacity="0.5"/>
                 <path d="M-36 2 Q-16 -4 0 -8 Q16 -4 36 2 Q16 12 0 16 Q-16 12 -36 2Z" fill="url(#bookGold)" opacity="0.65"/>
-                <!-- Book spine -->
                 <line x1="0" y1="-8" x2="0" y2="20" stroke="url(#gG)" stroke-width="2"/>
-                <!-- Page lines left -->
                 <path d="M-30 0 Q-15 -6 0 -7" stroke="#1a4731" stroke-width="0.8" fill="none" opacity="0.4"/>
                 <path d="M-28 3 Q-14 -3 0 -4" stroke="#1a4731" stroke-width="0.8" fill="none" opacity="0.4"/>
                 <path d="M-26 6 Q-13 0 0 -1" stroke="#1a4731" stroke-width="0.8" fill="none" opacity="0.4"/>
-                <!-- Page lines right -->
                 <path d="M30 0 Q15 -6 0 -7" stroke="#1a4731" stroke-width="0.8" fill="none" opacity="0.4"/>
                 <path d="M28 3 Q14 -3 0 -4" stroke="#1a4731" stroke-width="0.8" fill="none" opacity="0.4"/>
                 <path d="M26 6 Q13 0 0 -1" stroke="#1a4731" stroke-width="0.8" fill="none" opacity="0.4"/>
-                <!-- White quill pen above book -->
                 <path d="M0 -25 Q-8 -35 -12 -45 Q-10 -48 -5 -42 Q0 -36 0 -25Z" fill="#fff" opacity="0.9"/>
                 <line x1="0" y1="-25" x2="0" y2="-5" stroke="#1a4731" stroke-width="1.5"/>
                 <path d="M0 -25 Q8 -35 12 -45 Q10 -48 5 -42 Q0 -36 0 -25Z" fill="#fff" opacity="0.9"/>
             </g>
-
-            <!-- PONPES TEXT -->
             <text x="250" y="210" text-anchor="middle" font-family="Poppins, sans-serif" font-size="10" fill="#d4a037" font-weight="600" letter-spacing="3">PONDOK PESANTREN</text>
             <text x="250" y="226" text-anchor="middle" font-family="Poppins, sans-serif" font-size="13" fill="#fff" font-weight="700" letter-spacing="1.5">BAHRUL MAGHFIROH</text>
-
-            <!-- RIBBON -->
             <path d="M55 278 Q55 268 75 273 L250 290 L425 273 Q445 268 445 278 L445 295 Q445 305 425 300 L250 317 L75 300 Q55 305 55 295Z" fill="url(#gG2)" stroke="url(#gG)" stroke-width="2"/>
-
-            <!-- LARGE OPEN QURAN at bottom -->
             <g transform="translate(250, 360)">
-                <!-- Book shadow -->
                 <ellipse cx="0" cy="10" rx="110" ry="30" fill="rgba(0,0,0,0.2)"/>
-                <!-- Book cover left -->
                 <path d="M-110 0 Q-55 -25 0 -35 Q55 -25 110 0 Q55 25 0 35 Q-55 25 -110 0Z" fill="url(#gG2)" stroke="url(#gG)" stroke-width="2"/>
-                <!-- Book cover right (overlapping) -->
                 <path d="M-100 -2 Q-50 -22 0 -30 Q50 -22 100 -2 Q50 22 0 32 Q-50 22 -100 -2Z" fill="url(#gG2)" stroke="url(#gG)" stroke-width="1.5"/>
-                <!-- Golden pages left -->
                 <path d="M-90 2 Q-45 -16 0 -24 Q45 -16 90 2 Q45 18 0 26 Q-45 18 -90 2Z" fill="url(#bookGold)" opacity="0.3"/>
                 <path d="M-80 4 Q-40 -13 0 -20 Q40 -13 80 4 Q40 16 0 22 Q-40 16 -80 4Z" fill="url(#bookGold)" opacity="0.5"/>
                 <path d="M-70 6 Q-35 -10 0 -16 Q35 -10 70 6 Q35 14 0 18 Q-35 14 -70 6Z" fill="url(#bookGold)" opacity="0.7"/>
                 <path d="M-60 8 Q-30 -7 0 -12 Q30 -7 60 8 Q30 12 0 14 Q-30 12 -60 8Z" fill="#f0e6c8" opacity="0.8"/>
-                <!-- Book spine -->
                 <line x1="0" y1="-12" x2="0" y2="14" stroke="url(#gG)" stroke-width="2.5"/>
-                <!-- Page text lines -->
                 <g opacity="0.3" stroke="#1a4731" fill="none" stroke-width="0.8">
                     <path d="M-50 0 Q-25 -8 0 -10"/><path d="M-46 4 Q-22 -4 0 -6"/>
                     <path d="M-42 8 Q-20 0 0 -2"/><path d="M-38 11 Q-18 4 0 2"/>
                     <path d="M50 0 Q25 -8 0 -10"/><path d="M46 4 Q22 -4 0 -6"/>
                     <path d="M42 8 Q20 0 0 -2"/><path d="M38 11 Q18 4 0 2"/>
                 </g>
-                <!-- Decorative green leaves on sides -->
                 <path d="M-105 -5 Q-120 -15 -115 -25 Q-110 -20 -105 -10Z" fill="#2d8a5a" opacity="0.6"/>
                 <path d="M105 -5 Q120 -15 115 -25 Q110 -20 105 -10Z" fill="#2d8a5a" opacity="0.6"/>
             </g>
-
-            <!-- MUTQIN BM - large text -->
             <text x="250" y="430" text-anchor="middle" font-family="Playfair Display, Georgia, serif" font-size="58" font-weight="900" fill="#ffffff">Mutqin<tspan fill="url(#gG3)">BM</tspan></text>
-
-            <!-- Decorative line under Mutqin BM -->
             <line x1="80" y1="440" x2="420" y2="440" stroke="url(#gG3)" stroke-width="2.5"/>
-
-            <!-- SUBTITLE -->
             <text x="250" y="462" text-anchor="middle" font-family="Poppins, sans-serif" font-size="14" fill="#d4a037" font-weight="500" letter-spacing="1">Standar Kelulusan Ponpes Bahrul Maghfiroh</text>
-
-            <!-- BOTTOM ORNAMENTAL DECORATION -->
             <g transform="translate(250, 500)">
-                <!-- Main ornamental line -->
                 <path d="M-100 0 Q-80 -18 -50 -12 Q-25 -22 0 -16 Q25 -22 50 -12 Q80 -18 100 0" fill="none" stroke="url(#gG)" stroke-width="2.5"/>
                 <path d="M-90 3 Q-72 -14 -45 -9 Q-22 -18 0 -13 Q22 -18 45 -9 Q72 -14 90 3" fill="none" stroke="url(#gG)" stroke-width="1" opacity="0.5"/>
-                <!-- Center green gem -->
                 <polygon points="0,-24 6,-14 0,-10 -6,-14" fill="url(#gG2)" stroke="url(#gG)" stroke-width="1"/>
                 <circle cx="0" cy="-17" r="2" fill="#2d8a5a"/>
-                <!-- Side decorative curls -->
                 <path d="M-100 0 Q-115 -8 -108 -22 Q-100 -28 -95 -20" fill="none" stroke="url(#gG)" stroke-width="2"/>
                 <path d="M100 0 Q115 -8 108 -22 Q100 -28 95 -20" fill="none" stroke="url(#gG)" stroke-width="2"/>
-                <!-- Decorative dots -->
                 <circle cx="-60" cy="-10" r="2" fill="#f4d03f"/><circle cx="60" cy="-10" r="2" fill="#f4d03f"/>
                 <circle cx="-35" cy="-18" r="1.5" fill="#f4d03f"/><circle cx="35" cy="-18" r="1.5" fill="#f4d03f"/>
-                <!-- Additional flourishes -->
                 <path d="M-100 0 Q-105 8 -95 12 Q-85 14 -80 8" fill="none" stroke="url(#gG)" stroke-width="1.5" opacity="0.5"/>
                 <path d="M100 0 Q105 8 95 12 Q85 14 80 8" fill="none" stroke="url(#gG)" stroke-width="1.5" opacity="0.5"/>
-                <!-- Bottom point -->
                 <path d="M0 0 L-3 8 L0 14 L3 8Z" fill="url(#gG)"/>
             </g>
         </svg>
-
         <h2>Login</h2>
         <form id="loginForm">
             <div class="form-group"><label>Username</label><input type="text" id="username" placeholder="Masukkan username" required></div>
@@ -276,7 +218,6 @@
     </div>
 </div>
 
-<!-- APP CONTAINER -->
 <div id="appContainer" class="app-container">
     <aside class="sidebar">
         <div class="sidebar-header">
@@ -342,7 +283,6 @@
     </main>
 </div>
 
-<!-- MODALS -->
 <div class="modal-overlay" id="generateCertModal">
     <div class="modal">
         <div class="modal-header"><h3>Buat Sertifikat</h3><button class="modal-close" onclick="closeModal('generateCertModal')">&times;</button></div>
@@ -391,14 +331,12 @@
 <div class="toast-container" id="toastContainer"></div>
 
 <script>
-// DATA
 var santriData = [
     {id:1,nama:'Ahmad Fauzan',kelas:'6',hafalan:{yaasin:true,waqiah:true,mulk:true,juz30:true,tawasul:true,tahlil_ringkas:true,tahlil_lengkap:true,istighosah:true,wirid:true,sholat:true,jenazah:true,khotib:true,bilal:true,madin_ula:true,madin_wusto:true,sholat_jamaah:true,sekolah_madin:true},nilai:93,status:'lulus'},
     {id:2,nama:'Salma Azizah',kelas:'4',hafalan:{yaasin:true,waqiah:true,mulk:false,juz30:false,tawasul:true,tahlil_ringkas:true,tahlil_lengkap:false,istighosah:true,wirid:true,sholat:true,jenazah:false,khotib:false,bilal:false,madin_ula:false,madin_wusto:false,sholat_jamaah:true,sekolah_madin:true},nilai:65,status:'proses'},
     {id:3,nama:'Muhammad Lugman',kelas:'2',hafalan:{},nilai:15,status:'belum'}
 ];
 
-// AUTH
 document.getElementById('loginForm').addEventListener('submit', function(e) {
     e.preventDefault();
     var u = document.getElementById('username').value.trim().toLowerCase();
@@ -420,7 +358,6 @@ function logout() {
     document.getElementById('password').value = '';
 }
 
-// NAVIGATION
 function navigateTo(page) {
     document.querySelectorAll('.page').forEach(function(p) { p.classList.remove('active'); });
     document.getElementById('page-' + page).classList.add('active');
@@ -443,7 +380,6 @@ function showToast(msg, type) {
     setTimeout(function() { t.remove(); }, 3000);
 }
 
-// DASHBOARD
 function loadDashboard() {
     var lulus = santriData.filter(function(s) { return s.status === 'lulus'; }).length;
     var proses = santriData.filter(function(s) { return s.status === 'proses'; }).length;
@@ -455,10 +391,10 @@ function loadDashboard() {
     if (window.progressChart) window.progressChart.destroy();
     window.progressChart = new Chart(document.getElementById('progressChart'), {
         type: 'doughnut',
-         {
+        data: {
             labels: ['Lulus', 'Proses', 'Belum'],
             datasets: [{
-                 [lulus, proses, belum],
+                data: [lulus, proses, belum],
                 backgroundColor: ['#10b981', '#f59e0b', '#ef4444'],
                 borderWidth: 0
             }]
@@ -469,11 +405,11 @@ function loadDashboard() {
     if (window.monthlyChart) window.monthlyChart.destroy();
     window.monthlyChart = new Chart(document.getElementById('monthlyChart'), {
         type: 'bar',
-         {
+        data: {
             labels: ['Jan','Feb','Mar','Apr','Mei','Jun'],
             datasets: [
-                { label: 'Lulus',  [20,35,55,80,110,lulus], backgroundColor: '#10b981', borderRadius: 8 },
-                { label: 'Proses',  [40,50,60,70,85,proses], backgroundColor: '#f59e0b', borderRadius: 8 }
+                { label: 'Lulus', data: [20,35,55,80,110,lulus], backgroundColor: '#10b981', borderRadius: 8 },
+                { label: 'Proses', data: [40,50,60,70,85,proses], backgroundColor: '#f59e0b', borderRadius: 8 }
             ]
         },
         options: {
@@ -487,7 +423,6 @@ function loadDashboard() {
     });
 }
 
-// DATA SANTRI
 function renderSantriTable(data) {
     var tbody = document.getElementById('santriTableBody');
     if (!tbody) return;
@@ -540,7 +475,6 @@ function handleCSV(input) {
     reader.readAsText(file);
 }
 
-// SERTIFIKAT
 function loadSertifikat() {
     document.getElementById('certGrid').innerHTML = santriData.map(function(s) {
         return '<div class="card" style="margin-bottom:15px;"><div class="card-body"><div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;"><div style="width:45px;height:45px;background:linear-gradient(135deg,#c9a84c,#f4d03f);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:22px;">🏅</div><div><h4 style="font-size:14px;margin-bottom:2px;">' + s.nama + '</h4><p style="color:#888;font-size:10px;">Kelas ' + s.kelas + ' | Nilai: ' + (s.nilai||0) + '</p></div></div><button class="btn btn-sm btn-primary" onclick="viewCert(' + s.id + ')" style="width:100%;"><i class="fas fa-eye"></i> Preview Sertifikat</button></div></div>';
