@@ -8,1004 +8,607 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800;900&family=Poppins:wght@300;400;500;600;700&display=swap');
-
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root { --bg: #0d1b2a; --gold: #d4a037; --gold-light: #f0c040; --green-dark: #0d4a2a; --green: #1a6b3c; --green-light: #2d8a5a; }
+        body { font-family: 'Poppins', sans-serif; background: var(--bg); color: #e0e0e0; min-height: 100vh; }
 
-        :root {
-            --primary-dark: #0a1f1c;
-            --primary: #1a4731;
-            --primary-light: #2d6a4f;
-            --accent: #d4af37;
-            --accent-light: #f4d03f;
-            --text-light: #e0f2f1;
-            --text-muted: #80cbc4;
-            --success: #10b981;
-            --warning: #f59e0b;
-            --danger: #ef4444;
-            --bg-dark: #0d1117;
-        }
+        .login-page { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; }
+        .login-box { background: linear-gradient(145deg, rgba(13,27,42,0.98), rgba(10,30,50,0.95)); border: 2px solid rgba(212,160,55,0.5); border-radius: 20px; max-width: 480px; width: 100%; padding: 40px 35px; text-align: center; box-shadow: 0 20px 60px rgba(0,0,0,0.6); }
+        .login-box h2 { color: var(--gold); font-family: 'Playfair Display', serif; font-size: 22px; margin-top: 20px; margin-bottom: 25px; }
+        .login-box .form-group { margin-bottom: 16px; text-align: left; }
+        .login-box label { color: #aaa; font-size: 13px; margin-bottom: 5px; display: block; }
+        .login-box input { width: 100%; padding: 12px 16px; background: rgba(255,255,255,0.06); border: 2px solid rgba(212,160,55,0.3); border-radius: 10px; color: #fff; font-size: 14px; outline: none; transition: 0.3s; }
+        .login-box input:focus { border-color: var(--gold); box-shadow: 0 0 10px rgba(212,160,55,0.2); }
+        .login-box input::placeholder { color: #666; }
+        .login-btn { width: 100%; padding: 13px; background: linear-gradient(135deg, var(--green-dark), var(--green)); border: 2px solid var(--gold); border-radius: 10px; color: #fff; font-size: 16px; font-weight: 600; cursor: pointer; margin-top: 10px; transition: 0.3s; font-family: 'Poppins', sans-serif; }
+        .login-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(212,160,55,0.3); }
+        .login-footer { margin-top: 15px; color: #666; font-size: 12px; }
+        .login-footer a { color: var(--gold); text-decoration: none; font-size: 12px; }
 
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: var(--bg-dark);
-            color: var(--text-light);
-            min-height: 100vh;
-        }
-
-        .bg-pattern {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: radial-gradient(ellipse at 20% 50%, rgba(26, 71, 49, 0.3) 0%, transparent 50%);
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        /* ===== MUTQIN BM LOGO SVG ===== */
-        .mutqin-logo {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 100%;
-        }
-
-        .mutqin-logo svg {
-            max-width: 100%;
-            height: auto;
-        }
-
-        /* LOGIN PAGE */
-        .login-page {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .login-wrapper {
-            max-width: 1100px;
-            width: 100%;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            background: linear-gradient(145deg, rgba(13, 17, 23, 0.97) 0%, rgba(26, 71, 49, 0.4) 100%);
-            border: 2px solid rgba(212, 175, 55, 0.4);
-            border-radius: 24px;
-            overflow: hidden;
-            box-shadow: 0 30px 100px rgba(0,0,0,0.6);
-        }
-
-        .login-left {
-            padding: 40px 45px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        .login-logo-section {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .login-logo-section .logo-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 14px;
-            color: #d4af37;
-            letter-spacing: 3px;
-            margin-top: 5px;
-            font-weight: 600;
-        }
-
-        .login-form-section h2 {
-            color: var(--text-light);
-            font-size: 24px;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        .form-group { margin-bottom: 16px; }
-        .form-group label {
-            display: block;
-            color: var(--text-muted);
-            margin-bottom: 6px;
-            font-size: 13px;
-        }
-
-        .input-wrapper { position: relative; }
-        .input-wrapper i {
-            position: absolute;
-            left: 16px; top: 50%;
-            transform: translateY(-50%);
-            color: var(--accent);
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 12px 16px 12px 48px;
-            background: rgba(26, 71, 49, 0.25);
-            border: 2px solid rgba(212, 175, 55, 0.25);
-            border-radius: 10px;
-            color: var(--text-light);
-            font-size: 14px;
-        }
-        .form-control:focus {
-            outline: none;
-            border-color: var(--accent);
-        }
-
-        .btn-login {
-            width: 100%;
-            padding: 14px;
-            background: linear-gradient(135deg, #1a4731 0%, #2d6a4f 100%);
-            border: 2px solid var(--accent);
-            border-radius: 10px;
-            color: var(--text-light);
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            margin-top: 8px;
-        }
-        .btn-login:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
-        }
-
-        .forgot-link { text-align: center; margin-top: 15px; }
-        .forgot-link a { color: var(--accent); text-decoration: none; font-size: 13px; }
-
-        .upload-link {
-            text-align: center;
-            margin-top: 20px;
-            padding-top: 20px;
-            border-top: 1px solid rgba(212, 175, 55, 0.15);
-        }
-        .upload-link a { color: var(--accent); text-decoration: none; font-size: 13px; }
-
-        .login-right {
-            background: linear-gradient(145deg, rgba(26, 71, 49, 0.5) 0%, rgba(13, 31, 28, 0.9) 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 40px;
-        }
-
-        .feature-list { width: 100%; }
-        .feature-item {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 18px;
-            padding: 16px;
-            background: rgba(255,255,255,0.04);
-            border-radius: 12px;
-            border: 1px solid rgba(212, 175, 55, 0.15);
-        }
-        .feature-icon {
-            width: 45px; height: 45px;
-            background: linear-gradient(135deg, #c9a84c, #f4d03f);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-        }
-        .feature-text h3 { color: var(--text-light); font-size: 14px; margin-bottom: 2px; }
-        .feature-text p { color: var(--text-muted); font-size: 11px; }
-
-        .copyright {
-            position: absolute;
-            bottom: 15px;
-            left: 50%;
-            transform: translateX(-50%);
-            color: var(--text-muted);
-            font-size: 10px;
-        }
-
-        /* APP CONTAINER */
-        .app-container { display: none; min-height: 100vh; position: relative; z-index: 1; }
-
-        .sidebar {
-            width: 270px;
-            background: linear-gradient(180deg, var(--primary-dark) 0%, var(--primary) 100%);
-            border-right: 2px solid rgba(212, 175, 55, 0.3);
-            position: fixed;
-            height: 100vh;
-            z-index: 100;
-        }
-
-        .sidebar-header {
-            padding: 20px;
-            text-align: center;
-            border-bottom: 2px solid rgba(212, 175, 55, 0.2);
-        }
-
-        .sidebar-header h2 {
-            font-family: 'Playfair Display', serif;
-            color: var(--accent);
-            font-size: 22px;
-            margin-top: 8px;
-        }
-        .sidebar-header p { color: var(--text-muted); font-size: 10px; }
-
+        /* APP */
+        .app-container { display: none; min-height: 100vh; }
+        .sidebar { width: 260px; background: linear-gradient(180deg, #0a1a2e, #0d2840); border-right: 2px solid rgba(212,160,55,0.3); position: fixed; height: 100vh; z-index: 100; }
+        .sidebar-header { padding: 20px; text-align: center; border-bottom: 2px solid rgba(212,160,55,0.2); }
+        .sidebar-header h2 { font-family: 'Playfair Display', serif; color: var(--gold); font-size: 20px; margin-top: 8px; }
+        .sidebar-header p { color: #888; font-size: 9px; letter-spacing: 1px; }
         .nav-menu { padding: 15px 0; }
-        .nav-item {
-            padding: 12px 22px;
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            color: var(--text-muted);
-            cursor: pointer;
-            font-size: 14px;
-            margin: 4px 12px;
-            border-radius: 10px;
-        }
-        .nav-item:hover, .nav-item.active {
-            background: rgba(212, 175, 55, 0.12);
-            color: var(--accent);
-        }
+        .nav-item { padding: 12px 20px; display: flex; align-items: center; gap: 12px; color: #888; cursor: pointer; font-size: 13px; margin: 3px 10px; border-radius: 8px; transition: 0.3s; }
+        .nav-item:hover, .nav-item.active { background: rgba(212,160,55,0.12); color: var(--gold); }
+        .sidebar-footer { position: absolute; bottom: 0; left: 0; right: 0; padding: 15px 20px; border-top: 2px solid rgba(212,160,55,0.2); }
+        .btn-logout { width: 100%; padding: 10px; background: rgba(239,68,68,0.15); border: 1px solid #ef4444; color: #fca5a5; border-radius: 8px; cursor: pointer; font-size: 13px; }
 
-        .sidebar-footer {
-            position: absolute;
-            bottom: 0; left: 0; right: 0;
-            padding: 15px 20px;
-            border-top: 2px solid rgba(212, 175, 55, 0.2);
-        }
+        .main-content { margin-left: 260px; padding: 25px; }
+        .page { display: none; } .page.active { display: block; }
+        .page-header { background: linear-gradient(135deg, rgba(13,74,42,0.5), rgba(10,30,50,0.8)); border: 2px solid rgba(212,160,55,0.3); border-radius: 12px; padding: 20px 25px; margin-bottom: 22px; display: flex; justify-content: space-between; align-items: center; }
+        .page-header h1 { color: var(--gold); font-family: 'Playfair Display', serif; font-size: 22px; }
+        .page-header p { color: #888; font-size: 12px; margin-top: 3px; }
 
-        .btn-logout {
-            width: 100%;
-            padding: 11px;
-            background: rgba(239, 68, 68, 0.15);
-            border: 1px solid var(--danger);
-            color: #fca5a5;
-            border-radius: 8px;
-            cursor: pointer;
-        }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 15px; margin-bottom: 20px; }
+        .stat-card { background: linear-gradient(135deg, rgba(13,74,42,0.4), rgba(10,30,50,0.6)); border: 2px solid; border-radius: 12px; padding: 18px; display: flex; align-items: center; gap: 14px; }
+        .stat-card.total { border-color: #10b981; } .stat-card.lulus { border-color: #3b82f6; } .stat-card.proses { border-color: #f59e0b; }
+        .stat-icon { width: 50px; height: 50px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 22px; }
+        .stat-card.total .stat-icon { background: rgba(16,185,129,0.2); color: #10b981; }
+        .stat-card.lulus .stat-icon { background: rgba(59,130,246,0.2); color: #3b82f6; }
+        .stat-card.proses .stat-icon { background: rgba(245,158,11,0.2); color: #f59e0b; }
+        .stat-content h3 { color: #888; font-size: 11px; margin-bottom: 3px; }
+        .stat-number { font-size: 28px; font-weight: bold; }
 
-        .main-content {
-            margin-left: 270px;
-            padding: 25px;
-        }
+        .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 18px; }
+        .card { background: linear-gradient(135deg, rgba(13,74,42,0.4), rgba(10,30,50,0.6)); border: 2px solid rgba(212,160,55,0.25); border-radius: 12px; overflow: hidden; }
+        .card-header { padding: 15px 18px; border-bottom: 2px solid rgba(212,160,55,0.2); display: flex; justify-content: space-between; align-items: center; }
+        .card-header h3 { color: var(--gold); font-size: 14px; }
+        .card-body { padding: 18px; }
+        .chart-container { height: 230px; position: relative; }
 
-        .page { display: none; }
-        .page.active { display: block; }
-
-        .page-header {
-            background: linear-gradient(135deg, rgba(26, 71, 49, 0.85) 0%, rgba(13, 31, 28, 0.85) 100%);
-            border: 2px solid rgba(212, 175, 55, 0.3);
-            border-radius: 14px;
-            padding: 22px 28px;
-            margin-bottom: 25px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .page-header h1 {
-            color: var(--accent);
-            font-family: 'Playfair Display', serif;
-            font-size: 24px;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 16px;
-            margin-bottom: 22px;
-        }
-
-        .stat-card {
-            background: linear-gradient(135deg, rgba(26, 71, 49, 0.7) 0%, rgba(13, 31, 28, 0.7) 100%);
-            border: 2px solid;
-            border-radius: 12px;
-            padding: 20px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        .stat-card.total { border-color: var(--success); }
-        .stat-card.lulus { border-color: var(--info); }
-        .stat-card.proses { border-color: var(--warning); }
-
-        .stat-icon {
-            width: 55px; height: 55px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-        }
-        .stat-card.total .stat-icon { background: rgba(16,185,129,0.2); color: var(--success); }
-        .stat-card.lulus .stat-icon { background: rgba(59,130,246,0.2); color: var(--info); }
-        .stat-card.proses .stat-icon { background: rgba(245,158,11,0.2); color: var(--warning); }
-
-        .stat-content h3 { color: var(--text-muted); font-size: 12px; margin-bottom: 4px; }
-        .stat-number { font-size: 30px; font-weight: bold; color: var(--text-light); }
-
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: 20px;
-        }
-
-        .card {
-            background: linear-gradient(135deg, rgba(26, 71, 49, 0.7) 0%, rgba(13, 31, 28, 0.7) 100%);
-            border: 2px solid rgba(212, 175, 55, 0.25);
-            border-radius: 12px;
-            overflow: hidden;
-        }
-        .card-header {
-            padding: 16px 20px;
-            border-bottom: 2px solid rgba(212, 175, 55, 0.2);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .card-header h3 { color: var(--accent); font-size: 15px; }
-        .card-body { padding: 20px; }
-
-        .chart-container { height: 240px; position: relative; }
-
-        .btn {
-            padding: 8px 16px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 12px;
-            font-weight: 600;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .btn-primary { 
-            background: linear-gradient(135deg, #1a4731 0%, #2d6a4f 100%); 
-            border: 2px solid var(--accent); 
-            color: var(--text-light); 
-        }
-        .btn-success { background: var(--success); color: white; }
+        .btn { padding: 8px 16px; border: none; border-radius: 8px; cursor: pointer; font-size: 12px; font-weight: 600; display: inline-flex; align-items: center; gap: 5px; }
+        .btn-primary { background: linear-gradient(135deg, var(--green-dark), var(--green)); border: 2px solid var(--gold); color: #fff; }
         .btn-sm { padding: 5px 10px; font-size: 10px; }
+        .toolbar { display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; }
+        .search-box input { padding: 10px 14px; background: rgba(255,255,255,0.06); border: 2px solid rgba(212,160,55,0.25); border-radius: 10px; color: #fff; font-size: 12px; outline: none; }
 
-        .toolbar { display: flex; gap: 10px; margin-bottom: 18px; flex-wrap: wrap; }
-        .search-box { flex: 1; min-width: 200px; }
-        .search-box input {
-            width: 100%;
-            padding: 10px 14px;
-            background: rgba(26, 71, 49, 0.25);
-            border: 2px solid rgba(212, 175, 55, 0.25);
-            border-radius: 10px;
-            color: var(--text-light);
-        }
-
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.8);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-        }
+        .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 1000; align-items: center; justify-content: center; }
         .modal-overlay.active { display: flex; }
-        .modal {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            border: 2px solid var(--accent);
-            border-radius: 14px;
-            max-width: 600px;
-            width: 100%;
-            max-height: 90vh;
-            overflow-y: auto;
-        }
-        .modal-header {
-            padding: 16px 20px;
-            border-bottom: 2px solid rgba(212, 175, 55, 0.2);
-            display: flex;
-            justify-content: space-between;
-        }
-        .modal-header h3 { color: var(--accent); font-size: 16px; }
-        .modal-close { background: none; border: none; color: var(--text-muted); font-size: 22px; cursor: pointer; }
+        .modal { background: linear-gradient(135deg, #0d2840, #0a1a2e); border: 2px solid var(--gold); border-radius: 14px; max-width: 580px; width: 100%; max-height: 90vh; overflow-y: auto; }
+        .modal-header { padding: 16px 20px; border-bottom: 2px solid rgba(212,160,55,0.2); display: flex; justify-content: space-between; }
+        .modal-header h3 { color: var(--gold); font-size: 16px; }
+        .modal-close { background: none; border: none; color: #888; font-size: 22px; cursor: pointer; }
         .modal-body { padding: 20px; }
-        .modal-footer { padding: 14px 20px; border-top: 2px solid rgba(212, 175, 55, 0.2); display: flex; justify-content: flex-end; gap: 10px; }
+        .modal-footer { padding: 14px 20px; border-top: 2px solid rgba(212,160,55,0.2); display: flex; justify-content: flex-end; gap: 10px; }
 
         .toast-container { position: fixed; top: 20px; right: 20px; z-index: 3000; }
-        .toast {
-            padding: 12px 20px;
-            border-radius: 10px;
-            color: white;
-            margin-bottom: 10px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
-            font-size: 13px;
-        }
+        .toast { padding: 12px 20px; border-radius: 10px; color: #fff; margin-bottom: 10px; box-shadow: 0 8px 25px rgba(0,0,0,0.3); font-size: 13px; }
         .toast-success { background: linear-gradient(135deg, #10b981, #059669); }
         .toast-error { background: linear-gradient(135deg, #ef4444, #dc2626); }
 
         /* CERTIFICATE */
         .cert-page-container { max-width: 900px; margin: 0 auto; }
-        .certificate-wrapper {
-            background: #f5f0e1;
-            border: 8px solid #c9a84c;
-            border-radius: 4px;
-            padding: 8px;
-        }
-        .certificate-border-inner {
-            border: 3px solid #c9a84c;
-            padding: 40px 45px;
-            position: relative;
-            background: #f5f0e1;
-        }
-        .cert-corner-ornament { position: absolute; width: 50px; height: 50px; font-size: 30px; color: #c9a84c; opacity: 0.6; }
-        .cert-corner-ornament.tl { top: 8px; left: 8px; }
-        .cert-corner-ornament.tr { top: 8px; right: 8px; }
-        .cert-corner-ornament.bl { bottom: 8px; left: 8px; }
-        .cert-corner-ornament.br { bottom: 8px; right: 8px; }
-
-        .cert-top-section { text-align: center; margin-bottom: 20px; }
-        .cert-logo-top { width: 90px; height: 90px; margin: 0 auto 8px; }
-        .cert-ponpes-name { font-family: 'Playfair Display', serif; font-size: 15px; font-weight: 700; color: #1a4731; letter-spacing: 2px; margin-bottom: 6px; }
-        .cert-title-main { font-family: 'Playfair Display', serif; font-size: 38px; font-weight: 800; color: #1a4731; }
+        .certificate-wrapper { background: #f5f0e1; border: 8px solid #c9a84c; border-radius: 4px; padding: 8px; }
+        .certificate-border-inner { border: 3px solid #c9a84c; padding: 40px 45px; position: relative; background: #f5f0e1; }
+        .cert-corner-ornament { position: absolute; width: 40px; height: 40px; font-size: 24px; color: #c9a84c; opacity: 0.5; }
+        .cert-corner-ornament.tl { top: 8px; left: 8px; } .cert-corner-ornament.tr { top: 8px; right: 8px; }
+        .cert-corner-ornament.bl { bottom: 8px; left: 8px; } .cert-corner-ornament.br { bottom: 8px; right: 8px; }
+        .cert-top-section { text-align: center; margin-bottom: 18px; }
+        .cert-ponpes-name { font-family: 'Playfair Display', serif; font-size: 14px; font-weight: 700; color: #1a4731; letter-spacing: 2px; margin-bottom: 5px; }
+        .cert-title-main { font-family: 'Playfair Display', serif; font-size: 36px; font-weight: 800; color: #1a4731; }
         .cert-decorative-line { width: 180px; height: 2px; background: linear-gradient(90deg, transparent, #c9a84c, transparent); margin: 8px auto; }
-        .cert-name-main { font-family: 'Playfair Display', serif; font-size: 34px; font-weight: 700; color: #1a2e1a; text-align: center; margin: 18px 0 8px; }
-        .cert-desc-text { text-align: center; font-size: 12px; color: #555; line-height: 1.8; margin: 12px 0; }
-        .cert-lulus-badge { text-align: center; margin: 18px 0; }
-        .cert-lulus-badge .badge-inner {
-            display: inline-block;
-            background: linear-gradient(135deg, #1a4731, #2d6a4f);
-            color: #f4d03f;
-            padding: 8px 45px;
-            font-family: 'Playfair Display', serif;
-            font-size: 26px;
-            font-weight: 700;
-            letter-spacing: 5px;
-            border-radius: 6px;
-            border: 2px solid #c9a84c;
-        }
-
-        .cert-hafalan-table { width: 100%; margin: 20px 0; border-collapse: separate; border-spacing: 0 5px; }
-        .cert-hafalan-table td { padding: 8px 12px; border: none; color: #333; font-size: 12px; }
-        .cert-hafalan-table .haf-check { width: 28px; text-align: center; }
-        .cert-hafalan-table .haf-label { flex: 1; }
-        .cert-hafalan-table .haf-grade { text-align: right; }
-        .cert-grade-pill { display: inline-block; padding: 3px 12px; border-radius: 5px; font-size: 10px; font-weight: 600; color: white; }
+        .cert-name-main { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 700; color: #1a2e1a; text-align: center; margin: 16px 0 8px; }
+        .cert-desc-text { text-align: center; font-size: 12px; color: #555; line-height: 1.8; margin: 10px 0; }
+        .cert-lulus-badge { text-align: center; margin: 16px 0; }
+        .cert-lulus-badge .badge-inner { display: inline-block; background: linear-gradient(135deg, #1a4731, #2d6a4f); color: #f4d03f; padding: 8px 45px; font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 700; letter-spacing: 5px; border-radius: 6px; border: 2px solid #c9a84c; }
+        .cert-hafalan-table { width: 100%; margin: 18px 0; border-collapse: separate; border-spacing: 0 5px; }
+        .cert-hafalan-table td { padding: 7px 10px; border: none; color: #333; font-size: 11px; }
+        .cert-hafalan-table .haf-check { width: 26px; text-align: center; }
+        .cert-grade-pill { display: inline-block; padding: 3px 10px; border-radius: 5px; font-size: 10px; font-weight: 600; color: #fff; }
         .grade-mumtaz { background: linear-gradient(135deg, #c9a84c, #e8d48b); color: #1a4731; }
         .grade-jayyid-jiddan { background: linear-gradient(135deg, #1a4731, #2d6a4f); }
-        .grade-jayyid { background: #2d6a4f; }
-        .grade-ahsan { background: #3d8b6a; }
-        .cert-check-small { display: inline-flex; width: 22px; height: 22px; background: #1a4731; color: #f4d03f; border-radius: 3px; align-items: center; justify-content: center; font-size: 12px; margin-left: 3px; }
-
-        .cert-signatures { display: flex; justify-content: space-between; margin-top: 40px; padding: 0 25px; }
-        .cert-sig-block { text-align: center; min-width: 200px; }
-        .cert-sig-line { width: 180px; border-bottom: 1px solid #1a4731; margin: 0 auto 6px; }
-        .cert-sig-name { font-size: 11px; font-weight: 600; color: #1a4731; }
+        .grade-jayyid { background: #2d6a4f; } .grade-ahsan { background: #3d8b6a; }
+        .cert-check-small { display: inline-flex; width: 20px; height: 20px; background: #1a4731; color: #f4d03f; border-radius: 3px; align-items: center; justify-content: center; font-size: 11px; margin-left: 3px; }
+        .cert-signatures { display: flex; justify-content: space-between; margin-top: 35px; padding: 0 25px; }
+        .cert-sig-block { text-align: center; min-width: 180px; }
+        .cert-sig-line { width: 170px; border-bottom: 1px solid #1a4731; margin: 0 auto 5px; }
+        .cert-sig-name { font-size: 10px; font-weight: 600; color: #1a4731; }
         .cert-sig-title { font-size: 9px; color: #666; }
-        .cert-number-top { position: absolute; top: 15px; right: 25px; font-size: 10px; color: #888; }
+        .cert-number-top { position: absolute; top: 14px; right: 22px; font-size: 10px; color: #888; }
 
-        @media print {
-            body * { visibility: hidden; }
-            #printArea, #printArea * { visibility: visible; }
-            #printArea { position: absolute; left: 0; top: 0; width: 100%; }
-        }
-
-        @media(max-width: 768px) {
-            .login-wrapper { grid-template-columns: 1fr; }
-            .login-right { display: none; }
-            .sidebar { display: none; }
-            .main-content { margin-left: 0; }
-            .dashboard-grid { grid-template-columns: 1fr; }
-        }
+        @media print { body * { visibility: hidden; } #printArea, #printArea * { visibility: visible; } #printArea { position: absolute; left: 0; top: 0; width: 100%; } }
+        @media(max-width: 768px) { .sidebar { display: none; } .main-content { margin-left: 0; } .dashboard-grid { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
-    <div class="bg-pattern"></div>
 
-    <!-- LOGIN PAGE -->
-    <div id="loginPage" class="login-page">
-        <div class="login-wrapper">
-            <div class="login-left">
-                <div class="login-logo-section">
-                    <!-- MUTQIN BM LOGO SVG -->
-                    <div class="mutqin-logo">
-                        <svg viewBox="0 0 500 600" xmlns="http://www.w3.org/2000/svg" width="280">
-                            <!-- Background arch -->
-                            <defs>
-                                <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                                    <stop offset="0%" style="stop-color:#c9a84c"/>
-                                    <stop offset="50%" style="stop-color:#f4d03f"/>
-                                    <stop offset="100%" style="stop-color:#c9a84c"/>
-                                </linearGradient>
-                                <linearGradient id="greenGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                                    <stop offset="0%" style="stop-color:#1a6b3c"/>
-                                    <stop offset="100%" style="stop-color:#0d4a2a"/>
-                                </linearGradient>
-                                <linearGradient id="goldGrad2" x1="0%" y1="0%" x2="100%" y2="0%">
-                                    <stop offset="0%" style="stop-color:#b8942e"/>
-                                    <stop offset="50%" style="stop-color:#f4d03f"/>
-                                    <stop offset="100%" style="stop-color:#b8942e"/>
-                                </linearGradient>
-                            </defs>
+<!-- LOGIN PAGE -->
+<div id="loginPage" class="login-page">
+    <div class="login-box">
+        <!-- EXACT LOGO SVG -->
+        <svg viewBox="0 0 500 620" xmlns="http://www.w3.org/2000/svg" width="280" height="350">
+            <defs>
+                <linearGradient id="gG" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:#c9a84c"/>
+                    <stop offset="30%" style="stop-color:#f4d03f"/>
+                    <stop offset="50%" style="stop-color:#ffe066"/>
+                    <stop offset="70%" style="stop-color:#f4d03f"/>
+                    <stop offset="100%" style="stop-color:#c9a84c"/>
+                </linearGradient>
+                <linearGradient id="gG2" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" style="stop-color:#1a7a42"/>
+                    <stop offset="50%" style="stop-color:#0d5a2a"/>
+                    <stop offset="100%" style="stop-color:#0a3d1a"/>
+                </linearGradient>
+                <linearGradient id="gG3" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" style="stop-color:#a08030"/>
+                    <stop offset="50%" style="stop-color:#f4d03f"/>
+                    <stop offset="100%" style="stop-color:#a08030"/>
+                </linearGradient>
+                <linearGradient id="bookGold" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" style="stop-color:#f4d03f"/>
+                    <stop offset="50%" style="stop-color:#ffe066"/>
+                    <stop offset="100%" style="stop-color:#c9a84c"/>
+                </linearGradient>
+                <filter id="glow"><feGaussianBlur stdDeviation="2" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+            </defs>
 
-                            <!-- Outer arch -->
-                            <path d="M80 250 L80 120 Q80 40 250 40 Q420 40 420 120 L420 250 Q420 270 400 270 L100 270 Q80 270 80 250Z" fill="url(#greenGrad)" stroke="url(#goldGrad)" stroke-width="4"/>
-                            
-                            <!-- Inner arch -->
-                            <path d="M100 245 L100 130 Q100 55 250 55 Q400 55 400 130 L400 245 Q400 258 388 258 L112 258 Q100 258 100 245Z" fill="none" stroke="url(#goldGrad)" stroke-width="2"/>
+            <!-- OUTER ARCH - mosque shape with gold border -->
+            <path d="M75 260 L75 130 Q75 45 250 45 Q425 45 425 130 L425 260 Q425 278 405 278 L95 278 Q75 278 75 260Z" fill="url(#gG2)" stroke="url(#gG)" stroke-width="5"/>
+            <!-- Inner gold trim -->
+            <path d="M82 255 L82 135 Q82 55 250 55 Q418 55 418 135 L418 255 Q418 268 400 268 L100 268 Q82 268 82 255Z" fill="none" stroke="url(#gG)" stroke-width="2"/>
+            <!-- Inner arch decoration -->
+            <path d="M95 248 L95 142 Q95 65 250 65 Q405 65 405 142 L405 248 Q405 258 393 258 L107 258 Q95 258 95 248Z" fill="none" stroke="url(#gG)" stroke-width="1" opacity="0.4"/>
 
-                            <!-- Decorative arch top -->
-                            <path d="M120 240 L120 140 Q120 75 250 75 Q380 75 380 140 L380 240" fill="none" stroke="url(#goldGrad)" stroke-width="1.5" opacity="0.5"/>
+            <!-- CRESCENT MOON at top -->
+            <path d="M238 30 Q218 30 212 48 Q206 66 222 72 Q214 56 224 42 Q232 33 238 30Z" fill="url(#gG)" filter="url(#glow)"/>
+            <!-- STAR next to crescent -->
+            <polygon points="262,22 266,34 278,34 268,41 272,53 262,46 252,53 256,41 246,34 258,34" fill="url(#gG)" filter="url(#glow)"/>
 
-                            <!-- Crescent moon -->
-                            <path d="M235 25 Q220 25 215 40 Q210 55 225 60 Q220 45 230 35 Q235 28 235 25Z" fill="url(#goldGrad)"/>
-                            
-                            <!-- Star -->
-                            <polygon points="255,22 258,32 268,32 260,38 263,48 255,42 247,48 250,38 242,32 252,32" fill="url(#goldGrad)"/>
+            <!-- SCATTERED STARS inside arch -->
+            <g fill="#f4d03f" opacity="0.7">
+                <circle cx="145" cy="95" r="3"/><circle cx="175" cy="78" r="2.5"/><circle cx="200" cy="105" r="2"/>
+                <circle cx="250" cy="72" r="3.5"/><circle cx="300" cy="105" r="2"/><circle cx="325" cy="78" r="2.5"/>
+                <circle cx="355" cy="95" r="3"/><circle cx="125" cy="120" r="2"/><circle cx="375" cy="120" r="2"/>
+                <circle cx="160" cy="130" r="1.5"/><circle cx="340" cy="130" r="1.5"/>
+                <circle cx="140" cy="150" r="1.5"/><circle cx="360" cy="150" r="1.5"/>
+                <!-- Sparkle stars -->
+                <g transform="translate(135,105)" fill="#ffe066"><path d="M0,-4 L1,-1 L4,-1 L1.5,1 L2.5,4 L0,2 L-2.5,4 L-1.5,1 L-4,-1 L-1,-1Z" opacity="0.6"/></g>
+                <g transform="translate(365,105)" fill="#ffe066"><path d="M0,-4 L1,-1 L4,-1 L1.5,1 L2.5,4 L0,2 L-2.5,4 L-1.5,1 L-4,-1 L-1,-1Z" opacity="0.6"/></g>
+                <g transform="translate(120,140)" fill="#ffe066"><path d="M0,-3 L0.8,-0.8 L3,-0.8 L1.2,0.8 L2,3 L0,1.5 L-2,3 L-1.2,0.8 L-3,-0.8 L-0.8,-0.8Z" opacity="0.4"/></g>
+                <g transform="translate(380,140)" fill="#ffe066"><path d="M0,-3 L0.8,-0.8 L3,-0.8 L1.2,0.8 L2,3 L0,1.5 L-2,3 L-1.2,0.8 L-3,-0.8 L-0.8,-0.8Z" opacity="0.4"/></g>
+            </g>
 
-                            <!-- Stars scattered -->
-                            <circle cx="150" cy="90" r="3" fill="#f4d03f" opacity="0.8"/>
-                            <circle cx="180" cy="75" r="2" fill="#f4d03f" opacity="0.6"/>
-                            <circle cx="200" cy="100" r="2.5" fill="#f4d03f" opacity="0.7"/>
-                            <circle cx="250" cy="70" r="3.5" fill="#f4d03f" opacity="0.9"/>
-                            <circle cx="300" cy="100" r="2.5" fill="#f4d03f" opacity="0.7"/>
-                            <circle cx="320" cy="75" r="2" fill="#f4d03f" opacity="0.6"/>
-                            <circle cx="350" cy="90" r="3" fill="#f4d03f" opacity="0.8"/>
-                            <circle cx="170" cy="120" r="1.5" fill="#f4d03f" opacity="0.5"/>
-                            <circle cx="330" cy="120" r="1.5" fill="#f4d03f" opacity="0.5"/>
-                            <circle cx="140" cy="140" r="2" fill="#f4d03f" opacity="0.4"/>
-                            <circle cx="360" cy="140" r="2" fill="#f4d03f" opacity="0.4"/>
+            <!-- INNER SHIELD SHAPE behind book -->
+            <path d="M170 175 Q170 120 250 100 Q330 120 330 175 Q330 210 300 230 Q270 245 250 250 Q230 245 200 230 Q170 210 170 175Z" fill="rgba(212,160,55,0.08)" stroke="url(#gG)" stroke-width="1.5" opacity="0.5"/>
 
-                            <!-- Star decorations -->
-                            <g transform="translate(130, 100)">
-                                <polygon points="0,-5 1.5,-1.5 5,-1.5 2,0.5 3,4 0,2 -3,4 -2,0.5 -5,-1.5 -1.5,-1.5" fill="#f4d03f" opacity="0.7"/>
-                            </g>
-                            <g transform="translate(370, 100)">
-                                <polygon points="0,-5 1.5,-1.5 5,-1.5 2,0.5 3,4 0,2 -3,4 -2,0.5 -5,-1.5 -1.5,-1.5" fill="#f4d03f" opacity="0.7"/>
-                            </g>
-                            <g transform="translate(150, 150)">
-                                <polygon points="0,-3 1,-1 3,-1 1.5,0.5 2,3 0,1.5 -2,3 -1.5,0.5 -3,-1 -1,-1" fill="#f4d03f" opacity="0.5"/>
-                            </g>
-                            <g transform="translate(350, 150)">
-                                <polygon points="0,-3 1,-1 3,-1 1.5,0.5 2,3 0,1.5 -2,3 -1.5,0.5 -3,-1 -1,-1" fill="#f4d03f" opacity="0.5"/>
-                            </g>
+            <!-- OPEN QURAN BOOK in center - stylized -->
+            <g transform="translate(250, 170)">
+                <!-- Book base glow -->
+                <ellipse cx="0" cy="5" rx="65" ry="25" fill="url(#bookGold)" opacity="0.15"/>
+                <!-- Golden pages - layered -->
+                <path d="M-55 8 Q-28 -8 0 -18 Q28 -8 55 8 Q28 22 0 28 Q-28 22 -55 8Z" fill="url(#bookGold)" opacity="0.25"/>
+                <path d="M-48 6 Q-24 -6 0 -14 Q24 -6 48 6 Q24 18 0 24 Q-24 18 -48 6Z" fill="url(#bookGold)" opacity="0.35"/>
+                <path d="M-42 4 Q-20 -5 0 -11 Q20 -5 42 4 Q20 15 0 20 Q-20 15 -42 4Z" fill="url(#bookGold)" opacity="0.5"/>
+                <path d="M-36 2 Q-16 -4 0 -8 Q16 -4 36 2 Q16 12 0 16 Q-16 12 -36 2Z" fill="url(#bookGold)" opacity="0.65"/>
+                <!-- Book spine -->
+                <line x1="0" y1="-8" x2="0" y2="20" stroke="url(#gG)" stroke-width="2"/>
+                <!-- Page lines left -->
+                <path d="M-30 0 Q-15 -6 0 -7" stroke="#1a4731" stroke-width="0.8" fill="none" opacity="0.4"/>
+                <path d="M-28 3 Q-14 -3 0 -4" stroke="#1a4731" stroke-width="0.8" fill="none" opacity="0.4"/>
+                <path d="M-26 6 Q-13 0 0 -1" stroke="#1a4731" stroke-width="0.8" fill="none" opacity="0.4"/>
+                <!-- Page lines right -->
+                <path d="M30 0 Q15 -6 0 -7" stroke="#1a4731" stroke-width="0.8" fill="none" opacity="0.4"/>
+                <path d="M28 3 Q14 -3 0 -4" stroke="#1a4731" stroke-width="0.8" fill="none" opacity="0.4"/>
+                <path d="M26 6 Q13 0 0 -1" stroke="#1a4731" stroke-width="0.8" fill="none" opacity="0.4"/>
+                <!-- White quill pen above book -->
+                <path d="M0 -25 Q-8 -35 -12 -45 Q-10 -48 -5 -42 Q0 -36 0 -25Z" fill="#fff" opacity="0.9"/>
+                <line x1="0" y1="-25" x2="0" y2="-5" stroke="#1a4731" stroke-width="1.5"/>
+                <path d="M0 -25 Q8 -35 12 -45 Q10 -48 5 -42 Q0 -36 0 -25Z" fill="#fff" opacity="0.9"/>
+            </g>
 
-                            <!-- Open book base -->
-                            <g transform="translate(250, 185)">
-                                <!-- Book pages left -->
-                                <path d="M-60 10 Q-30 -5 0 -15 Q30 -5 60 10 Q30 20 0 25 Q-30 20 -60 10Z" fill="#f4d03f" opacity="0.3"/>
-                                <path d="M-55 8 Q-28 -5 0 -13 Q28 -5 55 8 Q28 18 0 22 Q-28 18 -55 8Z" fill="#f4d03f" opacity="0.5"/>
-                                <path d="M-50 6 Q-25 -5 0 -11 Q25 -5 50 6 Q25 16 0 20 Q-25 16 -50 6Z" fill="#f4d03f" opacity="0.7"/>
-                                <path d="M-45 4 Q-22 -5 0 -9 Q22 -5 45 4 Q22 14 0 18 Q-22 14 -45 4Z" fill="#e8d48b"/>
-                                <path d="M-40 2 Q-20 -4 0 -7 Q20 -4 40 2 Q20 12 0 16 Q-20 12 -40 2Z" fill="#f0e6c8"/>
-                            </g>
+            <!-- PONPES TEXT -->
+            <text x="250" y="210" text-anchor="middle" font-family="Poppins, sans-serif" font-size="10" fill="#d4a037" font-weight="600" letter-spacing="3">PONDOK PESANTREN</text>
+            <text x="250" y="226" text-anchor="middle" font-family="Poppins, sans-serif" font-size="13" fill="#fff" font-weight="700" letter-spacing="1.5">BAHRUL MAGHFIROH</text>
 
-                            <!-- Quill pen -->
-                            <g transform="translate(250, 160)">
-                                <path d="M0 -20 Q-5 -15 -8 -10 Q-10 -5 -5 0 Q0 5 -8 10 Q-12 15 -5 20" stroke="#1a4731" stroke-width="1.5" fill="none"/>
-                                <path d="M0 -20 Q5 -15 8 -10 Q10 -5 5 0 Q0 5 8 10 Q12 15 5 20" stroke="#1a4731" stroke-width="1.5" fill="none"/>
-                                <ellipse cx="0" cy="-22" rx="3" ry="6" fill="#1a4731"/>
-                                <line x1="0" y1="-16" x2="0" y2="15" stroke="#1a4731" stroke-width="1"/>
-                            </g>
+            <!-- RIBBON -->
+            <path d="M55 278 Q55 268 75 273 L250 290 L425 273 Q445 268 445 278 L445 295 Q445 305 425 300 L250 317 L75 300 Q55 305 55 295Z" fill="url(#gG2)" stroke="url(#gG)" stroke-width="2"/>
 
-                            <!-- Ponpes text -->
-                            <text x="250" y="215" text-anchor="middle" font-family="Poppins, sans-serif" font-size="9" fill="#d4af37" font-weight="600" letter-spacing="2">PONDOK PESANTREN</text>
-                            <text x="250" y="230" text-anchor="middle" font-family="Poppins, sans-serif" font-size="12" fill="#fff" font-weight="700" letter-spacing="1">BAHRUL MAGHFIROH</text>
+            <!-- LARGE OPEN QURAN at bottom -->
+            <g transform="translate(250, 360)">
+                <!-- Book shadow -->
+                <ellipse cx="0" cy="10" rx="110" ry="30" fill="rgba(0,0,0,0.2)"/>
+                <!-- Book cover left -->
+                <path d="M-110 0 Q-55 -25 0 -35 Q55 -25 110 0 Q55 25 0 35 Q-55 25 -110 0Z" fill="url(#gG2)" stroke="url(#gG)" stroke-width="2"/>
+                <!-- Book cover right (overlapping) -->
+                <path d="M-100 -2 Q-50 -22 0 -30 Q50 -22 100 -2 Q50 22 0 32 Q-50 22 -100 -2Z" fill="url(#gG2)" stroke="url(#gG)" stroke-width="1.5"/>
+                <!-- Golden pages left -->
+                <path d="M-90 2 Q-45 -16 0 -24 Q45 -16 90 2 Q45 18 0 26 Q-45 18 -90 2Z" fill="url(#bookGold)" opacity="0.3"/>
+                <path d="M-80 4 Q-40 -13 0 -20 Q40 -13 80 4 Q40 16 0 22 Q-40 16 -80 4Z" fill="url(#bookGold)" opacity="0.5"/>
+                <path d="M-70 6 Q-35 -10 0 -16 Q35 -10 70 6 Q35 14 0 18 Q-35 14 -70 6Z" fill="url(#bookGold)" opacity="0.7"/>
+                <path d="M-60 8 Q-30 -7 0 -12 Q30 -7 60 8 Q30 12 0 14 Q-30 12 -60 8Z" fill="#f0e6c8" opacity="0.8"/>
+                <!-- Book spine -->
+                <line x1="0" y1="-12" x2="0" y2="14" stroke="url(#gG)" stroke-width="2.5"/>
+                <!-- Page text lines -->
+                <g opacity="0.3" stroke="#1a4731" fill="none" stroke-width="0.8">
+                    <path d="M-50 0 Q-25 -8 0 -10"/><path d="M-46 4 Q-22 -4 0 -6"/>
+                    <path d="M-42 8 Q-20 0 0 -2"/><path d="M-38 11 Q-18 4 0 2"/>
+                    <path d="M50 0 Q25 -8 0 -10"/><path d="M46 4 Q22 -4 0 -6"/>
+                    <path d="M42 8 Q20 0 0 -2"/><path d="M38 11 Q18 4 0 2"/>
+                </g>
+                <!-- Decorative green leaves on sides -->
+                <path d="M-105 -5 Q-120 -15 -115 -25 Q-110 -20 -105 -10Z" fill="#2d8a5a" opacity="0.6"/>
+                <path d="M105 -5 Q120 -15 115 -25 Q110 -20 105 -10Z" fill="#2d8a5a" opacity="0.6"/>
+            </g>
 
-                            <!-- Decorative ribbon -->
-                            <path d="M60 270 Q60 260 80 265 L250 280 L420 265 Q440 260 440 270 L440 285 Q440 295 420 290 L250 305 L80 290 Q60 295 60 285Z" fill="url(#greenGrad)" stroke="url(#goldGrad)" stroke-width="1.5"/>
+            <!-- MUTQIN BM - large text -->
+            <text x="250" y="430" text-anchor="middle" font-family="Playfair Display, Georgia, serif" font-size="58" font-weight="900" fill="#ffffff">Mutqin<tspan fill="url(#gG3)">BM</tspan></text>
 
-                            <!-- Bottom book decoration -->
-                            <g transform="translate(250, 330)">
-                                <path d="M-120 0 Q-60 -20 0 -30 Q60 -20 120 0 Q60 20 0 30 Q-60 20 -120 0Z" fill="url(#greenGrad)" stroke="url(#goldGrad)" stroke-width="2"/>
-                                <path d="M-110 -2 Q-55 -18 0 -26 Q55 -18 110 -2 Q55 16 0 26 Q-55 16 -110 -2Z" fill="none" stroke="url(#goldGrad)" stroke-width="1" opacity="0.5"/>
-                                <!-- Book pages -->
-                                <path d="M-80 0 Q-40 -12 0 -18 Q40 -12 80 0 Q40 12 0 18 Q-40 12 -80 0Z" fill="#f4d03f" opacity="0.4"/>
-                                <path d="M-70 1 Q-35 -10 0 -15 Q35 -10 70 1 Q35 10 0 15 Q-35 10 -70 1Z" fill="#f4d03f" opacity="0.6"/>
-                                <path d="M-60 2 Q-30 -8 0 -12 Q30 -8 60 2 Q30 8 0 12 Q-30 8 -60 2Z" fill="#e8d48b" opacity="0.8"/>
-                            </g>
+            <!-- Decorative line under Mutqin BM -->
+            <line x1="80" y1="440" x2="420" y2="440" stroke="url(#gG3)" stroke-width="2.5"/>
 
-                            <!-- Mutqin BM text -->
-                            <text x="250" y="410" text-anchor="middle" font-family="Playfair Display, serif" font-size="56" fill="#fff" font-weight="800">Mutqin<tspan fill="url(#goldGrad2)">BM</tspan></text>
-                            
-                            <!-- Decorative line under Mutqin BM -->
-                            <line x1="100" y1="420" x2="400" y2="420" stroke="url(#goldGrad)" stroke-width="2"/>
+            <!-- SUBTITLE -->
+            <text x="250" y="462" text-anchor="middle" font-family="Poppins, sans-serif" font-size="14" fill="#d4a037" font-weight="500" letter-spacing="1">Standar Kelulusan Ponpes Bahrul Maghfiroh</text>
 
-                            <!-- Subtitle -->
-                            <text x="250" y="448" text-anchor="middle" font-family="Poppins, sans-serif" font-size="13" fill="#d4af37" font-weight="500" letter-spacing="1">Standar Kelulusan Ponpes Bahrul Maghfiroh</text>
+            <!-- BOTTOM ORNAMENTAL DECORATION -->
+            <g transform="translate(250, 500)">
+                <!-- Main ornamental line -->
+                <path d="M-100 0 Q-80 -18 -50 -12 Q-25 -22 0 -16 Q25 -22 50 -12 Q80 -18 100 0" fill="none" stroke="url(#gG)" stroke-width="2.5"/>
+                <path d="M-90 3 Q-72 -14 -45 -9 Q-22 -18 0 -13 Q22 -18 45 -9 Q72 -14 90 3" fill="none" stroke="url(#gG)" stroke-width="1" opacity="0.5"/>
+                <!-- Center green gem -->
+                <polygon points="0,-24 6,-14 0,-10 -6,-14" fill="url(#gG2)" stroke="url(#gG)" stroke-width="1"/>
+                <circle cx="0" cy="-17" r="2" fill="#2d8a5a"/>
+                <!-- Side decorative curls -->
+                <path d="M-100 0 Q-115 -8 -108 -22 Q-100 -28 -95 -20" fill="none" stroke="url(#gG)" stroke-width="2"/>
+                <path d="M100 0 Q115 -8 108 -22 Q100 -28 95 -20" fill="none" stroke="url(#gG)" stroke-width="2"/>
+                <!-- Decorative dots -->
+                <circle cx="-60" cy="-10" r="2" fill="#f4d03f"/><circle cx="60" cy="-10" r="2" fill="#f4d03f"/>
+                <circle cx="-35" cy="-18" r="1.5" fill="#f4d03f"/><circle cx="35" cy="-18" r="1.5" fill="#f4d03f"/>
+                <!-- Additional flourishes -->
+                <path d="M-100 0 Q-105 8 -95 12 Q-85 14 -80 8" fill="none" stroke="url(#gG)" stroke-width="1.5" opacity="0.5"/>
+                <path d="M100 0 Q105 8 95 12 Q85 14 80 8" fill="none" stroke="url(#gG)" stroke-width="1.5" opacity="0.5"/>
+                <!-- Bottom point -->
+                <path d="M0 0 L-3 8 L0 14 L3 8Z" fill="url(#gG)"/>
+            </g>
+        </svg>
 
-                            <!-- Bottom ornamental decoration -->
-                            <g transform="translate(250, 480)">
-                                <path d="M-80 0 Q-60 -15 -40 -10 Q-20 -20 0 -15 Q20 -20 40 -10 Q60 -15 80 0" fill="none" stroke="url(#goldGrad)" stroke-width="2"/>
-                                <path d="M-70 2 Q-50 -12 -30 -8 Q-10 -18 0 -13 Q10 -18 30 -8 Q50 -12 70 2" fill="none" stroke="url(#goldGrad)" stroke-width="1" opacity="0.5"/>
-                                <!-- Center diamond -->
-                                <polygon points="0,-20 8,-8 0,-5 -8,-8" fill="url(#goldGrad)"/>
-                                <!-- Side curls -->
-                                <path d="M-80 0 Q-90 -5 -85 -15 Q-80 -20 -75 -15" fill="none" stroke="url(#goldGrad)" stroke-width="1.5"/>
-                                <path d="M80 0 Q90 -5 85 -15 Q80 -20 75 -15" fill="none" stroke="url(#goldGrad)" stroke-width="1.5"/>
-                                <!-- Decorative dots -->
-                                <circle cx="-50" cy="-8" r="2" fill="#f4d03f"/>
-                                <circle cx="50" cy="-8" r="2" fill="#f4d03f"/>
-                                <circle cx="-30" cy="-14" r="1.5" fill="#f4d03f"/>
-                                <circle cx="30" cy="-14" r="1.5" fill="#f4d03f"/>
-                            </g>
-                        </svg>
-                    </div>
-                </div>
-                
-                <div class="login-form-section">
-                    <h2>Login</h2>
-                    <form id="loginForm">
-                        <div class="form-group">
-                            <label>Username</label>
-                            <div class="input-wrapper">
-                                <i class="fas fa-user"></i>
-                                <input type="text" class="form-control" id="username" placeholder="Masukkan username" required>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>Password</label>
-                            <div class="input-wrapper">
-                                <i class="fas fa-lock"></i>
-                                <input type="password" class="form-control" id="password" placeholder="Masukkan password" required>
-                            </div>
-                        </div>
-                        <button type="submit" class="btn-login">
-                            <i class="fas fa-sign-in-alt"></i> Login
-                        </button>
-                    </form>
-                    <div class="forgot-link">
-                        <a href="#"><i class="fas fa-key"></i> Lupa Password?</a>
-                    </div>
-                    <div class="upload-link">
-                        <a href="#" onclick="openModal('uploadMassalModal'); return false;">
-                            <i class="fas fa-file-excel"></i> Upload Data Santri (Excel)
-                        </a>
-                    </div>
-                </div>
+        <h2>Login</h2>
+        <form id="loginForm">
+            <div class="form-group"><label>Username</label><input type="text" id="username" placeholder="Masukkan username" required></div>
+            <div class="form-group"><label>Password</label><input type="password" id="password" placeholder="Masukkan password" required></div>
+            <button type="submit" class="login-btn"><i class="fas fa-sign-in-alt"></i> Login</button>
+        </form>
+        <div class="login-footer"><a href="#">Lupa Password?</a></div>
+    </div>
+</div>
+
+<!-- APP CONTAINER -->
+<div id="appContainer" class="app-container">
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <svg viewBox="0 0 500 620" xmlns="http://www.w3.org/2000/svg" width="110" height="135">
+                <defs>
+                    <linearGradient id="sG" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#c9a84c"/><stop offset="50%" style="stop-color:#f4d03f"/><stop offset="100%" style="stop-color:#c9a84c"/></linearGradient>
+                    <linearGradient id="sG2" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" style="stop-color:#1a7a42"/><stop offset="100%" style="stop-color:#0a3d1a"/></linearGradient>
+                </defs>
+                <path d="M75 65 L75 30 Q75 10 250 10 Q425 10 425 30 L425 65 Q425 70 418 70 L82 70 Q75 70 75 65Z" fill="url(#sG2)" stroke="url(#sG)" stroke-width="2"/>
+                <path d="M238 8 Q228 8 225 15 Q222 22 230 25 Q226 18 232 12 Q235 9 238 8Z" fill="url(#sG)"/>
+                <polygon points="262,5 264,12 272,12 266,16 268,23 262,19 256,23 258,16 252,12 260,12" fill="url(#sG)"/>
+                <g fill="#f4d03f" opacity="0.6"><circle cx="145" cy="22" r="1.5"/><circle cx="250" cy="16" r="2"/><circle cx="355" cy="22" r="1.5"/></g>
+                <g transform="translate(250,45)"><path d="M-30 4 Q-15 -4 0 -9 Q15 -4 30 4 Q15 12 0 14 Q-15 12 -30 4Z" fill="#f4d03f" opacity="0.4"/></g>
+                <text x="250" y="52" text-anchor="middle" font-family="Poppins" font-size="4" fill="#d4a037" font-weight="600">PONDOK PESANTREN</text>
+                <text x="250" y="58" text-anchor="middle" font-family="Poppins" font-size="5.5" fill="#fff" font-weight="700">BAHRUL MAGHFIROH</text>
+                <path d="M60 72 Q60 68 70 70 L250 78 L430 70 Q440 68 440 72 L440 80 Q440 84 430 82 L250 90 L70 82 Q60 84 60 80Z" fill="url(#sG2)" stroke="url(#sG)" stroke-width="1"/>
+                <g transform="translate(250,105)"><path d="M-55 0 Q-28 -12 0 -18 Q28 -12 55 0 Q28 12 0 18 Q-28 12 -55 0Z" fill="url(#sG2)" stroke="url(#sG)" stroke-width="1"/></g>
+                <text x="250" y="120" text-anchor="middle" font-family="Playfair Display, serif" font-size="24" fill="#fff" font-weight="800">Mutqin<tspan fill="url(#sG)">BM</tspan></text>
+                <line x1="80" y1="128" x2="420" y2="128" stroke="url(#sG)" stroke-width="1"/>
+                <text x="250" y="138" text-anchor="middle" font-family="Poppins" font-size="5" fill="#d4a037">Standar Kelulusan Ponpes Bahrul Maghfiroh</text>
+            </svg>
+            <h2>Mutqin BM</h2>
+            <p>Standar Kelulusan Ponpes Bahrul Maghfiroh</p>
+        </div>
+        <nav class="nav-menu">
+            <div class="nav-item active" onclick="navigateTo('dashboard')"><i class="fas fa-home"></i><span>Dashboard</span></div>
+            <div class="nav-item" onclick="navigateTo('dataSantri')"><i class="fas fa-users"></i><span>Data Santri</span></div>
+            <div class="nav-item" onclick="navigateTo('inputHafalan')"><i class="fas fa-edit"></i><span>Input Hafalan</span></div>
+            <div class="nav-item" onclick="navigateTo('laporan')"><i class="fas fa-chart-bar"></i><span>Laporan</span></div>
+            <div class="nav-item" onclick="navigateTo('sertifikat')"><i class="fas fa-certificate"></i><span>Sertifikat</span></div>
+        </nav>
+        <div class="sidebar-footer"><button class="btn-logout" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</button></div>
+    </aside>
+
+    <main class="main-content">
+        <div id="page-dashboard" class="page active">
+            <div class="page-header">
+                <div><h1>Assalamu'alaikum, <span id="userNameDisplay">Admin</span>!</h1><p>Selamat datang di Sistem Hafalan Mutqin BM.</p></div>
             </div>
-            
-            <div class="login-right">
-                <div class="feature-list">
-                    <div class="feature-item">
-                        <div class="feature-icon">📖</div>
-                        <div class="feature-text">
-                            <h3>Hafalan Al-Quran</h3>
-                            <p>Yaasin, Waqiah, Al-Mulk, Juz 30</p>
-                        </div>
-                    </div>
-                    <div class="feature-item">
-                        <div class="feature-icon">🤲</div>
-                        <div class="feature-text">
-                            <h3>Dzikir & Doa</h3>
-                            <p>Tawasul, Tahlil, Istighosah, Wirid</p>
-                        </div>
-                    </div>
-                    <div class="feature-item">
-                        <div class="feature-icon">🕌</div>
-                        <div class="feature-text">
-                            <h3>Praktik Ibadah</h3>
-                            <p>Sholat, Jenazah, Khotib, Bilal</p>
-                        </div>
-                    </div>
-                    <div class="feature-item">
-                        <div class="feature-icon">🏅</div>
-                        <div class="feature-text">
-                            <h3>Sertifikat Profesional</h3>
-                            <p>Sertifikat kelulusan resmi</p>
-                        </div>
-                    </div>
-                </div>
+            <div class="stats-grid">
+                <div class="stat-card total"><div class="stat-icon"><i class="fas fa-users"></i></div><div class="stat-content"><h3>Total Santri</h3><div class="stat-number" id="statTotal">263</div></div></div>
+                <div class="stat-card lulus"><div class="stat-icon"><i class="fas fa-check-circle"></i></div><div class="stat-content"><h3>Sudah Lulus</h3><div class="stat-number" id="statLulus">134</div></div></div>
+                <div class="stat-card proses"><div class="stat-icon"><i class="fas fa-clock"></i></div><div class="stat-content"><h3>Sedang Proses</h3><div class="stat-number" id="statProses">95</div></div></div>
+            </div>
+            <div class="dashboard-grid">
+                <div class="card"><div class="card-header"><h3><i class="fas fa-chart-pie"></i> Progres Hafalan Santri</h3></div><div class="card-body"><div class="chart-container"><canvas id="progressChart"></canvas></div></div></div>
+                <div class="card"><div class="card-header"><h3><i class="fas fa-chart-bar"></i> Statistik Bulanan</h3></div><div class="card-body"><div class="chart-container"><canvas id="monthlyChart"></canvas></div></div></div>
             </div>
         </div>
-        <div class="copyright">© 2024 Hafalan Santri BM. All rights reserved.</div>
+
+        <div id="page-dataSantri" class="page">
+            <div class="page-header"><div><h1>Data Santri</h1><p>Kelola data santri</p></div>
+                <div style="display:flex;gap:8px;"><button class="btn btn-primary" onclick="openModal('uploadModal')"><i class="fas fa-file-excel"></i> Import Excel</button><button class="btn btn-primary" onclick="openModal('addSantriModal')"><i class="fas fa-plus"></i> Tambah</button></div>
+            </div>
+            <div class="toolbar"><div class="search-box"><input type="text" placeholder="Cari santri..." oninput="filterSantri()"></div></div>
+            <div class="card"><div class="card-body"><table style="width:100%;border-collapse:collapse;"><thead><tr style="background:rgba(212,160,55,0.1);"><th style="padding:10px;color:#d4a037;font-size:12px;text-align:left;">No</th><th style="padding:10px;color:#d4a037;font-size:12px;text-align:left;">Nama</th><th style="padding:10px;color:#d4a037;font-size:12px;text-align:left;">Kelas</th><th style="padding:10px;color:#d4a037;font-size:12px;text-align:left;">Nilai</th><th style="padding:10px;color:#d4a037;font-size:12px;text-align:left;">Status</th></tr></thead><tbody id="santriTableBody"></tbody></table></div></div>
+        </div>
+
+        <div id="page-sertifikat" class="page">
+            <div class="page-header"><div><h1>Sertifikat Kelulusan</h1></div><button class="btn btn-primary" onclick="openModal('generateCertModal')"><i class="fas fa-plus"></i> Buat Sertifikat</button></div>
+            <div id="certGrid"></div>
+        </div>
+    </main>
+</div>
+
+<!-- MODALS -->
+<div class="modal-overlay" id="generateCertModal">
+    <div class="modal">
+        <div class="modal-header"><h3>Buat Sertifikat</h3><button class="modal-close" onclick="closeModal('generateCertModal')">&times;</button></div>
+        <div class="modal-body">
+            <div style="margin-bottom:15px;"><label style="color:#aaa;font-size:12px;">Pilih Santri</label><select class="form-control" id="certSantriSelect" style="width:100%;padding:10px;background:rgba(255,255,255,0.06);border:2px solid rgba(212,160,55,0.3);border-radius:8px;color:#fff;font-size:13px;outline:none;"><option value="">-- Pilih --</option></select></div>
+            <div><label style="color:#aaa;font-size:12px;">Tanggal</label><input type="date" id="certDate" style="width:100%;padding:10px;background:rgba(255,255,255,0.06);border:2px solid rgba(212,160,55,0.3);border-radius:8px;color:#fff;font-size:13px;outline:none;"></div>
+        </div>
+        <div class="modal-footer"><button class="btn" onclick="closeModal('generateCertModal')" style="background:transparent;border:1px solid #888;color:#888;">Batal</button><button class="btn btn-primary" onclick="generateCertificate()">Generate</button></div>
     </div>
+</div>
 
-    <!-- APP CONTAINER -->
-    <div id="appContainer" class="app-container">
-        <aside class="sidebar">
-            <div class="sidebar-header">
-                <!-- Small logo for sidebar -->
-                <svg viewBox="0 0 200 240" xmlns="http://www.w3.org/2000/svg" width="120">
-                    <defs>
-                        <linearGradient id="goldGradS" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" style="stop-color:#c9a84c"/>
-                            <stop offset="50%" style="stop-color:#f4d03f"/>
-                            <stop offset="100%" style="stop-color:#c9a84c"/>
-                        </linearGradient>
-                        <linearGradient id="greenGradS" x1="0%" y1="0%" x2="0%" y2="100%">
-                            <stop offset="0%" style="stop-color:#1a6b3c"/>
-                            <stop offset="100%" style="stop-color:#0d4a2a"/>
-                        </linearGradient>
-                    </defs>
-                    <path d="M30 100 L30 50 Q30 15 100 15 Q170 15 170 50 L170 100 Q170 110 160 110 L40 110 Q30 110 30 100Z" fill="url(#greenGradS)" stroke="url(#goldGradS)" stroke-width="2"/>
-                    <path d="M95 10 Q88 10 85 20 Q82 30 90 35 Q85 25 92 18 Q95 12 95 10Z" fill="url(#goldGradS)"/>
-                    <polygon points="105,8 107,15 114,15 108,19 110,26 105,22 100,26 102,19 96,15 103,15" fill="url(#goldGradS)"/>
-                    <circle cx="60" cy="35" r="1.5" fill="#f4d03f" opacity="0.7"/>
-                    <circle cx="100" cy="28" r="2" fill="#f4d03f" opacity="0.9"/>
-                    <circle cx="140" cy="35" r="1.5" fill="#f4d03f" opacity="0.7"/>
-                    <g transform="translate(100, 75)">
-                        <path d="M-25 4 Q-15 -2 0 -6 Q15 -2 25 4 Q15 8 0 10 Q-15 8 -25 4Z" fill="#f4d03f" opacity="0.6"/>
-                        <path d="M-20 3 Q-12 -2 0 -5 Q12 -2 20 3 Q12 7 0 9 Q-12 7 -20 3Z" fill="#e8d48b" opacity="0.8"/>
-                    </g>
-                    <text x="100" y="85" text-anchor="middle" font-family="Poppins" font-size="4" fill="#d4af37" font-weight="600">PONDOK PESANTREN</text>
-                    <text x="100" y="93" text-anchor="middle" font-family="Poppins" font-size="5" fill="#fff" font-weight="700">BAHRUL MAGHFIROH</text>
-                    <path d="M25 110 Q25 105 35 108 L100 115 L165 108 Q175 105 175 110 L175 118 Q175 123 165 120 L100 127 L35 120 Q25 123 25 118Z" fill="url(#greenGradS)" stroke="url(#goldGradS)" stroke-width="1"/>
-                    <g transform="translate(100, 138)">
-                        <path d="M-50 0 Q-25 -8 0 -12 Q25 -8 50 0 Q25 8 0 12 Q-25 8 -50 0Z" fill="url(#greenGradS)" stroke="url(#goldGradS)" stroke-width="1"/>
-                        <path d="M-30 1 Q-15 -4 0 -6 Q15 -4 30 1 Q15 4 0 6 Q-15 4 -30 1Z" fill="#f4d03f" opacity="0.5"/>
-                    </g>
-                    <text x="100" y="168" text-anchor="middle" font-family="Playfair Display, serif" font-size="24" fill="#fff" font-weight="800">Mutqin<tspan fill="url(#goldGradS)">BM</tspan></text>
-                    <line x1="40" y1="175" x2="160" y2="175" stroke="url(#goldGradS)" stroke-width="1"/>
-                    <text x="100" y="188" text-anchor="middle" font-family="Poppins" font-size="5.5" fill="#d4af37">Standar Kelulusan Ponpes Bahrul Maghfiroh</text>
-                </svg>
-                <h2>Mutqin BM</h2>
-                <p>Standar Kelulusan Ponpes Bahrul Maghfiroh</p>
-            </div>
-            <nav class="nav-menu">
-                <div class="nav-item active" onclick="navigateTo('dashboard')"><i class="fas fa-home"></i><span>Dashboard</span></div>
-                <div class="nav-item" onclick="navigateTo('dataSantri')"><i class="fas fa-users"></i><span>Data Santri</span></div>
-                <div class="nav-item" onclick="navigateTo('inputHafalan')"><i class="fas fa-edit"></i><span>Input Hafalan</span></div>
-                <div class="nav-item" onclick="navigateTo('laporan')"><i class="fas fa-chart-bar"></i><span>Laporan</span></div>
-                <div class="nav-item" onclick="navigateTo('sertifikat')"><i class="fas fa-certificate"></i><span>Sertifikat</span></div>
-            </nav>
-            <div class="sidebar-footer">
-                <button class="btn-logout" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
-            </div>
-        </aside>
-
-        <main class="main-content">
-            <div id="page-dashboard" class="page active">
-                <div class="page-header">
-                    <div>
-                        <h1>Assalamu'alaikum, <span id="userNameDisplay">Ust. Abdul Malik</span>!</h1>
-                        <p>Selamat datang di Sistem Hafalan Mutqin BM.</p>
-                    </div>
-                </div>
-                <div class="stats-grid">
-                    <div class="stat-card total">
-                        <div class="stat-icon"><i class="fas fa-users"></i></div>
-                        <div class="stat-content"><h3>Total Santri</h3><div class="stat-number" id="statTotal">263</div></div>
-                    </div>
-                    <div class="stat-card lulus">
-                        <div class="stat-icon"><i class="fas fa-check-circle"></i></div>
-                        <div class="stat-content"><h3>Sudah Lulus</h3><div class="stat-number" id="statLulus">134</div></div>
-                    </div>
-                    <div class="stat-card proses">
-                        <div class="stat-icon"><i class="fas fa-clock"></i></div>
-                        <div class="stat-content"><h3>Sedang Proses</h3><div class="stat-number" id="statProses">95</div></div>
-                    </div>
-                </div>
-                <div class="dashboard-grid">
-                    <div class="card">
-                        <div class="card-header"><h3><i class="fas fa-chart-pie"></i> Progres Hafalan Santri</h3></div>
-                        <div class="card-body"><div class="chart-container"><canvas id="progressChart"></canvas></div></div>
-                    </div>
-                    <div class="card">
-                        <div class="card-header"><h3><i class="fas fa-chart-bar"></i> Statistik Bulanan</h3></div>
-                        <div class="card-body"><div class="chart-container"><canvas id="monthlyChart"></canvas></div></div>
-                    </div>
-                </div>
-            </div>
-
-            <div id="page-sertifikat" class="page">
-                <div class="page-header">
-                    <div><h1>Sertifikat Kelulusan</h1></div>
-                    <button class="btn btn-primary" onclick="openModal('generateCertModal')"><i class="fas fa-plus"></i> Buat Sertifikat</button>
-                </div>
-                <div class="toolbar">
-                    <div class="search-box"><input type="text" placeholder="Cari sertifikat..."></div>
-                </div>
-                <div id="certGrid"></div>
-            </div>
-        </main>
+<div class="modal-overlay" id="viewCertModal">
+    <div class="modal" style="max-width:940px;">
+        <div class="modal-header"><h3>Preview Sertifikat</h3><button class="modal-close" onclick="closeModal('viewCertModal')">&times;</button></div>
+        <div class="modal-body" id="certPreviewContent"></div>
+        <div class="modal-footer"><button class="btn" onclick="closeModal('viewCertModal')" style="background:transparent;border:1px solid #888;color:#888;">Tutup</button><button class="btn btn-primary" onclick="window.print()"><i class="fas fa-print"></i> Cetak</button></div>
     </div>
+</div>
 
-    <!-- MODALS -->
-    <div class="modal-overlay" id="generateCertModal">
-        <div class="modal">
-            <div class="modal-header">
-                <h3>Buat Sertifikat</h3>
-                <button class="modal-close" onclick="closeModal('generateCertModal')">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div class="form-group"><label>Pilih Santri</label><select class="form-control" id="certSantriSelect"><option value="">-- Pilih Santri --</option><option value="1">Ahmad Fauzan - Kelas 6</option></select></div>
-                <div class="form-group"><label>Tanggal</label><input type="date" class="form-control" id="certDate"></div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn" onclick="closeModal('generateCertModal')">Batal</button>
-                <button class="btn btn-primary" onclick="generateCertificate()">Generate</button>
+<div class="modal-overlay" id="addSantriModal">
+    <div class="modal">
+        <div class="modal-header"><h3>Tambah Santri</h3><button class="modal-close" onclick="closeModal('addSantriModal')">&times;</button></div>
+        <div class="modal-body">
+            <div style="margin-bottom:12px;"><label style="color:#aaa;font-size:12px;">Nama</label><input type="text" id="addNama" style="width:100%;padding:10px;background:rgba(255,255,255,0.06);border:2px solid rgba(212,160,55,0.3);border-radius:8px;color:#fff;font-size:13px;outline:none;"></div>
+            <div><label style="color:#aaa;font-size:12px;">Kelas</label><select id="addKelas" style="width:100%;padding:10px;background:rgba(255,255,255,0.06);border:2px solid rgba(212,160,55,0.3);border-radius:8px;color:#fff;font-size:13px;outline:none;"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option></select></div>
+        </div>
+        <div class="modal-footer"><button class="btn" onclick="closeModal('addSantriModal')" style="background:transparent;border:1px solid #888;color:#888;">Batal</button><button class="btn btn-primary" onclick="addSantri()">Simpan</button></div>
+    </div>
+</div>
+
+<div class="modal-overlay" id="uploadModal">
+    <div class="modal">
+        <div class="modal-header"><h3>Import Excel/CSV</h3><button class="modal-close" onclick="closeModal('uploadModal')">&times;</button></div>
+        <div class="modal-body">
+            <p style="color:#aaa;font-size:12px;margin-bottom:15px;">Format CSV: Nama,Kelas</p>
+            <div style="border:2px dashed rgba(212,160,55,0.3);border-radius:10px;padding:30px;text-align:center;cursor:pointer;" onclick="document.getElementById('csvFile').click();">
+                <i class="fas fa-cloud-upload-alt" style="font-size:36px;color:#d4a037;margin-bottom:10px;"></i>
+                <p style="color:#aaa;font-size:12px;">Klik untuk upload</p>
+                <input type="file" id="csvFile" accept=".csv" style="display:none;" onchange="handleCSV(this);">
             </div>
         </div>
+        <div class="modal-footer"><button class="btn" onclick="closeModal('uploadModal')" style="background:transparent;border:1px solid #888;color:#888;">Tutup</button></div>
     </div>
+</div>
 
-    <div class="modal-overlay" id="viewCertModal">
-        <div class="modal" style="max-width:960px;">
-            <div class="modal-header">
-                <h3>Preview Sertifikat</h3>
-                <button class="modal-close" onclick="closeModal('viewCertModal')">&times;</button>
-            </div>
-            <div class="modal-body" id="certPreviewContent"></div>
-            <div class="modal-footer">
-                <button class="btn" onclick="closeModal('viewCertModal')">Tutup</button>
-                <button class="btn btn-primary" onclick="printCertificate()">Cetak</button>
-            </div>
-        </div>
-    </div>
+<div class="toast-container" id="toastContainer"></div>
 
-    <div class="modal-overlay" id="uploadMassalModal">
-        <div class="modal">
-            <div class="modal-header"><h3>Upload Massal</h3><button class="modal-close" onclick="closeModal('uploadMassalModal')">&times;</button></div>
-            <div class="modal-body"><p>Upload file CSV dengan format: Nama,Kelas</p><input type="file" accept=".csv" class="form-control" style="margin-top:15px;"></div>
-            <div class="modal-footer"><button class="btn" onclick="closeModal('uploadMassalModal')">Tutup</button></div>
-        </div>
-    </div>
+<script>
+// DATA
+var santriData = [
+    {id:1,nama:'Ahmad Fauzan',kelas:'6',hafalan:{yaasin:true,waqiah:true,mulk:true,juz30:true,tawasul:true,tahlil_ringkas:true,tahlil_lengkap:true,istighosah:true,wirid:true,sholat:true,jenazah:true,khotib:true,bilal:true,madin_ula:true,madin_wusto:true,sholat_jamaah:true,sekolah_madin:true},nilai:93,status:'lulus'},
+    {id:2,nama:'Salma Azizah',kelas:'4',hafalan:{yaasin:true,waqiah:true,mulk:false,juz30:false,tawasul:true,tahlil_ringkas:true,tahlil_lengkap:false,istighosah:true,wirid:true,sholat:true,jenazah:false,khotib:false,bilal:false,madin_ula:false,madin_wusto:false,sholat_jamaah:true,sekolah_madin:true},nilai:65,status:'proses'},
+    {id:3,nama:'Muhammad Lugman',kelas:'2',hafalan:{},nilai:15,status:'belum'}
+];
 
-    <div class="toast-container" id="toastContainer"></div>
+// AUTH
+document.getElementById('loginForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    var u = document.getElementById('username').value.trim().toLowerCase();
+    var p = document.getElementById('password').value;
+    if (u === 'admin' && p === 'admin123') {
+        document.getElementById('loginPage').style.display = 'none';
+        document.getElementById('appContainer').style.display = 'block';
+        showToast('Login berhasil!', 'success');
+        loadDashboard();
+    } else {
+        showToast('Username atau password salah!', 'error');
+    }
+});
 
-    <script>
-        const santriData = [
-            {id:1,nama:'Ahmad Fauzan',kelas:'6',hafalan:{yaasin:true,waqiah:true,mulk:true,juz30:true,tawasul:true,tahlil_ringkas:true,tahlil_lengkap:true,istighosah:true,wirid:true,sholat:true,jenazah:true,khotib:true,bilal:true,madin_ula:true,madin_wusto:true,sholat_jamaah:true,sekolah_madin:true},nilai:93,status:'lulus'}
-        ];
+function logout() {
+    document.getElementById('appContainer').style.display = 'none';
+    document.getElementById('loginPage').style.display = 'flex';
+    document.getElementById('username').value = '';
+    document.getElementById('password').value = '';
+}
 
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            document.getElementById('loginPage').style.display = 'none';
-            document.getElementById('appContainer').style.display = 'block';
-            showToast('Login berhasil!', 'success');
-        });
+// NAVIGATION
+function navigateTo(page) {
+    document.querySelectorAll('.page').forEach(function(p) { p.classList.remove('active'); });
+    document.getElementById('page-' + page).classList.add('active');
+    document.querySelectorAll('.nav-item').forEach(function(n) { n.classList.remove('active'); });
+    if (event.currentTarget) event.currentTarget.classList.add('active');
+    if (page === 'dashboard') loadDashboard();
+    if (page === 'dataSantri') renderSantriTable(santriData);
+    if (page === 'sertifikat') loadSertifikat();
+}
 
-        function logout() {
-            document.getElementById('appContainer').style.display = 'none';
-            document.getElementById('loginPage').style.display = 'flex';
-        }
+function openModal(id) { document.getElementById(id).classList.add('active'); }
+function closeModal(id) { document.getElementById(id).classList.remove('active'); }
 
-        function navigateTo(page) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.getElementById('page-' + page).classList.add('active');
-            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-            event.currentTarget.classList.add('active');
-            if (page === 'dashboard') loadDashboard();
-            if (page === 'sertifikat') loadSertifikat();
-        }
+function showToast(msg, type) {
+    var c = document.getElementById('toastContainer');
+    var t = document.createElement('div');
+    t.className = 'toast toast-' + type;
+    t.textContent = msg;
+    c.appendChild(t);
+    setTimeout(function() { t.remove(); }, 3000);
+}
 
-        function openModal(id) { document.getElementById(id).classList.add('active'); }
-        function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+// DASHBOARD
+function loadDashboard() {
+    var lulus = santriData.filter(function(s) { return s.status === 'lulus'; }).length;
+    var proses = santriData.filter(function(s) { return s.status === 'proses'; }).length;
+    var belum = santriData.filter(function(s) { return s.status === 'belum'; }).length;
+    document.getElementById('statTotal').textContent = santriData.length;
+    document.getElementById('statLulus').textContent = lulus;
+    document.getElementById('statProses').textContent = proses;
 
-        function showToast(msg, type) {
-            const t = document.createElement('div');
-            t.className = 'toast toast-' + type;
-            t.textContent = msg;
-            document.getElementById('toastContainer').appendChild(t);
-            setTimeout(() => t.remove(), 3000);
-        }
+    if (window.progressChart) window.progressChart.destroy();
+    window.progressChart = new Chart(document.getElementById('progressChart'), {
+        type: 'doughnut',
+         {
+            labels: ['Lulus', 'Proses', 'Belum'],
+            datasets: [{
+                 [lulus, proses, belum],
+                backgroundColor: ['#10b981', '#f59e0b', '#ef4444'],
+                borderWidth: 0
+            }]
+        },
+        options: { responsive: true, maintainAspectRatio: false, cutout: '70%', plugins: { legend: { display: false } } }
+    });
 
-        function loadDashboard() {
-            new Chart(document.getElementById('progressChart'), {
-                type: 'doughnut',
-                 {
-                    labels: ['Lulus', 'Proses', 'Belum'],
-                    datasets: [{
-                         [134, 95, 34],
-                        backgroundColor: ['#10b981', '#f59e0b', '#ef4444'],
-                        borderWidth: 0
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    cutout: '70%',
-                    plugins: { legend: { display: false } }
-                }
-            });
-
-            new Chart(document.getElementById('monthlyChart'), {
-                type: 'bar',
-                 {
-                    labels: ['Jan','Feb','Mar','Apr','Mei','Jun'],
-                    datasets: [
-                        { label: 'Lulus',  [20,35,55,80,110,134], backgroundColor: '#10b981', borderRadius: 8 },
-                        { label: 'Proses',  [40,50,60,70,85,95], backgroundColor: '#f59e0b', borderRadius: 8 }
-                    ]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: { legend: { labels: { color: '#80cbc4' } } },
-                    scales: {
-                        y: { beginAtZero: true, grid: { color: 'rgba(212,175,55,0.1)' }, ticks: { color: '#80cbc4' } },
-                        x: { grid: { display: false }, ticks: { color: '#80cbc4' } }
-                    }
-                }
-            });
-        }
-
-        function loadSertifikat() {
-            document.getElementById('certGrid').innerHTML = `
-                <div class="card">
-                    <div class="card-body">
-                        <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
-                            <div style="width:55px;height:55px;background:linear-gradient(135deg,#c9a84c,#f4d03f);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:28px;">🏅</div>
-                            <div style="flex:1;"><h4 style="color:var(--text-light);margin-bottom:3px;">Ahmad Fauzan</h4><p style="color:var(--text-muted);font-size:11px;">Kelulusan | No. BM/00123</p></div>
-                        </div>
-                        <button class="btn btn-sm btn-primary" onclick="viewCertificate(1)" style="width:100%;"><i class="fas fa-eye"></i> Preview</button>
-                    </div>
-                </div>
-            `;
-        }
-
-        function generateCertificate() {
-            closeModal('generateCertModal');
-            showToast('Sertifikat berhasil dibuat!', 'success');
-            loadSertifikat();
-        }
-
-        function viewCertificate(id) {
-            const santri = santriData[0];
-            const h = santri.hafalan;
-            function getGrade(pct) {
-                if (pct >= 90) return '<span class="cert-grade-pill grade-mumtaz">Mumtaz</span>';
-                if (pct >= 80) return '<span class="cert-grade-pill grade-jayyid-jiddan">Jayyid Jiddan</span>';
-                if (pct >= 70) return '<span class="cert-grade-pill grade-jayyid">Jayyid</span>';
-                if (pct >= 60) return '<span class="cert-grade-pill grade-ahsan">Ahsan</span>';
-                return '<span class="cert-grade-pill" style="background:#888;">Maqbul</span>';
+    if (window.monthlyChart) window.monthlyChart.destroy();
+    window.monthlyChart = new Chart(document.getElementById('monthlyChart'), {
+        type: 'bar',
+         {
+            labels: ['Jan','Feb','Mar','Apr','Mei','Jun'],
+            datasets: [
+                { label: 'Lulus',  [20,35,55,80,110,lulus], backgroundColor: '#10b981', borderRadius: 8 },
+                { label: 'Proses',  [40,50,60,70,85,proses], backgroundColor: '#f59e0b', borderRadius: 8 }
+            ]
+        },
+        options: {
+            responsive: true, maintainAspectRatio: false,
+            plugins: { legend: { labels: { color: '#888' } } },
+            scales: {
+                y: { beginAtZero: true, grid: { color: 'rgba(212,160,55,0.1)' }, ticks: { color: '#888' } },
+                x: { grid: { display: false }, ticks: { color: '#888' } }
             }
-            function check(isDone) { return isDone ? '<span class="cert-check-small">✓</span>' : '<span class="cert-check-small" style="background:#ef4444;">✗</span>'; }
-
-            const html = `
-                <div class="cert-page-container" id="printArea">
-                    <div class="certificate-wrapper">
-                        <div class="certificate-border-inner">
-                            <div class="cert-corner-ornament tl">❖</div>
-                            <div class="cert-corner-ornament tr">❖</div>
-                            <div class="cert-corner-ornament bl">❖</div>
-                            <div class="cert-corner-ornament br">❖</div>
-                            <div class="cert-number-top">No Sertifikat: BM/00123</div>
-                            <div class="cert-top-section">
-                                <div class="cert-logo-top">
-                                    <svg viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg" width="90" height="90">
-                                        <defs>
-                                            <linearGradient id="gG" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#c9a84c"/><stop offset="50%" style="stop-color:#f4d03f"/><stop offset="100%" style="stop-color:#c9a84c"/></linearGradient>
-                                            <linearGradient id="gG2" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" style="stop-color:#1a6b3c"/><stop offset="100%" style="stop-color:#0d4a2a"/></linearGradient>
-                                        </defs>
-                                        <path d="M15 50 L15 25 Q15 8 50 8 Q85 8 85 25 L85 50 Q85 55 80 55 L20 55 Q15 55 15 50Z" fill="url(#gG2)" stroke="url(#gG)" stroke-width="2"/>
-                                        <path d="M47 5 Q42 5 40 12 Q38 19 45 22 Q40 16 44 10 Q47 6 47 5Z" fill="url(#gG)"/>
-                                        <polygon points="55,3 57,10 64,10 58,14 60,21 55,17 50,21 52,14 46,10 53,10" fill="url(#gG)"/>
-                                        <circle cx="30" cy="18" r="1" fill="#f4d03f" opacity="0.7"/><circle cx="50" cy="14" r="1.5" fill="#f4d03f" opacity="0.9"/><circle cx="70" cy="18" r="1" fill="#f4d03f" opacity="0.7"/>
-                                        <g transform="translate(50,38)"><path d="M-12 2 Q-6 -1 0 -3 Q6 -1 12 2 Q6 4 0 5 Q-6 4 -12 2Z" fill="#f4d03f" opacity="0.6"/><path d="M-10 1 Q-5 -1 0 -2 Q5 -1 10 1 Q5 3 0 4 Q-5 3 -10 1Z" fill="#e8d48b" opacity="0.8"/></g>
-                                        <text x="50" y="44" text-anchor="middle" font-family="Poppins" font-size="2.5" fill="#d4af37" font-weight="600">PONDOK PESANTREN</text>
-                                        <text x="50" y="48" text-anchor="middle" font-family="Poppins" font-size="3.5" fill="#fff" font-weight="700">BAHRUL MAGHFIROH</text>
-                                        <path d="M12 55 Q12 52 18 54 L50 58 L82 54 Q88 52 88 55 L88 60 Q88 63 82 61 L50 65 L18 61 Q12 63 12 60Z" fill="url(#gG2)" stroke="url(#gG)" stroke-width="1"/>
-                                        <g transform="translate(50,70)"><path d="M-25 0 Q-12 -4 0 -6 Q12 -4 25 0 Q12 4 0 6 Q-12 4 -25 0Z" fill="url(#gG2)" stroke="url(#gG)" stroke-width="1"/></g>
-                                        <text x="50" y="82" text-anchor="middle" font-family="Playfair Display, serif" font-size="12" fill="#fff" font-weight="800">Mutqin<tspan fill="url(#gG)">BM</tspan></text>
-                                    </svg>
-                                </div>
-                                <div class="cert-ponpes-name">PONPES BAHRUL MAGHFIROH</div>
-                                <div class="cert-title-main">Sertifikat Kelulusan</div>
-                                <div class="cert-decorative-line"></div>
-                            </div>
-                            <div class="cert-name-main">${santri.nama}</div>
-                            <div class="cert-decorative-line"></div>
-                            <p class="cert-desc-text">Dinnyatakan telah <strong>MENYELESAIKAN MUTQIN BM</strong><br>Program Hafalan Auseh seeu Standar Kelulusan Pondok Bahrul</p>
-                            <div class="cert-lulus-badge"><div class="badge-inner">LULUS</div></div>
-                            <table class="cert-hafalan-table"><tbody>
-                                <tr><td class="haf-check">${check(true)}</td><td class="haf-label">Hafal Surat Yaasin, Waqiah, Al Mulk</td><td class="haf-grade">${getGrade(95)}</td></tr>
-                                <tr><td class="haf-check">${check(true)}</td><td class="haf-label">Hafal Tawasul, Tahlil, Istighosah, Doa</td><td class="haf-grade">${getGrade(85)}</td></tr>
-                                <tr><td class="haf-check">${check(true)}</td><td class="haf-label">Praktik Sholat & Pengurusan Jenazah</td><td class="haf-grade">${getGrade(75)}</td></tr>
-                                <tr><td class="haf-check">${check(true)}</td><td class="haf-label">Hafal Juz 30</td><td class="haf-grade">${getGrade(65)}</td></tr>
-                                <tr><td class="haf-check">${check(true)}</td><td class="haf-label">Praktik Khotib & Bilal</td><td class="haf-grade">${getGrade(65)}</td></tr>
-                                <tr><td class="haf-check">${check(true)}</td><td class="haf-label">Lulus Madin Ula</td><td class="haf-grade">${check(true)}${check(true)}</td></tr>
-                                <tr><td class="haf-check">${check(true)}</td><td class="haf-label">Lulus Madin Wusto</td><td class="haf-grade">${check(true)}${check(true)}</td></tr>
-                                <tr><td class="haf-check">${check(true)}</td><td class="haf-label">Sikap dan Adab Sholat Berjamaah & Madin</td><td class="haf-grade">${check(true)}${check(true)}</td></tr>
-                            </tbody></table>
-                            <div class="cert-signatures">
-                                <div class="cert-sig-block"><div class="cert-sig-line"></div><div class="cert-sig-name">Ust. Drs. H. Abdul Malik, Lc., M.M.Pd.</div><div class="cert-sig-title">Pengasuh</div></div>
-                                <div class="cert-sig-block"><div class="cert-sig-line"></div><div class="cert-sig-name">Ust. H. Muhammad Amin</div><div class="cert-sig-title">Kepala Dewan Tahfizh</div></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>`;
-            document.getElementById('certPreviewContent').innerHTML = html;
-            openModal('viewCertModal');
         }
+    });
+}
 
-        function printCertificate() { window.print(); }
-        document.getElementById('certDate').valueAsDate = new Date();
-    </script>
+// DATA SANTRI
+function renderSantriTable(data) {
+    var tbody = document.getElementById('santriTableBody');
+    if (!tbody) return;
+    tbody.innerHTML = data.map(function(s, i) {
+        var statusClass = s.status === 'lulus' ? 'color:#10b981' : (s.status === 'proses' ? 'color:#f59e0b' : 'color:#ef4444');
+        var statusText = s.status === 'lulus' ? 'Lulus' : (s.status === 'proses' ? 'Proses' : 'Belum');
+        return '<tr style="border-bottom:1px solid rgba(212,160,55,0.1);"><td style="padding:10px;font-size:12px;">' + (i+1) + '</td><td style="padding:10px;font-size:12px;">' + s.nama + '</td><td style="padding:10px;font-size:12px;">' + s.kelas + '</td><td style="padding:10px;font-size:12px;color:#d4a037;font-weight:bold;">' + (s.nilai||0) + '</td><td style="padding:10px;font-size:12px;' + statusClass + '">' + statusText + '</td></tr>';
+    }).join('');
+}
+
+function filterSantri() {
+    var search = document.querySelector('.search-box input').value.toLowerCase();
+    var filtered = santriData.filter(function(s) { return s.nama.toLowerCase().indexOf(search) !== -1; });
+    renderSantriTable(filtered);
+}
+
+function addSantri() {
+    var nama = document.getElementById('addNama').value.trim();
+    var kelas = document.getElementById('addKelas').value;
+    if (!nama) { showToast('Nama harus diisi!', 'error'); return; }
+    var newId = santriData.length > 0 ? Math.max.apply(null, santriData.map(function(s) { return s.id; })) + 1 : 1;
+    santriData.push({id: newId, nama: nama, kelas: kelas, hafalan: {}, nilai: 0, status: 'belum'});
+    closeModal('addSantriModal');
+    document.getElementById('addNama').value = '';
+    showToast('Santri ditambahkan!', 'success');
+    renderSantriTable(santriData);
+    loadDashboard();
+}
+
+function handleCSV(input) {
+    var file = input.files[0];
+    if (!file) return;
+    var reader = new FileReader();
+    reader.onload = function(e) {
+        var lines = e.target.result.split('\n').filter(function(l) { return l.trim(); });
+        var added = 0;
+        for (var i = 1; i < lines.length; i++) {
+            var cols = lines[i].split(',').map(function(c) { return c.trim(); });
+            if (cols.length >= 2 && cols[0]) {
+                var newId = santriData.length > 0 ? Math.max.apply(null, santriData.map(function(s) { return s.id; })) + 1 : 1;
+                santriData.push({id: newId, nama: cols[0], kelas: cols[1], hafalan: {}, nilai: 0, status: 'belum'});
+                added++;
+            }
+        }
+        closeModal('uploadModal');
+        showToast(added + ' santri berhasil diimport!', 'success');
+        renderSantriTable(santriData);
+        loadDashboard();
+    };
+    reader.readAsText(file);
+}
+
+// SERTIFIKAT
+function loadSertifikat() {
+    document.getElementById('certGrid').innerHTML = santriData.map(function(s) {
+        return '<div class="card" style="margin-bottom:15px;"><div class="card-body"><div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;"><div style="width:45px;height:45px;background:linear-gradient(135deg,#c9a84c,#f4d03f);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:22px;">🏅</div><div><h4 style="font-size:14px;margin-bottom:2px;">' + s.nama + '</h4><p style="color:#888;font-size:10px;">Kelas ' + s.kelas + ' | Nilai: ' + (s.nilai||0) + '</p></div></div><button class="btn btn-sm btn-primary" onclick="viewCert(' + s.id + ')" style="width:100%;"><i class="fas fa-eye"></i> Preview Sertifikat</button></div></div>';
+    }).join('');
+    var sel = document.getElementById('certSantriSelect');
+    sel.innerHTML = '<option value="">-- Pilih --</option>' + santriData.map(function(s) { return '<option value="' + s.id + '">' + s.nama + ' - Kelas ' + s.kelas + '</option>'; }).join('');
+}
+
+function viewCert(id) {
+    var s = santriData.find(function(x) { return x.id === id; });
+    if (!s) return;
+    var h = s.hafalan || {};
+    var kelas = s.kelas;
+
+    function getGrade(pct) {
+        if (pct >= 90) return '<span class="cert-grade-pill grade-mumtaz">Mumtaz</span>';
+        if (pct >= 80) return '<span class="cert-grade-pill grade-jayyid-jiddan">Jayyid Jiddan</span>';
+        if (pct >= 70) return '<span class="cert-grade-pill grade-jayyid">Jayyid</span>';
+        if (pct >= 60) return '<span class="cert-grade-pill grade-ahsan">Ahsan</span>';
+        return '<span class="cert-grade-pill" style="background:#888;">Maqbul</span>';
+    }
+    function check(isDone) { return isDone ? '<span class="cert-check-small">✓</span>' : '<span class="cert-check-small" style="background:#ef4444;">✗</span>'; }
+
+    var rows = '';
+    rows += '<tr><td class="haf-check">' + check(h.yaasin && h.waqiah && h.mulk) + '</td><td>Hafal Surat Yaasin, Waqiah, Al Mulk</td><td>' + getGrade((h.yaasin?1:0)+(h.waqiah?1:0)+(h.mulk?1:0) >= 2 ? 90 : 60) + '</td></tr>';
+    rows += '<tr><td class="haf-check">' + check(h.tawasul && h.tahlil_ringkas && h.istighosah && h.wirid) + '</td><td>Hafal Tawasul, Tahlil, Istighosah, Doa</td><td>' + getGrade((h.tawasul?1:0)+(h.tahlil_ringkas?1:0)+(h.istighosah?1:0)+(h.wirid?1:0) >= 3 ? 85 : 60) + '</td></tr>';
+    rows += '<tr><td class="haf-check">' + check(h.sholat && h.jenazah) + '</td><td>Praktik Sholat & Pengurusan Jenazah</td><td>' + getGrade((h.sholat?1:0)+(h.jenazah?1:0) >= 1 ? 75 : 50) + '</td></tr>';
+    rows += '<tr><td class="haf-check">' + check(h.juz30) + '</td><td>Hafal Juz 30</td><td>' + getGrade(h.juz30 ? 100 : 30) + '</td></tr>';
+    rows += '<tr><td class="haf-check">' + check(h.khotib && h.bilal) + '</td><td>Praktik Khotib & Bilal</td><td>' + getGrade((h.khotib?1:0)+(h.bilal?1:0) >= 1 ? 65 : 30) + '</td></tr>';
+    rows += '<tr><td class="haf-check">' + check(h.madin_ula) + '</td><td>Lulus Madin Ula</td><td>' + check(h.madin_ula) + check(h.madin_ula) + '</td></tr>';
+    if (kelas === '6') {
+        rows += '<tr><td class="haf-check">' + check(h.madin_wusto) + '</td><td>Lulus Madin Wusto</td><td>' + check(h.madin_wusto) + check(h.madin_wusto) + '</td></tr>';
+    }
+    rows += '<tr><td class="haf-check">' + check(h.sholat_jamaah && h.sekolah_madin) + '</td><td>Sikap dan Adab Sholat Berjamaah & Madin</td><td>' + check(h.sholat_jamaah) + check(h.sekolah_madin) + '</td></tr>';
+
+    var overallStatus = s.nilai >= 75 ? 'LULUS' : (s.nilai >= 50 ? 'DALAM PROSES' : 'BELUM LULUS');
+
+    var html = '<div id="printArea"><div class="cert-page-container"><div class="certificate-wrapper"><div class="certificate-border-inner">';
+    html += '<div class="cert-corner-ornament tl">❖</div><div class="cert-corner-ornament tr">❖</div><div class="cert-corner-ornament bl">❖</div><div class="cert-corner-ornament br">❖</div>';
+    html += '<div class="cert-number-top">No Sertifikat: BM/' + String(s.id).padStart(5,'0') + '</div>';
+    html += '<div class="cert-top-section">';
+    html += '<div style="width:80px;height:80px;margin:0 auto 8px;background:linear-gradient(135deg,#c9a84c,#f4d03f);border-radius:50% 50% 0 0;display:flex;align-items:center;justify-content:center;font-size:36px;">📖</div>';
+    html += '<div class="cert-ponpes-name">PONPES BAHRUL MAGHFIROH</div>';
+    html += '<div class="cert-title-main">Sertifikat Kelulusan</div>';
+    html += '<div class="cert-decorative-line"></div></div>';
+    html += '<div class="cert-name-main">' + s.nama + '</div>';
+    html += '<div class="cert-decorative-line"></div>';
+    html += '<p class="cert-desc-text">Dinnyatakan telah <strong>MENYELESAIKAN MUTQIN BM</strong><br>Program Hafalan Auseh seeu Standar Kelulusan Pondok Bahrul</p>';
+    html += '<div class="cert-lulus-badge"><div class="badge-inner">' + overallStatus + '</div></div>';
+    html += '<table class="cert-hafalan-table"><tbody>' + rows + '</tbody></table>';
+    html += '<div class="cert-signatures">';
+    html += '<div class="cert-sig-block"><div class="cert-sig-line"></div><div class="cert-sig-name">Prof.Dr.Ir KH Muhammad Bisri MS</div><div class="cert-sig-title">Pengasuh</div></div>';
+    html += '<div class="cert-sig-block"><div class="cert-sig-line"></div><div class="cert-sig-name">Muhammad Sulthon S.Pd M.Pd</div><div class="cert-sig-title">Kepala Madin</div></div>';
+    html += '</div></div></div></div></div>';
+
+    document.getElementById('certPreviewContent').innerHTML = html;
+    openModal('viewCertModal');
+}
+
+function generateCertificate() {
+    var id = parseInt(document.getElementById('certSantriSelect').value);
+    if (!id) { showToast('Pilih santri dulu!', 'error'); return; }
+    closeModal('generateCertModal');
+    showToast('Sertifikat berhasil dibuat!', 'success');
+    loadSertifikat();
+}
+
+document.getElementById('certDate').valueAsDate = new Date();
+</script>
 </body>
 </html>
