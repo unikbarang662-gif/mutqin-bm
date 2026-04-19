@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Poppins:wght@300;400;500;600;700&family=Amiri:wght@400;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap');
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -17,14 +17,11 @@
             --primary-light: #2d6a4f;
             --accent: #d4af37;
             --accent-light: #f4d03f;
-            --gold-gradient: linear-gradient(135deg, #c9a84c 0%, #f4d03f 50%, #c9a84c 100%);
-            --green-gradient: linear-gradient(135deg, #1a4731 0%, #2d6a4f 100%);
             --text-light: #e0f2f1;
             --text-muted: #80cbc4;
             --success: #10b981;
             --warning: #f59e0b;
             --danger: #ef4444;
-            --info: #3b82f6;
             --bg-dark: #0d1117;
         }
 
@@ -33,21 +30,18 @@
             background: var(--bg-dark);
             color: var(--text-light);
             min-height: 100vh;
-            overflow-x: hidden;
         }
 
         .bg-pattern {
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            background: 
-                radial-gradient(ellipse at 20% 50%, rgba(26, 71, 49, 0.3) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 20%, rgba(212, 175, 55, 0.08) 0%, transparent 50%);
+            background: radial-gradient(ellipse at 20% 50%, rgba(26, 71, 49, 0.3) 0%, transparent 50%);
             pointer-events: none;
             z-index: 0;
         }
 
-        /* ===== LOGIN PAGE ===== */
+        /* LOGIN PAGE */
         .login-page {
             min-height: 100vh;
             display: flex;
@@ -67,7 +61,7 @@
             border: 2px solid rgba(212, 175, 55, 0.4);
             border-radius: 24px;
             overflow: hidden;
-            box-shadow: 0 30px 100px rgba(0,0,0,0.6), 0 0 60px rgba(212, 175, 55, 0.1);
+            box-shadow: 0 30px 100px rgba(0,0,0,0.6);
         }
 
         .login-left {
@@ -75,58 +69,48 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
-            position: relative;
-        }
-
-        .login-left::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: radial-gradient(circle at 50% 30%, rgba(212, 175, 55, 0.06) 0%, transparent 60%);
-            pointer-events: none;
         }
 
         .login-logo-section {
             text-align: center;
             margin-bottom: 35px;
-            position: relative;
-            z-index: 1;
         }
 
         .logo-img-container {
             width: 160px;
             height: 160px;
             margin: 0 auto 20px;
-            position: relative;
-        }
-
-        .logo-img-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            filter: drop-shadow(0 8px 25px rgba(212, 175, 55, 0.4));
         }
 
         .logo-img-container .logo-placeholder {
             width: 100%;
             height: 100%;
-            background: var(--gold-gradient);
+            background: linear-gradient(135deg, #c9a84c 0%, #f4d03f 50%, #c9a84c 100%);
             border-radius: 50% 50% 0 0;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 70px;
             box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
+            position: relative;
+        }
+
+        .logo-placeholder::after {
+            content: 'القرآن';
+            position: absolute;
+            bottom: 5px;
+            font-size: 20px;
+            color: #1a4731;
+            font-family: serif;
         }
 
         .login-logo-section h1 {
             font-family: 'Playfair Display', serif;
             font-size: 40px;
             font-weight: 800;
-            background: var(--gold-gradient);
+            background: linear-gradient(135deg, #c9a84c 0%, #f4d03f 50%, #c9a84c 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            background-clip: text;
             margin-bottom: 6px;
         }
 
@@ -134,7 +118,6 @@
             color: var(--text-muted);
             font-size: 13px;
             letter-spacing: 2px;
-            text-transform: uppercase;
         }
 
         .login-form-section h2 {
@@ -142,7 +125,6 @@
             font-size: 26px;
             margin-bottom: 25px;
             text-align: center;
-            font-weight: 600;
         }
 
         .form-group { margin-bottom: 18px; }
@@ -151,7 +133,6 @@
             color: var(--text-muted);
             margin-bottom: 6px;
             font-size: 13px;
-            font-weight: 500;
         }
 
         .input-wrapper { position: relative; }
@@ -160,7 +141,6 @@
             left: 16px; top: 50%;
             transform: translateY(-50%);
             color: var(--accent);
-            font-size: 15px;
         }
 
         .form-control {
@@ -171,30 +151,23 @@
             border-radius: 10px;
             color: var(--text-light);
             font-size: 14px;
-            transition: all 0.3s;
-            font-family: 'Poppins', sans-serif;
         }
         .form-control:focus {
             outline: none;
             border-color: var(--accent);
-            background: rgba(26, 71, 49, 0.4);
-            box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.1);
         }
-        .form-control::placeholder { color: rgba(128, 203, 196, 0.6); }
 
         .btn-login {
             width: 100%;
             padding: 15px;
-            background: var(--green-gradient);
+            background: linear-gradient(135deg, #1a4731 0%, #2d6a4f 100%);
             border: 2px solid var(--accent);
             border-radius: 10px;
             color: var(--text-light);
             font-size: 16px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s;
             margin-top: 8px;
-            font-family: 'Poppins', sans-serif;
         }
         .btn-login:hover {
             transform: translateY(-2px);
@@ -210,7 +183,6 @@
             text-decoration: none;
             font-size: 13px;
         }
-        .forgot-link a:hover { text-decoration: underline; }
 
         .upload-link {
             text-align: center;
@@ -222,12 +194,7 @@
             color: var(--accent);
             text-decoration: none;
             font-size: 13px;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            transition: all 0.3s;
         }
-        .upload-link a:hover { color: var(--accent-light); }
 
         .login-right {
             background: linear-gradient(145deg, rgba(26, 71, 49, 0.5) 0%, rgba(13, 31, 28, 0.9) 100%);
@@ -235,25 +202,9 @@
             align-items: center;
             justify-content: center;
             padding: 40px;
-            position: relative;
-            overflow: hidden;
         }
 
-        .login-right::before {
-            content: '';
-            position: absolute;
-            top: -30%; right: -30%;
-            width: 160%; height: 160%;
-            background: radial-gradient(circle, rgba(212, 175, 55, 0.08) 0%, transparent 60%);
-            animation: pulseGlow 5s ease-in-out infinite;
-        }
-
-        @keyframes pulseGlow {
-            0%, 100% { transform: scale(1); opacity: 0.5; }
-            50% { transform: scale(1.1); opacity: 0.8; }
-        }
-
-        .feature-list { position: relative; z-index: 1; }
+        .feature-list { width: 100%; }
 
         .feature-item {
             display: flex;
@@ -264,24 +215,16 @@
             background: rgba(255,255,255,0.04);
             border-radius: 12px;
             border: 1px solid rgba(212, 175, 55, 0.15);
-            backdrop-filter: blur(5px);
-            transition: all 0.3s;
-        }
-        .feature-item:hover {
-            background: rgba(255,255,255,0.08);
-            border-color: rgba(212, 175, 55, 0.3);
-            transform: translateX(5px);
         }
 
         .feature-icon {
             width: 48px; height: 48px;
-            background: var(--gold-gradient);
+            background: linear-gradient(135deg, #c9a84c, #f4d03f);
             border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 22px;
-            flex-shrink: 0;
         }
 
         .feature-text h3 { color: var(--text-light); font-size: 15px; margin-bottom: 3px; }
@@ -294,11 +237,9 @@
             transform: translateX(-50%);
             color: var(--text-muted);
             font-size: 10px;
-            text-align: center;
-            opacity: 0.7;
         }
 
-        /* ===== APP CONTAINER ===== */
+        /* APP CONTAINER */
         .app-container { display: none; min-height: 100vh; position: relative; z-index: 1; }
 
         .sidebar {
@@ -307,35 +248,21 @@
             border-right: 2px solid rgba(212, 175, 55, 0.3);
             position: fixed;
             height: 100vh;
-            overflow-y: auto;
             z-index: 100;
-            transition: transform 0.3s;
         }
 
         .sidebar-header {
             padding: 25px 20px;
             text-align: center;
             border-bottom: 2px solid rgba(212, 175, 55, 0.2);
-            background: rgba(212, 175, 55, 0.03);
-        }
-
-        .sidebar-logo-img {
-            width: 75px; height: 75px;
-            margin: 0 auto 12px;
-        }
-        .sidebar-logo-img img {
-            width: 100%; height: 100%;
-            object-fit: contain;
-            filter: drop-shadow(0 4px 12px rgba(212, 175, 55, 0.3));
         }
 
         .sidebar-header h2 {
             font-family: 'Playfair Display', serif;
             color: var(--accent);
             font-size: 24px;
-            margin-bottom: 3px;
         }
-        .sidebar-header p { color: var(--text-muted); font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; }
+        .sidebar-header p { color: var(--text-muted); font-size: 10px; }
 
         .nav-menu { padding: 15px 0; }
         .nav-item {
@@ -345,7 +272,6 @@
             gap: 14px;
             color: var(--text-muted);
             cursor: pointer;
-            transition: all 0.3s;
             font-size: 14px;
             margin: 4px 12px;
             border-radius: 10px;
@@ -354,14 +280,12 @@
             background: rgba(212, 175, 55, 0.12);
             color: var(--accent);
         }
-        .nav-item i { font-size: 17px; width: 24px; text-align: center; }
 
         .sidebar-footer {
             position: absolute;
             bottom: 0; left: 0; right: 0;
             padding: 15px 20px;
             border-top: 2px solid rgba(212, 175, 55, 0.2);
-            background: rgba(0,0,0,0.2);
         }
 
         .btn-logout {
@@ -372,25 +296,15 @@
             color: #fca5a5;
             border-radius: 8px;
             cursor: pointer;
-            transition: all 0.3s;
-            font-size: 13px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            font-family: 'Poppins', sans-serif;
         }
-        .btn-logout:hover { background: var(--danger); color: white; }
 
         .main-content {
             margin-left: 270px;
             padding: 25px;
-            min-height: 100vh;
         }
 
-        .page { display: none; animation: fadeIn 0.4s ease; }
+        .page { display: none; }
         .page.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
         .page-header {
             background: linear-gradient(135deg, rgba(26, 71, 49, 0.85) 0%, rgba(13, 31, 28, 0.85) 100%);
@@ -401,9 +315,6 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap;
-            gap: 15px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
         }
 
         .page-header h1 {
@@ -411,30 +322,6 @@
             font-family: 'Playfair Display', serif;
             font-size: 26px;
         }
-        .page-header p { color: var(--text-muted); font-size: 13px; margin-top: 4px; }
-
-        .user-profile {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            background: rgba(212, 175, 55, 0.08);
-            padding: 8px 18px;
-            border-radius: 50px;
-            border: 1px solid rgba(212, 175, 55, 0.2);
-        }
-        .user-avatar {
-            width: 42px; height: 42px;
-            background: var(--gold-gradient);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            color: var(--primary-dark);
-            font-size: 16px;
-        }
-        .user-info .name { color: var(--text-light); font-weight: 600; font-size: 13px; }
-        .user-info .role { color: var(--text-muted); font-size: 10px; }
 
         .stats-grid {
             display: grid;
@@ -442,6 +329,7 @@
             gap: 18px;
             margin-bottom: 25px;
         }
+
         .stat-card {
             background: linear-gradient(135deg, rgba(26, 71, 49, 0.7) 0%, rgba(13, 31, 28, 0.7) 100%);
             border: 2px solid;
@@ -450,11 +338,7 @@
             display: flex;
             align-items: center;
             gap: 18px;
-            transition: all 0.3s;
-            cursor: pointer;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
         }
-        .stat-card:hover { transform: translateY(-4px); box-shadow: 0 12px 35px rgba(0,0,0,0.3); }
         .stat-card.total { border-color: var(--success); }
         .stat-card.lulus { border-color: var(--info); }
         .stat-card.proses { border-color: var(--warning); }
@@ -466,25 +350,13 @@
             align-items: center;
             justify-content: center;
             font-size: 26px;
-            flex-shrink: 0;
         }
         .stat-card.total .stat-icon { background: rgba(16,185,129,0.2); color: var(--success); }
         .stat-card.lulus .stat-icon { background: rgba(59,130,246,0.2); color: var(--info); }
         .stat-card.proses .stat-icon { background: rgba(245,158,11,0.2); color: var(--warning); }
 
-        .stat-content h3 { color: var(--text-muted); font-size: 12px; margin-bottom: 6px; font-weight: 500; }
-        .stat-number { font-size: 34px; font-weight: bold; color: var(--text-light); line-height: 1; }
-        .stat-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            margin-top: 8px;
-            padding: 3px 10px;
-            background: rgba(255,255,255,0.08);
-            border-radius: 20px;
-            font-size: 10px;
-            color: var(--text-muted);
-        }
+        .stat-content h3 { color: var(--text-muted); font-size: 12px; margin-bottom: 6px; }
+        .stat-number { font-size: 34px; font-weight: bold; color: var(--text-light); }
 
         .dashboard-grid {
             display: grid;
@@ -497,7 +369,6 @@
             border: 2px solid rgba(212, 175, 55, 0.25);
             border-radius: 14px;
             overflow: hidden;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
         }
         .card-header {
             padding: 18px 22px;
@@ -505,105 +376,11 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(212, 175, 55, 0.03);
         }
-        .card-header h3 { color: var(--accent); font-size: 16px; display: flex; align-items: center; gap: 8px; font-family: 'Playfair Display', serif; }
+        .card-header h3 { color: var(--accent); font-size: 16px; }
         .card-body { padding: 22px; }
 
-        .chart-container { height: 260px; position: relative; margin: 15px 0; }
-
-        .hafalan-list { display: flex; flex-direction: column; gap: 10px; }
-        .hafalan-item {
-            display: flex;
-            align-items: center;
-            padding: 13px 14px;
-            background: rgba(255,255,255,0.02);
-            border-radius: 10px;
-            border: 1px solid rgba(212, 175, 55, 0.15);
-            transition: all 0.3s;
-        }
-        .hafalan-item:hover { background: rgba(212, 175, 55, 0.04); transform: translateX(4px); }
-
-        .hafalan-checkbox {
-            width: 22px; height: 22px;
-            border: 2px solid var(--accent);
-            border-radius: 6px;
-            margin-right: 14px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s;
-            flex-shrink: 0;
-        }
-        .hafalan-checkbox.checked { background: var(--success); border-color: var(--success); }
-        .hafalan-checkbox.checked::after { content: '✓'; color: white; font-weight: bold; font-size: 14px; }
-
-        .hafalan-content { flex: 1; }
-        .hafalan-content h4 { color: var(--text-light); font-size: 13px; margin-bottom: 2px; }
-        .hafalan-content p { color: var(--text-muted); font-size: 10px; }
-
-        .hafalan-status {
-            padding: 4px 10px;
-            border-radius: 18px;
-            font-size: 10px;
-            font-weight: 600;
-            margin-left: 8px;
-        }
-        .status-lulus { background: rgba(16,185,129,0.2); color: var(--success); }
-        .status-proses { background: rgba(245,158,11,0.2); color: var(--warning); }
-        .status-belum { background: rgba(239,68,68,0.2); color: var(--danger); }
-
-        .score-display {
-            background: linear-gradient(135deg, var(--success) 0%, #059669 100%);
-            border-radius: 12px;
-            padding: 18px;
-            text-align: center;
-            margin-top: 18px;
-            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.25);
-        }
-        .score-label { color: white; font-size: 12px; margin-bottom: 6px; opacity: 0.9; }
-        .score-value { font-size: 44px; font-weight: bold; color: white; line-height: 1; }
-        .score-grade {
-            display: inline-block;
-            margin-top: 8px;
-            padding: 5px 18px;
-            background: rgba(255,255,255,0.2);
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-            color: white;
-        }
-
-        .progress-item { margin-bottom: 16px; }
-        .progress-header { display: flex; justify-content: space-between; margin-bottom: 6px; }
-        .progress-label { color: var(--text-muted); font-size: 11px; display: flex; align-items: center; gap: 5px; }
-        .progress-value { color: var(--accent); font-weight: 600; font-size: 12px; }
-        .progress-bar {
-            height: 9px;
-            background: rgba(255,255,255,0.04);
-            border-radius: 8px;
-            overflow: hidden;
-            border: 1px solid rgba(212, 175, 55, 0.15);
-        }
-        .progress-fill { height: 100%; border-radius: 8px; transition: width 0.5s ease; }
-        .progress-fill.green { background: linear-gradient(90deg, var(--success), #34d399); }
-        .progress-fill.yellow { background: linear-gradient(90deg, var(--warning), #fbbf24); }
-        .progress-fill.blue { background: linear-gradient(90deg, var(--info), #60a5fa); }
-        .progress-fill.red { background: linear-gradient(90deg, var(--danger), #f87171); }
-
-        .table-container { overflow-x: auto; }
-        table { width: 100%; border-collapse: collapse; }
-        th, td { padding: 12px 14px; text-align: left; border-bottom: 1px solid rgba(212, 175, 55, 0.15); }
-        th { background: rgba(212, 175, 55, 0.08); color: var(--accent); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
-        td { color: var(--text-light); font-size: 12px; }
-        tr:hover td { background: rgba(212, 175, 55, 0.03); }
-
-        .status-badge { padding: 5px 12px; border-radius: 18px; font-size: 10px; font-weight: 600; display: inline-block; }
-        .badge-success { background: rgba(16,185,129,0.2); color: var(--success); }
-        .badge-warning { background: rgba(245,158,11,0.2); color: var(--warning); }
-        .badge-danger { background: rgba(239,68,68,0.2); color: var(--danger); }
-        .badge-info { background: rgba(59,130,246,0.2); color: var(--info); }
+        .chart-container { height: 260px; position: relative; }
 
         .btn {
             padding: 9px 18px;
@@ -612,22 +389,20 @@
             cursor: pointer;
             font-size: 12px;
             font-weight: 600;
-            transition: all 0.3s;
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            font-family: 'Poppins', sans-serif;
         }
-        .btn-primary { background: var(--green-gradient); border: 2px solid var(--accent); color: var(--text-light); }
-        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(212, 175, 55, 0.3); }
+        .btn-primary { 
+            background: linear-gradient(135deg, #1a4731 0%, #2d6a4f 100%); 
+            border: 2px solid var(--accent); 
+            color: var(--text-light); 
+        }
         .btn-success { background: var(--success); color: white; }
-        .btn-warning { background: var(--warning); color: var(--primary-dark); }
-        .btn-danger { background: var(--danger); color: white; }
         .btn-sm { padding: 5px 10px; font-size: 10px; }
 
-        .toolbar { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; align-items: center; }
+        .toolbar { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
         .search-box { flex: 1; min-width: 220px; position: relative; }
-        .search-box i { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--text-muted); }
         .search-box input {
             width: 100%;
             padding: 11px 14px 11px 42px;
@@ -635,18 +410,13 @@
             border: 2px solid rgba(212, 175, 55, 0.25);
             border-radius: 10px;
             color: var(--text-light);
-            font-size: 12px;
-            transition: all 0.3s;
         }
-        .search-box input:focus { outline: none; border-color: var(--accent); }
         .filter-select {
             padding: 11px 14px;
             background: rgba(26, 71, 49, 0.25);
             border: 2px solid rgba(212, 175, 55, 0.25);
             border-radius: 10px;
             color: var(--text-light);
-            font-size: 12px;
-            cursor: pointer;
         }
 
         .modal-overlay {
@@ -657,8 +427,6 @@
             z-index: 1000;
             align-items: center;
             justify-content: center;
-            padding: 20px;
-            backdrop-filter: blur(5px);
         }
         .modal-overlay.active { display: flex; }
         .modal {
@@ -669,59 +437,30 @@
             width: 100%;
             max-height: 90vh;
             overflow-y: auto;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
         }
         .modal-header {
             padding: 18px 22px;
             border-bottom: 2px solid rgba(212, 175, 55, 0.2);
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            background: rgba(212, 175, 55, 0.03);
         }
-        .modal-header h3 { color: var(--accent); font-size: 16px; font-family: 'Playfair Display', serif; }
+        .modal-header h3 { color: var(--accent); font-size: 16px; }
         .modal-close { background: none; border: none; color: var(--text-muted); font-size: 22px; cursor: pointer; }
-        .modal-close:hover { color: var(--danger); }
         .modal-body { padding: 22px; }
-        .modal-footer { padding: 15px 22px; border-top: 2px solid rgba(212, 175, 55, 0.2); display: flex; justify-content: flex-end; gap: 10px; background: rgba(0,0,0,0.15); }
+        .modal-footer { padding: 15px 22px; border-top: 2px solid rgba(212, 175, 55, 0.2); display: flex; justify-content: flex-end; gap: 10px; }
 
-        .toast-container { position: fixed; top: 20px; right: 20px; z-index: 3000; display: flex; flex-direction: column; gap: 10px; }
+        .toast-container { position: fixed; top: 20px; right: 20px; z-index: 3000; }
         .toast {
             padding: 14px 22px;
             border-radius: 10px;
             color: white;
-            font-size: 13px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            animation: slideIn 0.3s ease;
-            min-width: 280px;
+            margin-bottom: 10px;
             box-shadow: 0 8px 25px rgba(0,0,0,0.3);
-            font-family: 'Poppins', sans-serif;
         }
         .toast-success { background: linear-gradient(135deg, #10b981, #059669); }
         .toast-error { background: linear-gradient(135deg, #ef4444, #dc2626); }
-        .toast-warning { background: linear-gradient(135deg, #f59e0b, #d97706); }
-        .toast-info { background: linear-gradient(135deg, #3b82f6, #2563eb); }
-        @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
-        @keyframes slideOut { from { transform: translateX(0); opacity: 1; } to { transform: translateX(100%); opacity: 0; } }
 
-        .mobile-toggle { display: none; position: fixed; top: 18px; left: 18px; z-index: 200; background: var(--accent); color: var(--primary-dark); border: none; width: 42px; height: 42px; border-radius: 10px; font-size: 18px; cursor: pointer; }
-
-        @media(max-width: 1024px) {
-            .login-wrapper { grid-template-columns: 1fr; }
-            .login-right { display: none; }
-        }
-        @media(max-width: 768px) {
-            .sidebar { transform: translateX(-100%); }
-            .sidebar.open { transform: translateX(0); }
-            .main-content { margin-left: 0; padding: 15px; padding-top: 70px; }
-            .mobile-toggle { display: block; }
-            .dashboard-grid { grid-template-columns: 1fr; }
-            .stats-grid { grid-template-columns: 1fr; }
-        }
-
-        /* ===== SERTIFIKAT BARU ===== */
+        /* CERTIFICATE STYLES - SESUAI GAMBAR */
         .cert-page-container {
             max-width: 900px;
             margin: 0 auto;
@@ -732,44 +471,49 @@
             border: 8px solid #c9a84c;
             border-radius: 4px;
             padding: 8px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
             position: relative;
         }
 
         .certificate-border-inner {
             border: 3px solid #c9a84c;
-            border-radius: 2px;
             padding: 45px 50px;
             position: relative;
             background: #f5f0e1;
-            background-image: 
-                radial-gradient(circle at 25% 25%, rgba(201, 168, 76, 0.03) 0%, transparent 50%),
-                radial-gradient(circle at 75% 75%, rgba(201, 168, 76, 0.03) 0%, transparent 50%);
         }
 
         .cert-corner-ornament {
             position: absolute;
-            width: 80px;
-            height: 80px;
-            opacity: 0.6;
+            width: 60px;
+            height: 60px;
         }
-        .cert-corner-ornament.tl { top: 15px; left: 15px; }
-        .cert-corner-ornament.tr { top: 15px; right: 15px; transform: scaleX(-1); }
-        .cert-corner-ornament.bl { bottom: 15px; left: 15px; transform: scaleY(-1); }
-        .cert-corner-ornament.br { bottom: 15px; right: 15px; transform: scale(-1); }
+        .cert-corner-ornament.tl { top: 10px; left: 10px; }
+        .cert-corner-ornament.tr { top: 10px; right: 10px; }
+        .cert-corner-ornament.bl { bottom: 10px; left: 10px; }
+        .cert-corner-ornament.br { bottom: 10px; right: 10px; }
 
         .cert-top-section { text-align: center; margin-bottom: 25px; }
-        .cert-logo-top { width: 130px; height: 130px; margin: 0 auto 15px; }
-        .cert-logo-top img { width: 100%; height: 100%; object-fit: contain; }
+        
+        .cert-logo-top { 
+            width: 100px; 
+            height: 100px; 
+            margin: 0 auto 10px;
+            background: linear-gradient(135deg, #c9a84c 0%, #f4d03f 50%, #c9a84c 100%);
+            border-radius: 50% 50% 0 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+        }
+
         .cert-ponpes-name {
             font-family: 'Playfair Display', serif;
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 700;
             color: #1a4731;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            margin-bottom: 12px;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
         }
+
         .cert-title-main {
             font-family: 'Playfair Display', serif;
             font-size: 42px;
@@ -777,11 +521,12 @@
             color: #1a4731;
             margin-bottom: 5px;
         }
+
         .cert-decorative-line {
-            width: 250px;
+            width: 200px;
             height: 2px;
             background: linear-gradient(90deg, transparent, #c9a84c, transparent);
-            margin: 12px auto;
+            margin: 10px auto;
         }
 
         .cert-name-main {
@@ -816,7 +561,6 @@
             letter-spacing: 6px;
             border-radius: 8px;
             border: 2px solid #c9a84c;
-            box-shadow: 0 5px 20px rgba(26, 71, 49, 0.3);
         }
 
         .cert-hafalan-table {
@@ -875,13 +619,6 @@
             text-align: center;
             min-width: 220px;
         }
-        .cert-sig-image {
-            height: 55px;
-            margin-bottom: 5px;
-            display: flex;
-            align-items: flex-end;
-            justify-content: center;
-        }
         .cert-sig-line {
             width: 200px;
             border-bottom: 1px solid #1a4731;
@@ -897,25 +634,6 @@
             color: #666;
         }
 
-        .cert-stamp {
-            width: 85px;
-            height: 85px;
-            border: 3px solid #c9a84c;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-            color: #1a4731;
-            font-weight: bold;
-            text-align: center;
-            background: rgba(201, 168, 76, 0.08);
-            position: absolute;
-            bottom: 60px;
-            right: 80px;
-            transform: rotate(-15deg);
-        }
-
         .cert-number-top {
             position: absolute;
             top: 20px;
@@ -928,12 +646,15 @@
             body * { visibility: hidden; }
             #printArea, #printArea * { visibility: visible; }
             #printArea { position: absolute; left: 0; top: 0; width: 100%; }
-            .certificate-wrapper { box-shadow: none; }
         }
 
-        ::-webkit-scrollbar { width: 7px; }
-        ::-webkit-scrollbar-track { background: var(--primary-dark); }
-        ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 4px; }
+        @media(max-width: 768px) {
+            .login-wrapper { grid-template-columns: 1fr; }
+            .login-right { display: none; }
+            .sidebar { display: none; }
+            .main-content { margin-left: 0; }
+            .dashboard-grid { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body>
@@ -945,7 +666,7 @@
             <div class="login-left">
                 <div class="login-logo-section">
                     <div class="logo-img-container">
-                        <div class="logo-placeholder" id="loginLogoImg">📖</div>
+                        <div class="logo-placeholder"></div>
                     </div>
                     <h1>Mutqin BM</h1>
                     <div class="subtitle">Standar Kelulusan Ponpes Bahrul Maghfiroh</div>
@@ -1021,23 +742,18 @@
 
     <!-- APP CONTAINER -->
     <div id="appContainer" class="app-container">
-        <button class="mobile-toggle" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
-        
-        <aside class="sidebar" id="sidebar">
+        <aside class="sidebar">
             <div class="sidebar-header">
-                <div class="sidebar-logo-img">
-                    <div class="logo-placeholder" style="width:100%;height:100%;background:var(--gold-gradient);border-radius:50% 50% 0 0;display:flex;align-items:center;justify-content:center;font-size:36px;" id="sidebarLogoImg">📖</div>
-                </div>
+                <div style="font-size:40px;margin-bottom:10px;">📖</div>
                 <h2>Mutqin BM</h2>
                 <p>Standar Kelulusan Ponpes Bahrul Maghfiroh</p>
             </div>
             <nav class="nav-menu">
-                <div class="nav-item active" onclick="navigateTo('dashboard')" data-page="dashboard"><i class="fas fa-home"></i><span>Dashboard</span></div>
-                <div class="nav-item" onclick="navigateTo('dataSantri')" data-page="dataSantri"><i class="fas fa-users"></i><span>Data Santri</span></div>
-                <div class="nav-item" onclick="navigateTo('inputHafalan')" data-page="inputHafalan"><i class="fas fa-edit"></i><span>Input Hafalan</span></div>
-                <div class="nav-item" onclick="navigateTo('laporan')" data-page="laporan"><i class="fas fa-chart-bar"></i><span>Laporan</span></div>
-                <div class="nav-item" onclick="navigateTo('sertifikat')" data-page="sertifikat"><i class="fas fa-certificate"></i><span>Sertifikat</span></div>
-                <div class="nav-item" onclick="navigateTo('pengaturan')" data-page="pengaturan"><i class="fas fa-cog"></i><span>Pengaturan</span></div>
+                <div class="nav-item active" onclick="navigateTo('dashboard')"><i class="fas fa-home"></i><span>Dashboard</span></div>
+                <div class="nav-item" onclick="navigateTo('dataSantri')"><i class="fas fa-users"></i><span>Data Santri</span></div>
+                <div class="nav-item" onclick="navigateTo('inputHafalan')"><i class="fas fa-edit"></i><span>Input Hafalan</span></div>
+                <div class="nav-item" onclick="navigateTo('laporan')"><i class="fas fa-chart-bar"></i><span>Laporan</span></div>
+                <div class="nav-item" onclick="navigateTo('sertifikat')"><i class="fas fa-certificate"></i><span>Sertifikat</span></div>
             </nav>
             <div class="sidebar-footer">
                 <button class="btn-logout" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
@@ -1052,439 +768,170 @@
                         <h1>Assalamu'alaikum, <span id="userNameDisplay">Ust. Abdul Malik</span>!</h1>
                         <p>Selamat datang di Sistem Hafalan Mutqin BM.</p>
                     </div>
-                    <div class="user-profile">
-                        <div class="user-avatar" id="userAvatar">AM</div>
-                        <div class="user-info">
-                            <div class="name" id="userFullName">Ust. Abdul Malik</div>
-                            <div class="role">Administrator</div>
-                        </div>
-                    </div>
                 </div>
                 <div class="stats-grid">
-                    <div class="stat-card total"><div class="stat-icon"><i class="fas fa-users"></i></div><div class="stat-content"><h3>Total Santri</h3><div class="stat-number" id="statTotal">263</div><div class="stat-badge"><i class="fas fa-plus-circle"></i> +12 bulan ini</div></div></div>
-                    <div class="stat-card lulus"><div class="stat-icon"><i class="fas fa-check-circle"></i></div><div class="stat-content"><h3>Sudah Lulus</h3><div class="stat-number" id="statLulus">134</div><div class="stat-badge"><i class="fas fa-arrow-up"></i> 50.9%</div></div></div>
-                    <div class="stat-card proses"><div class="stat-icon"><i class="fas fa-clock"></i></div><div class="stat-content"><h3>Sedang Proses</h3><div class="stat-number" id="statProses">95</div><div class="stat-badge"><i class="fas fa-spinner"></i> 36.1%</div></div></div>
+                    <div class="stat-card total">
+                        <div class="stat-icon"><i class="fas fa-users"></i></div>
+                        <div class="stat-content">
+                            <h3>Total Santri</h3>
+                            <div class="stat-number" id="statTotal">263</div>
+                        </div>
+                    </div>
+                    <div class="stat-card lulus">
+                        <div class="stat-icon"><i class="fas fa-check-circle"></i></div>
+                        <div class="stat-content">
+                            <h3>Sudah Lulus</h3>
+                            <div class="stat-number" id="statLulus">134</div>
+                        </div>
+                    </div>
+                    <div class="stat-card proses">
+                        <div class="stat-icon"><i class="fas fa-clock"></i></div>
+                        <div class="stat-content">
+                            <h3>Sedang Proses</h3>
+                            <div class="stat-number" id="statProses">95</div>
+                        </div>
+                    </div>
                 </div>
                 <div class="dashboard-grid">
                     <div class="card">
                         <div class="card-header"><h3><i class="fas fa-chart-pie"></i> Progres Hafalan Santri</h3></div>
                         <div class="card-body">
-                            <div style="display:grid;grid-template-columns:1fr 1fr;gap:25px;align-items:center;">
-                                <div class="chart-container" style="height:240px;"><canvas id="progressChart"></canvas></div>
-                                <div>
-                                    <div style="text-align:center;margin-bottom:20px;">
-                                        <div style="color:var(--text-muted);font-size:12px;margin-bottom:6px;">Persentase Kelulusan</div>
-                                        <div style="font-size:52px;font-weight:bold;color:var(--accent);line-height:1;" id="kelulusanPct">50.9%</div>
-                                        <div style="color:var(--text-muted);font-size:12px;">Santri</div>
-                                    </div>
-                                    <div style="display:flex;flex-direction:column;gap:10px;">
-                                        <div style="display:flex;align-items:center;gap:8px;padding:8px;background:rgba(16,185,129,0.1);border-radius:8px;"><div style="width:10px;height:10px;background:var(--success);border-radius:50%;"></div><span style="color:var(--text-muted);font-size:11px;flex:1;">Sudah Lulus</span><span style="color:var(--success);font-weight:600;" id="dashLulus">134</span></div>
-                                        <div style="display:flex;align-items:center;gap:8px;padding:8px;background:rgba(245,158,11,0.1);border-radius:8px;"><div style="width:10px;height:10px;background:var(--warning);border-radius:50%;"></div><span style="color:var(--text-muted);font-size:11px;flex:1;">Sedang Proses</span><span style="color:var(--warning);font-weight:600;" id="dashProses">95</span></div>
-                                        <div style="display:flex;align-items:center;gap:8px;padding:8px;background:rgba(239,68,68,0.1);border-radius:8px;"><div style="width:10px;height:10px;background:var(--danger);border-radius:50%;"></div><span style="color:var(--text-muted);font-size:11px;flex:1;">Belum Mulai</span><span style="color:var(--danger);font-weight:600;" id="dashBelum">34</span></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-header"><h3><i class="fas fa-clipboard-check"></i> Checklist Hafalan</h3><span class="status-badge status-lulus" id="overallStatus">LULUS</span></div>
-                        <div class="card-body">
-                            <div class="hafalan-list" id="hafalanChecklist"></div>
-                            <div class="score-display">
-                                <div class="score-label">Nilai Rata-Rata</div>
-                                <div class="score-value" id="averageScore">93</div>
-                                <div class="score-grade" id="scoreGrade">MUMTAZ</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="dashboard-grid" style="margin-top:22px;">
-                    <div class="card">
-                        <div class="card-header"><h3><i class="fas fa-tasks"></i> Progress Detail</h3></div>
-                        <div class="card-body">
-                            <div class="progress-item"><div class="progress-header"><span class="progress-label"><i class="fas fa-book-quran" style="color:var(--success);"></i> Hafalan (Yaasin, Waqiah, Mulk)</span><span class="progress-value">90%</span></div><div class="progress-bar"><div class="progress-fill green" style="width:90%"></div></div></div>
-                            <div class="progress-item"><div class="progress-header"><span class="progress-label"><i class="fas fa-pray" style="color:var(--info);"></i> Praktik (Sholat, Jenazah)</span><span class="progress-value">75%</span></div><div class="progress-bar"><div class="progress-fill blue" style="width:75%"></div></div></div>
-                            <div class="progress-item"><div class="progress-header"><span class="progress-label"><i class="fas fa-graduation-cap" style="color:var(--warning);"></i> Akademik (Madin)</span><span class="progress-value">85%</span></div><div class="progress-bar"><div class="progress-fill yellow" style="width:85%"></div></div></div>
-                            <div class="progress-item"><div class="progress-header"><span class="progress-label"><i class="fas fa-star" style="color:var(--danger);"></i> Sikap & Adab</span><span class="progress-value">95%</span></div><div class="progress-bar"><div class="progress-fill red" style="width:95%"></div></div></div>
+                            <div class="chart-container"><canvas id="progressChart"></canvas></div>
                         </div>
                     </div>
                     <div class="card">
                         <div class="card-header"><h3><i class="fas fa-chart-bar"></i> Statistik Bulanan</h3></div>
-                        <div class="card-body"><div class="chart-container" style="height:240px;"><canvas id="monthlyChart"></canvas></div></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- DATA SANTRI -->
-            <div id="page-dataSantri" class="page">
-                <div class="page-header">
-                    <div><h1>Data Santri</h1><p>Kelola data santri dan progres hafalan</p></div>
-                    <div style="display:flex;gap:10px;">
-                        <button class="btn btn-success" onclick="openModal('uploadMassalModal')"><i class="fas fa-file-excel"></i> Upload Massal</button>
-                        <button class="btn btn-primary" onclick="openModal('addSantriModal')"><i class="fas fa-plus"></i> Tambah Santri</button>
-                    </div>
-                </div>
-                <div class="toolbar">
-                    <div class="search-box"><i class="fas fa-search"></i><input type="text" id="searchSantri" placeholder="Cari nama santri..." oninput="filterSantri()"></div>
-                    <select class="filter-select" id="filterKelas" onchange="filterSantri()"><option value="">Semua Kelas</option><option value="1">Kelas 1</option><option value="2">Kelas 2</option><option value="3">Kelas 3</option><option value="4">Kelas 4</option><option value="5">Kelas 5</option><option value="6">Kelas 6</option></select>
-                    <select class="filter-select" id="filterStatus" onchange="filterSantri()"><option value="">Semua Status</option><option value="lulus">Lulus</option><option value="proses">Dalam Proses</option><option value="belum">Belum Mulai</option></select>
-                </div>
-                <div class="card">
-                    <div class="card-body">
-                        <div class="table-container">
-                            <table><thead><tr><th class="checkbox-cell" style="width:40px;"><input type="checkbox" style="accent-color:var(--accent);"></th><th>No</th><th>Nama Santri</th><th>Kelas</th><th>Hafalan</th><th>Nilai</th><th>Status</th><th>Aksi</th></tr></thead><tbody id="santriTableBody"></tbody></table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- INPUT HAFALAN -->
-            <div id="page-inputHafalan" class="page">
-                <div class="page-header"><div><h1>Input Hafalan</h1><p>Input dan evaluasi hafalan santri</p></div></div>
-                <div class="card">
-                    <div class="card-header"><h3><i class="fas fa-user-check"></i> Pilih Santri</h3></div>
-                    <div class="card-body">
-                        <div class="form-group"><label>Pilih Santri</label><select class="form-control" id="inputSantriSelect" onchange="loadSantriForInput()"><option value="">-- Pilih Santri --</option></select></div>
-                    </div>
-                </div>
-                <div id="inputHafalanForm" style="display:none;margin-top:22px;">
-                    <div class="dashboard-grid">
-                        <div class="card">
-                            <div class="card-header"><h3><i class="fas fa-book-quran"></i> Hafalan Surat</h3></div>
-                            <div class="card-body">
-                                <div class="hafalan-list">
-                                    <div class="hafalan-item"><div class="hafalan-checkbox" onclick="toggleHafalan(this,'yaasin')"></div><div class="hafalan-content"><h4>Surat Yaasin</h4><p>Hafal surat Yaasin lengkap</p></div></div>
-                                    <div class="hafalan-item"><div class="hafalan-checkbox" onclick="toggleHafalan(this,'waqiah')"></div><div class="hafalan-content"><h4>Surat Al-Waqiah</h4><p>Hafal surat Al-Waqiah lengkap</p></div></div>
-                                    <div class="hafalan-item"><div class="hafalan-checkbox" onclick="toggleHafalan(this,'mulk')"></div><div class="hafalan-content"><h4>Surat Al-Mulk</h4><p>Hafal surat Al-Mulk lengkap</p></div></div>
-                                    <div class="hafalan-item"><div class="hafalan-checkbox" onclick="toggleHafalan(this,'juz30')"></div><div class="hafalan-content"><h4>Juz 30</h4><p>Hafal Juz 30 (Juz Amma)</p></div></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-header"><h3><i class="fas fa-pray"></i> Dzikir & Doa</h3></div>
-                            <div class="card-body">
-                                <div class="hafalan-list">
-                                    <div class="hafalan-item"><div class="hafalan-checkbox" onclick="toggleHafalan(this,'tawasul')"></div><div class="hafalan-content"><h4>Tawasul</h4><p>Hafal bacaan tawasul</p></div></div>
-                                    <div class="hafalan-item"><div class="hafalan-checkbox" onclick="toggleHafalan(this,'tahlil_ringkas')"></div><div class="hafalan-content"><h4>Tahlil Ringkas + Doa</h4><p>Tahlil ringkas beserta doanya</p></div></div>
-                                    <div class="hafalan-item"><div class="hafalan-checkbox" onclick="toggleHafalan(this,'tahlil_lengkap')"></div><div class="hafalan-content"><h4>Tahlil Lengkap + Doa</h4><p>Tahlil lengkap beserta doanya</p></div></div>
-                                    <div class="hafalan-item"><div class="hafalan-checkbox" onclick="toggleHafalan(this,'istighosah')"></div><div class="hafalan-content"><h4>Istighosah</h4><p>Hafal bacaan istighosah</p></div></div>
-                                    <div class="hafalan-item"><div class="hafalan-checkbox" onclick="toggleHafalan(this,'wirid')"></div><div class="hafalan-content"><h4>Wirid Setelah Sholat + Doa</h4><p>Wirid dan doa setelah sholat</p></div></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-header"><h3><i class="fas fa-mosque"></i> Praktik Ibadah</h3></div>
-                            <div class="card-body">
-                                <div class="hafalan-list">
-                                    <div class="hafalan-item"><div class="hafalan-checkbox" onclick="toggleHafalan(this,'sholat')"></div><div class="hafalan-content"><h4>Praktik Sholat</h4><p>Praktik sholat sesuai sunnah</p></div></div>
-                                    <div class="hafalan-item"><div class="hafalan-checkbox" onclick="toggleHafalan(this,'jenazah')"></div><div class="hafalan-content"><h4>Pengurusan Jenazah</h4><p>Praktik pengurusan jenazah (dapat sertifikat)</p></div></div>
-                                    <div class="hafalan-item"><div class="hafalan-checkbox" onclick="toggleHafalan(this,'khotib')"></div><div class="hafalan-content"><h4>Praktik Khotib</h4><p>Praktik menjadi khotib Jumat</p></div></div>
-                                    <div class="hafalan-item"><div class="hafalan-checkbox" onclick="toggleHafalan(this,'bilal')"></div><div class="hafalan-content"><h4>Praktik Bilal</h4><p>Praktik menjadi bilal/muadzin</p></div></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-header"><h3><i class="fas fa-graduation-cap"></i> Akademik & Adab</h3></div>
-                            <div class="card-body">
-                                <div class="hafalan-list">
-                                    <div class="hafalan-item"><div class="hafalan-checkbox" onclick="toggleHafalan(this,'madin_ula')"></div><div class="hafalan-content"><h4>Lulus Madin Ula</h4><p>Lulus Madrasah Diniyah Ula</p></div></div>
-                                    <div class="hafalan-item"><div class="hafalan-checkbox" onclick="toggleHafalan(this,'madin_wusto')"></div><div class="hafalan-content"><h4>Lulus Madin Wusto</h4><p>Lulus Madrasah Diniyah Wustho</p></div></div>
-                                    <div class="hafalan-item"><div class="hafalan-checkbox" onclick="toggleHafalan(this,'sholat_jamaah')"></div><div class="hafalan-content"><h4>Sholat 5 Waktu Berjamaah</h4><p>Rutin sholat 5 waktu berjamaah</p></div></div>
-                                    <div class="hafalan-item"><div class="hafalan-checkbox" onclick="toggleHafalan(this,'sekolah_madin')"></div><div class="hafalan-content"><h4>Sekolah Madin</h4><p>Kehadiran di sekolah madin</p></div></div>
-                                    <div class="hafalan-item"><div class="hafalan-checkbox" onclick="toggleHafalan(this,'sekolah_formal')"></div><div class="hafalan-content"><h4>Sekolah Formal</h4><p>Kehadiran di sekolah formal</p></div></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card" style="margin-top:22px;">
                         <div class="card-body">
-                            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:15px;">
-                                <div><div style="color:var(--text-muted);font-size:13px;margin-bottom:6px;">Total Hafalan Selesai</div><div style="font-size:32px;font-weight:bold;color:var(--accent);" id="totalHafalan">0/17</div></div>
-                                <div class="score-display" style="margin:0;"><div class="score-label">Nilai Otomatis</div><div class="score-value" id="autoScore">0</div><div class="score-grade" id="autoGrade">-</div></div>
-                            </div>
-                            <button class="btn btn-primary btn-full" style="margin-top:22px;padding:15px;" onclick="saveHafalan()"><i class="fas fa-save"></i> Simpan Data Hafalan</button>
+                            <div class="chart-container"><canvas id="monthlyChart"></canvas></div>
                         </div>
                     </div>
-                </div>
-            </div>
-
-            <!-- LAPORAN -->
-            <div id="page-laporan" class="page">
-                <div class="page-header"><div><h1>Laporan</h1><p>Laporan dan analisis progres santri</p></div><div style="display:flex;gap:10px;"><button class="btn btn-secondary" onclick="window.print()"><i class="fas fa-print"></i> Cetak</button><button class="btn btn-primary" onclick="exportLaporan()"><i class="fas fa-download"></i> Export</button></div></div>
-                <div class="stats-grid">
-                    <div class="stat-card total"><div class="stat-icon"><i class="fas fa-users"></i></div><div class="stat-content"><h3>Total Santri</h3><div class="stat-number" id="rptTotal">263</div></div></div>
-                    <div class="stat-card lulus"><div class="stat-icon"><i class="fas fa-check-circle"></i></div><div class="stat-content"><h3>Lulus</h3><div class="stat-number" id="rptLulus">134</div></div></div>
-                    <div class="stat-card proses"><div class="stat-icon"><i class="fas fa-clock"></i></div><div class="stat-content"><h3>Proses</h3><div class="stat-number" id="rptProses">95</div></div></div>
-                    <div class="stat-card" style="border-color:var(--danger);"><div class="stat-icon" style="background:rgba(239,68,68,0.2);color:var(--danger);"><i class="fas fa-times-circle"></i></div><div class="stat-content"><h3>Belum Mulai</h3><div class="stat-number" id="rptBelum">34</div></div></div>
-                </div>
-                <div class="dashboard-grid">
-                    <div class="card"><div class="card-header"><h3><i class="fas fa-chart-line"></i> Tren Kelulusan</h3></div><div class="card-body"><div class="chart-container" style="height:280px;"><canvas id="trendChart"></canvas></div></div></div>
-                    <div class="card"><div class="card-header"><h3><i class="fas fa-chart-pie"></i> Distribusi per Kelas</h3></div><div class="card-body"><div class="chart-container" style="height:280px;"><canvas id="kelasChart"></canvas></div></div></div>
                 </div>
             </div>
 
             <!-- SERTIFIKAT -->
             <div id="page-sertifikat" class="page">
-                <div class="page-header"><div><h1>Sertifikat Kelulusan</h1><p>Generate dan cetak sertifikat santri</p></div><button class="btn btn-primary" onclick="openModal('generateCertModal')"><i class="fas fa-plus"></i> Buat Sertifikat</button></div>
+                <div class="page-header">
+                    <div><h1>Sertifikat Kelulusan</h1></div>
+                    <button class="btn btn-primary" onclick="openModal('generateCertModal')"><i class="fas fa-plus"></i> Buat Sertifikat</button>
+                </div>
                 <div class="toolbar">
-                    <div class="search-box"><i class="fas fa-search"></i><input type="text" id="searchCert" placeholder="Cari sertifikat..." oninput="filterSertifikat()"></div>
-                    <select class="filter-select" id="filterCertType" onchange="filterSertifikat()"><option value="">Semua Tipe</option><option value="kelulusan">Kelulusan</option><option value="jenazah">Pengurusan Jenazah</option><option value="hafalan">Hafalan</option></select>
+                    <div class="search-box"><input type="text" placeholder="Cari sertifikat..."></div>
                 </div>
-                <div class="dashboard-grid" id="certGrid"></div>
-            </div>
-
-            <!-- PENGATURAN -->
-            <div id="page-pengaturan" class="page">
-                <div class="page-header"><div><h1>Pengaturan</h1><p>Konfigurasi sistem dan bobot penilaian</p></div></div>
-                <div class="card">
-                    <div class="card-body">
-                        <h3 style="color:var(--accent);margin-bottom:18px;font-family:'Playfair Display',serif;">🏢 Informasi Ponpes</h3>
-                        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;margin-bottom:25px;">
-                            <div class="form-group"><label>Nama Ponpes</label><input type="text" class="form-control" id="setNamaPonpes" value="Bahrul Maghfiroh"></div>
-                            <div class="form-group"><label>Nama Aplikasi</label><input type="text" class="form-control" id="setNamaAplikasi" value="Mutqin BM"></div>
-                        </div>
-                        <h3 style="color:var(--accent);margin-bottom:18px;font-family:'Playfair Display',serif;">💾 Data</h3>
-                        <div style="display:flex;gap:10px;flex-wrap:wrap;">
-                            <button class="btn btn-primary" onclick="exportAllData()"><i class="fas fa-download"></i> Export Semua Data</button>
-                            <button class="btn btn-secondary" onclick="document.getElementById('importFile').click()"><i class="fas fa-upload"></i> Import Data</button>
-                            <input type="file" id="importFile" style="display:none;" accept=".json" onchange="importAllData(event)">
-                            <button class="btn btn-danger" onclick="if(confirm('Yakin ingin reset semua data?')){localStorage.clear();location.reload()}"><i class="fas fa-trash"></i> Reset Data</button>
-                        </div>
-                    </div>
-                </div>
+                <div id="certGrid"></div>
             </div>
         </main>
     </div>
 
     <!-- MODALS -->
-    <div class="modal-overlay" id="uploadMassalModal">
-        <div class="modal" style="max-width:650px;">
-            <div class="modal-header"><h3><i class="fas fa-file-excel"></i> Upload Data Santri Massal</h3><button class="modal-close" onclick="closeModal('uploadMassalModal')">&times;</button></div>
-            <div class="modal-body">
-                <div style="background:rgba(212,175,55,0.08);border:2px solid var(--accent);border-radius:12px;padding:22px;margin-bottom:22px;">
-                    <h4 style="color:var(--accent);margin-bottom:12px;font-family:'Playfair Display',serif;">📋 Format Template</h4>
-                    <div style="background:rgba(0,0,0,0.25);border-radius:8px;padding:12px;overflow-x:auto;margin-bottom:12px;">
-                        <table style="width:100%;font-size:12px;"><thead><tr style="background:rgba(212,175,55,0.15);"><th style="color:var(--accent);padding:8px;">Nama Santri</th><th style="color:var(--accent);padding:8px;">Kelas</th></tr></thead><tbody><tr><td style="padding:8px;color:var(--text-muted);">Ahmad Fauzan</td><td style="padding:8px;color:var(--text-muted);">5</td></tr></tbody></table>
-                    </div>
-                    <button class="btn btn-success btn-sm" onclick="downloadTemplate()"><i class="fas fa-download"></i> Download Template</button>
-                </div>
-                <div style="border:2px dashed var(--accent);border-radius:12px;padding:35px;text-align:center;cursor:pointer;transition:all 0.3s;" onclick="document.getElementById('csvFile').click()">
-                    <i class="fas fa-cloud-upload-alt" style="font-size:42px;color:var(--accent);margin-bottom:12px;"></i>
-                    <p style="color:var(--text-light);font-size:14px;margin-bottom:5px;">Klik untuk upload file CSV</p>
-                    <p style="color:var(--text-muted);font-size:11px;">Format: .csv (dipisahkan koma)</p>
-                    <input type="file" id="csvFile" accept=".csv,.txt" style="display:none;" onchange="handleFileUpload(event)">
-                </div>
-                <div id="uploadPreview" style="margin-top:18px;max-height:250px;overflow-y:auto;display:none;"></div>
-            </div>
-            <div class="modal-footer"><button class="btn btn-secondary" onclick="closeModal('uploadMassalModal')">Batal</button><button class="btn btn-primary" id="btnConfirmUpload" style="display:none;" onclick="confirmUpload()"><i class="fas fa-check"></i> Import Data</button></div>
-        </div>
-    </div>
-
-    <div class="modal-overlay" id="addSantriModal">
-        <div class="modal">
-            <div class="modal-header"><h3><i class="fas fa-user-plus"></i> Tambah Santri</h3><button class="modal-close" onclick="closeModal('addSantriModal')">&times;</button></div>
-            <div class="modal-body">
-                <div class="form-row" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
-                    <div class="form-group"><label>Nama Lengkap</label><input type="text" class="form-control" id="addNama" placeholder="Nama santri"></div>
-                    <div class="form-group"><label>Kelas</label><select class="form-control" id="addKelas"><option value="1">Kelas 1</option><option value="2">Kelas 2</option><option value="3">Kelas 3</option><option value="4">Kelas 4</option><option value="5">Kelas 5</option><option value="6">Kelas 6</option></select></div>
-                </div>
-                <div class="form-row" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
-                    <div class="form-group"><label>Wali</label><input type="text" class="form-control" id="addWali" placeholder="Nama wali"></div>
-                    <div class="form-group"><label>No. HP</label><input type="text" class="form-control" id="addHp" placeholder="08xxx"></div>
-                </div>
-            </div>
-            <div class="modal-footer"><button class="btn btn-secondary" onclick="closeModal('addSantriModal')">Batal</button><button class="btn btn-primary" onclick="addSantri()"><i class="fas fa-save"></i> Simpan</button></div>
-        </div>
-    </div>
-
     <div class="modal-overlay" id="generateCertModal">
         <div class="modal">
-            <div class="modal-header"><h3><i class="fas fa-certificate"></i> Buat Sertifikat</h3><button class="modal-close" onclick="closeModal('generateCertModal')">&times;</button></div>
+            <div class="modal-header">
+                <h3>Buat Sertifikat</h3>
+                <button class="modal-close" onclick="closeModal('generateCertModal')">&times;</button>
+            </div>
             <div class="modal-body">
-                <div class="form-group"><label>Pilih Santri</label><select class="form-control" id="certSantriSelect"><option value="">-- Pilih Santri --</option></select></div>
-                <div class="form-row" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
-                    <div class="form-group"><label>Jenis Sertifikat</label><select class="form-control" id="certType"><option value="kelulusan">Kelulusan Mutqin BM</option><option value="jenazah">Pengurusan Jenazah</option><option value="hafalan">Hafalan Al-Quran</option></select></div>
-                    <div class="form-group"><label>Tanggal</label><input type="date" class="form-control" id="certDate"></div>
+                <div class="form-group">
+                    <label>Pilih Santri</label>
+                    <select class="form-control" id="certSantriSelect">
+                        <option value="">-- Pilih Santri --</option>
+                        <option value="1">Ahmad Fauzan - Kelas 6</option>
+                        <option value="2">Salma Azizah - Kelas 3</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Tanggal</label>
+                    <input type="date" class="form-control" id="certDate">
                 </div>
             </div>
-            <div class="modal-footer"><button class="btn btn-secondary" onclick="closeModal('generateCertModal')">Batal</button><button class="btn btn-primary" onclick="generateCertificate()"><i class="fas fa-certificate"></i> Generate</button></div>
+            <div class="modal-footer">
+                <button class="btn" onclick="closeModal('generateCertModal')">Batal</button>
+                <button class="btn btn-primary" onclick="generateCertificate()">Generate</button>
+            </div>
         </div>
     </div>
 
     <div class="modal-overlay" id="viewCertModal">
         <div class="modal" style="max-width:960px;">
-            <div class="modal-header"><h3><i class="fas fa-eye"></i> Preview Sertifikat</h3><button class="modal-close" onclick="closeModal('viewCertModal')">&times;</button></div>
+            <div class="modal-header">
+                <h3>Preview Sertifikat</h3>
+                <button class="modal-close" onclick="closeModal('viewCertModal')">&times;</button>
+            </div>
             <div class="modal-body" id="certPreviewContent"></div>
-            <div class="modal-footer"><button class="btn btn-secondary" onclick="closeModal('viewCertModal')">Tutup</button><button class="btn btn-primary" onclick="printCertificate()"><i class="fas fa-print"></i> Cetak Sertifikat</button></div>
+            <div class="modal-footer">
+                <button class="btn" onclick="closeModal('viewCertModal')">Tutup</button>
+                <button class="btn btn-primary" onclick="printCertificate()">Cetak</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="uploadMassalModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>Upload Massal</h3>
+                <button class="modal-close" onclick="closeModal('uploadMassalModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Upload file CSV dengan format: Nama,Kelas</p>
+                <input type="file" accept=".csv" class="form-control" style="margin-top:15px;">
+            </div>
+            <div class="modal-footer">
+                <button class="btn" onclick="closeModal('uploadMassalModal')">Tutup</button>
+            </div>
         </div>
     </div>
 
     <div class="toast-container" id="toastContainer"></div>
 
     <script>
-        // ==================== DATA STORE ====================
-        const DB = {
-            get(key, def) { try { return JSON.parse(localStorage.getItem('mutqin_' + key)) || def; } catch { return def; } },
-            set(key, val) { localStorage.setItem('mutqin_' + key, JSON.stringify(val)); },
-            remove(key) { localStorage.removeItem('mutqin_' + key); }
-        };
+        // DATA
+        const santriData = [
+            {id:1,nama:'Ahmad Fauzan',kelas:'6',hafalan:{yaasin:true,waqiah:true,mulk:true,juz30:true,tawasul:true,tahlil_ringkas:true,tahlil_lengkap:true,istighosah:true,wirid:true,sholat:true,jenazah:true,khotib:true,bilal:true,madin_ula:true,madin_wusto:true,sholat_jamaah:true,sekolah_madin:true},nilai:93,status:'lulus'}
+        ];
 
-        // ==================== INIT DATA ====================
-        function initData() {
-            if (!DB.get('initialized', false)) {
-                const santri = [
-                    {id:1,nama:'Ahmad Fauzan',kelas:'6',wali:'H. Fauzan',hp:'081234567890',hafalan:{yaasin:true,waqiah:true,mulk:true,juz30:true,tawasul:true,tahlil_ringkas:true,tahlil_lengkap:true,istighosah:true,wirid:true,sholat:true,jenazah:true,khotib:true,bilal:true,madin_ula:true,madin_wusto:true,sholat_jamaah:true,sekolah_madin:true,sekolah_formal:true},nilai:93,status:'lulus'},
-                    {id:2,nama:'Salma Azizah',kelas:'3',wali:'Aziz',hp:'081234567891',hafalan:{yaasin:true,waqiah:true,mulk:true,juz30:true,tawasul:true,tahlil_ringkas:true,tahlil_lengkap:false,istighosah:true,wirid:true,sholat:true,jenazah:true,khotib:false,bilal:false,madin_ula:true,madin_wusto:false,sholat_jamaah:true,sekolah_madin:true,sekolah_formal:true},nilai:78,status:'proses'},
-                    {id:3,nama:'Muhammad Lugman',kelas:'4',wali:'Lugman',hp:'081234567892',hafalan:{yaasin:true,waqiah:false,mulk:false,juz30:false,tawasul:false,tahlil_ringkas:false,tahlil_lengkap:false,istighosah:false,wirid:false,sholat:false,jenazah:false,khotib:false,bilal:false,madin_ula:false,madin_wusto:false,sholat_jamaah:false,sekolah_madin:false,sekolah_formal:true},nilai:25,status:'belum'},
-                ];
-                const certs = [
-                    {id:1,santri:'Ahmad Fauzan',type:'kelulusan',date:'2024-04-01',number:'BM/00123',nilai:93,kelas:'6'},
-                ];
-                DB.set('santri', santri);
-                DB.set('certs', certs);
-                DB.set('initialized', true);
-            }
-        }
+        // AUTH
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            document.getElementById('loginPage').style.display = 'none';
+            document.getElementById('appContainer').style.display = 'block';
+            showToast('Login berhasil!', 'success');
+        });
 
-        // ==================== AUTH ====================
-        const USERS = {
-            admin: {pass:'admin123',name:'Ust. Abdul Malik',role:'Administrator',avatar:'AM'},
-            ustad: {pass:'ustad123',name:'Ust. Hasan',role:'Pengajar',avatar:'UH'}
-        };
-
-        function login(u, p) {
-            if (USERS[u] && USERS[u].pass === p) {
-                DB.set('currentUser', {username:u,...USERS[u]});
-                return true;
-            }
-            return false;
-        }
         function logout() {
-            DB.remove('currentUser');
             document.getElementById('appContainer').style.display = 'none';
             document.getElementById('loginPage').style.display = 'flex';
         }
-        function checkAuth() {
-            const u = DB.get('currentUser', null);
-            if (u) {
-                document.getElementById('loginPage').style.display = 'none';
-                document.getElementById('appContainer').style.display = 'block';
-                document.getElementById('userNameDisplay').textContent = u.name;
-                document.getElementById('userFullName').textContent = u.name;
-                document.getElementById('userAvatar').textContent = u.avatar;
-                loadAllData();
-            }
-        }
 
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const u = document.getElementById('username').value.trim().toLowerCase();
-            const p = document.getElementById('password').value;
-            if (login(u, p)) {
-                showToast('Login berhasil! Selamat datang, ' + USERS[u].name, 'success');
-                setTimeout(() => location.reload(), 500);
-            } else {
-                showToast('Username atau password salah!', 'error');
-            }
-        });
-
-        // ==================== NAVIGATION ====================
+        // NAVIGATION
         function navigateTo(page) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.getElementById('page-' + page).classList.add('active');
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-            const nav = document.querySelector('[data-page="' + page + '"]');
-            if (nav) nav.classList.add('active');
-            document.getElementById('sidebar').classList.remove('open');
-            switch(page) {
-                case 'dashboard': loadDashboard(); break;
-                case 'dataSantri': loadDataSantri(); break;
-                case 'inputHafalan': loadInputHafalan(); break;
-                case 'laporan': loadLaporan(); break;
-                case 'sertifikat': loadSertifikat(); break;
-            }
+            event.currentTarget.classList.add('active');
+            
+            if (page === 'dashboard') loadDashboard();
+            if (page === 'sertifikat') loadSertifikat();
         }
-        function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); }
+
         function openModal(id) { document.getElementById(id).classList.add('active'); }
         function closeModal(id) { document.getElementById(id).classList.remove('active'); }
-        document.querySelectorAll('.modal-overlay').forEach(m => {
-            m.addEventListener('click', function(e) { if (e.target === this) this.classList.remove('active'); });
-        });
 
-        // ==================== TOAST ====================
         function showToast(msg, type) {
-            type = type || 'success';
-            const c = document.getElementById('toastContainer');
-            const icons = {success:'fa-check-circle',error:'fa-times-circle',warning:'fa-exclamation-triangle',info:'fa-info-circle'};
             const t = document.createElement('div');
             t.className = 'toast toast-' + type;
-            t.innerHTML = '<i class="fas ' + icons[type] + '"></i><span>' + msg + '</span>';
-            c.appendChild(t);
-            setTimeout(function() {
-                t.style.animation = 'slideOut .3s ease forwards';
-                setTimeout(function() { t.remove(); }, 300);
-            }, 3000);
+            t.textContent = msg;
+            document.getElementById('toastContainer').appendChild(t);
+            setTimeout(() => t.remove(), 3000);
         }
 
-        // ==================== HELPER ====================
-        function countHafalan(h) {
-            if (!h) return 0;
-            return Object.values(h).filter(function(v) { return v === true; }).length;
-        }
-        function getGradeName(pct) {
-            if (pct >= 90) return 'Mumtaz';
-            if (pct >= 80) return 'Jayyid Jiddan';
-            if (pct >= 70) return 'Jayyid';
-            if (pct >= 60) return 'Ahsan';
-            return 'Maqbul';
-        }
-        function getGradeClass(pct) {
-            if (pct >= 90) return 'grade-mumtaz';
-            if (pct >= 80) return 'grade-jayyid-jiddan';
-            if (pct >= 70) return 'grade-jayyid';
-            if (pct >= 60) return 'grade-ahsan';
-            return 'grade-maqbul';
-        }
-        function formatDate(d) {
-            if (!d) return '-';
-            var months = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
-            var dt = new Date(d);
-            return dt.getDate() + ' ' + months[dt.getMonth()] + ' ' + dt.getFullYear();
-        }
-        function formatDateShort(d) {
-            if (!d) return '-';
-            var months = ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Ags','Sep','Okt','Nov','Des'];
-            var dt = new Date(d);
-            return dt.getDate() + ' ' + months[dt.getMonth()] + ' ' + dt.getFullYear();
-        }
-
-        // ==================== DASHBOARD ====================
+        // DASHBOARD
         function loadDashboard() {
-            var santri = DB.get('santri');
-            var lulus = santri.filter(function(s) { return s.status === 'lulus'; }).length;
-            var proses = santri.filter(function(s) { return s.status === 'proses'; }).length;
-            var belum = santri.filter(function(s) { return s.status === 'belum'; }).length;
-            var total = santri.length;
-
-            document.getElementById('statTotal').textContent = total;
-            document.getElementById('statLulus').textContent = lulus;
-            document.getElementById('statProses').textContent = proses;
-            document.getElementById('dashLulus').textContent = lulus;
-            document.getElementById('dashProses').textContent = proses;
-            document.getElementById('dashBelum').textContent = belum;
-
-            var pct = total > 0 ? ((lulus / total) * 100).toFixed(1) : 0;
-            document.getElementById('kelulusanPct').textContent = pct + '%';
-
             // Progress Chart
-            var ctx = document.getElementById('progressChart');
-            if (window.progressChart) window.progressChart.destroy();
-            window.progressChart = new Chart(ctx, {
+            new Chart(document.getElementById('progressChart'), {
                 type: 'doughnut',
-                data: {
+                 {
                     labels: ['Lulus', 'Proses', 'Belum'],
                     datasets: [{
-                        data: [lulus, proses, belum],
+                         [134, 95, 34],
                         backgroundColor: ['#10b981', '#f59e0b', '#ef4444'],
                         borderWidth: 0
                     }]
@@ -1498,15 +945,13 @@
             });
 
             // Monthly Chart
-            var mctx = document.getElementById('monthlyChart');
-            if (window.monthlyChart) window.monthlyChart.destroy();
-            window.monthlyChart = new Chart(mctx, {
+            new Chart(document.getElementById('monthlyChart'), {
                 type: 'bar',
-                data: {
+                 {
                     labels: ['Jan','Feb','Mar','Apr','Mei','Jun'],
                     datasets: [
-                        { label: 'Lulus', data: [20,35,55,80,110,lulus], backgroundColor: '#10b981', borderRadius: 8 },
-                        { label: 'Proses', data: [40,50,60,70,85,proses], backgroundColor: '#f59e0b', borderRadius: 8 }
+                        { label: 'Lulus',  [20,35,55,80,110,134], backgroundColor: '#10b981', borderRadius: 8 },
+                        { label: 'Proses', data: [40,50,60,70,85,95], backgroundColor: '#f59e0b', borderRadius: 8 }
                     ]
                 },
                 options: {
@@ -1519,467 +964,146 @@
                     }
                 }
             });
-
-            if (santri.length > 0) {
-                renderHafalanChecklist(santri[0]);
-            }
         }
 
-        function renderHafalanChecklist(santri) {
-            var items = [
-                {key:'yaasin',label:'Surat Yaasin'},{key:'waqiah',label:'Surat Al-Waqiah'},{key:'mulk',label:'Surat Al-Mulk'},
-                {key:'juz30',label:'Juz 30'},{key:'tawasul',label:'Tawasul'},{key:'tahlil_ringkas',label:'Tahlil Ringkas'},
-                {key:'istighosah',label:'Istighosah'},{key:'wirid',label:'Wirid & Doa'},{key:'sholat',label:'Praktik Sholat'},
-                {key:'jenazah',label:'Pengurusan Jenazah'},{key:'khotib',label:'Praktik Khotib'},{key:'bilal',label:'Praktik Bilal'},
-                {key:'madin_ula',label:'Lulus Madin Ula'},{key:'madin_wusto',label:'Lulus Madin Wusto'},
-                {key:'sholat_jamaah',label:'Sholat 5 Waktu'},{key:'sekolah_madin',label:'Sekolah Madin'}
-            ];
-            var h = santri.hafalan || {};
-            var completed = 0;
-            var html = '';
-            items.forEach(function(item) {
-                var isDone = h[item.key] === true;
-                if (isDone) completed++;
-                html += '<div class="hafalan-item"><div class="hafalan-checkbox ' + (isDone ? 'checked' : '') + '"></div><div class="hafalan-content"><h4>' + item.label + '</h4></div><span class="hafalan-status ' + (isDone ? 'status-lulus' : 'status-belum') + '">' + (isDone ? 'LULUS' : 'BELUM') + '</span></div>';
-            });
-            document.getElementById('hafalanChecklist').innerHTML = html;
-            var total = items.length;
-            var pct = (completed / total) * 100;
-            document.getElementById('averageScore').textContent = Math.round(pct);
-            document.getElementById('scoreGrade').textContent = getGradeName(pct).toUpperCase();
-            document.getElementById('overallStatus').textContent = pct >= 75 ? 'LULUS' : (pct >= 50 ? 'DALAM PROSES' : 'BELUM LULUS');
-            document.getElementById('overallStatus').className = 'status-badge ' + (pct >= 75 ? 'status-lulus' : (pct >= 50 ? 'status-proses' : 'status-belum'));
-        }
-
-        // ==================== DATA SANTRI ====================
-        function loadDataSantri() { renderSantriTable(DB.get('santri')); }
-
-        function renderSantriTable(data) {
-            var tbody = document.getElementById('santriTableBody');
-            if (data.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:40px;color:var(--text-muted);">Tidak ada data santri</td></tr>';
-                return;
-            }
-            tbody.innerHTML = data.map(function(s, i) {
-                var initials = s.nama.split(' ').map(function(n) { return n[0]; }).join('').substring(0, 2).toUpperCase();
-                var statusClass = s.status === 'lulus' ? 'badge-success' : (s.status === 'proses' ? 'badge-warning' : 'badge-danger');
-                var statusText = s.status === 'lulus' ? 'Lulus' : (s.status === 'proses' ? 'Dalam Proses' : 'Belum');
-                return '<tr><td style="width:40px;"><input type="checkbox" style="accent-color:var(--accent);"></td><td>' + (i+1) + '</td><td><div style="display:flex;align-items:center;gap:8px;"><div style="width:32px;height:32px;background:var(--gold-gradient);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:bold;color:var(--primary-dark);font-size:11px;">' + initials + '</div><span>' + s.nama + '</span></div></td><td>Kelas ' + s.kelas + '</td><td>' + countHafalan(s.hafalan) + '/16</td><td><strong style="color:var(--accent);">' + (s.nilai||0) + '</strong></td><td><span class="status-badge ' + statusClass + '">' + statusText + '</span></td><td><div style="display:flex;gap:5px;"><button class="btn btn-sm btn-primary" onclick="viewSantri(' + s.id + ')" title="Lihat"><i class="fas fa-eye"></i></button><button class="btn btn-sm btn-danger" onclick="deleteSantri(' + s.id + ')" title="Hapus"><i class="fas fa-trash"></i></button></div></td></tr>';
-            }).join('');
-        }
-
-        function filterSantri() {
-            var search = document.getElementById('searchSantri').value.toLowerCase();
-            var kelas = document.getElementById('filterKelas').value;
-            var status = document.getElementById('filterStatus').value;
-            var santri = DB.get('santri');
-            if (search) santri = santri.filter(function(s) { return s.nama.toLowerCase().indexOf(search) !== -1; });
-            if (kelas) santri = santri.filter(function(s) { return s.kelas === kelas; });
-            if (status) santri = santri.filter(function(s) { return s.status === status; });
-            renderSantriTable(santri);
-        }
-
-        function addSantri() {
-            var nama = document.getElementById('addNama').value.trim();
-            var kelas = document.getElementById('addKelas').value;
-            if (!nama) { showToast('Nama harus diisi!', 'error'); return; }
-            var santri = DB.get('santri');
-            var newId = santri.length > 0 ? Math.max.apply(null, santri.map(function(s) { return s.id; })) + 1 : 1;
-            santri.push({id:newId, nama:nama, kelas:kelas, wali:'', hp:'', hafalan:{}, nilai:0, status:'belum'});
-            DB.set('santri', santri);
-            closeModal('addSantriModal');
-            document.getElementById('addNama').value = '';
-            showToast('Santri berhasil ditambahkan!', 'success');
-            loadDataSantri();
-            loadDashboard();
-        }
-
-        function viewSantri(id) {
-            var s = DB.get('santri').find(function(x) { return x.id === id; });
-            if (s) showToast('Detail: ' + s.nama, 'info');
-        }
-
-        function deleteSantri(id) {
-            if (!confirm('Hapus santri ini?')) return;
-            DB.set('santri', DB.get('santri').filter(function(s) { return s.id !== id; }));
-            loadDataSantri();
-            loadDashboard();
-            showToast('Santri dihapus!', 'warning');
-        }
-
-        // ==================== INPUT HAFALAN ====================
-        var currentInputSantriId = null;
-
-        function loadInputHafalan() {
-            var santri = DB.get('santri');
-            var sel = document.getElementById('inputSantriSelect');
-            sel.innerHTML = '<option value="">-- Pilih Santri --</option>' + santri.map(function(s) { return '<option value="' + s.id + '">' + s.nama + ' - Kelas ' + s.kelas + '</option>'; }).join('');
-            document.getElementById('inputHafalanForm').style.display = 'none';
-        }
-
-        function loadSantriForInput() {
-            var id = parseInt(document.getElementById('inputSantriSelect').value);
-            if (!id) { document.getElementById('inputHafalanForm').style.display = 'none'; return; }
-            currentInputSantriId = id;
-            var s = DB.get('santri').find(function(x) { return x.id === id; });
-            if (!s) return;
-            document.getElementById('inputHafalanForm').style.display = 'block';
-            var h = s.hafalan || {};
-            document.querySelectorAll('.hafalan-checkbox').forEach(function(cb) {
-                var key = cb.getAttribute('onclick').match(/'([^']+)'/)[1];
-                if (h[key]) cb.classList.add('checked');
-                else cb.classList.remove('checked');
-            });
-            updateHafalanCount();
-        }
-
-        function toggleHafalan(element, key) {
-            element.classList.toggle('checked');
-            updateHafalanCount();
-        }
-
-        function updateHafalanCount() {
-            var checked = document.querySelectorAll('.hafalan-checkbox.checked').length;
-            document.getElementById('totalHafalan').textContent = checked + '/16';
-            var pct = (checked / 16) * 100;
-            document.getElementById('autoScore').textContent = Math.round(pct);
-            document.getElementById('autoGrade').textContent = getGradeName(pct).toUpperCase();
-        }
-
-        function saveHafalan() {
-            if (!currentInputSantriId) { showToast('Pilih santri dulu!', 'error'); return; }
-            var santri = DB.get('santri');
-            var idx = santri.findIndex(function(s) { return s.id === currentInputSantriId; });
-            if (idx === -1) return;
-            var hafalan = {};
-            document.querySelectorAll('.hafalan-checkbox').forEach(function(cb) {
-                var key = cb.getAttribute('onclick').match(/'([^']+)'/)[1];
-                hafalan[key] = cb.classList.contains('checked');
-            });
-            var count = Object.values(hafalan).filter(function(v) { return v; }).length;
-            var pct = (count / 16) * 100;
-            santri[idx].hafalan = hafalan;
-            santri[idx].nilai = Math.round(pct);
-            santri[idx].status = pct >= 75 ? 'lulus' : (pct >= 50 ? 'proses' : 'belum');
-            DB.set('santri', santri);
-            showToast('Data hafalan berhasil disimpan!', 'success');
-            loadInputHafalan();
-        }
-
-        // ==================== LAPORAN ====================
-        function loadLaporan() {
-            var santri = DB.get('santri');
-            var lulus = santri.filter(function(s) { return s.status === 'lulus'; }).length;
-            var proses = santri.filter(function(s) { return s.status === 'proses'; }).length;
-            var belum = santri.filter(function(s) { return s.status === 'belum'; }).length;
-            document.getElementById('rptTotal').textContent = santri.length;
-            document.getElementById('rptLulus').textContent = lulus;
-            document.getElementById('rptProses').textContent = proses;
-            document.getElementById('rptBelum').textContent = belum;
-
-            var tctx = document.getElementById('trendChart');
-            if (window.trendChart) window.trendChart.destroy();
-            window.trendChart = new Chart(tctx, {
-                type: 'line',
-                data: {
-                    labels: ['Jan','Feb','Mar','Apr','Mei','Jun'],
-                    datasets: [
-                        { label: 'Lulus', data: [20,35,55,80,110,lulus], borderColor: '#10b981', backgroundColor: 'rgba(16,185,129,0.1)', fill: true, tension: 0.4 },
-                        { label: 'Proses', data: [40,50,60,70,85,proses], borderColor: '#f59e0b', backgroundColor: 'rgba(245,158,11,0.1)', fill: true, tension: 0.4 }
-                    ]
-                },
-                options: {
-                    responsive: true, maintainAspectRatio: false,
-                    plugins: { legend: { labels: { color: '#80cbc4' } } },
-                    scales: { y: { beginAtZero: true, grid: { color: 'rgba(212,175,55,0.1)' }, ticks: { color: '#80cbc4' } }, x: { grid: { display: false }, ticks: { color: '#80cbc4' } } }
-                }
-            });
-
-            var kctx = document.getElementById('kelasChart');
-            if (window.kelasChart) window.kelasChart.destroy();
-            var kelasData = {};
-            santri.forEach(function(s) { if (!kelasData[s.kelas]) kelasData[s.kelas] = 0; kelasData[s.kelas]++; });
-            window.kelasChart = new Chart(kctx, {
-                type: 'pie',
-                data: {
-                    labels: Object.keys(kelasData).map(function(k) { return 'Kelas ' + k; }),
-                    datasets: [{ data: Object.values(kelasData), backgroundColor: ['#10b981','#3b82f6','#f59e0b','#ef4444','#8b5cf6','#ec4899'] }]
-                },
-                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { labels: { color: '#80cbc4' } } } }
-            });
-        }
-        function exportLaporan() { showToast('Export PDF akan segera hadir', 'info'); }
-
-        // ==================== SERTIFIKAT ====================
+        // SERTIFIKAT
         function loadSertifikat() {
-            var certs = DB.get('certs');
-            var grid = document.getElementById('certGrid');
-            if (certs.length === 0) {
-                grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:60px;color:var(--text-muted);"><i class="fas fa-certificate" style="font-size:60px;margin-bottom:15px;opacity:0.3;"></i><h3>Belum ada sertifikat</h3></div>';
-                return;
-            }
-            grid.innerHTML = certs.map(function(c) {
-                var typeLabel = c.type === 'kelulusan' ? 'Kelulusan' : (c.type === 'jenazah' ? 'Pengurusan Jenazah' : 'Hafalan');
-                return '<div class="card"><div class="card-body"><div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;"><div style="width:55px;height:55px;background:var(--gold-gradient);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:28px;">🏅</div><div style="flex:1;"><h4 style="color:var(--text-light);margin-bottom:3px;">' + c.santri + '</h4><p style="color:var(--text-muted);font-size:11px;">' + typeLabel + ' | No. ' + (c.number||'-') + '</p></div></div><p style="color:var(--text-muted);font-size:11px;margin-bottom:12px;">Tanggal: ' + formatDateShort(c.date) + '</p><div style="display:flex;gap:6px;"><button class="btn btn-sm btn-primary" onclick="viewCertificate(' + c.id + ')" style="flex:1;"><i class="fas fa-eye"></i> Preview</button><button class="btn btn-sm btn-danger" onclick="deleteCertificate(' + c.id + ')"><i class="fas fa-trash"></i></button></div></div></div>';
-            }).join('');
+            document.getElementById('certGrid').innerHTML = `
+                <div class="card">
+                    <div class="card-body">
+                        <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
+                            <div style="width:55px;height:55px;background:linear-gradient(135deg,#c9a84c,#f4d03f);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:28px;">🏅</div>
+                            <div style="flex:1;">
+                                <h4 style="color:var(--text-light);margin-bottom:3px;">Ahmad Fauzan</h4>
+                                <p style="color:var(--text-muted);font-size:11px;">Kelulusan | No. BM/00123</p>
+                            </div>
+                        </div>
+                        <button class="btn btn-sm btn-primary" onclick="viewCertificate(1)" style="width:100%;"><i class="fas fa-eye"></i> Preview</button>
+                    </div>
+                </div>
+            `;
         }
-
-        function filterSertifikat() { loadSertifikat(); }
 
         function generateCertificate() {
-            var santriId = parseInt(document.getElementById('certSantriSelect').value);
-            var type = document.getElementById('certType').value;
-            var date = document.getElementById('certDate').value;
-            if (!santriId || !date) { showToast('Pilih santri dan tanggal!', 'error'); return; }
-            var santri = DB.get('santri').find(function(s) { return s.id === santriId; });
-            if (!santri) return;
-            var certs = DB.get('certs');
-            var newId = certs.length > 0 ? Math.max.apply(null, certs.map(function(c) { return c.id; })) + 1 : 1;
-            var certNumber = 'BM/' + String(newId).padStart(5, '0');
-            certs.push({id:newId, santri:santri.nama, type:type, date:date, number:certNumber, nilai:santri.nilai||90, kelas:santri.kelas});
-            DB.set('certs', certs);
             closeModal('generateCertModal');
             showToast('Sertifikat berhasil dibuat!', 'success');
             loadSertifikat();
         }
 
         function viewCertificate(id) {
-            var cert = DB.get('certs').find(function(c) { return c.id === id; });
-            if (!cert) return;
-
-            var santri = DB.get('santri').find(function(s) { return s.nama === cert.santri; }) || {};
-            var h = santri.hafalan || {};
-            var kelas = cert.kelas || santri.kelas || '3';
-
-            // Hitung nilai per kategori
-            var hafalanKeys = ['yaasin','waqiah','mulk','juz30','tawasul','tahlil_ringkas','tahlil_lengkap','istighosah','wirid'];
-            var hafalanDone = 0, hafalanTotal = hafalanKeys.length;
-            hafalanKeys.forEach(function(k) { if (h[k]) hafalanDone++; });
-            var hafalanPct = Math.round((hafalanDone / hafalanTotal) * 100);
-
-            var praktikKeys = ['sholat','jenazah','khotib','bilal'];
-            var praktikDone = 0, praktikTotal = praktikKeys.length;
-            praktikKeys.forEach(function(k) { if (h[k]) praktikDone++; });
-            var praktikPct = Math.round((praktikDone / praktikTotal) * 100);
-
-            var madinKeys = kelas === '6' ? ['madin_ula','madin_wusto'] : ['madin_ula'];
-            var madinDone = 0, madinTotal = madinKeys.length;
-            madinKeys.forEach(function(k) { if (h[k]) madinDone++; });
-            var madinPct = Math.round((madinDone / madinTotal) * 100);
-
-            var adabKeys = ['sholat_jamaah','sekolah_madin','sekolah_formal'];
-            var adabDone = 0, adabTotal = adabKeys.length;
-            adabKeys.forEach(function(k) { if (h[k]) adabDone++; });
-            var adabPct = Math.round((adabDone / adabTotal) * 100);
-
-            // Build hafalan rows
-            var hafalanRows = '';
-            hafalanRows += buildHafalanRow('Hafal Surat Yaasin, Waqiah, Al Mulk', hafalanPct);
-            hafalanRows += buildHafalanRow('Hafal Tawasul, Tahlil, Istighosah, Doa', Math.round(((h.tawasul?1:0)+(h.tahlil_ringkas?1:0)+(h.istighosah?1:0)+(h.wirid?1:0)) / 4 * 100));
-            hafalanRows += buildHafalanRow('Praktik Sholat & Pengurusan Jenazah', Math.round(((h.sholat?1:0)+(h.jenazah?1:0)) / 2 * 100));
-            hafalanRows += buildHafalanRow('Hafal Juz 30', h.juz30 ? 100 : 0);
-            hafalanRows += buildHafalanRow('Praktik Khotib & Bilal', Math.round(((h.khotib?1:0)+(h.bilal?1:0)) / 2 * 100));
-
-            if (kelas === '6') {
-                hafalanRows += buildMadinRow('Lulus Madin Ula', h.madin_ula);
-                hafalanRows += buildMadinRow('Lulus Madin Wusto', h.madin_wusto);
-            } else {
-                hafalanRows += buildMadinRow('Lulus Madin Ula', h.madin_ula);
+            const santri = santriData[0];
+            const h = santri.hafalan;
+            
+            function getGrade(pct) {
+                if (pct >= 90) return '<span class="cert-grade-pill grade-mumtaz">Mumtaz</span>';
+                if (pct >= 80) return '<span class="cert-grade-pill grade-jayyid-jiddan">Jayyid Jiddan</span>';
+                if (pct >= 70) return '<span class="cert-grade-pill grade-jayyid">Jayyid</span>';
+                if (pct >= 60) return '<span class="cert-grade-pill grade-ahsan">Ahsan</span>';
+                return '<span class="cert-grade-pill" style="background:#888;">Maqbul</span>';
             }
 
-            hafalanRows += buildAdabRow('Sikap dan Adab Sholat Berjamaah & Madin', Math.round(((h.sholat_jamaah?1:0)+(h.sekolah_madin?1:0)+(h.sekolah_formal?1:0)) / 3 * 100));
+            function check(isDone) {
+                return isDone ? '<span class="cert-check-small">✓</span>' : '<span class="cert-check-small" style="background:#ef4444;">✗</span>';
+            }
 
-            var overallStatus = cert.nilai >= 75 ? 'LULUS' : (cert.nilai >= 50 ? 'DALAM PROSES' : 'BELUM LULUS');
-
-            var html = '<div class="cert-page-container" id="printArea"><div class="certificate-wrapper"><div class="certificate-border-inner">';
-            html += '<div class="cert-corner-ornament tl"><svg viewBox="0 0 80 80" fill="none"><path d="M0 0h30v5H5v25H0V0z" fill="#c9a84c"/><path d="M0 0h20v3H3v17H0V0z" fill="#d4af37" opacity="0.5"/><circle cx="8" cy="8" r="3" fill="#c9a84c"/></svg></div>';
-            html += '<div class="cert-corner-ornament tr"><svg viewBox="0 0 80 80" fill="none"><path d="M80 0H50v5h25v25h5V0z" fill="#c9a84c"/><path d="M80 0H60v3h-17v17h17V0z" fill="#d4af37" opacity="0.5"/><circle cx="72" cy="8" r="3" fill="#c9a84c"/></svg></div>';
-            html += '<div class="cert-corner-ornament bl"><svg viewBox="0 0 80 80" fill="none"><path d="M0 80h30v-5H5v-25H0v30z" fill="#c9a84c"/><path d="M0 80h20v-3H3v-17H0v20z" fill="#d4af37" opacity="0.5"/><circle cx="8" cy="72" r="3" fill="#c9a84c"/></svg></div>';
-            html += '<div class="cert-corner-ornament br"><svg viewBox="0 0 80 80" fill="none"><path d="M80 80H50v-5h25v-25h5v30z" fill="#c9a84c"/><path d="M80 80H60v-3h-17v-17h17v20z" fill="#d4af37" opacity="0.5"/><circle cx="72" cy="72" r="3" fill="#c9a84c"/></svg></div>';
-
-            html += '<div class="cert-number-top">No Sertifikat: ' + (cert.number || 'BM/00123') + '</div>';
-
-            // Logo
-            html += '<div class="cert-top-section">';
-            html += '<div class="cert-logo-top"><div style="width:100%;height:100%;background:var(--gold-gradient);border-radius:50% 50% 0 0;display:flex;align-items:center;justify-content:center;font-size:50px;box-shadow:0 6px 20px rgba(212,175,55,0.3);">📖</div></div>';
-            html += '<div class="cert-ponpes-name">PONPES BAHRUL MAGHFIROH</div>';
-            html += '<div class="cert-title-main">Sertifikat Kelulusan</div>';
-            html += '<div class="cert-decorative-line"></div>';
-            html += '</div>';
-
-            html += '<div class="cert-name-main">' + cert.santri + '</div>';
-            html += '<div class="cert-decorative-line"></div>';
-            html += '<p class="cert-desc-text">Dinnyatakan telah <strong>MENYELESAIKAN MUTQIN BM</strong><br>Program Hafalan Auseh seeu Standar Kelulusan Pondok Bahrul</p>';
-
-            html += '<div class="cert-lulus-badge"><div class="badge-inner">' + overallStatus + '</div></div>';
-
-            // Hafalan table
-            html += '<table class="cert-hafalan-table"><tbody>';
-            html += hafalanRows;
-            html += '</tbody></table>';
-
-            // Signatures
-            html += '<div class="cert-signatures">';
-            html += '<div class="cert-sig-block"><div class="cert-sig-image"><svg width="180" height="50" viewBox="0 0 180 50"><path d="M20 35c5-10 15-20 30-15s25 10 40 5 20-15 35-10 25 15 40 8 20-10 30-5" stroke="#1a4731" stroke-width="2" fill="none" stroke-linecap="round"/></svg></div><div class="cert-sig-line"></div><div class="cert-sig-name">Prof.Dr.Ir KH Muhammad Bisri MS</div><div class="cert-sig-title">Pengasuh</div></div>';
-            html += '<div class="cert-sig-block"><div class="cert-sig-image"><svg width="180" height="50" viewBox="0 0 180 50"><path d="M15 30c8-8 18-18 35-12s22 12 38 6 22-14 38-8 28 16 42 10" stroke="#1a4731" stroke-width="2" fill="none" stroke-linecap="round"/></svg></div><div class="cert-sig-line"></div><div class="cert-sig-name">Muhammad Sulthon S.Pd M.Pd</div><div class="cert-sig-title">Kepala Dewan Tahfizh</div></div>';
-            html += '</div>';
-
-            // Stamp
-            html += '<div class="cert-stamp"><div style="font-size:8px;line-height:1.3;">PONDOK<br>PESANTREN<br>BAHRUL<br>MAGHFIROH</div></div>';
-
-            html += '<div class="cert-decorative-line" style="margin-top:30px;"></div>';
-            html += '<p style="text-align:center;font-size:11px;color:#888;margin-top:10px;">Dikeluarkan di Jakarta, ' + formatDate(cert.date) + '</p>';
-
-            html += '</div></div></div>';
-
+            const html = `
+                <div class="cert-page-container" id="printArea">
+                    <div class="certificate-wrapper">
+                        <div class="certificate-border-inner">
+                            <div class="cert-corner-ornament tl">❖</div>
+                            <div class="cert-corner-ornament tr">❖</div>
+                            <div class="cert-corner-ornament bl">❖</div>
+                            <div class="cert-corner-ornament br">❖</div>
+                            
+                            <div class="cert-number-top">No Sertifikat: BM/00123</div>
+                            
+                            <div class="cert-top-section">
+                                <div class="cert-logo-top">📖</div>
+                                <div class="cert-ponpes-name">PONPES BAHRUL MAGHFIROH</div>
+                                <div class="cert-title-main">Sertifikat Kelulusan</div>
+                                <div class="cert-decorative-line"></div>
+                            </div>
+                            
+                            <div class="cert-name-main">${santri.nama}</div>
+                            <div class="cert-decorative-line"></div>
+                            <p class="cert-desc-text">Dinnyatakan telah <strong>MENYELESAIKAN MUTQIN BM</strong><br>Program Hafalan Auseh seeu Standar Kelulusan Pondok Bahrul</p>
+                            
+                            <div class="cert-lulus-badge">
+                                <div class="badge-inner">LULUS</div>
+                            </div>
+                            
+                            <table class="cert-hafalan-table">
+                                <tbody>
+                                    <tr>
+                                        <td class="haf-check">${check(true)}</td>
+                                        <td class="haf-label">Hafal Surat Yaasin, Waqiah, Al Mulk</td>
+                                        <td class="haf-grade">${getGrade(95)}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="haf-check">${check(true)}</td>
+                                        <td class="haf-label">Hafal Tawasul, Tahlil, Istighosah, Doa</td>
+                                        <td class="haf-grade">${getGrade(85)}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="haf-check">${check(true)}</td>
+                                        <td class="haf-label">Praktik Sholat & Pengurusan Jenazah</td>
+                                        <td class="haf-grade">${getGrade(75)}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="haf-check">${check(true)}</td>
+                                        <td class="haf-label">Hafal Juz 30</td>
+                                        <td class="haf-grade">${getGrade(65)}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="haf-check">${check(true)}</td>
+                                        <td class="haf-label">Praktik Khotib & Bilal</td>
+                                        <td class="haf-grade">${getGrade(65)}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="haf-check">${check(true)}</td>
+                                        <td class="haf-label">Lulus Madin Ula</td>
+                                        <td class="haf-grade">${check(true)}${check(true)}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="haf-check">${check(true)}</td>
+                                        <td class="haf-label">Lulus Madin Wusto</td>
+                                        <td class="haf-grade">${check(true)}${check(true)}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="haf-check">${check(true)}</td>
+                                        <td class="haf-label">Sikap dan Adab Sholat Berjamaah & Madin</td>
+                                        <td class="haf-grade">${check(true)}${check(true)}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            
+                            <div class="cert-signatures">
+                                <div class="cert-sig-block">
+                                    <div class="cert-sig-line"></div>
+                                    <div class="cert-sig-name">Ust. Drs. H. Abdul Malik, Lc., M.M.Pd.</div>
+                                    <div class="cert-sig-title">Pengasuh</div>
+                                </div>
+                                <div class="cert-sig-block">
+                                    <div class="cert-sig-line"></div>
+                                    <div class="cert-sig-name">Ust. H. Muhammad Amin</div>
+                                    <div class="cert-sig-title">Kepala Dewan Tahfizh</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
             document.getElementById('certPreviewContent').innerHTML = html;
             openModal('viewCertModal');
         }
 
-        function buildHafalanRow(label, pct) {
-            var grade = getGradeName(pct);
-            var gradeClass = getGradeClass(pct);
-            var checkClass = pct >= 70 ? '' : 'style="background:rgba(239,68,68,0.5);"';
-            var checkIcon = pct >= 70 ? '✓' : '✗';
-            return '<tr><td class="haf-check"><span class="cert-check-small" ' + checkClass + '>' + checkIcon + '</span></td><td class="haf-label">' + label + '</td><td class="haf-grade"><span class="cert-grade-pill ' + gradeClass + '">' + grade + '</span></td></tr>';
+        function printCertificate() {
+            window.print();
         }
 
-        function buildMadinRow(label, isDone) {
-            var checkClass = isDone ? '' : 'style="background:rgba(239,68,68,0.5);"';
-            var checkIcon = isDone ? '✓' : '✗';
-            var gradeClass = isDone ? 'grade-jayyid' : 'grade-maqbul';
-            var grade = isDone ? 'Jayyid' : 'Kurang';
-            return '<tr><td class="haf-check"><span class="cert-check-small" ' + checkClass + '>' + checkIcon + '</span></td><td class="haf-label">' + label + '</td><td class="haf-grade"><span class="cert-check-small" ' + checkClass + '>' + checkIcon + '</span><span class="cert-check-small" ' + checkClass + '>' + checkIcon + '</span></td></tr>';
-        }
-
-        function buildAdabRow(label, pct) {
-            var checkClass = pct >= 70 ? '' : 'style="background:rgba(239,68,68,0.5);"';
-            var checkIcon = pct >= 70 ? '✓' : '✗';
-            return '<tr><td class="haf-check"><span class="cert-check-small" ' + checkClass + '>' + checkIcon + '</span></td><td class="haf-label">' + label + '</td><td class="haf-grade"><span class="cert-check-small" ' + checkClass + '>' + checkIcon + '</span><span class="cert-check-small" ' + checkClass + '>' + checkIcon + '</span></td></tr>';
-        }
-
-        function printCertificate() { window.print(); }
-
-        function deleteCertificate(id) {
-            if (!confirm('Hapus sertifikat ini?')) return;
-            DB.set('certs', DB.get('certs').filter(function(c) { return c.id !== id; }));
-            loadSertifikat();
-            showToast('Sertifikat dihapus!', 'warning');
-        }
-
-        // ==================== BULK UPLOAD ====================
-        var pendingUpload = [];
-
-        function downloadTemplate() {
-            var csv = 'Nama Santri,Kelas\nAhmad Fauzan,5\nSalma Azizah,4\nMuhammad Lugman,2';
-            var blob = new Blob([csv], {type: 'text/csv'});
-            var url = URL.createObjectURL(blob);
-            var a = document.createElement('a');
-            a.href = url; a.download = 'template_santri_mutqin_bm.csv'; a.click();
-            URL.revokeObjectURL(url);
-            showToast('Template didownload!', 'success');
-        }
-
-        function handleFileUpload(event) {
-            var file = event.target.files[0];
-            if (!file) return;
-            var reader = new FileReader();
-            reader.onload = function(e) {
-                var text = e.target.result;
-                var lines = text.split('\n').filter(function(l) { return l.trim(); });
-                if (lines.length < 2) { showToast('File kosong!', 'error'); return; }
-                pendingUpload = [];
-                var html = '<table style="width:100%;font-size:12px;"><thead><tr style="background:rgba(212,175,55,0.15);"><th style="color:var(--accent);padding:8px;">No</th><th style="color:var(--accent);padding:8px;">Nama</th><th style="color:var(--accent);padding:8px;">Kelas</th></tr></thead><tbody>';
-                for (var i = 1; i < lines.length && i < 11; i++) {
-                    var cols = lines[i].split(',').map(function(c) { return c.trim(); });
-                    if (cols.length >= 2) {
-                        pendingUpload.push({nama: cols[0], kelas: cols[1]});
-                        html += '<tr><td style="padding:8px;color:var(--text-muted);">' + i + '</td><td style="padding:8px;color:var(--text-muted);">' + cols[0] + '</td><td style="padding:8px;color:var(--text-muted);">' + cols[1] + '</td></tr>';
-                    }
-                }
-                html += '</tbody></table>';
-                if (lines.length > 11) html += '<p style="color:var(--text-muted);font-size:11px;margin-top:8px;">...dan ' + (lines.length - 11) + ' data lainnya</p>';
-                document.getElementById('uploadPreview').innerHTML = html;
-                document.getElementById('uploadPreview').style.display = 'block';
-                document.getElementById('btnConfirmUpload').style.display = 'inline-flex';
-            };
-            reader.readAsText(file);
-        }
-
-        function confirmUpload() {
-            if (pendingUpload.length === 0) return;
-            var santri = DB.get('santri');
-            var added = 0;
-            pendingUpload.forEach(function(p) {
-                var exists = santri.find(function(s) { return s.nama.toLowerCase() === p.nama.toLowerCase(); });
-                if (!exists) {
-                    var newId = santri.length > 0 ? Math.max.apply(null, santri.map(function(s) { return s.id; })) + 1 : 1;
-                    santri.push({id:newId, nama:p.nama, kelas:p.kelas, wali:'', hp:'', hafalan:{}, nilai:0, status:'belum'});
-                    added++;
-                }
-            });
-            DB.set('santri', santri);
-            closeModal('uploadMassalModal');
-            document.getElementById('uploadPreview').style.display = 'none';
-            document.getElementById('btnConfirmUpload').style.display = 'none';
-            document.getElementById('csvFile').value = '';
-            pendingUpload = [];
-            showToast(added + ' santri berhasil diimport!', 'success');
-            loadDataSantri();
-            loadDashboard();
-        }
-
-        // ==================== UTILS ====================
-        function exportAllData() {
-            var data = {santri: DB.get('santri'), certs: DB.get('certs'), exportDate: new Date().toISOString()};
-            var blob = new Blob([JSON.stringify(data, null, 2)], {type: 'application/json'});
-            var url = URL.createObjectURL(blob);
-            var a = document.createElement('a');
-            a.href = url; a.download = 'backup_mutqin_bm_' + new Date().toISOString().split('T')[0] + '.json'; a.click();
-            URL.revokeObjectURL(url);
-            showToast('Data diexport!', 'success');
-        }
-
-        function importAllData(event) {
-            var file = event.target.files[0];
-            if (!file) return;
-            var reader = new FileReader();
-            reader.onload = function(e) {
-                try {
-                    var data = JSON.parse(e.target.result);
-                    if (data.santri) DB.set('santri', data.santri);
-                    if (data.certs) DB.set('certs', data.certs);
-                    showToast('Data diimport! Reload...', 'success');
-                    setTimeout(function() { location.reload(); }, 1500);
-                } catch (err) {
-                    showToast('File tidak valid!', 'error');
-                }
-            };
-            reader.readAsText(file);
-        }
-
-        function loadAllData() { loadDashboard(); }
-
-        // ==================== INIT ====================
-        initData();
-        checkAuth();
+        // Init
         document.getElementById('certDate').valueAsDate = new Date();
-
-        document.getElementById('certSantriSelect').addEventListener('change', function() {
-            var certs = DB.get('certs');
-            var newId = certs.length + 1;
-        });
-
-        // Populate cert select
-        var origOpenModal = openModal;
-        openModal = function(id) {
-            if (id === 'generateCertModal') {
-                var santri = DB.get('santri');
-                var sel = document.getElementById('certSantriSelect');
-                sel.innerHTML = '<option value="">-- Pilih Santri --</option>' + santri.map(function(s) { return '<option value="' + s.id + '">' + s.nama + ' - Kelas ' + s.kelas + '</option>'; }).join('');
-            }
-            origOpenModal(id);
-        };
     </script>
 </body>
 </html>
