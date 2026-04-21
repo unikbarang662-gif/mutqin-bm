@@ -7,253 +7,320 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        :root {
-            --primary: #0f2922;
-            --secondary: #1a4731;
-            --accent: #d4af37;
-            --accent-light: #f4d03f;
-            --success: #10b981;
-            --warning: #f59e0b;
-            --danger: #ef4444;
-            --info: #3b82f6;
-            --text: #e0f2f1;
-            --text-muted: #80cbc4;
-            --border: rgba(212, 175, 55, 0.3);
-            --card-bg: linear-gradient(135deg, #1a4731 0%, #0f2922 100%);
+        *{margin:0;padding:0;box-sizing:border-box}
+        :root{
+            --primary:#0a1f18;--secondary:#1a4731;--accent:#c9a84c;--accent-light:#e8d48b;
+            --success:#10b981;--warning:#f59e0b;--danger:#ef4444;--info:#3b82f6;
+            --text:#e0f2f1;--text-muted:#80cbc4;--border:rgba(201,168,76,0.3);
+            --card-bg:linear-gradient(135deg,#1a4731 0%,#0f2922 100%);
+            --sidebar-bg:linear-gradient(180deg,#0a1f18 0%,#1a4731 100%);
+            --gold-gradient:linear-gradient(135deg,#c9a84c,#e8d48b,#c9a84c);
+        }
+        body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:var(--primary);min-height:100vh;color:var(--text);overflow-x:hidden}
+
+        /* LOGIN */
+        .login-page{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;background:linear-gradient(135deg,#0a1f18 0%,#1a4731 100%);position:relative}
+        .login-page::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Cg fill='%23c9a84c' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")}
+        .login-box{background:var(--card-bg);border:2px solid var(--accent);border-radius:20px;padding:40px 35px;max-width:420px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,0.5);position:relative;z-index:1}
+        .login-header{text-align:center;margin-bottom:25px}
+        .logo-circle{width:90px;height:90px;margin:0 auto 15px;background:var(--gold-gradient);border-radius:50% 50% 0 0;display:flex;align-items:center;justify-content:center;font-size:45px;box-shadow:0 8px 25px rgba(201,168,76,0.4)}
+        .login-header h1{color:var(--accent);font-size:32px;margin-bottom:5px}
+        .login-header p{color:var(--text-muted);font-size:13px}
+        .input-group{margin-bottom:18px;position:relative}
+        .input-group i{position:absolute;left:16px;top:50%;transform:translateY(-50%);color:var(--accent);font-size:15px}
+        .input-group input{width:100%;padding:13px 16px 13px 44px;border:2px solid var(--border);border-radius:10px;background:rgba(15,41,34,0.8);color:#fff;font-size:14px;transition:all .3s}
+        .input-group input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(201,168,76,0.15)}
+        .input-group input::placeholder{color:var(--text-muted)}
+        .btn-login{width:100%;padding:14px;background:var(--gold-gradient);border:none;border-radius:10px;color:var(--primary);font-size:16px;font-weight:bold;cursor:pointer;transition:all .3s}
+        .btn-login:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(201,168,76,0.5)}
+        .login-info{margin-top:18px;padding:12px;background:rgba(201,168,76,0.08);border:1px solid var(--border);border-radius:8px;font-size:12px}
+        .login-info h4{color:var(--accent);margin-bottom:6px;font-size:13px}
+        .login-info div{color:var(--text-muted);margin:3px 0}
+        .login-info strong{color:var(--text)}
+
+        /* APP */
+        .app-container{display:none;min-height:100vh}
+        .sidebar{width:260px;background:var(--sidebar-bg);border-right:2px solid var(--border);position:fixed;height:100vh;overflow-y:auto;z-index:100;transition:transform .3s}
+        .sidebar-header{padding:22px 18px;text-align:center;border-bottom:1px solid var(--border)}
+        .sidebar-header .logo{font-size:35px;margin-bottom:6px}
+        .sidebar-header h2{color:var(--accent);font-size:22px;margin-bottom:2px}
+        .sidebar-header p{color:var(--text-muted);font-size:11px}
+        .nav-menu{padding:12px 0}
+        .nav-item{padding:12px 20px;display:flex;align-items:center;color:var(--text-muted);transition:all .3s;margin:3px 10px;border-radius:8px;cursor:pointer;font-size:13px}
+        .nav-item:hover,.nav-item.active{background:rgba(201,168,76,0.15);color:var(--accent)}
+        .nav-item i{font-size:16px;margin-right:12px;width:20px;text-align:center}
+        .nav-item .badge{margin-left:auto;background:var(--danger);color:#fff;padding:1px 7px;border-radius:8px;font-size:10px}
+        .sidebar-footer{position:absolute;bottom:0;left:0;right:0;padding:15px;border-top:1px solid var(--border)}
+        .btn-logout{width:100%;padding:10px;background:rgba(220,38,38,0.15);border:1px solid var(--danger);color:#fca5a5;border-radius:8px;cursor:pointer;transition:all .3s;font-size:13px;display:flex;align-items:center;justify-content:center;gap:6px}
+        .btn-logout:hover{background:var(--danger);color:#fff}
+        .main-content{margin-left:260px;padding:22px;min-height:100vh}
+        .page{display:none;animation:fadeIn .3s ease}
+        .page.active{display:block}
+        @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+        /* HEADER */
+        .page-header{background:var(--card-bg);border:2px solid var(--border);border-radius:14px;padding:20px 24px;margin-bottom:22px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+        .page-header h1{color:var(--accent);font-size:22px}
+        .page-header p{color:var(--text-muted);font-size:12px;margin-top:2px}
+        .user-profile{display:flex;align-items:center;gap:10px;background:rgba(201,168,76,0.1);padding:7px 16px;border-radius:50px;border:1px solid var(--border)}
+        .user-profile img{width:36px;height:36px;border-radius:50%;border:2px solid var(--accent)}
+        .user-profile .name{color:#fff;font-weight:600;font-size:13px}
+        .user-profile .role{color:var(--text-muted);font-size:11px}
+
+        /* STATS */
+        .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:15px;margin-bottom:22px}
+        .stat-card{background:var(--card-bg);border:2px solid;border-radius:14px;padding:18px;display:flex;align-items:center;gap:15px;transition:all .3s;cursor:pointer}
+        .stat-card:hover{transform:translateY(-3px)}
+        .stat-card.green{border-color:var(--success)}.stat-card.blue{border-color:var(--info)}.stat-card.yellow{border-color:var(--warning)}.stat-card.red{border-color:var(--danger)}
+        .stat-icon{width:50px;height:50px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px}
+        .stat-card.green .stat-icon{background:rgba(16,185,129,0.15);color:var(--success)}.stat-card.blue .stat-icon{background:rgba(59,130,246,0.15);color:var(--info)}.stat-card.yellow .stat-icon{background:rgba(245,158,11,0.15);color:var(--warning)}.stat-card.red .stat-icon{background:rgba(239,68,68,0.15);color:var(--danger)}
+        .stat-content h3{color:var(--text-muted);font-size:12px;margin-bottom:3px}.stat-number{font-size:26px;font-weight:bold;color:#fff}
+
+        /* CARDS */
+        .card{background:var(--card-bg);border:2px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:22px}
+        .card-header{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
+        .card-header h3{color:var(--accent);font-size:16px;display:flex;align-items:center;gap:6px}
+        .card-body{padding:20px}
+
+        /* BUTTONS */
+        .btn{padding:9px 18px;border:none;border-radius:8px;cursor:pointer;font-size:12px;font-weight:600;transition:all .3s;display:inline-flex;align-items:center;gap:6px;text-decoration:none}
+        .btn-primary{background:var(--gold-gradient);color:var(--primary)}.btn-primary:hover{box-shadow:0 4px 15px rgba(201,168,76,0.4)}
+        .btn-success{background:var(--success);color:#fff}.btn-warning{background:var(--warning);color:#fff}
+        .btn-danger{background:var(--danger);color:#fff}.btn-info{background:var(--info);color:#fff}
+        .btn-secondary{background:rgba(201,168,76,0.1);border:1px solid var(--accent);color:var(--accent)}
+        .btn-sm{padding:6px 12px;font-size:11px}.btn-full{width:100%;justify-content:center}
+
+        /* TABLES */
+        .table-container{overflow-x:auto}
+        .data-table{width:100%;border-collapse:collapse}
+        .data-table th,.data-table td{padding:10px 13px;text-align:left;border-bottom:1px solid var(--border);font-size:13px}
+        .data-table th{background:rgba(201,168,76,0.08);color:var(--accent);font-weight:600;white-space:nowrap}
+        .data-table td{color:var(--text)}.data-table tr:hover td{background:rgba(201,168,76,0.03)}
+        .user-cell{display:flex;align-items:center;gap:8px}
+        .user-cell img{width:32px;height:32px;border-radius:50%;border:2px solid var(--accent)}
+
+        /* STATUS */
+        .status{padding:3px 10px;border-radius:16px;font-size:11px;font-weight:600;display:inline-block}
+        .status-success{background:rgba(16,185,129,0.15);color:var(--success);border:1px solid rgba(16,185,129,0.3)}
+        .status-warning{background:rgba(245,158,11,0.15);color:var(--warning);border:1px solid rgba(245,158,11,0.3)}
+        .status-danger{background:rgba(239,68,68,0.15);color:var(--danger);border:1px solid rgba(239,68,68,0.3)}
+        .status-info{background:rgba(59,130,246,0.15);color:var(--info);border:1px solid rgba(59,130,246,0.3)}
+
+        /* FORMS */
+        .form-group{margin-bottom:16px}
+        .form-group label{display:block;color:var(--text-muted);font-size:12px;margin-bottom:5px;font-weight:600}
+        .form-control{width:100%;padding:10px 14px;border:2px solid var(--border);border-radius:8px;background:rgba(15,41,34,0.6);color:#fff;font-size:13px;transition:all .3s}
+        .form-control:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(201,168,76,0.1)}
+        select.form-control{cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23c9a84c' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:35px}
+        textarea.form-control{resize:vertical;min-height:70px}
+        .form-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}
+
+        /* MODAL */
+        .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:1000;align-items:center;justify-content:center;padding:20px}
+        .modal-overlay.active{display:flex}
+        .modal{background:var(--card-bg);border:2px solid var(--accent);border-radius:14px;max-width:650px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,0.5)}
+        .modal-header{padding:18px 22px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+        .modal-header h3{color:var(--accent);font-size:16px}
+        .modal-close{background:none;border:none;color:var(--text-muted);font-size:22px;cursor:pointer}
+        .modal-close:hover{color:var(--danger)}
+        .modal-body{padding:22px}.modal-footer{padding:14px 22px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:8px}
+
+        /* TOAST */
+        .toast-container{position:fixed;top:15px;right:15px;z-index:2000;display:flex;flex-direction:column;gap:8px}
+        .toast{padding:12px 18px;border-radius:10px;color:#fff;font-size:13px;display:flex;align-items:center;gap:8px;animation:slideIn .3s ease;min-width:260px;box-shadow:0 8px 25px rgba(0,0,0,0.3)}
+        .toast-success{background:linear-gradient(135deg,#059669,#10b981)}.toast-error{background:linear-gradient(135deg,#dc2626,#ef4444)}
+        .toast-warning{background:linear-gradient(135deg,#d97706,#f59e0b)}.toast-info{background:linear-gradient(135deg,#2563eb,#3b82f6)}
+        @keyframes slideIn{from{transform:translateX(100%);opacity:0}to{transform:translateX(0);opacity:1}}
+        @keyframes slideOut{from{transform:translateX(0);opacity:1}to{transform:translateX(100%);opacity:0}}
+
+        /* CHECKLIST */
+        .checklist-item{display:flex;align-items:center;padding:12px 14px;margin-bottom:6px;background:rgba(15,41,34,0.5);border-radius:8px;border-left:4px solid;transition:all .3s}
+        .checklist-item:hover{transform:translateX(4px)}
+        .checklist-item.lulus{border-left-color:var(--success)}.checklist-item.proses{border-left-color:var(--warning)}.checklist-item.belum{border-left-color:var(--danger)}
+        .checklist-icon{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin-right:12px;font-size:14px}
+        .checklist-item.lulus .checklist-icon{background:rgba(16,185,129,0.15);color:var(--success)}
+        .checklist-item.proses .checklist-icon{background:rgba(245,158,11,0.15);color:var(--warning)}
+        .checklist-item.belum .checklist-icon{background:rgba(239,68,68,0.15);color:var(--danger)}
+        .checklist-content{flex:1}.checklist-content h4{color:#fff;font-size:13px;margin-bottom:2px}.checklist-content p{color:var(--text-muted);font-size:11px}
+
+        /* PROGRESS */
+        .progress-container{margin-bottom:15px}
+        .progress-header{display:flex;justify-content:space-between;margin-bottom:5px}
+        .progress-label{color:var(--text-muted);font-size:12px;display:flex;align-items:center;gap:5px}
+        .progress-value{color:var(--accent);font-weight:bold;font-size:13px}
+        .progress-bar{height:8px;background:rgba(15,41,34,0.8);border-radius:6px;overflow:hidden;border:1px solid var(--border)}
+        .progress-fill{height:100%;border-radius:6px;transition:width .5s ease}
+        .progress-fill.green{background:linear-gradient(90deg,var(--success),#34d399)}.progress-fill.yellow{background:linear-gradient(90deg,var(--warning),#fbbf24)}
+        .progress-fill.red{background:linear-gradient(90deg,var(--danger),#f87171)}.progress-fill.blue{background:linear-gradient(90deg,var(--info),#60a5fa)}
+
+        /* TABS */
+        .tabs{display:flex;gap:4px;margin-bottom:18px;flex-wrap:wrap}
+        .tab{padding:8px 16px;background:rgba(15,41,34,0.6);border:1px solid var(--border);border-radius:8px;color:var(--text-muted);cursor:pointer;transition:all .3s;font-size:12px;font-weight:600}
+        .tab:hover{border-color:var(--accent);color:var(--accent)}.tab.active{background:rgba(201,168,76,0.15);border-color:var(--accent);color:var(--accent)}
+
+        /* SEARCH */
+        .toolbar{display:flex;gap:10px;margin-bottom:18px;flex-wrap:wrap;align-items:center}
+        .search-box{flex:1;min-width:180px;position:relative}
+        .search-box i{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--text-muted)}
+        .search-box input{width:100%;padding:9px 12px 9px 36px;border:2px solid var(--border);border-radius:8px;background:rgba(15,41,34,0.6);color:#fff;font-size:13px}
+        .search-box input:focus{outline:none;border-color:var(--accent)}
+        .filter-select{padding:9px 12px;border:2px solid var(--border);border-radius:8px;background:rgba(15,41,34,0.6);color:#fff;font-size:13px;cursor:pointer}
+
+        /* UPLOAD AREA */
+        .upload-area{border:2px dashed var(--border);border-radius:10px;padding:25px;text-align:center;cursor:pointer;transition:all .3s;background:rgba(201,168,76,0.03)}
+        .upload-area:hover{border-color:var(--accent);background:rgba(201,168,76,0.08)}
+        .upload-area i{font-size:36px;color:var(--accent);margin-bottom:8px}
+        .upload-area p{color:var(--text-muted);font-size:13px}
+
+        /* RANKING */
+        .ranking-item{display:flex;align-items:center;padding:12px 14px;margin-bottom:6px;background:rgba(15,41,34,0.5);border-radius:8px;border-left:4px solid var(--accent);transition:all .3s}
+        .ranking-item:hover{transform:translateX(4px)}
+        .ranking-number{width:28px;height:28px;background:var(--gold-gradient);color:var(--primary);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:13px;margin-right:12px;flex-shrink:0}
+        .ranking-info{flex:1}.ranking-name{color:#fff;font-weight:600;font-size:13px}.ranking-detail{color:var(--text-muted);font-size:11px}
+        .ranking-score{color:var(--accent);font-size:18px;font-weight:bold}
+
+        /* SETTINGS */
+        .settings-section{margin-bottom:25px}
+        .settings-section h3{color:var(--accent);font-size:15px;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+        .setting-item{display:flex;justify-content:space-between;align-items:center;padding:12px;background:rgba(15,41,34,0.5);border-radius:8px;margin-bottom:8px}
+        .setting-info h4{color:#fff;font-size:13px;margin-bottom:2px}.setting-info p{color:var(--text-muted);font-size:11px}
+        .toggle{position:relative;width:44px;height:24px;background:rgba(255,255,255,0.1);border-radius:12px;cursor:pointer;transition:all .3s}
+        .toggle.active{background:var(--success)}.toggle::after{content:'';position:absolute;width:20px;height:20px;background:#fff;border-radius:50%;top:2px;left:2px;transition:all .3s}
+        .toggle.active::after{left:22px}
+
+        /* REPORT */
+        .report-summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin-bottom:22px}
+        .report-card{text-align:center;padding:16px;background:rgba(15,41,34,0.5);border-radius:10px;border:1px solid var(--border)}
+        .report-card .value{font-size:24px;font-weight:bold;color:var(--accent)}.report-card .label{color:var(--text-muted);font-size:11px;margin-top:4px}
+
+        /* EMPTY */
+        .empty-state{text-align:center;padding:35px 15px;color:var(--text-muted)}.empty-state i{font-size:45px;margin-bottom:12px;opacity:0.5}.empty-state h3{color:var(--text);margin-bottom:6px}
+
+        /* INPUT SCORE CARDS */
+        .score-input-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:15px}
+        .score-input-card{background:rgba(15,41,34,0.5);border:1px solid var(--border);border-radius:12px;padding:18px;transition:all .3s}
+        .score-input-card:hover{border-color:var(--accent)}
+        .score-input-card h4{color:var(--accent);font-size:14px;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+        .score-input-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+        .score-input-row label{color:var(--text-muted);font-size:12px;flex:1}
+        .score-input-row input{width:70px;padding:6px 8px;border:1px solid var(--border);border-radius:6px;background:rgba(15,41,34,0.8);color:#fff;font-size:13px;text-align:center}
+        .score-input-row input:focus{outline:none;border-color:var(--accent)}
+        .score-input-row .max-score{color:var(--text-muted);font-size:11px;margin-left:4px}
+
+        /* BULK IMPORT */
+        .import-template{background:rgba(201,168,76,0.08);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:20px}
+        .import-template h4{color:var(--accent);margin-bottom:12px;font-size:15px}
+        .template-preview{background:rgba(0,0,0,0.3);border-radius:8px;padding:15px;margin:12px 0;overflow-x:auto}
+        .template-preview table{width:100%;border-collapse:collapse;font-size:13px}
+        .template-preview th{background:rgba(201,168,76,0.15);color:var(--accent);padding:8px 12px;text-align:left}
+        .template-preview td{padding:8px 12px;color:var(--text-muted);border-bottom:1px solid rgba(201,168,76,0.1)}
+        .import-steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:15px 0}
+        .import-step{display:flex;align-items:flex-start;gap:10px;padding:12px;background:rgba(15,41,34,0.5);border-radius:8px}
+        .step-num{width:28px;height:28px;background:var(--gold-gradient);color:var(--primary);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:14px;flex-shrink:0}
+        .step-text{font-size:12px;color:var(--text-muted)}.step-text strong{color:#fff;display:block;margin-bottom:2px}
+        .import-result{margin-top:15px;padding:15px;background:rgba(16,185,129,0.1);border:1px solid var(--success);border-radius:8px;display:none}
+        .import-result.show{display:block}
+        .import-result h4{color:var(--success);margin-bottom:8px}
+        .import-result table{width:100%;font-size:12px;border-collapse:collapse;margin-top:10px}
+        .import-result th,.import-result td{padding:6px 10px;text-align:left;border-bottom:1px solid rgba(201,168,76,0.1)}
+        .import-result th{color:var(--accent)}
+        .import-result td{color:var(--text-muted)}
+        .import-error{background:rgba(239,68,68,0.1);border-color:var(--danger)}
+        .import-error h4{color:var(--danger)}
+
+        /* CERTIFICATE STYLES - PROFESSIONAL */
+        .cert-container{max-width:800px;margin:0 auto}
+        .certificate-frame{background:#fffdf7;border:3px solid #c9a84c;border-radius:8px;padding:5px;box-shadow:0 10px 40px rgba(0,0,0,0.3)}
+        .certificate-inner{border:2px solid #c9a84c;padding:40px 35px;position:relative;background:linear-gradient(180deg,#fffdf7 0%,#f9f5e8 100%)}
+        .certificate-inner::before{content:'';position:absolute;top:8px;left:8px;right:8px;bottom:8px;border:1px solid rgba(201,168,76,0.3);pointer-events:none}
+        .cert-corner{position:absolute;width:40px;height:40px;opacity:0.6}
+        .cert-corner-tl{top:15px;left:15px;border-top:3px solid var(--accent);border-left:3px solid var(--accent)}
+        .cert-corner-tr{top:15px;right:15px;border-top:3px solid var(--accent);border-right:3px solid var(--accent)}
+        .cert-corner-bl{bottom:15px;left:15px;border-bottom:3px solid var(--accent);border-left:3px solid var(--accent)}
+        .cert-corner-br{bottom:15px;right:15px;border-bottom:3px solid var(--accent);border-right:3px solid var(--accent)}
+        .cert-header-section{text-align:center;margin-bottom:25px}
+        .cert-logo{font-size:40px;margin-bottom:8px}
+        .cert-institution{font-size:16px;color:#1a4731;font-weight:bold;letter-spacing:2px;text-transform:uppercase;margin-bottom:2px}
+        .cert-institution-sub{font-size:11px;color:#666;letter-spacing:1px;margin-bottom:15px}
+        .cert-ornament{width:200px;height:2px;background:var(--gold-gradient);margin:0 auto 20px}
+        .cert-title{font-size:28px;color:#c9a84c;font-weight:bold;letter-spacing:4px;text-transform:uppercase;margin-bottom:5px;font-family:Georgia,'Times New Roman',serif}
+        .cert-subtitle{font-size:12px;color:#888;letter-spacing:3px;text-transform:uppercase;margin-bottom:20px}
+        .cert-body{text-align:center;margin:20px 0}
+        .cert-presented{font-size:13px;color:#555;margin-bottom:15px}
+        .cert-name{font-size:32px;color:#1a4731;font-weight:bold;font-family:Georgia,'Times New Roman',serif;margin:10px 0 15px;padding-bottom:10px;border-bottom:2px solid #c9a84c;display:inline-block}
+        .cert-achievement{font-size:14px;color:#444;line-height:1.7;margin:15px 0}
+        .cert-details{display:flex;justify-content:center;gap:30px;margin:20px 0;flex-wrap:wrap}
+        .cert-detail-item{text-align:center}
+        .cert-detail-label{font-size:10px;color:#888;text-transform:uppercase;letter-spacing:1px}
+        .cert-detail-value{font-size:14px;color:#1a4731;font-weight:600;margin-top:3px}
+        .cert-footer{display:flex;justify-content:space-around;align-items:flex-end;margin-top:40px;padding-top:20px}
+        .cert-signature{text-align:center;min-width:120px}
+        .cert-sig-line{width:140px;border-bottom:1px solid #333;margin:0 auto 5px;height:40px}
+        .cert-sig-name{font-size:12px;color:#1a4731;font-weight:600}
+        .cert-sig-title{font-size:10px;color:#888}
+        .cert-seal{width:80px;height:80px;border:3px solid var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:30px;background:rgba(201,168,76,0.05);margin:0 auto}
+        .cert-date-section{text-align:center;margin-top:15px}
+        .cert-date-text{font-size:11px;color:#888}
+        .cert-id{position:absolute;top:15px;right:20px;font-size:9px;color:#aaa}
+        .cert-watermark{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:120px;opacity:0.03;pointer-events:none}
+
+        /* CHART */
+        .chart-container{height:220px;position:relative;margin:12px 0}
+
+        /* RESPONSIVE */
+        .mobile-toggle{display:none;position:fixed;top:12px;left:12px;z-index:200;background:var(--accent);color:var(--primary);border:none;width:40px;height:40px;border-radius:8px;font-size:18px;cursor:pointer}
+        @media(max-width:768px){
+            .sidebar{transform:translateX(-100%)}.sidebar.open{transform:translateX(0)}
+            .main-content{margin-left:0;padding:12px;padding-top:65px}
+            .mobile-toggle{display:block}
+            .stats-grid{grid-template-columns:1fr 1fr}
+            .page-header{flex-direction:column;align-items:flex-start}
+            .form-row{grid-template-columns:1fr}
+            .toolbar{flex-direction:column}
+            .certificate-inner{padding:25px 20px}
+            .cert-name{font-size:24px}
+            .cert-title{font-size:22px}
+        }
+        @media(max-width:480px){.stats-grid{grid-template-columns:1fr}}
+
+        /* PRINT */
+        @media print{
+            .sidebar,.page-header,.toolbar,.btn,.mobile-toggle,.modal-overlay{display:none!important}
+            .main-content{margin-left:0!important;padding:0!important}
+            body{background:#fff!important;color:#333!important}
+            .certificate-frame{box-shadow:none!important;border:2px solid #c9a84c!important}
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--primary); min-height: 100vh; color: var(--text); }
-        
-        /* Login */
-        .login-page { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: radial-gradient(circle at center, #1a4731 0%, #0f2922 100%); }
-        .login-box { background: rgba(15, 41, 34, 0.95); border: 2px solid var(--accent); padding: 40px; border-radius: 16px; width: 100%; max-width: 420px; box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
-        .login-header { text-align: center; margin-bottom: 30px; }
-        .login-logo { font-size: 60px; color: var(--accent); margin-bottom: 15px; }
-        .login-header h1 { color: var(--accent); font-size: 32px; margin-bottom: 5px; }
-        .login-header p { color: var(--text-muted); font-size: 14px; }
-        
-        /* Layout */
-        .app-container { display: none; min-height: 100vh; }
-        .sidebar { width: 260px; background: linear-gradient(180deg, #0f2922 0%, #1a4731 100%); border-right: 2px solid var(--border); position: fixed; height: 100vh; z-index: 100; overflow-y: auto; }
-        .sidebar-header { padding: 25px 20px; text-align: center; border-bottom: 1px solid var(--border); }
-        .sidebar-header .logo { font-size: 40px; color: var(--accent); margin-bottom: 10px; }
-        .sidebar-header h2 { color: var(--accent); font-size: 22px; margin-bottom: 3px; }
-        .sidebar-header p { color: var(--text-muted); font-size: 12px; }
-        .nav-menu { padding: 15px 0; }
-        .nav-item { padding: 12px 20px; display: flex; align-items: center; gap: 12px; color: var(--text-muted); cursor: pointer; transition: all 0.3s; font-size: 14px; margin: 3px 10px; border-radius: 8px; }
-        .nav-item:hover, .nav-item.active { background: rgba(212, 175, 55, 0.15); color: var(--accent); }
-        .nav-item i { width: 20px; text-align: center; }
-        .nav-item .badge { margin-left: auto; background: var(--danger); color: white; padding: 2px 8px; border-radius: 10px; font-size: 11px; }
-        .sidebar-footer { position: absolute; bottom: 0; left: 0; right: 0; padding: 15px; border-top: 1px solid var(--border); }
-        .btn-logout { width: 100%; padding: 10px; background: rgba(239, 68, 68, 0.2); border: 1px solid var(--danger); color: #fca5a5; border-radius: 8px; cursor: pointer; transition: all 0.3s; font-size: 13px; display: flex; align-items: center; justify-content: center; gap: 8px; }
-        .btn-logout:hover { background: var(--danger); color: white; }
-        .main-content { margin-left: 260px; padding: 25px; min-height: 100vh; }
-        .page { display: none; animation: fadeIn 0.3s ease; }
-        .page.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        
-        /* Header */
-        .page-header { background: var(--card-bg); border: 2px solid var(--border); border-radius: 12px; padding: 20px 25px; margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; }
-        .page-header h1 { color: var(--accent); font-size: 24px; }
-        .page-header p { color: var(--text-muted); font-size: 13px; margin-top: 3px; }
-        .user-profile { display: flex; align-items: center; gap: 12px; background: rgba(212, 175, 55, 0.1); padding: 8px 18px; border-radius: 50px; border: 1px solid var(--border); }
-        .user-profile img { width: 40px; height: 40px; border-radius: 50%; border: 2px solid var(--accent); }
-        .user-profile .name { color: white; font-weight: 600; font-size: 14px; }
-        .user-profile .role { color: var(--text-muted); font-size: 11px; }
-        
-        /* Stats */
-        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 18px; margin-bottom: 25px; }
-        .stat-card { background: var(--card-bg); border: 2px solid; border-radius: 12px; padding: 20px; display: flex; align-items: center; gap: 15px; transition: all 0.3s; cursor: pointer; }
-        .stat-card:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(0,0,0,0.3); }
-        .stat-card.green { border-color: var(--success); }
-        .stat-card.blue { border-color: var(--info); }
-        .stat-card.yellow { border-color: var(--warning); }
-        .stat-card.red { border-color: var(--danger); }
-        .stat-icon { width: 55px; height: 55px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 24px; }
-        .stat-card.green .stat-icon { background: rgba(16, 185, 129, 0.2); color: var(--success); }
-        .stat-card.blue .stat-icon { background: rgba(59, 130, 246, 0.2); color: var(--info); }
-        .stat-card.yellow .stat-icon { background: rgba(245, 158, 11, 0.2); color: var(--warning); }
-        .stat-card.red .stat-icon { background: rgba(239, 68, 68, 0.2); color: var(--danger); }
-        .stat-content h3 { color: var(--text-muted); font-size: 13px; margin-bottom: 4px; }
-        .stat-number { font-size: 28px; font-weight: bold; color: white; }
-        
-        /* Cards */
-        .card { background: var(--card-bg); border: 2px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 25px; }
-        .card-header { padding: 16px 22px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
-        .card-header h3 { color: var(--accent); font-size: 16px; display: flex; align-items: center; gap: 8px; }
-        .card-body { padding: 22px; }
-        
-        /* Buttons */
-        .btn { padding: 10px 18px; border: none; border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: 600; transition: all 0.3s; display: inline-flex; align-items: center; gap: 6px; text-decoration: none; }
-        .btn-primary { background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%); color: var(--primary); }
-        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4); }
-        .btn-success { background: var(--success); color: white; }
-        .btn-warning { background: var(--warning); color: white; }
-        .btn-danger { background: var(--danger); color: white; }
-        .btn-info { background: var(--info); color: white; }
-        .btn-secondary { background: rgba(212, 175, 55, 0.1); border: 1px solid var(--accent); color: var(--accent); }
-        .btn-sm { padding: 6px 12px; font-size: 12px; }
-        .btn-full { width: 100%; justify-content: center; }
-        
-        /* Forms */
-        .form-group { margin-bottom: 16px; }
-        .form-group label { display: block; color: var(--text-muted); font-size: 12px; margin-bottom: 5px; font-weight: 600; }
-        .form-control { width: 100%; padding: 11px 14px; border: 2px solid var(--border); border-radius: 8px; background: rgba(15, 41, 34, 0.6); color: white; font-size: 14px; transition: all 0.3s; }
-        .form-control:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.15); }
-        select.form-control { appearance: none; background-image: url("image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23d4af37' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; padding-right: 35px; cursor: pointer; }
-        textarea.form-control { resize: vertical; min-height: 80px; }
-        .form-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; }
-        
-        /* Tables */
-        .table-responsive { overflow-x: auto; }
-        table { width: 100%; border-collapse: collapse; }
-        th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid var(--border); font-size: 13px; }
-        th { background: rgba(212, 175, 55, 0.08); color: var(--accent); font-weight: 600; white-space: nowrap; }
-        td { color: var(--text); }
-        tr:hover td { background: rgba(212, 175, 55, 0.03); }
-        .user-cell { display: flex; align-items: center; gap: 10px; }
-        .user-cell img { width: 35px; height: 35px; border-radius: 50%; border: 2px solid var(--accent); }
-        
-        /* Status */
-        .status { padding: 4px 12px; border-radius: 16px; font-size: 11px; font-weight: 600; display: inline-block; }
-        .status-success { background: rgba(16, 185, 129, 0.15); color: var(--success); border: 1px solid rgba(16, 185, 129, 0.3); }
-        .status-warning { background: rgba(245, 158, 11, 0.15); color: var(--warning); border: 1px solid rgba(245, 158, 11, 0.3); }
-        .status-danger { background: rgba(239, 68, 68, 0.15); color: var(--danger); border: 1px solid rgba(239, 68, 68, 0.3); }
-        .status-info { background: rgba(59, 130, 246, 0.15); color: var(--info); border: 1px solid rgba(59, 130, 246, 0.3); }
-        
-        /* Modal */
-        .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 1000; align-items: center; justify-content: center; padding: 20px; }
-        .modal-overlay.active { display: flex; }
-        .modal { background: var(--card-bg); border: 2px solid var(--accent); border-radius: 14px; max-width: 600px; width: 100%; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
-        .modal-header { padding: 18px 22px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
-        .modal-header h3 { color: var(--accent); font-size: 16px; }
-        .modal-close { background: none; border: none; color: var(--text-muted); font-size: 24px; cursor: pointer; transition: color 0.3s; }
-        .modal-close:hover { color: var(--danger); }
-        .modal-body { padding: 22px; }
-        .modal-footer { padding: 15px 22px; border-top: 1px solid var(--border); display: flex; justify-content: flex-end; gap: 10px; }
-        
-        /* Toast */
-        .toast-container { position: fixed; top: 20px; right: 20px; z-index: 2000; display: flex; flex-direction: column; gap: 10px; }
-        .toast { padding: 13px 20px; border-radius: 10px; color: white; font-size: 14px; display: flex; align-items: center; gap: 10px; animation: slideIn 0.3s ease; min-width: 280px; box-shadow: 0 8px 25px rgba(0,0,0,0.3); }
-        .toast-success { background: linear-gradient(135deg, #059669, #10b981); }
-        .toast-error { background: linear-gradient(135deg, #dc2626, #ef4444); }
-        .toast-warning { background: linear-gradient(135deg, #d97706, #f59e0b); }
-        .toast-info { background: linear-gradient(135deg, #2563eb, #3b82f6); }
-        @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
-        @keyframes slideOut { from { transform: translateX(0); opacity: 1; } to { transform: translateX(100%); opacity: 0; } }
-        
-        /* Toolbar */
-        .toolbar { display: flex; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; align-items: center; }
-        .search-box { flex: 1; min-width: 200px; position: relative; }
-        .search-box i { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--text-muted); }
-        .search-box input { width: 100%; padding: 10px 14px 10px 40px; border: 2px solid var(--border); border-radius: 8px; background: rgba(15, 41, 34, 0.6); color: white; font-size: 13px; }
-        .search-box input:focus { outline: none; border-color: var(--accent); }
-        .filter-select { padding: 10px 14px; border: 2px solid var(--border); border-radius: 8px; background: rgba(15, 41, 34, 0.6); color: white; font-size: 13px; cursor: pointer; }
-        
-        /* Import */
-        .import-area { border: 2px dashed var(--border); border-radius: 10px; padding: 30px; text-align: center; cursor: pointer; transition: all 0.3s; background: rgba(212, 175, 55, 0.03); }
-        .import-area:hover { border-color: var(--accent); background: rgba(212, 175, 55, 0.08); }
-        .import-area i { font-size: 40px; color: var(--accent); margin-bottom: 10px; }
-        .import-area p { color: var(--text-muted); font-size: 13px; }
-        
-        /* Certificate */
-        .cert-container { max-width: 800px; margin: 0 auto; }
-        .certificate-frame { background: #fffdf7; border: 3px solid #c9a84c; border-radius: 8px; padding: 5px; box-shadow: 0 10px 40px rgba(0,0,0,0.3); }
-        .certificate-inner { border: 2px solid #c9a84c; padding: 40px 35px; position: relative; background: linear-gradient(180deg, #fffdf7 0%, #f9f5e8 100%); }
-        .cert-corner { position: absolute; width: 40px; height: 40px; opacity: 0.6; }
-        .cert-corner-tl { top: 15px; left: 15px; border-top: 3px solid #c9a84c; border-left: 3px solid #c9a84c; }
-        .cert-corner-tr { top: 15px; right: 15px; border-top: 3px solid #c9a84c; border-right: 3px solid #c9a84c; }
-        .cert-corner-bl { bottom: 15px; left: 15px; border-bottom: 3px solid #c9a84c; border-left: 3px solid #c9a84c; }
-        .cert-corner-br { bottom: 15px; right: 15px; border-bottom: 3px solid #c9a84c; border-right: 3px solid #c9a84c; }
-        .cert-header-section { text-align: center; margin-bottom: 25px; }
-        .cert-logo { font-size: 40px; margin-bottom: 8px; }
-        .cert-institution { font-size: 16px; color: #1a4731; font-weight: bold; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 2px; }
-        .cert-institution-sub { font-size: 11px; color: #666; letter-spacing: 1px; margin-bottom: 15px; }
-        .cert-ornament { width: 200px; height: 2px; background: linear-gradient(90deg, transparent, #c9a84c, transparent); margin: 0 auto 20px; }
-        .cert-title { font-size: 28px; color: #c9a84c; font-weight: bold; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 5px; font-family: Georgia, 'Times New Roman', serif; }
-        .cert-subtitle { font-size: 12px; color: #888; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 20px; }
-        .cert-body { text-align: center; margin: 20px 0; }
-        .cert-presented { font-size: 13px; color: #555; margin-bottom: 15px; }
-        .cert-name { font-size: 32px; color: #1a4731; font-weight: bold; font-family: Georgia, 'Times New Roman', serif; margin: 10px 0 15px; padding-bottom: 10px; border-bottom: 2px solid #c9a84c; display: inline-block; }
-        .cert-achievement { font-size: 14px; color: #444; line-height: 1.7; margin: 15px 0; }
-        .cert-footer { display: flex; justify-content: space-around; align-items: flex-end; margin-top: 40px; padding-top: 20px; }
-        .cert-signature { text-align: center; min-width: 120px; }
-        .cert-sig-line { width: 140px; border-bottom: 1px solid #333; margin: 0 auto 5px; height: 40px; }
-        .cert-sig-name { font-size: 12px; color: #1a4731; font-weight: 600; }
-        .cert-sig-title { font-size: 10px; color: #888; }
-        .cert-seal { width: 80px; height: 80px; border: 3px solid #c9a84c; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 30px; background: rgba(201, 168, 76, 0.05); margin: 0 auto; }
-        .cert-date-section { text-align: center; margin-top: 15px; }
-        .cert-date-text { font-size: 11px; color: #888; }
-        .cert-id { position: absolute; top: 15px; right: 20px; font-size: 9px; color: #aaa; }
-        .cert-watermark { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 120px; opacity: 0.03; pointer-events: none; }
-        
-        /* Chart */
-        .chart-container { height: 250px; position: relative; margin: 15px 0; }
-        
-        /* Responsive */
-        .mobile-toggle { display: none; position: fixed; top: 15px; left: 15px; z-index: 200; background: var(--accent); color: var(--primary); border: none; width: 44px; height: 44px; border-radius: 8px; font-size: 20px; cursor: pointer; }
-        @media(max-width: 768px) {
-            .sidebar { transform: translateX(-100%); }
-            .sidebar.open { transform: translateX(0); }
-            .main-content { margin-left: 0; padding: 15px; padding-top: 75px; }
-            .mobile-toggle { display: block; }
-            .stats-grid { grid-template-columns: 1fr 1fr; }
-            .page-header { flex-direction: column; align-items: flex-start; }
-            .form-row { grid-template-columns: 1fr; }
-            .toolbar { flex-direction: column; }
-        }
-        @media(max-width: 480px) { .stats-grid { grid-template-columns: 1fr; } }
-        
-        /* Print */
-        @media print {
-            body * { visibility: hidden; }
-            #printArea, #printArea * { visibility: visible; }
-            #printArea { position: absolute; left: 0; top: 0; width: 100%; }
-            .certificate-frame { box-shadow: none; border: 2px solid #c9a84c; }
-        }
+        ::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:var(--primary)}::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
     </style>
 </head>
 <body>
 
-<!-- LOGIN PAGE -->
+<button class="mobile-toggle" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
+
+<!-- LOGIN -->
 <div id="loginPage" class="login-page">
     <div class="login-box">
         <div class="login-header">
-            <div class="login-logo">📖</div>
+            <div class="logo-circle">📖</div>
             <h1>Mutqin BM</h1>
             <p>Ponpes Bahrul Maghfiroh</p>
         </div>
         <form id="loginForm">
-            <div class="form-group">
-                <div style="position: relative;">
-                    <i class="fas fa-user" style="position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--accent);"></i>
-                    <input type="text" id="loginUser" class="form-control" placeholder="Username" required style="padding-left: 44px;">
-                </div>
-            </div>
-            <div class="form-group">
-                <div style="position: relative;">
-                    <i class="fas fa-lock" style="position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--accent);"></i>
-                    <input type="password" id="loginPass" class="form-control" placeholder="Password" required style="padding-left: 44px;">
-                </div>
-            </div>
-            <button type="submit" class="btn btn-primary btn-full" style="padding: 14px; font-size: 16px;">
-                <i class="fas fa-sign-in-alt"></i> Masuk
-            </button>
+            <div class="input-group"><i class="fas fa-user"></i><input type="text" id="loginUser" placeholder="Username" required></div>
+            <div class="input-group"><i class="fas fa-lock"></i><input type="password" id="loginPass" placeholder="Password" required></div>
+            <button type="submit" class="btn-login"><i class="fas fa-sign-in-alt"></i> Masuk</button>
         </form>
-        <div style="margin-top: 20px; padding: 15px; background: rgba(212, 175, 55, 0.08); border: 1px solid var(--border); border-radius: 8px; font-size: 12px;">
-            <div style="color: var(--accent); margin-bottom: 8px; font-weight: 600;">🔑 Demo Login:</div>
-            <div style="color: var(--text-muted);">👤 <strong style="color: var(--text);">admin</strong> / <strong style="color: var(--text);">admin123</strong></div>
-            <div style="color: var(--text-muted); margin-top: 4px;">👤 <strong style="color: var(--text);">ustad</strong> / <strong style="color: var(--text);">ustad123</strong></div>
+        <div class="login-info">
+            <h4>🔑 Demo Login:</h4>
+            <div>👤 <strong>admin</strong> / <strong>admin123</strong></div>
+            <div>👤 <strong>ustad</strong> / <strong>ustad123</strong></div>
         </div>
     </div>
 </div>
 
-<!-- APP CONTAINER -->
+<!-- APP -->
 <div id="appContainer" class="app-container">
-    <button class="mobile-toggle" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
-    
-    <!-- Sidebar -->
     <aside class="sidebar" id="sidebar">
         <div class="sidebar-header">
             <div class="logo">📖</div>
@@ -261,418 +328,234 @@
             <p>Ponpes Bahrul Maghfiroh</p>
         </div>
         <nav class="nav-menu">
-            <div class="nav-item active" onclick="navigateTo('dashboard')" data-page="dashboard">
-                <i class="fas fa-home"></i><span>Dashboard</span>
-            </div>
-            <div class="nav-item" onclick="navigateTo('hafalan')" data-page="hafalan">
-                <i class="fas fa-book-quran"></i><span>Standar Hafalan</span>
-            </div>
-            <div class="nav-item" onclick="navigateTo('inputNilai')" data-page="inputNilai">
-                <i class="fas fa-edit"></i><span>Input Nilai</span>
-            </div>
-            <div class="nav-item" onclick="navigateTo('santri')" data-page="santri">
-                <i class="fas fa-users"></i><span>Data Santri</span>
-                <span class="badge" id="santriBadge">0</span>
-            </div>
-            <div class="nav-item" onclick="navigateTo('laporan')" data-page="laporan">
-                <i class="fas fa-chart-bar"></i><span>Laporan</span>
-            </div>
-            <div class="nav-item" onclick="navigateTo('sertifikat')" data-page="sertifikat">
-                <i class="fas fa-certificate"></i><span>Sertifikat</span>
-            </div>
-            <div class="nav-item" onclick="navigateTo('pengaturan')" data-page="pengaturan">
-                <i class="fas fa-cog"></i><span>Pengaturan</span>
-            </div>
+            <div class="nav-item active" onclick="navigateTo('dashboard')" data-page="dashboard"><i class="fas fa-home"></i><span>Dashboard</span></div>
+            <div class="nav-item" onclick="navigateTo('hafalan')" data-page="hafalan"><i class="fas fa-book-quran"></i><span>Standar Hafalan</span></div>
+            <div class="nav-item" onclick="navigateTo('inputNilai')" data-page="inputNilai"><i class="fas fa-edit"></i><span>Input Nilai</span></div>
+            <div class="nav-item" onclick="navigateTo('santri')" data-page="santri"><i class="fas fa-users"></i><span>Data Santri</span><span class="badge" id="santriBadge">243</span></div>
+            <div class="nav-item" onclick="navigateTo('laporan')" data-page="laporan"><i class="fas fa-chart-bar"></i><span>Laporan</span></div>
+            <div class="nav-item" onclick="navigateTo('sertifikat')" data-page="sertifikat"><i class="fas fa-certificate"></i><span>Sertifikat</span></div>
+            <div class="nav-item" onclick="navigateTo('kegiatan')" data-page="kegiatan"><i class="fas fa-camera"></i><span>Kegiatan</span></div>
+            <div class="nav-item" onclick="navigateTo('pengaturan')" data-page="pengaturan"><i class="fas fa-cog"></i><span>Pengaturan</span></div>
         </nav>
-        <div class="sidebar-footer">
-            <button class="btn-logout" onclick="logout()">
-                <i class="fas fa-sign-out-alt"></i> Log Out
-            </button>
-        </div>
+        <div class="sidebar-footer"><button class="btn-logout" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Log Out</button></div>
     </aside>
 
-    <!-- Main Content -->
     <main class="main-content">
-        
-        <!-- DASHBOARD PAGE -->
+
+        <!-- ========== DASHBOARD ========== -->
         <div id="page-dashboard" class="page active">
             <div class="page-header">
-                <div>
-                    <h1>Assalamu'alaikum, <span id="dashName">Ust. Abdul Malik</span>!</h1>
-                    <p>Selamat datang di Sistem Hafalan Mutqin BM.</p>
-                </div>
-                <div class="user-profile">
-                    <img id="dashAvatar" src="" alt="">
-                    <div>
-                        <div class="name" id="dashUser"></div>
-                        <div class="role">Administrator</div>
-                    </div>
-                </div>
+                <div><h1>Assalamu'alaikum, <span id="dashName">Ust. Abdul Malik</span>!</h1><p>Selamat datang di Sistem Hafalan Mutqin BM.</p></div>
+                <div class="user-profile"><img id="dashAvatar" src="" alt=""><div><div class="name" id="dashUser"></div><div class="role">Administrator</div></div></div>
             </div>
-
             <div class="stats-grid">
-                <div class="stat-card green" onclick="navigateTo('santri')">
-                    <div class="stat-icon"><i class="fas fa-users"></i></div>
-                    <div class="stat-content">
-                        <h3>Total Santri</h3>
-                        <div class="stat-number" id="statTotal">0</div>
-                    </div>
-                </div>
-                <div class="stat-card blue">
-                    <div class="stat-icon"><i class="fas fa-check-circle"></i></div>
-                    <div class="stat-content">
-                        <h3>Sudah Lulus</h3>
-                        <div class="stat-number" id="statLulus">0</div>
-                    </div>
-                </div>
-                <div class="stat-card yellow">
-                    <div class="stat-icon"><i class="fas fa-clock"></i></div>
-                    <div class="stat-content">
-                        <h3>Sedang Proses</h3>
-                        <div class="stat-number" id="statProses">0</div>
-                    </div>
-                </div>
-                <div class="stat-card red">
-                    <div class="stat-icon"><i class="fas fa-exclamation-circle"></i></div>
-                    <div class="stat-content">
-                        <h3>Belum Mulai</h3>
-                        <div class="stat-number" id="statBelum">0</div>
-                    </div>
-                </div>
+                <div class="stat-card green" onclick="navigateTo('santri')"><div class="stat-icon"><i class="fas fa-users"></i></div><div class="stat-content"><h3>Total Santri</h3><div class="stat-number" id="statTotal">0</div></div></div>
+                <div class="stat-card blue"><div class="stat-icon"><i class="fas fa-check-circle"></i></div><div class="stat-content"><h3>Sudah Lulus</h3><div class="stat-number" id="statLulus">0</div></div></div>
+                <div class="stat-card yellow"><div class="stat-icon"><i class="fas fa-clock"></i></div><div class="stat-content"><h3>Sedang Proses</h3><div class="stat-number" id="statProses">0</div></div></div>
+                <div class="stat-card red"><div class="stat-icon"><i class="fas fa-exclamation-circle"></i></div><div class="stat-content"><h3>Belum Mulai</h3><div class="stat-number" id="statBelum">0</div></div></div>
             </div>
-
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 20px;">
-                <div class="card">
-                    <div class="card-header"><h3><i class="fas fa-chart-pie"></i> Distribusi Nilai</h3></div>
-                    <div class="card-body">
-                        <div class="chart-container"><canvas id="chartDistribusi"></canvas></div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(380px,1fr));gap:18px">
+                <div class="card"><div class="card-header"><h3><i class="fas fa-clipboard-check"></i> Progress Checklist</h3></div><div class="card-body" id="checklistContainer"></div></div>
+                <div class="card"><div class="card-header"><h3><i class="fas fa-award"></i> Nilai Kelulusan</h3></div><div class="card-body" style="text-align:center"><div class="chart-container" style="height:180px"><canvas id="gradChart"></canvas></div><div class="status status-warning" style="font-size:16px;padding:6px 25px;margin-top:8px" id="statusBadge">LULUS BERSYARAT</div>
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:15px;text-align:left">
+                        <div style="display:flex;align-items:center;gap:6px;padding:6px 10px;background:rgba(15,41,34,0.5);border-radius:6px"><span style="width:10px;height:10px;border-radius:50%;background:var(--success)"></span><span style="color:var(--text-muted);font-size:11px">Hafalan 40%</span><span style="color:var(--accent);font-weight:bold;margin-left:auto;font-size:12px">32/40</span></div>
+                        <div style="display:flex;align-items:center;gap:6px;padding:6px 10px;background:rgba(15,41,34,0.5);border-radius:6px"><span style="width:10px;height:10px;border-radius:50%;background:var(--info)"></span><span style="color:var(--text-muted);font-size:11px">Praktik 30%</span><span style="color:var(--accent);font-weight:bold;margin-left:auto;font-size:12px">22/30</span></div>
+                        <div style="display:flex;align-items:center;gap:6px;padding:6px 10px;background:rgba(15,41,34,0.5);border-radius:6px"><span style="width:10px;height:10px;border-radius:50%;background:var(--warning)"></span><span style="color:var(--text-muted);font-size:11px">Madin 20%</span><span style="color:var(--accent);font-weight:bold;margin-left:auto;font-size:12px">18/20</span></div>
+                        <div style="display:flex;align-items:center;gap:6px;padding:6px 10px;background:rgba(15,41,34,0.5);border-radius:6px"><span style="width:10px;height:10px;border-radius:50%;background:#8b5cf6"></span><span style="color:var(--text-muted);font-size:11px">Adab 10%</span><span style="color:var(--accent);font-weight:bold;margin-left:auto;font-size:12px">8/10</span></div>
                     </div>
-                </div>
-                <div class="card">
-                    <div class="card-header"><h3><i class="fas fa-trophy"></i> Top 5 Santri</h3></div>
-                    <div class="card-body">
-                        <div id="topRanking"></div>
-                    </div>
-                </div>
+                </div></div>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(380px,1fr));gap:18px">
+                <div class="card"><div class="card-header"><h3><i class="fas fa-bullseye"></i> Target Hafalan</h3></div><div class="card-body" id="targetHafalan"></div></div>
+                <div class="card"><div class="card-header"><h3><i class="fas fa-clipboard-list"></i> Ujian Terbaru</h3></div><div class="card-body"><div class="table-container"><table class="data-table"><thead><tr><th>Nama</th><th>Kelas</th><th>Nilai</th></tr></thead><tbody id="recentExams"></tbody></table></div></div></div>
+                <div class="card"><div class="card-header"><h3><i class="fas fa-trophy"></i> Top 5 Santri</h3></div><div class="card-body" id="topRanking"></div></div>
+                <div class="card"><div class="card-header"><h3><i class="fas fa-chart-pie"></i> Distribusi Nilai</h3></div><div class="card-body"><div class="chart-container" style="height:200px"><canvas id="distChart"></canvas></div></div></div>
             </div>
         </div>
 
-        <!-- STANDAR HAFALAN PAGE -->
+        <!-- ========== STANDAR HAFALAN ========== -->
         <div id="page-hafalan" class="page">
-            <div class="page-header">
-                <div><h1>📖 Standar Hafalan</h1><p>Kelola standar hafalan santri</p></div>
-                <button class="btn btn-primary" onclick="openModal('addHafalanModal')"><i class="fas fa-plus"></i> Tambah Standar</button>
+            <div class="page-header"><div><h1>📖 Standar Hafalan</h1><p>Kelola standar hafalan santri</p></div><button class="btn btn-primary" onclick="openModal('addHafalanModal')"><i class="fas fa-plus"></i> Tambah Standar</button></div>
+            <div class="tabs">
+                <div class="tab active" onclick="filterHafalan('all',this)">Semua</div>
+                <div class="tab" onclick="filterHafalan('surah',this)">Surah</div>
+                <div class="tab" onclick="filterHafalan('dzikir',this)">Dzikir</div>
+                <div class="tab" onclick="filterHafalan('juz',this)">Juz</div>
+                <div class="tab" onclick="filterHafalan('praktik',this)">Praktik</div>
+                <div class="tab" onclick="filterHafalan('akademik',this)">Akademik</div>
+                <div class="tab" onclick="filterHafalan('adab',this)">Adab</div>
             </div>
-            <div id="hafalanList" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 15px;"></div>
+            <div id="hafalanList" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:12px"></div>
         </div>
 
-        <!-- INPUT NILAI PAGE -->
+        <!-- ========== INPUT NILAI ========== -->
         <div id="page-inputNilai" class="page">
-            <div class="page-header">
-                <div><h1>✏️ Input Nilai Santri</h1><p>Input dan update nilai hafalan santri</p></div>
-            </div>
+            <div class="page-header"><div><h1>✏️ Input Nilai Santri</h1><p>Input dan update nilai hafalan santri</p></div></div>
             <div class="card">
                 <div class="card-header"><h3><i class="fas fa-user-check"></i> Pilih Santri</h3></div>
                 <div class="card-body">
                     <div class="form-row">
-                        <div class="form-group">
-                            <label>Pilih Santri</label>
-                            <select class="form-control" id="inputSantriSelect" onchange="loadSantriScores()">
-                                <option value="">-- Pilih Santri --</option>
-                            </select>
-                        </div>
-                        <div class="form-group" style="display: flex; align-items: flex-end;">
-                            <button class="btn btn-primary" onclick="saveAllScores()" style="width: 100%;">
-                                <i class="fas fa-save"></i> Simpan Semua Nilai
-                            </button>
-                        </div>
+                        <div class="form-group"><label>Pilih Santri</label><select class="form-control" id="inputSantriSelect" onchange="loadSantriScores()"><option value="">-- Pilih Santri --</option></select></div>
+                        <div class="form-group" style="display:flex;align-items:flex-end"><button class="btn btn-primary" onclick="saveAllScores()" style="width:100%"><i class="fas fa-save"></i> Simpan Semua Nilai</button></div>
                     </div>
                 </div>
             </div>
-            <div id="scoreInputArea" style="display: none;">
-                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 15px;" id="scoreInputGrid"></div>
+            <div id="scoreInputArea" style="display:none">
+                <div class="score-input-grid" id="scoreInputGrid"></div>
             </div>
         </div>
 
-        <!-- DATA SANTRI PAGE -->
+        <!-- ========== DATA SANTRI ========== -->
         <div id="page-santri" class="page">
-            <div class="page-header">
-                <div><h1>👥 Data Santri</h1><p>Kelola data santri</p></div>
-                <div style="display: flex; gap: 10px;">
-                    <button class="btn btn-success" onclick="openModal('bulkImportModal')"><i class="fas fa-file-import"></i> Import Excel</button>
-                    <button class="btn btn-primary" onclick="openModal('addSantriModal')"><i class="fas fa-plus"></i> Tambah Santri</button>
-                </div>
-            </div>
+            <div class="page-header"><div><h1>👥 Data Santri</h1><p>Kelola data santri</p></div><div style="display:flex;gap:8px"><button class="btn btn-success" onclick="openModal('bulkImportModal')"><i class="fas fa-file-import"></i> Import Excel</button><button class="btn btn-primary" onclick="openModal('addSantriModal')"><i class="fas fa-plus"></i> Tambah Santri</button></div></div>
             <div class="toolbar">
-                <div class="search-box">
-                    <i class="fas fa-search"></i>
-                    <input type="text" id="searchSantri" placeholder="Cari nama santri..." oninput="filterSantri()">
-                </div>
-                <select class="filter-select" id="filterKelas" onchange="filterSantri()">
-                    <option value="">Semua Kelas</option>
-                    <option value="1">Kelas 1</option><option value="2">Kelas 2</option><option value="3">Kelas 3</option>
-                    <option value="4">Kelas 4</option><option value="5">Kelas 5</option><option value="6">Kelas 6</option>
-                </select>
-                <select class="filter-select" id="filterStatus" onchange="filterSantri()">
-                    <option value="">Semua Status</option>
-                    <option value="lulus">Lulus</option><option value="proses">Proses</option><option value="belum">Belum</option>
-                </select>
+                <div class="search-box"><i class="fas fa-search"></i><input type="text" id="searchSantri" placeholder="Cari nama santri..." oninput="filterSantri()"></div>
+                <select class="filter-select" id="filterKelas" onchange="filterSantri()"><option value="">Semua Kelas</option><option value="1">Kelas 1</option><option value="2">Kelas 2</option><option value="3">Kelas 3</option><option value="4">Kelas 4</option><option value="5">Kelas 5</option><option value="6">Kelas 6</option></select>
+                <select class="filter-select" id="filterStatus" onchange="filterSantri()"><option value="">Semua Status</option><option value="lulus">Lulus</option><option value="proses">Proses</option><option value="belum">Belum</option></select>
                 <button class="btn btn-secondary" onclick="exportSantriCSV()"><i class="fas fa-download"></i> Export</button>
             </div>
-            <div class="card">
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="data-table">
-                            <thead>
-                                <tr><th>No</th><th>Nama Santri</th><th>Kelas</th><th>Hafalan</th><th>Nilai</th><th>Status</th><th>Aksi</th></tr>
-                            </thead>
-                            <tbody id="santriTable"></tbody>
-                        </table>
-                    </div>
-                    <div id="santriEmpty" class="empty-state" style="display: none; text-align: center; padding: 40px; color: var(--text-muted);">
-                        <i class="fas fa-users" style="font-size: 48px; margin-bottom: 15px; opacity: 0.5;"></i>
-                        <h3>Tidak ada data santri</h3>
-                        <p>Klik "Import Excel" untuk input massal</p>
-                    </div>
-                </div>
-            </div>
+            <div class="card"><div class="card-body"><div class="table-container"><table class="data-table"><thead><tr><th>No</th><th>Nama Santri</th><th>Kelas</th><th>Hafalan</th><th>Nilai</th><th>Status</th><th>Aksi</th></tr></thead><tbody id="santriTable"></tbody></table></div><div id="santriEmpty" class="empty-state" style="display:none"><i class="fas fa-users"></i><h3>Tidak ada data santri</h3><p>Klik "Import Excel" untuk input massal</p></div></div></div>
         </div>
 
-        <!-- LAPORAN PAGE -->
+        <!-- ========== LAPORAN ========== -->
         <div id="page-laporan" class="page">
-            <div class="page-header">
-                <div><h1>📊 Laporan</h1><p>Laporan dan analisis progres santri</p></div>
-                <div style="display: flex; gap: 10px;">
-                    <button class="btn btn-secondary" onclick="window.print()"><i class="fas fa-print"></i> Cetak</button>
-                    <button class="btn btn-primary" onclick="exportAllData()"><i class="fas fa-download"></i> Export</button>
-                </div>
+            <div class="page-header"><div><h1>📊 Laporan</h1><p>Laporan dan analisis progres santri</p></div><div style="display:flex;gap:8px"><button class="btn btn-secondary" onclick="window.print()"><i class="fas fa-print"></i> Cetak</button><button class="btn btn-primary" onclick="exportAllData()"><i class="fas fa-download"></i> Export</button></div></div>
+            <div class="report-summary">
+                <div class="report-card"><div class="value" id="rptTotal">0</div><div class="label">Total Santri</div></div>
+                <div class="report-card"><div class="value" style="color:var(--success)" id="rptLulus">0</div><div class="label">Lulus</div></div>
+                <div class="report-card"><div class="value" style="color:var(--warning)" id="rptProses">0</div><div class="label">Proses</div></div>
+                <div class="report-card"><div class="value" style="color:var(--danger)" id="rptBelum">0</div><div class="label">Belum</div></div>
+                <div class="report-card"><div class="value" style="color:var(--info)" id="rptAvg">0</div><div class="label">Rata-rata</div></div>
             </div>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-bottom: 25px;">
-                <div style="text-align: center; padding: 20px; background: rgba(15, 41, 34, 0.5); border-radius: 10px; border: 1px solid var(--border);">
-                    <div style="font-size: 28px; font-weight: bold; color: var(--accent);" id="rptTotal">0</div>
-                    <div style="color: var(--text-muted); font-size: 12px; margin-top: 5px;">Total Santri</div>
-                </div>
-                <div style="text-align: center; padding: 20px; background: rgba(15, 41, 34, 0.5); border-radius: 10px; border: 1px solid var(--border);">
-                    <div style="font-size: 28px; font-weight: bold; color: var(--success);" id="rptLulus">0</div>
-                    <div style="color: var(--text-muted); font-size: 12px; margin-top: 5px;">Lulus</div>
-                </div>
-                <div style="text-align: center; padding: 20px; background: rgba(15, 41, 34, 0.5); border-radius: 10px; border: 1px solid var(--border);">
-                    <div style="font-size: 28px; font-weight: bold; color: var(--warning);" id="rptProses">0</div>
-                    <div style="color: var(--text-muted); font-size: 12px; margin-top: 5px;">Proses</div>
-                </div>
-                <div style="text-align: center; padding: 20px; background: rgba(15, 41, 34, 0.5); border-radius: 10px; border: 1px solid var(--border);">
-                    <div style="font-size: 28px; font-weight: bold; color: var(--danger);" id="rptBelum">0</div>
-                    <div style="color: var(--text-muted); font-size: 12px; margin-top: 5px;">Belum</div>
-                </div>
-                <div style="text-align: center; padding: 20px; background: rgba(15, 41, 34, 0.5); border-radius: 10px; border: 1px solid var(--border);">
-                    <div style="font-size: 28px; font-weight: bold; color: var(--info);" id="rptAvg">0</div>
-                    <div style="color: var(--text-muted); font-size: 12px; margin-top: 5px;">Rata-rata</div>
-                </div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(380px,1fr));gap:18px">
+                <div class="card"><div class="card-header"><h3>📈 Tren Kelulusan</h3></div><div class="card-body"><div class="chart-container" style="height:220px"><canvas id="trendChart"></canvas></div></div></div>
+                <div class="card"><div class="card-header"><h3>📊 Per Kelas</h3></div><div class="card-body"><div class="chart-container" style="height:220px"><canvas id="kelasChart"></canvas></div></div></div>
             </div>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 20px;">
-                <div class="card">
-                    <div class="card-header"><h3>📈 Tren Kelulusan</h3></div>
-                    <div class="card-body"><div class="chart-container" style="height: 250px;"><canvas id="trendChart"></canvas></div></div>
-                </div>
-                <div class="card">
-                    <div class="card-header"><h3>📊 Per Kelas</h3></div>
-                    <div class="card-body"><div class="chart-container" style="height: 250px;"><canvas id="kelasChart"></canvas></div></div>
-                </div>
-            </div>
+            <div class="card"><div class="card-header"><h3>📋 Detail per Kelas</h3></div><div class="card-body"><div class="table-container"><table class="data-table"><thead><tr><th>Kelas</th><th>Total</th><th>Lulus</th><th>Proses</th><th>Belum</th><th>Rata-rata</th><th>% Lulus</th></tr></thead><tbody id="laporanTable"></tbody></table></div></div></div>
         </div>
 
-        <!-- SERTIFIKAT PAGE -->
+        <!-- ========== SERTIFIKAT ========== -->
         <div id="page-sertifikat" class="page">
-            <div class="page-header">
-                <div><h1>🏅 Sertifikat</h1><p>Generate sertifikat otomatis</p></div>
-                <button class="btn btn-primary" onclick="openModal('certModal')"><i class="fas fa-plus"></i> Buat Sertifikat</button>
-            </div>
+            <div class="page-header"><div><h1>🏅 Sertifikat</h1><p>Generate sertifikat otomatis</p></div><button class="btn btn-primary" onclick="openModal('certModal')"><i class="fas fa-plus"></i> Buat Sertifikat</button></div>
             <div class="toolbar">
-                <div class="search-box">
-                    <i class="fas fa-search"></i>
-                    <input type="text" id="searchCert" placeholder="Cari sertifikat..." oninput="filterCert()">
-                </div>
-                <select class="filter-select" id="filterCertType" onchange="filterCert()">
-                    <option value="">Semua Tipe</option>
-                    <option value="hafalan">Hafalan Al-Quran</option>
-                    <option value="jenazah">Pengurusan Jenazah</option>
-                    <option value="lulus">Kelulusan Madin</option>
-                </select>
+                <div class="search-box"><i class="fas fa-search"></i><input type="text" id="searchCert" placeholder="Cari sertifikat..." oninput="filterCert()"></div>
+                <select class="filter-select" id="filterCertType" onchange="filterCert()"><option value="">Semua Tipe</option><option value="hafalan">Hafalan Al-Quran</option><option value="jenazah">Pengurusan Jenazah</option><option value="lulus">Kelulusan Madin</option><option value="khatib">Praktik Khatib</option><option value="bilal">Praktik Bilal</option></select>
             </div>
-            <div id="certList" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 15px;"></div>
-            <div id="certEmpty" class="empty-state" style="display: none; text-align: center; padding: 40px; color: var(--text-muted);">
-                <i class="fas fa-certificate" style="font-size: 48px; margin-bottom: 15px; opacity: 0.5;"></i>
-                <h3>Belum ada sertifikat</h3>
-            </div>
+            <div id="certList" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:12px"></div>
+            <div id="certEmpty" class="empty-state" style="display:none"><i class="fas fa-certificate"></i><h3>Belum ada sertifikat</h3><p>Klik "Buat Sertifikat" untuk mulai</p></div>
         </div>
 
-        <!-- PENGATURAN PAGE -->
+        <!-- ========== KEGIATAN ========== -->
+        <div id="page-kegiatan" class="page">
+            <div class="page-header"><div><h1>📸 Kegiatan</h1><p>Upload foto kegiatan</p></div><button class="btn btn-primary" onclick="openModal('uploadModal')"><i class="fas fa-upload"></i> Upload Foto</button></div>
+            <div class="toolbar">
+                <div class="search-box"><i class="fas fa-search"></i><input type="text" id="searchKegiatan" placeholder="Cari kegiatan..." oninput="filterKegiatan()"></div>
+                <select class="filter-select" id="filterKegiatanType" onchange="filterKegiatan()"><option value="">Semua</option><option value="hafalan">Setoran Hafalan</option><option value="ujian">Ujian</option><option value="praktik">Praktik Ibadah</option><option value="jenazah">Pengurusan Jenazah</option><option value="khatam">Khataman</option></select>
+            </div>
+            <div id="kegiatanList" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px"></div>
+            <div id="kegiatanEmpty" class="empty-state" style="display:none"><i class="fas fa-camera"></i><h3>Belum ada foto</h3><button class="btn btn-primary" style="margin-top:12px" onclick="openModal('uploadModal')"><i class="fas fa-upload"></i> Upload</button></div>
+        </div>
+
+        <!-- ========== PENGATURAN ========== -->
         <div id="page-pengaturan" class="page">
-            <div class="page-header">
-                <div><h1>⚙️ Pengaturan</h1><p>Konfigurasi aplikasi</p></div>
-                <button class="btn btn-primary" onclick="saveSettings()"><i class="fas fa-save"></i> Simpan</button>
-            </div>
-            <div class="card">
-                <div class="card-body">
-                    <h3 style="color: var(--accent); margin-bottom: 15px; font-size: 16px;">🏢 Informasi Ponpes</h3>
-                    <div class="form-row">
-                        <div class="form-group"><label>Nama Ponpes</label><input type="text" class="form-control" id="setNamaPonpes" value="Bahrul Maghfiroh"></div>
-                        <div class="form-group"><label>Nama Aplikasi</label><input type="text" class="form-control" id="setNamaAplikasi" value="Mutqin BM"></div>
-                    </div>
-                    <h3 style="color: var(--accent); margin: 25px 0 15px; font-size: 16px;">📚 Bobot Penilaian</h3>
-                    <div class="form-row">
-                        <div class="form-group"><label>Hafalan (%)</label><input type="number" class="form-control" id="setBobotHafalan" value="40" min="0" max="100"></div>
-                        <div class="form-group"><label>Praktik (%)</label><input type="number" class="form-control" id="setBobotPraktik" value="30" min="0" max="100"></div>
-                        <div class="form-group"><label>Madin (%)</label><input type="number" class="form-control" id="setBobotMadin" value="20" min="0" max="100"></div>
-                        <div class="form-group"><label>Adab (%)</label><input type="number" class="form-control" id="setBobotAdab" value="10" min="0" max="100"></div>
-                    </div>
-                    <h3 style="color: var(--accent); margin: 25px 0 15px; font-size: 16px;">💾 Data</h3>
-                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-                        <button class="btn btn-info" onclick="exportAllData()"><i class="fas fa-download"></i> Export Semua Data</button>
-                        <button class="btn btn-secondary" onclick="document.getElementById('importFile').click()"><i class="fas fa-upload"></i> Import Data</button>
-                        <input type="file" id="importFile" style="display: none;" accept=".json" onchange="importAllData(event)">
-                        <button class="btn btn-danger" onclick="if(confirm('Reset semua data?')){localStorage.clear();location.reload()}"><i class="fas fa-trash"></i> Reset</button>
-                    </div>
-                </div>
-            </div>
+            <div class="page-header"><div><h1>⚙️ Pengaturan</h1><p>Konfigurasi aplikasi</p></div><button class="btn btn-primary" onclick="saveSettings()"><i class="fas fa-save"></i> Simpan</button></div>
+            <div class="settings-section"><h3>🏢 Informasi Ponpes</h3><div class="form-row"><div class="form-group"><label>Nama Ponpes</label><input type="text" class="form-control" id="setNamaPonpes" value="Bahrul Maghfiroh"></div><div class="form-group"><label>Nama Aplikasi</label><input type="text" class="form-control" id="setNamaAplikasi" value="Mutqin BM"></div></div><div class="form-row"><div class="form-group"><label>Alamat</label><input type="text" class="form-control" id="setAlamat" value="Jl. Pendidikan No. 1"></div><div class="form-group"><label>Kota</label><input type="text" class="form-control" id="setKota" value="Jakarta"></div></div></div>
+            <div class="settings-section"><h3>📚 Bobot Penilaian</h3><div class="form-row"><div class="form-group"><label>Hafalan (%)</label><input type="number" class="form-control" id="setBobotHafalan" value="40" min="0" max="100"></div><div class="form-group"><label>Praktik (%)</label><input type="number" class="form-control" id="setBobotPraktik" value="30" min="0" max="100"></div><div class="form-group"><label>Madin (%)</label><input type="number" class="form-control" id="setBobotMadin" value="20" min="0" max="100"></div><div class="form-group"><label>Adab (%)</label><input type="number" class="form-control" id="setBobotAdab" value="10" min="0" max="100"></div></div></div>
+            <div class="settings-section"><h3>🔔 Notifikasi</h3><div class="setting-item"><div class="setting-info"><h4>Notifikasi Email</h4><p>Kirim notifikasi ke email pengajar</p></div><div class="toggle active" onclick="this.classList.toggle('active')"></div></div><div class="setting-item"><div class="setting-info"><h4>Notifikasi WhatsApp</h4><p>Kirim notifikasi ke WhatsApp wali santri</p></div><div class="toggle" onclick="this.classList.toggle('active')"></div></div></div>
+            <div class="settings-section"><h3>💾 Data</h3><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-info" onclick="exportAllData()"><i class="fas fa-download"></i> Export Semua</button><button class="btn btn-secondary" onclick="document.getElementById('importFile').click()"><i class="fas fa-upload"></i> Import Data</button><input type="file" id="importFile" style="display:none" accept=".json" onchange="importAllData(event)"><button class="btn btn-danger" onclick="if(confirm('Reset semua data?')){localStorage.clear();location.reload()}"><i class="fas fa-trash"></i> Reset</button></div></div>
         </div>
-
     </main>
 </div>
 
-<!-- MODALS -->
+<!-- ========== MODALS ========== -->
 
-<!-- Add Santri Modal -->
+<!-- Add Santri -->
 <div class="modal-overlay" id="addSantriModal">
     <div class="modal">
-        <div class="modal-header">
-            <h3><i class="fas fa-user-plus"></i> Tambah Santri</h3>
-            <button class="modal-close" onclick="closeModal('addSantriModal')">&times;</button>
-        </div>
+        <div class="modal-header"><h3><i class="fas fa-user-plus"></i> Tambah Santri</h3><button class="modal-close" onclick="closeModal('addSantriModal')">&times;</button></div>
         <div class="modal-body">
-            <div class="form-row">
-                <div class="form-group"><label>Nama Lengkap</label><input type="text" class="form-control" id="newSantriNama" placeholder="Nama santri"></div>
-                <div class="form-group"><label>Kelas</label>
-                    <select class="form-control" id="newSantriKelas">
-                        <option value="1">Kelas 1</option><option value="2">Kelas 2</option><option value="3">Kelas 3</option>
-                        <option value="4">Kelas 4</option><option value="5">Kelas 5</option><option value="6">Kelas 6</option>
-                    </select>
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group"><label>Wali</label><input type="text" class="form-control" id="newSantriWali" placeholder="Nama wali"></div>
-                <div class="form-group"><label>No. HP</label><input type="text" class="form-control" id="newSantriHp" placeholder="08xxx"></div>
-            </div>
+            <div class="form-row"><div class="form-group"><label>Nama Lengkap</label><input type="text" class="form-control" id="newSantriNama" placeholder="Nama santri"></div><div class="form-group"><label>Kelas</label><select class="form-control" id="newSantriKelas"><option value="1">Kelas 1</option><option value="2">Kelas 2</option><option value="3">Kelas 3</option><option value="4">Kelas 4</option><option value="5">Kelas 5</option><option value="6">Kelas 6</option></select></div></div>
+            <div class="form-row"><div class="form-group"><label>Wali</label><input type="text" class="form-control" id="newSantriWali" placeholder="Nama wali"></div><div class="form-group"><label>No. HP</label><input type="text" class="form-control" id="newSantriHp" placeholder="08xxx"></div></div>
         </div>
-        <div class="modal-footer">
-            <button class="btn btn-secondary" onclick="closeModal('addSantriModal')">Batal</button>
-            <button class="btn btn-primary" onclick="addSantri()"><i class="fas fa-save"></i> Simpan</button>
-        </div>
+        <div class="modal-footer"><button class="btn btn-secondary" onclick="closeModal('addSantriModal')">Batal</button><button class="btn btn-primary" onclick="addSantri()"><i class="fas fa-save"></i> Simpan</button></div>
     </div>
 </div>
 
-<!-- Bulk Import Modal -->
+<!-- Bulk Import -->
 <div class="modal-overlay" id="bulkImportModal">
-    <div class="modal" style="max-width: 700px;">
-        <div class="modal-header">
-            <h3><i class="fas fa-file-import"></i> Import Data Santri Massal</h3>
-            <button class="modal-close" onclick="closeModal('bulkImportModal')">&times;</button>
-        </div>
+    <div class="modal" style="max-width:700px">
+        <div class="modal-header"><h3><i class="fas fa-file-import"></i> Import Data Santri Massal</h3><button class="modal-close" onclick="closeModal('bulkImportModal')">&times;</button></div>
         <div class="modal-body">
-            <div style="background: rgba(212, 175, 55, 0.08); border: 1px solid var(--border); border-radius: 10px; padding: 20px; margin-bottom: 20px;">
-                <h4 style="color: var(--accent); margin-bottom: 10px; font-size: 15px;">📋 Format Template</h4>
-                <p style="color: var(--text-muted); font-size: 12px; margin-bottom: 10px;">Format CSV dengan kolom <strong>Nama</strong> dan <strong>Kelas</strong></p>
-                <div style="background: rgba(0,0,0,0.3); border-radius: 8px; padding: 15px; margin: 12px 0; overflow-x: auto;">
-                    <table style="width: 100%; font-size: 13px;">
-                        <thead><tr style="background: rgba(212, 175, 55, 0.15);"><th style="color: var(--accent); padding: 8px;">Nama</th><th style="color: var(--accent); padding: 8px;">Kelas</th></tr></thead>
-                        <tbody>
-                            <tr><td style="padding: 8px; color: var(--text-muted);">Ahmad Fauzi</td><td style="padding: 8px; color: var(--text-muted);">3</td></tr>
-                            <tr><td style="padding: 8px; color: var(--text-muted);">Muhammad Rizky</td><td style="padding: 8px; color: var(--text-muted);">5</td></tr>
-                            <tr><td style="padding: 8px; color: var(--text-muted);">Abdullah Hakim</td><td style="padding: 8px; color: var(--text-muted);">2</td></tr>
-                        </tbody>
-                    </table>
+            <div class="import-template">
+                <h4>📋 Format Template</h4>
+                <p style="color:var(--text-muted);font-size:12px;margin-bottom:10px">Format CSV dengan kolom <strong>Nama</strong> dan <strong>Kelas</strong>. Pisahkan dengan koma (,)</p>
+                <div class="template-preview">
+                    <table><thead><tr><th>Nama</th><th>Kelas</th></tr></thead><tbody>
+                        <tr><td>Ahmad Fauzi</td><td>3</td></tr>
+                        <tr><td>Muhammad Rizky</td><td>5</td></tr>
+                        <tr><td>Abdullah Hakim</td><td>2</td></tr>
+                        <tr><td>Fatimah Azzahra</td><td>4</td></tr>
+                        <tr><td>Umar bin Khattab</td><td>6</td></tr>
+                    </tbody></table>
                 </div>
-                <button class="btn btn-info btn-sm" onclick="downloadTemplate()"><i class="fas fa-download"></i> Download Template CSV</button>
+                <div class="import-steps">
+                    <div class="import-step"><div class="step-num">1</div><div class="step-text"><strong>Download Template</strong>Klik tombol di bawah untuk mengunduh template CSV</div></div>
+                    <div class="import-step"><div class="step-num">2</div><div class="step-text"><strong>Isi Data</strong>Buka file CSV dengan Excel, isi nama dan kelas</div></div>
+                    <div class="import-step"><div class="step-num">3</div><div class="step-text"><strong>Upload File</strong>Upload file CSV yang sudah diisi</div></div>
+                </div>
+                <div style="margin-top:12px"><button class="btn btn-info" onclick="downloadTemplate()"><i class="fas fa-download"></i> Download Template CSV</button></div>
             </div>
-            <div class="import-area" onclick="document.getElementById('csvFileInput').click()">
+
+            <div class="upload-area" onclick="document.getElementById('csvFileInput').click()" id="csvDropArea">
                 <i class="fas fa-cloud-upload-alt"></i>
-                <p><strong style="color: var(--accent);">Klik untuk upload file CSV</strong></p>
-                <p style="font-size: 11px; margin-top: 5px;">Format: .csv (dipisahkan koma)</p>
+                <p><strong style="color:var(--accent)">Klik untuk upload file CSV</strong></p>
+                <p style="font-size:11px;margin-top:5px">Format: .csv (dipisahkan koma)</p>
             </div>
-            <input type="file" id="csvFileInput" accept=".csv,.txt" style="display: none;" onchange="handleCSVUpload(event)">
-            <div id="csvFileName" style="color: var(--text-muted); font-size: 12px; margin-top: 10px; text-align: center;"></div>
-            <div id="importResult" style="margin-top: 15px; padding: 15px; background: rgba(16, 185, 129, 0.1); border: 1px solid var(--success); border-radius: 8px; display: none;"></div>
+            <input type="file" id="csvFileInput" accept=".csv,.txt" style="display:none" onchange="handleCSVUpload(event)">
+            <div id="csvFileName" style="color:var(--text-muted);font-size:12px;margin-top:8px;text-align:center"></div>
+
+            <div class="import-result" id="importResult"></div>
         </div>
-        <div class="modal-footer">
-            <button class="btn btn-secondary" onclick="closeModal('bulkImportModal')">Tutup</button>
-            <button class="btn btn-primary" id="btnConfirmImport" style="display: none;" onclick="confirmImport()"><i class="fas fa-check"></i> Import Semua</button>
-        </div>
+        <div class="modal-footer"><button class="btn btn-secondary" onclick="closeModal('bulkImportModal')">Tutup</button><button class="btn btn-primary" id="btnConfirmImport" style="display:none" onclick="confirmImport()"><i class="fas fa-check"></i> Import Semua</button></div>
     </div>
 </div>
 
-<!-- Add Hafalan Modal -->
+<!-- Add Hafalan -->
 <div class="modal-overlay" id="addHafalanModal">
     <div class="modal">
-        <div class="modal-header">
-            <h3><i class="fas fa-book-quran"></i> Tambah Standar Hafalan</h3>
-            <button class="modal-close" onclick="closeModal('addHafalanModal')">&times;</button>
-        </div>
+        <div class="modal-header"><h3><i class="fas fa-book-quran"></i> Tambah Standar Hafalan</h3><button class="modal-close" onclick="closeModal('addHafalanModal')">&times;</button></div>
         <div class="modal-body">
             <div class="form-group"><label>Nama Hafalan</label><input type="text" class="form-control" id="newHafalanNama" placeholder="Contoh: Surah Ar-Rahman"></div>
             <div class="form-row">
-                <div class="form-group"><label>Kategori</label>
-                    <select class="form-control" id="newHafalanKategori">
-                        <option value="surah">Surah</option><option value="dzikir">Dzikir & Doa</option>
-                        <option value="juz">Juz</option><option value="praktik">Praktik</option>
-                        <option value="akademik">Akademik</option><option value="adab">Adab</option>
-                    </select>
-                </div>
+                <div class="form-group"><label>Kategori</label><select class="form-control" id="newHafalanKategori"><option value="surah">Surah</option><option value="dzikir">Dzikir & Doa</option><option value="juz">Juz</option><option value="praktik">Praktik</option><option value="akademik">Akademik</option><option value="adab">Adab</option></select></div>
                 <div class="form-group"><label>Max Score</label><input type="number" class="form-control" id="newHafalanMax" value="100" min="1"></div>
             </div>
             <div class="form-group"><label>Deskripsi</label><textarea class="form-control" id="newHafalanDesk" placeholder="Deskripsi"></textarea></div>
         </div>
-        <div class="modal-footer">
-            <button class="btn btn-secondary" onclick="closeModal('addHafalanModal')">Batal</button>
-            <button class="btn btn-primary" onclick="addHafalan()"><i class="fas fa-save"></i> Simpan</button>
-        </div>
+        <div class="modal-footer"><button class="btn btn-secondary" onclick="closeModal('addHafalanModal')">Batal</button><button class="btn btn-primary" onclick="addHafalan()"><i class="fas fa-save"></i> Simpan</button></div>
     </div>
 </div>
 
 <!-- Certificate Modal -->
 <div class="modal-overlay" id="certModal">
     <div class="modal">
-        <div class="modal-header">
-            <h3><i class="fas fa-certificate"></i> Buat Sertifikat</h3>
-            <button class="modal-close" onclick="closeModal('certModal')">&times;</button>
-        </div>
+        <div class="modal-header"><h3><i class="fas fa-certificate"></i> Buat Sertifikat</h3><button class="modal-close" onclick="closeModal('certModal')">&times;</button></div>
         <div class="modal-body">
             <div class="form-group"><label>Nama Santri</label><select class="form-control" id="certSantri"><option value="">Pilih Santri</option></select></div>
             <div class="form-row">
-                <div class="form-group"><label>Jenis Sertifikat</label>
-                    <select class="form-control" id="certType">
-                        <option value="hafalan">Hafalan Al-Quran</option>
-                        <option value="jenazah">Pengurusan Jenazah</option>
-                        <option value="lulus">Kelulusan Madin</option>
-                    </select>
-                </div>
+                <div class="form-group"><label>Jenis Sertifikat</label><select class="form-control" id="certType"><option value="hafalan">Hafalan Al-Quran</option><option value="jenazah">Pengurusan Jenazah</option><option value="lulus">Kelulusan Madin</option><option value="khatib">Praktik Khatib</option><option value="bilal">Praktik Bilal</option></select></div>
                 <div class="form-group"><label>Tanggal</label><input type="date" class="form-control" id="certDate"></div>
             </div>
             <div class="form-group"><label>Keterangan</label><textarea class="form-control" id="certDesc" placeholder="Keterangan tambahan"></textarea></div>
         </div>
-        <div class="modal-footer">
-            <button class="btn btn-secondary" onclick="closeModal('certModal')">Batal</button>
-            <button class="btn btn-primary" onclick="generateCertificate()"><i class="fas fa-certificate"></i> Generate</button>
-        </div>
+        <div class="modal-footer"><button class="btn btn-secondary" onclick="closeModal('certModal')">Batal</button><button class="btn btn-primary" onclick="generateCertificate()"><i class="fas fa-certificate"></i> Generate</button></div>
     </div>
 </div>
 
-<!-- Certificate Preview Modal -->
+<!-- Certificate Preview -->
 <div class="modal-overlay" id="certPreviewModal">
-    <div class="modal" style="max-width: 850px;">
-        <div class="modal-header">
-            <h3><i class="fas fa-eye"></i> Preview Sertifikat</h3>
-            <button class="modal-close" onclick="closeModal('certPreviewModal')">&times;</button>
-        </div>
+    <div class="modal" style="max-width:850px">
+        <div class="modal-header"><h3><i class="fas fa-eye"></i> Preview Sertifikat</h3><button class="modal-close" onclick="closeModal('certPreviewModal')">&times;</button></div>
         <div class="modal-body" id="certPreviewContent"></div>
         <div class="modal-footer">
             <button class="btn btn-secondary" onclick="closeModal('certPreviewModal')">Tutup</button>
@@ -681,45 +564,54 @@
     </div>
 </div>
 
-<!-- View Santri Detail Modal -->
-<div class="modal-overlay" id="viewSantriModal">
-    <div class="modal" style="max-width: 650px;">
-        <div class="modal-header">
-            <h3><i class="fas fa-user"></i> Detail Santri</h3>
-            <button class="modal-close" onclick="closeModal('viewSantriModal')">&times;</button>
+<!-- Upload Modal -->
+<div class="modal-overlay" id="uploadModal">
+    <div class="modal">
+        <div class="modal-header"><h3><i class="fas fa-upload"></i> Upload Foto</h3><button class="modal-close" onclick="closeModal('uploadModal')">&times;</button></div>
+        <div class="modal-body">
+            <div class="form-group"><label>Judul Kegiatan</label><input type="text" class="form-control" id="kegiatanJudul" placeholder="Judul kegiatan"></div>
+            <div class="form-row">
+                <div class="form-group"><label>Kategori</label><select class="form-control" id="kegiatanType"><option value="hafalan">Setoran Hafalan</option><option value="ujian">Ujian Hafalan</option><option value="praktik">Praktik Ibadah</option><option value="jenazah">Pengurusan Jenazah</option><option value="khatam">Khataman</option></select></div>
+                <div class="form-group"><label>Tanggal</label><input type="date" class="form-control" id="kegiatanDate"></div>
+            </div>
+            <div class="form-group"><label>Deskripsi</label><textarea class="form-control" id="kegiatanDesc" placeholder="Keterangan"></textarea></div>
         </div>
-        <div class="modal-body" id="santriDetailContent"></div>
-        <div class="modal-footer">
-            <button class="btn btn-secondary" onclick="closeModal('viewSantriModal')">Tutup</button>
-        </div>
+        <div class="modal-footer"><button class="btn btn-secondary" onclick="closeModal('uploadModal')">Batal</button><button class="btn btn-primary" onclick="uploadKegiatan()"><i class="fas fa-upload"></i> Upload</button></div>
     </div>
 </div>
 
-<!-- Toast Container -->
+<!-- View Santri Detail -->
+<div class="modal-overlay" id="viewSantriModal">
+    <div class="modal" style="max-width:650px">
+        <div class="modal-header"><h3><i class="fas fa-user"></i> Detail Santri</h3><button class="modal-close" onclick="closeModal('viewSantriModal')">&times;</button></div>
+        <div class="modal-body" id="santriDetailContent"></div>
+        <div class="modal-footer"><button class="btn btn-secondary" onclick="closeModal('viewSantriModal')">Tutup</button></div>
+    </div>
+</div>
+
+<!-- Toast -->
 <div class="toast-container" id="toastContainer"></div>
 
 <script>
 // ==================== DATA STORE ====================
-const DB = {
-    get(key, def = []) {
-        try { return JSON.parse(localStorage.getItem('mutqin_' + key)) || def; }
-        catch { return def; }
-    },
-    set(key, val) { localStorage.setItem('mutqin_' + key, JSON.stringify(val)); },
-    remove(key) { localStorage.removeItem('mutqin_' + key); }
-};
+const DB={get(k,d=[]){try{return JSON.parse(localStorage.getItem('mutqin_'+k))||d}catch{return d}},set(k,v){localStorage.setItem('mutqin_'+k,JSON.stringify(v))},remove(k){localStorage.removeItem('mutqin_'+k)}};
 
 // ==================== INIT DATA ====================
-function initData() {
-    if (!DB.get('initialized', false)) {
-        const santri = [
+function initData(){
+    if(!DB.get('initialized',false)){
+        const santri=[
             {id:1,nama:'Ahmad Fauzan',kelas:5,gender:'L',wali:'H. Fauzan',hp:'081234567890',hafalan:85,nilai:98,status:'lulus',surah:100,dzikir:100,juz:80,praktik:70,akademik:90,adab:95},
             {id:2,nama:'Yusup Ramadhan',kelas:3,gender:'L',wali:'Ramadhan',hp:'081234567891',hafalan:75,nilai:95,status:'proses',surah:90,dzikir:85,juz:60,praktik:65,akademik:80,adab:85},
             {id:3,nama:'Salma Azizah',kelas:4,gender:'P',wali:'Aziz',hp:'081234567892',hafalan:88,nilai:96,status:'proses',surah:95,dzikir:90,juz:75,praktik:80,akademik:85,adab:90},
             {id:4,nama:'Muhammad Lugman',kelas:6,gender:'L',wali:'Lugman',hp:'081234567893',hafalan:82,nilai:95,status:'proses',surah:85,dzikir:80,juz:70,praktik:75,akademik:88,adab:82},
             {id:5,nama:'M. Faris',kelas:4,gender:'L',wali:'Faris',hp:'081234567894',hafalan:70,nilai:90,status:'proses',surah:75,dzikir:70,juz:55,praktik:60,akademik:75,adab:80},
+            {id:6,nama:'H. Hamzah',kelas:6,gender:'L',wali:'Hamzah',hp:'081234567895',hafalan:78,nilai:90,status:'proses',surah:80,dzikir:75,juz:65,praktik:70,akademik:82,adab:88},
+            {id:7,nama:'Rahmad',kelas:5,gender:'L',wali:'Rahmat',hp:'081234567896',hafalan:65,nilai:88,status:'proses',surah:70,dzikir:65,juz:50,praktik:55,akademik:70,adab:75},
+            {id:8,nama:'Fatimah Zahra',kelas:3,gender:'P',wali:'Zahra',hp:'081234567897',hafalan:92,nilai:94,status:'lulus',surah:98,dzikir:95,juz:85,praktik:85,akademik:92,adab:96},
+            {id:9,nama:'Abdullah Hakim',kelas:2,gender:'L',wali:'Hakim',hp:'081234567898',hafalan:45,nilai:72,status:'belum',surah:50,dzikir:40,juz:30,praktik:45,akademik:55,adab:60},
+            {id:10,nama:'Siti Aisyah',kelas:5,gender:'P',wali:'Aisyah',hp:'081234567899',hafalan:95,nilai:97,status:'lulus',surah:100,dzikir:98,juz:90,praktik:90,akademik:95,adab:98},
         ];
-        const hafalan = [
+        const hafalan=[
             {id:1,nama:'Surah Yaasin',kategori:'surah',max:100,deskripsi:'Hafal Surah Yaasin (36) lengkap',icon:'📖'},
             {id:2,nama:'Surah Al-Waqiah',kategori:'surah',max:100,deskripsi:'Hafal Surah Al-Waqiah (56) lengkap',icon:'📖'},
             {id:3,nama:'Surah Al-Mulk',kategori:'surah',max:100,deskripsi:'Hafal Surah Al-Mulk (67) lengkap',icon:'📖'},
@@ -738,851 +630,407 @@ function initData() {
             {id:16,nama:'Kehadiran Madin',kategori:'adab',max:100,deskripsi:'Kehadiran minimal 90%',icon:'⭐'},
             {id:17,nama:'Kedisiplinan & Akhlak',kategori:'adab',max:100,deskripsi:'Kedisiplinan dan akhlak baik',icon:'⭐'},
         ];
-        const certs = [
+        const certs=[
             {id:1,santri:'Ahmad Fauzan',type:'hafalan',date:'2026-04-01',desc:'Telah menyelesaikan hafalan Juz 30 dengan baik',certNo:'BM-2026-001'},
             {id:2,santri:'Fatimah Zahra',type:'jenazah',date:'2026-03-28',desc:'Telah mengikuti pelatihan pengurusan jenazah',certNo:'BM-2026-002'},
         ];
-        DB.set('santri', santri);
-        DB.set('hafalan', hafalan);
-        DB.set('certs', certs);
-        DB.set('initialized', true);
+        const kegiatan=[
+            {id:1,judul:'Setoran Hafalan Surah Ar-Rahman',type:'hafalan',date:'2026-04-15',desc:'Santri kelas 5 setoran hafalan'},
+            {id:2,judul:'Ujian Hafalan Juz 30',type:'ujian',date:'2026-04-14',desc:'Ujian Juz 30 kelas 6'},
+            {id:3,judul:'Praktik Sholat Berjamaah',type:'praktik',date:'2026-04-13',desc:'Praktik sholat berjamaah'},
+        ];
+        DB.set('santri',santri);DB.set('hafalan',hafalan);DB.set('certs',certs);DB.set('kegiatan',kegiatan);DB.set('initialized',true);
     }
 }
 
 // ==================== AUTH ====================
-const USERS = {
-    admin: {pass: 'admin123', name: 'Ust. Abdul Malik', role: 'Administrator', avatar: 'AM'},
-    ustad: {pass: 'ustad123', name: 'Ust. Hasan', role: 'Pengajar', avatar: 'UH'}
+const USERS={
+    admin:{pass:'admin123',name:'Ust. Abdul Malik',role:'Administrator',avatar:'AM'},
+    ustad:{pass:'ustad123',name:'Ust. Hasan',role:'Pengajar',avatar:'UH'}
 };
-
-function login(u, p) {
-    if (USERS[u] && USERS[u].pass === p) {
-        DB.set('currentUser', {username: u, ...USERS[u]});
-        return true;
-    }
-    return false;
-}
-
-function logout() {
-    DB.remove('currentUser');
-    document.getElementById('appContainer').style.display = 'none';
-    document.getElementById('loginPage').style.display = 'flex';
-    document.getElementById('loginUser').value = '';
-    document.getElementById('loginPass').value = '';
-}
-
-function checkAuth() {
-    const u = DB.get('currentUser', null);
-    if (u) {
-        document.getElementById('loginPage').style.display = 'none';
-        document.getElementById('appContainer').style.display = 'block';
-        document.getElementById('dashName').textContent = u.name;
-        document.getElementById('dashUser').textContent = u.name;
-        document.getElementById('dashAvatar').src = `https://ui-avatars.com/api/?name=${encodeURIComponent(u.name)}&background=d4af37&color=0f2922`;
-        loadAllData();
-    }
-}
-
-document.getElementById('loginForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    const u = document.getElementById('loginUser').value.trim().toLowerCase();
-    const p = document.getElementById('loginPass').value;
-    if (login(u, p)) {
-        showToast('Berhasil login!', 'success');
-        setTimeout(() => location.reload(), 500);
-    } else {
-        showToast('Username atau password salah!', 'error');
-    }
-});
+function login(u,p){if(USERS[u]&&USERS[u].pass===p){DB.set('currentUser',{username:u,...USERS[u]});return true}return false}
+function logout(){DB.remove('currentUser');document.getElementById('appContainer').style.display='none';document.getElementById('loginPage').style.display='flex';document.getElementById('loginUser').value='';document.getElementById('loginPass').value=''}
+function checkAuth(){const u=DB.get('currentUser',null);if(u){document.getElementById('loginPage').style.display='none';document.getElementById('appContainer').style.display='block';document.getElementById('dashName').textContent=u.name;document.getElementById('dashUser').textContent=u.name;document.getElementById('dashAvatar').src=`https://ui-avatars.com/api/?name=${encodeURIComponent(u.name)}&background=c9a84c&color=0a1f18`;loadAllData()}}
+document.getElementById('loginForm').addEventListener('submit',function(e){e.preventDefault();const u=document.getElementById('loginUser').value.trim().toLowerCase(),p=document.getElementById('loginPass').value;if(login(u,p)){showToast('Berhasil login!','success');setTimeout(()=>location.reload(),500)}else showToast('Username atau password salah!','error')});
 
 // ==================== NAVIGATION ====================
-function navigateTo(page) {
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    document.getElementById('page-' + page).classList.add('active');
-    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-    const nav = document.querySelector(`[data-page="${page}"]`);
-    if (nav) nav.classList.add('active');
+function navigateTo(page){
+    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+    document.getElementById('page-'+page).classList.add('active');
+    document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+    const nav=document.querySelector(`[data-page="${page}"]`);if(nav)nav.classList.add('active');
     document.getElementById('sidebar').classList.remove('open');
-    
-    switch(page) {
-        case 'dashboard': loadDashboard(); break;
-        case 'hafalan': loadHafalan(); break;
-        case 'inputNilai': loadInputNilai(); break;
-        case 'santri': loadSantri(); break;
-        case 'laporan': loadLaporan(); break;
-        case 'sertifikat': loadSertifikat(); break;
-    }
+    switch(page){case'dashboard':loadDashboard();break;case'hafalan':loadHafalan();break;case'inputNilai':loadInputNilai();break;case'santri':loadSantri();break;case'laporan':loadLaporan();break;case'sertifikat':loadSertifikat();break;case'kegiatan':loadKegiatan();break}
 }
-
-function toggleSidebar() {
-    document.getElementById('sidebar').classList.toggle('open');
-}
-
-function openModal(id) { document.getElementById(id).classList.add('active'); }
-function closeModal(id) { document.getElementById(id).classList.remove('active'); }
-
-document.querySelectorAll('.modal-overlay').forEach(m => {
-    m.addEventListener('click', function(e) {
-        if (e.target === this) this.classList.remove('active');
-    });
-});
+function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open')}
+function openModal(id){document.getElementById(id).classList.add('active')}
+function closeModal(id){document.getElementById(id).classList.remove('active')}
+document.querySelectorAll('.modal-overlay').forEach(m=>{m.addEventListener('click',function(e){if(e.target===this)this.classList.remove('active')})});
 
 // ==================== TOAST ====================
-function showToast(msg, type = 'success') {
-    const c = document.getElementById('toastContainer');
-    const icons = {success: 'fa-check-circle', error: 'fa-times-circle', warning: 'fa-exclamation-triangle', info: 'fa-info-circle'};
-    const t = document.createElement('div');
-    t.className = `toast toast-${type}`;
-    t.innerHTML = `<i class="fas ${icons[type]}"></i><span>${msg}</span>`;
-    c.appendChild(t);
-    setTimeout(() => {
-        t.style.animation = 'slideOut .3s ease forwards';
-        setTimeout(() => t.remove(), 300);
-    }, 3000);
+function showToast(msg,type='success'){
+    const c=document.getElementById('toastContainer'),icons={success:'fa-check-circle',error:'fa-times-circle',warning:'fa-exclamation-triangle',info:'fa-info-circle'};
+    const t=document.createElement('div');t.className=`toast toast-${type}`;t.innerHTML=`<i class="fas ${icons[type]}"></i><span>${msg}</span>`;c.appendChild(t);
+    setTimeout(()=>{t.style.animation='slideOut .3s ease forwards';setTimeout(()=>t.remove(),300)},3000);
 }
 
 // ==================== DASHBOARD ====================
-function loadDashboard() {
-    const santri = DB.get('santri');
-    const lulus = santri.filter(s => s.status === 'lulus').length;
-    const proses = santri.filter(s => s.status === 'proses').length;
-    const belum = santri.filter(s => s.status === 'belum').length;
-    
-    document.getElementById('statTotal').textContent = santri.length;
-    document.getElementById('statLulus').textContent = lulus;
-    document.getElementById('statProses').textContent = proses;
-    document.getElementById('statBelum').textContent = belum;
-    document.getElementById('santriBadge').textContent = santri.length;
-    
-    // Chart Distribusi
-    const ctx = document.getElementById('chartDistribusi');
-    if (window.chartDist) window.chartDist.destroy();
-    window.chartDist = new Chart(ctx, {
-        type: 'doughnut',
-         {
-            labels: ['Lulus', 'Proses', 'Belum'],
-            datasets: [{
-                 [lulus, proses, belum],
-                backgroundColor: ['#10b981', '#f59e0b', '#ef4444'],
-                borderWidth: 0
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: { position: 'bottom', labels: { color: '#80cbc4' } }
-            }
-        }
-    });
-    
-    // Top 5
-    const sorted = [...santri].sort((a, b) => b.nilai - a.nilai).slice(0, 5);
-    document.getElementById('topRanking').innerHTML = sorted.map((s, i) => `
-        <div style="display: flex; align-items: center; padding: 12px; margin-bottom: 8px; background: rgba(15, 41, 34, 0.5); border-radius: 8px; border-left: 4px solid var(--accent);">
-            <div style="width: 28px; height: 28px; background: linear-gradient(135deg, #d4af37, #f4d03f); color: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; margin-right: 12px;">${i + 1}</div>
-            <div style="flex: 1;">
-                <div style="color: white; font-weight: 600;">${s.nama}</div>
-                <div style="color: var(--text-muted); font-size: 11px;">Kelas ${s.kelas}</div>
-            </div>
-            <div style="color: var(--accent); font-size: 18px; font-weight: bold;">${s.nilai}</div>
-        </div>
-    `).join('');
+function loadDashboard(){
+    const santri=DB.get('santri'),lulus=santri.filter(s=>s.status==='lulus').length,proses=santri.filter(s=>s.status==='proses').length,belum=santri.filter(s=>s.status==='belum').length;
+    document.getElementById('statTotal').textContent=santri.length;document.getElementById('statLulus').textContent=lulus;document.getElementById('statProses').textContent=proses;document.getElementById('statBelum').textContent=belum;document.getElementById('santriBadge').textContent=santri.length;
+
+    document.getElementById('checklistContainer').innerHTML=[
+        {nama:'Yaasin, Waqiah, Mulk',desc:'Hafalan Surah',status:'lulus'},
+        {nama:'Tahlil & Istighosah',desc:'Dzikir & Doa',status:'lulus'},
+        {nama:'Juz 30',desc:'78.5% (31/40 Ayat)',status:'proses'},
+        {nama:'Praktik Khotib',desc:'Belum Dimulai',status:'belum'},
+        {nama:'Pengurusan Jenazah',desc:'Dalam Proses',status:'proses'},
+    ].map(c=>`<div class="checklist-item ${c.status}"><div class="checklist-icon"><i class="fas ${c.status==='lulus'?'fa-check':c.status==='proses'?'fa-spinner fa-spin':'fa-times'}"></i></div><div class="checklist-content"><h4>${c.nama}</h4><p>${c.desc}</p></div></div>`).join('');
+
+    // Target Hafalan
+    document.getElementById('targetHafalan').innerHTML=[
+        {nama:'QS. An-Nur: 1-31',pct:78.5,ayat:'31/40 Ayat',cls:'green'},
+        {nama:'Juz 30',pct:65,ayat:'237/364 Ayat',cls:'yellow'},
+        {nama:'Surah Yaasin',pct:100,ayat:'83/83 Ayat',cls:'green'},
+        {nama:'Surah Al-Mulk',pct:100,ayat:'30/30 Ayat',cls:'green'},
+    ].map(t=>`<div class="progress-container"><div class="progress-header"><span class="progress-label">📖 ${t.nama}</span><span class="progress-value">${t.pct}%</span></div><div class="progress-bar"><div class="progress-fill ${t.cls}" style="width:${t.pct}%"></div></div><div style="color:var(--text-muted);font-size:11px;margin-top:3px">${t.ayat}</div></div>`).join('');
+
+    // Grad Chart
+    const gctx=document.getElementById('gradChart');if(gctx._chart)gctx._chart.destroy();
+    gctx._chart=new Chart(gctx,{type:'doughnut',{labels:['Hafalan','Praktik','Madin','Adab'],datasets:[{[32,22,18,8],backgroundColor:['#10b981','#3b82f6','#f59e0b','#8b5cf6'],borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,cutout:'70%',plugins:{legend:{display:false}}}});
+
+    const totalScore=32+22+18+8;const sb=document.getElementById('statusBadge');
+    if(totalScore>=85){sb.textContent='LULUS';sb.className='status status-success';sb.style.fontSize='16px';sb.style.padding='6px 25px'}
+    else if(totalScore>=70){sb.textContent='LULUS BERSYARAT';sb.className='status status-warning';sb.style.fontSize='16px';sb.style.padding='6px 25px'}
+    else{sb.textContent='BELUM LULUS';sb.className='status status-danger';sb.style.fontSize='16px';sb.style.padding='6px 25px'}
+
+    // Recent exams
+    document.getElementById('recentExams').innerHTML=santri.slice(0,5).map(s=>`<tr><td><div class="user-cell"><img src="https://ui-avatars.com/api/?name=${encodeURIComponent(s.nama)}&background=random&color=fff" alt=""><span>${s.nama}</span></div></td><td>Kelas ${s.kelas}</td><td style="color:${s.nilai>=90?'var(--success)':s.nilai>=75?'var(--warning)':'var(--danger)'};font-weight:bold">${s.nilai}</td></tr>`).join('');
+
+    // Ranking
+    const sorted=[...santri].sort((a,b)=>b.nilai-a.nilai).slice(0,5);
+    document.getElementById('topRanking').innerHTML=sorted.map((s,i)=>`<div class="ranking-item"><div class="ranking-number" style="${i>=3?'background:linear-gradient(135deg,#94a3b8,#64748b)':''}">${i+1}</div><div class="ranking-info"><div class="ranking-name">${s.nama}</div><div class="ranking-detail">Kelas ${s.kelas}</div></div><div class="ranking-score">${s.nilai}</div></div>`).join('');
+
+    // Dist chart
+    const dctx=document.getElementById('distChart');if(dctx._chart)dctx._chart.destroy();
+    const dd={'90-100':santri.filter(s=>s.nilai>=90).length,'80-89':santri.filter(s=>s.nilai>=80&&s.nilai<90).length,'70-79':santri.filter(s=>s.nilai>=70&&s.nilai<80).length,'<70':santri.filter(s=>s.nilai<70).length};
+    dctx._chart=new Chart(dctx,{type:'bar',{labels:Object.keys(dd),datasets:[{label:'Jumlah',data:Object.values(dd),backgroundColor:['#10b981','#3b82f6','#f59e0b','#ef4444'],borderRadius:6}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,grid:{color:'rgba(201,168,76,0.1)'},ticks:{color:'#80cbc4'}},x:{grid:{display:false},ticks:{color:'#80cbc4'}}}}});
 }
 
 // ==================== HAFALAN ====================
-function loadHafalan() {
-    const hafalan = DB.get('hafalan');
-    const icons = {surah: '📖', dzikir: '🤲', juz: '📗', praktik: '🕌', akademik: '🎓', adab: '⭐'};
-    const sc = {surah: 'success', dzikir: 'info', juz: 'warning', praktik: 'info', akademik: 'warning', adab: 'purple'};
-    
-    document.getElementById('hafalanList').innerHTML = hafalan.map(h => `
-        <div class="card" style="margin-bottom: 0;">
-            <div class="card-body">
-                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
-                    <span style="font-size: 30px;">${h.icon || icons[h.kategori]}</span>
-                    <div style="flex: 1;">
-                        <h4 style="color: white; font-size: 15px; margin-bottom: 3px;">${h.nama}</h4>
-                        <p style="color: var(--text-muted); font-size: 12px;">${h.deskripsi}</p>
-                    </div>
-                    <span class="status status-${sc[h.kategori] || 'info'}">${h.kategori}</span>
-                </div>
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <span style="color: var(--text-muted); font-size: 12px;">Max Score: ${h.max || 100}</span>
-                    <div style="display: flex; gap: 6px;">
-                        <button class="btn btn-secondary btn-sm" onclick="editHafalan(${h.id})"><i class="fas fa-edit"></i></button>
-                        <button class="btn btn-danger btn-sm" onclick="deleteHafalan(${h.id})"><i class="fas fa-trash"></i></button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    `).join('') || '<div style="text-align: center; padding: 40px; color: var(--text-muted);"><i class="fas fa-book" style="font-size: 48px; margin-bottom: 15px; opacity: 0.5;"></i><h3>Tidak ada data</h3></div>';
+function loadHafalan(filter='all'){
+    const hafalan=DB.get('hafalan'),filtered=filter==='all'?hafalan:hafalan.filter(h=>h.kategori===filter);
+    const icons={surah:'📖',dzikir:'🤲',juz:'📗',praktik:'🕌',akademik:'🎓',adab:'⭐'};
+    const sc={surah:'green',dzikir:'blue',juz:'yellow',praktik:'info',akademik:'warning',adab:'purple'};
+    document.getElementById('hafalanList').innerHTML=filtered.map(h=>`<div class="card" style="margin-bottom:0"><div class="card-body"><div style="display:flex;align-items:center;gap:10px;margin-bottom:10px"><span style="font-size:26px">${h.icon||icons[h.kategori]}</span><div style="flex:1"><h4 style="color:#fff;font-size:14px">${h.nama}</h4><p style="color:var(--text-muted);font-size:11px">${h.deskripsi}</p></div><span class="status status-${sc[h.kategori]||'info'}">${h.kategori}</span></div><div style="display:flex;justify-content:space-between;align-items:center"><span style="color:var(--text-muted);font-size:12px">Max: ${h.max||100}</span><div style="display:flex;gap:5px"><button class="btn btn-secondary btn-sm" onclick="editHafalan(${h.id})"><i class="fas fa-edit"></i></button><button class="btn btn-danger btn-sm" onclick="deleteHafalan(${h.id})"><i class="fas fa-trash"></i></button></div></div></div></div>`).join('')||'<div class="empty-state"><i class="fas fa-book"></i><h3>Tidak ada data</h3></div>';
 }
-
-function addHafalan() {
-    const nama = document.getElementById('newHafalanNama').value.trim();
-    const kategori = document.getElementById('newHafalanKategori').value;
-    const max = parseInt(document.getElementById('newHafalanMax').value) || 100;
-    const desk = document.getElementById('newHafalanDesk').value.trim();
-    
-    if (!nama) { showToast('Nama harus diisi!', 'error'); return; }
-    
-    const icons = {surah: '📖', dzikir: '🤲', juz: '📗', praktik: '🕌', akademik: '🎓', adab: '⭐'};
-    const hafalan = DB.get('hafalan');
-    const newId = hafalan.length > 0 ? Math.max(...hafalan.map(h => h.id)) + 1 : 1;
-    hafalan.push({id: newId, nama, kategori, max, deskripsi: desk, icon: icons[kategori]});
-    DB.set('hafalan', hafalan);
-    
-    closeModal('addHafalanModal');
-    document.getElementById('newHafalanNama').value = '';
-    document.getElementById('newHafalanDesk').value = '';
-    showToast('Standar hafalan ditambahkan!', 'success');
-    loadHafalan();
+function filterHafalan(cat,el){document.querySelectorAll('#page-hafalan .tab').forEach(t=>t.classList.remove('active'));el.classList.add('active');loadHafalan(cat)}
+function addHafalan(){
+    const nama=document.getElementById('newHafalanNama').value.trim(),kategori=document.getElementById('newHafalanKategori').value,max=parseInt(document.getElementById('newHafalanMax').value)||100,desk=document.getElementById('newHafalanDesk').value.trim();
+    if(!nama){showToast('Nama harus diisi!','error');return}
+    const icons={surah:'📖',dzikir:'🤲',juz:'📗',praktik:'🕌',akademik:'🎓',adab:'⭐'};
+    const hafalan=DB.get('hafalan'),newId=hafalan.length>0?Math.max(...hafalan.map(h=>h.id))+1:1;
+    hafalan.push({id:newId,nama,kategori,max,deskripsi:desk,icon:icons[kategori]});DB.set('hafalan',hafalan);
+    closeModal('addHafalanModal');document.getElementById('newHafalanNama').value='';document.getElementById('newHafalanDesk').value='';
+    showToast('Standar hafalan ditambahkan!','success');loadHafalan();
 }
-
-function editHafalan(id) {
-    const hafalan = DB.get('hafalan');
-    const item = hafalan.find(h => h.id === id);
-    if (!item) return;
-    const newName = prompt('Nama:', item.nama);
-    if (newName !== null) {
-        item.nama = newName;
-        item.max = parseInt(prompt('Max Score:', item.max)) || item.max;
-        DB.set('hafalan', hafalan);
-        loadHafalan();
-        showToast('Data diupdate!', 'success');
-    }
+function editHafalan(id){
+    const hafalan=DB.get('hafalan'),item=hafalan.find(h=>h.id===id);if(!item)return;
+    const newName=prompt('Nama:',item.nama);if(newName!==null){item.nama=newName;item.max=parseInt(prompt('Max Score:',item.max))||item.max;DB.set('hafalan',hafalan);loadHafalan();showToast('Data diupdate!','success')}
 }
-
-function deleteHafalan(id) {
-    if (!confirm('Hapus standar ini?')) return;
-    DB.set('hafalan', DB.get('hafalan').filter(h => h.id !== id));
-    loadHafalan();
-    showToast('Standar dihapus!', 'warning');
-}
+function deleteHafalan(id){if(!confirm('Hapus standar ini?'))return;DB.set('hafalan',DB.get('hafalan').filter(h=>h.id!==id));loadHafalan();showToast('Standar dihapus!','warning')}
 
 // ==================== INPUT NILAI ====================
-function loadInputNilai() {
-    const santri = DB.get('santri');
-    const sel = document.getElementById('inputSantriSelect');
-    sel.innerHTML = '<option value="">-- Pilih Santri --</option>' + santri.map(s => `<option value="${s.id}">${s.nama} - Kelas ${s.kelas}</option>`).join('');
-    document.getElementById('scoreInputArea').style.display = 'none';
+function loadInputNilai(){
+    const santri=DB.get('santri');
+    const sel=document.getElementById('inputSantriSelect');
+    sel.innerHTML='<option value="">-- Pilih Santri --</option>'+santri.map(s=>`<option value="${s.id}">${s.nama} - Kelas ${s.kelas}</option>`).join('');
+    document.getElementById('scoreInputArea').style.display='none';
 }
+function loadSantriScores(){
+    const id=parseInt(document.getElementById('inputSantriSelect').value);
+    if(!id){document.getElementById('scoreInputArea').style.display='none';return}
+    const santri=DB.get('santri').find(s=>s.id===id);if(!santri)return;
+    document.getElementById('scoreInputArea').style.display='block';
 
-function loadSantriScores() {
-    const id = parseInt(document.getElementById('inputSantriSelect').value);
-    if (!id) { document.getElementById('scoreInputArea').style.display = 'none'; return; }
-    
-    const santri = DB.get('santri').find(s => s.id === id);
-    if (!santri) return;
-    
-    document.getElementById('scoreInputArea').style.display = 'block';
-    
-    const categories = [
-        {key: 'surah', label: '📖 Hafalan Surah', items: ['Yaasin', 'Al-Waqiah', 'Al-Mulk'], max: [100, 100, 100]},
-        {key: 'dzikir', label: '🤲 Dzikir & Doa', items: ['Tawasul', 'Tahlil', 'Istighosah', 'Wirid'], max: [100, 100, 100, 100]},
-        {key: 'juz', label: '📗 Juz 30', items: ['Juz 30'], max: [100]},
-        {key: 'praktik', label: '🕌 Praktik Ibadah', items: ['Sholat', 'Jenazah', 'Khotib', 'Bilal'], max: [100, 100, 100, 100]},
-        {key: 'akademik', label: '🎓 Akademik Madin', items: ['Madin Ula', 'Madin Wusto'], max: [100, 100]},
-        {key: 'adab', label: '⭐ Sikap & Adab', items: ['Sholat 5 Waktu', 'Kehadiran', 'Kedisiplinan'], max: [100, 100, 100]},
+    const categories=[
+        {key:'surah',label:'📖 Hafalan Surah',items:['Yaasin','Al-Waqiah','Al-Mulk'],max:[100,100,100]},
+        {key:'dzikir',label:'🤲 Dzikir & Doa',items:['Tawasul','Tahlil','Istighosah','Wirid & Doa'],max:[100,100,100,100]},
+        {key:'juz',label:'📗 Juz 30',items:['Juz 30'],max:[100]},
+        {key:'praktik',label:'🕌 Praktik Ibadah',items:['Sholat','Jenazah','Khotib','Bilal'],max:[100,100,100,100]},
+        {key:'akademik',label:'🎓 Akademik Madin',items:['Madin Ula','Madin Wusto'],max:[100,100]},
+        {key:'adab',label:'⭐ Sikap & Adab',items:['Sholat 5 Waktu','Kehadiran Madin','Kedisiplinan'],max:[100,100,100]},
     ];
-    
-    let html = '';
-    categories.forEach(cat => {
-        let itemsHTML = '';
-        cat.items.forEach((item, i) => {
-            const catScore = santri[cat.key] || 0;
-            const itemScore = Math.round(catScore * (cat.max[i] / cat.max.reduce((a, b) => a + b, 0)));
-            itemsHTML += `<div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
-                <label style="color: var(--text-muted); font-size: 12px; flex: 1;">${item}</label>
-                <input type="number" class="form-control score-input" data-cat="${cat.key}" data-item="${i}" value="${Math.min(itemScore, cat.max[i])}" min="0" max="${cat.max[i]}" style="width: 70px; text-align: center; padding: 6px;">
-                <span style="color: var(--text-muted); font-size: 11px; margin-left: 4px;">/ ${cat.max[i]}</span>
-            </div>`;
+
+    let html='';
+    categories.forEach(cat=>{
+        let itemsHTML='';
+        cat.items.forEach((item,i)=>{
+            // Calculate individual score from category percentage
+            const catScore=santri[cat.key]||0;
+            const itemScore=Math.round(catScore * (cat.max[i]/cat.max.reduce((a,b)=>a+b,0)));
+            itemsHTML+=`<div class="score-input-row"><label>${item}</label><input type="number" class="score-input" data-cat="${cat.key}" data-item="${i}" value="${Math.min(itemScore,cat.max[i])}" min="0" max="${cat.max[i]}" onchange="autoCalcAverage()"><span class="max-score">/ ${cat.max[i]}</span></div>`;
         });
-        html += `<div style="background: rgba(15, 41, 34, 0.5); border: 1px solid var(--border); border-radius: 10px; padding: 18px;">
-            <h4 style="color: var(--accent); margin-bottom: 12px; font-size: 14px;">${cat.label}</h4>
-            ${itemsHTML}
-        </div>`;
+        html+=`<div class="score-input-card"><h4>${cat.label}</h4>${itemsHTML}</div>`;
     });
-    
-    const totalScore = Math.round((santri.surah || 0) * 0.25 + (santri.dzikir || 0) * 0.2 + (santri.juz || 0) * 0.2 + (santri.praktik || 0) * 0.2 + (santri.akademik || 0) * 0.1 + (santri.adab || 0) * 0.05);
-    html += `<div style="background: rgba(15, 41, 34, 0.5); border: 2px solid var(--accent); border-radius: 10px; padding: 18px;">
-        <h4 style="color: var(--accent); margin-bottom: 12px; font-size: 14px;">📊 Ringkasan</h4>
-        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
-            <label style="color: var(--text-muted); font-size: 12px; flex: 1;">Hafalan (40%)</label>
-            <input type="number" id="sumHafalan" class="form-control" value="${Math.round((santri.surah || 0 + santri.dzikir || 0 + santri.juz || 0) / 3)}" min="0" max="100" onchange="autoCalcAverage()" style="width: 70px; text-align: center;">
-        </div>
-        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
-            <label style="color: var(--text-muted); font-size: 12px; flex: 1;">Praktik (30%)</label>
-            <input type="number" id="sumPraktik" class="form-control" value="${Math.round(santri.praktik || 0)}" min="0" max="100" onchange="autoCalcAverage()" style="width: 70px; text-align: center;">
-        </div>
-        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
-            <label style="color: var(--text-muted); font-size: 12px; flex: 1;">Madin (20%)</label>
-            <input type="number" id="sumMadin" class="form-control" value="${Math.round(santri.akademik || 0)}" min="0" max="100" onchange="autoCalcAverage()" style="width: 70px; text-align: center;">
-        </div>
-        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
-            <label style="color: var(--text-muted); font-size: 12px; flex: 1;">Adab (10%)</label>
-            <input type="number" id="sumAdab" class="form-control" value="${Math.round(santri.adab || 0)}" min="0" max="100" onchange="autoCalcAverage()" style="width: 70px; text-align: center;">
-        </div>
-        <div style="margin-top: 12px; padding: 12px; background: rgba(212, 175, 55, 0.1); border-radius: 8px; text-align: center;">
-            <div style="color: var(--text-muted); font-size: 12px;">Nilai Total</div>
-            <div id="totalScoreDisplay" style="color: var(--accent); font-size: 32px; font-weight: bold;">${santri.nilai || 0}</div>
-        </div>
+
+    // Summary
+    const totalScore=Math.round((santri.surah||0)*0.25+(santri.dzikir||0)*0.2+(santri.juz||0)*0.2+(santri.praktik||0)*0.2+(santri.akademik||0)*0.1+(santri.adab||0)*0.05);
+    html+=`<div class="score-input-card" style="border-color:var(--accent)"><h4>📊 Ringkasan</h4>
+        <div class="score-input-row"><label>Hafalan (40%)</label><input type="number" id="sumHafalan" value="${Math.round((santri.surah||0+santri.dzikir||0+santri.juz||0)/3)}" min="0" max="100" onchange="autoCalcAverage()"><span class="max-score">/ 100</span></div>
+        <div class="score-input-row"><label>Praktik (30%)</label><input type="number" id="sumPraktik" value="${Math.round((santri.praktik||0))}" min="0" max="100" onchange="autoCalcAverage()"><span class="max-score">/ 100</span></div>
+        <div class="score-input-row"><label>Madin (20%)</label><input type="number" id="sumMadin" value="${Math.round((santri.akademik||0))}" min="0" max="100" onchange="autoCalcAverage()"><span class="max-score">/ 100</span></div>
+        <div class="score-input-row"><label>Adab (10%)</label><input type="number" id="sumAdab" value="${Math.round((santri.adab||0))}" min="0" max="100" onchange="autoCalcAverage()"><span class="max-score">/ 100</span></div>
+        <div style="margin-top:12px;padding:10px;background:rgba(201,168,76,0.1);border-radius:6px;text-align:center"><div style="color:var(--text-muted);font-size:12px">Nilai Total</div><div id="totalScoreDisplay" style="color:var(--accent);font-size:28px;font-weight:bold">${santri.nilai||0}</div></div>
     </div>`;
-    
-    document.getElementById('scoreInputGrid').innerHTML = html;
+
+    document.getElementById('scoreInputGrid').innerHTML=html;
 }
 
-function autoCalcAverage() {
-    const hafalan = parseInt(document.getElementById('sumHafalan')?.value) || 0;
-    const praktik = parseInt(document.getElementById('sumPraktik')?.value) || 0;
-    const madin = parseInt(document.getElementById('sumMadin')?.value) || 0;
-    const adab = parseInt(document.getElementById('sumAdab')?.value) || 0;
-    const total = Math.round(hafalan * 0.4 + praktik * 0.3 + madin * 0.2 + adab * 0.1);
-    const el = document.getElementById('totalScoreDisplay');
-    if (el) el.textContent = total;
+function autoCalcAverage(){
+    const hafalan=parseInt(document.getElementById('sumHafalan')?.value)||0;
+    const praktik=parseInt(document.getElementById('sumPraktik')?.value)||0;
+    const madin=parseInt(document.getElementById('sumMadin')?.value)||0;
+    const adab=parseInt(document.getElementById('sumAdab')?.value)||0;
+    const total=Math.round(hafalan*0.4+praktik*0.3+madin*0.2+adab*0.1);
+    const el=document.getElementById('totalScoreDisplay');if(el)el.textContent=total;
 }
 
-function saveAllScores() {
-    const id = parseInt(document.getElementById('inputSantriSelect').value);
-    if (!id) { showToast('Pilih santri dulu!', 'error'); return; }
-    
-    const santri = DB.get('santri');
-    const item = santri.find(s => s.id === id);
-    if (!item) return;
-    
-    const hafalanEl = document.getElementById('sumHafalan');
-    if (hafalanEl) {
-        item.surah = item.surah || 0;
-        item.dzikir = item.dzikir || 0;
-        item.juz = item.juz || 0;
-        item.nilai = Math.round(
-            (parseInt(document.getElementById('sumHafalan').value) || 0) * 0.4 +
-            (parseInt(document.getElementById('sumPraktik').value) || 0) * 0.3 +
-            (parseInt(document.getElementById('sumMadin').value) || 0) * 0.2 +
-            (parseInt(document.getElementById('sumAdab').value) || 0) * 0.1
+function saveAllScores(){
+    const id=parseInt(document.getElementById('inputSantriSelect').value);if(!id){showToast('Pilih santri dulu!','error');return}
+    const santri=DB.get('santri'),item=santri.find(s=>s.id===id);if(!item)return;
+
+    // Calculate averages from individual inputs
+    const catItems={
+        surah:{inputs:document.querySelectorAll('[data-cat="surah"]'),weights:[1/3,1/3,1/3]},
+        dzikir:{inputs:document.querySelectorAll('[data-cat="dzikir"]'),weights:[1/4,1/4,1/4,1/4]},
+        juz:{inputs:document.querySelectorAll('[data-cat="juz"]'),weights:[1]},
+        praktik:{inputs:document.querySelectorAll('[data-cat="praktik"]'),weights:[1/4,1/4,1/4,1/4]},
+        akademik:{inputs:document.querySelectorAll('[data-cat="akademik"]'),weights:[1/2,1/2]},
+        adab:{inputs:document.querySelectorAll('[data-cat="adab"]'),weights:[1/3,1/3,1/3]},
+    };
+
+    Object.keys(catItems).forEach(key=>{
+        let sum=0;const items=catItems[key].inputs;
+        items.forEach((inp,i)=>{const max=parseInt(inp.max)||100;sum+=(parseInt(inp.value)||0)/max*100*catItems[key].weights[i]});
+        item[key]=Math.round(sum);
+    });
+
+    // Also update from summary inputs if they exist
+    const hafalanEl=document.getElementById('sumHafalan');
+    if(hafalanEl){
+        item.surah=item.surah||0;item.dzikir=item.dzikir||0;item.juz=item.juz||0;
+        item.nilai=Math.round(
+            (parseInt(document.getElementById('sumHafalan').value)||0)*0.4+
+            (parseInt(document.getElementById('sumPraktik').value)||0)*0.3+
+            (parseInt(document.getElementById('sumMadin').value)||0)*0.2+
+            (parseInt(document.getElementById('sumAdab').value)||0)*0.1
         );
     } else {
-        item.nilai = Math.round((item.surah || 0) * 0.25 + (item.dzikir || 0) * 0.2 + (item.juz || 0) * 0.2 + (item.praktik || 0) * 0.2 + (item.akademik || 0) * 0.1 + (item.adab || 0) * 0.05);
+        item.nilai=Math.round((item.surah||0)*0.25+(item.dzikir||0)*0.2+(item.juz||0)*0.2+(item.praktik||0)*0.2+(item.akademik||0)*0.1+(item.adab||0)*0.05);
     }
-    
-    item.hafalan = Math.round((item.surah + item.dzikir + item.juz) / 3);
-    if (item.nilai >= 85) item.status = 'lulus';
-    else if (item.nilai >= 70) item.status = 'proses';
-    else item.status = 'belum';
-    
-    DB.set('santri', santri);
-    showToast(`Nilai ${item.nama} berhasil disimpan! Nilai: ${item.nilai}`, 'success');
+
+    // Update status
+    item.hafalan=Math.round((item.surah+item.dzikir+item.juz)/3);
+    if(item.nilai>=85)item.status='lulus';
+    else if(item.nilai>=70)item.status='proses';
+    else item.status='belum';
+
+    DB.set('santri',santri);
+    showToast(`Nilai ${item.nama} berhasil disimpan! Nilai: ${item.nilai}`,'success');
 }
 
 // ==================== SANTRI ====================
-function loadSantri() {
-    renderSantriTable(DB.get('santri'));
-    const sel = document.getElementById('certSantri');
-    if (sel) sel.innerHTML = '<option value="">Pilih Santri</option>' + DB.get('santri').map(s => `<option value="${s.nama}">${s.nama} - Kelas ${s.kelas}</option>`).join('');
+function loadSantri(){renderSantriTable(DB.get('santri'));const sel=document.getElementById('certSantri');if(sel)sel.innerHTML='<option value="">Pilih Santri</option>'+DB.get('santri').map(s=>`<option value="${s.nama}">${s.nama} - Kelas ${s.kelas}</option>`).join('')}
+function renderSantriTable(data){
+    const tbody=document.getElementById('santriTable'),empty=document.getElementById('santriEmpty');
+    if(data.length===0){tbody.innerHTML='';empty.style.display='block';return}
+    empty.style.display='none';
+    tbody.innerHTML=data.map((s,i)=>`<tr><td>${i+1}</td><td><div class="user-cell"><img src="https://ui-avatars.com/api/?name=${encodeURIComponent(s.nama)}&background=random&color=fff" alt=""><span>${s.nama}</span></div></td><td>Kelas ${s.kelas}</td><td>${s.hafalan||0}%</td><td style="font-weight:bold;color:${s.nilai>=90?'var(--success)':s.nilai>=75?'var(--warning)':'var(--danger)'}">${s.nilai}</td><td><span class="status status-${s.status==='lulus'?'success':s.status==='proses'?'warning':'danger'}">${s.status==='lulus'?'Lulus':s.status==='proses'?'Proses':'Belum'}</span></td><td><div style="display:flex;gap:4px"><button class="btn btn-info btn-sm" onclick="viewSantri(${s.id})" title="Lihat"><i class="fas fa-eye"></i></button><button class="btn btn-warning btn-sm" onclick="editSantri(${s.id})" title="Edit"><i class="fas fa-edit"></i></button><button class="btn btn-danger btn-sm" onclick="deleteSantri(${s.id})" title="Hapus"><i class="fas fa-trash"></i></button></div></td></tr>`).join('');
 }
-
-function renderSantriTable(data) {
-    const tbody = document.getElementById('santriTable');
-    const empty = document.getElementById('santriEmpty');
-    
-    if (data.length === 0) {
-        tbody.innerHTML = '';
-        empty.style.display = 'block';
-        return;
-    }
-    
-    empty.style.display = 'none';
-    tbody.innerHTML = data.map((s, i) => `
-        <tr>
-            <td>${i + 1}</td>
-            <td><div class="user-cell"><img src="https://ui-avatars.com/api/?name=${encodeURIComponent(s.nama)}&background=random&color=fff" alt=""><span>${s.nama}</span></div></td>
-            <td>Kelas ${s.kelas}</td>
-            <td>${s.hafalan || 0}%</td>
-            <td style="font-weight: bold; color: ${s.nilai >= 90 ? 'var(--success)' : s.nilai >= 75 ? 'var(--warning)' : 'var(--danger)'}">${s.nilai}</td>
-            <td><span class="status status-${s.status === 'lulus' ? 'success' : s.status === 'proses' ? 'warning' : 'danger'}">${s.status === 'lulus' ? 'Lulus' : s.status === 'proses' ? 'Proses' : 'Belum'}</span></td>
-            <td>
-                <div style="display: flex; gap: 5px;">
-                    <button class="btn btn-info btn-sm" onclick="viewSantri(${s.id})" title="Lihat"><i class="fas fa-eye"></i></button>
-                    <button class="btn btn-warning btn-sm" onclick="editSantri(${s.id})" title="Edit"><i class="fas fa-edit"></i></button>
-                    <button class="btn btn-danger btn-sm" onclick="deleteSantri(${s.id})" title="Hapus"><i class="fas fa-trash"></i></button>
-                </div>
-            </td>
-        </tr>
-    `).join('');
-}
-
-function filterSantri() {
-    const search = document.getElementById('searchSantri').value.toLowerCase();
-    const kelas = document.getElementById('filterKelas').value;
-    const status = document.getElementById('filterStatus').value;
-    
-    let santri = DB.get('santri');
-    if (search) santri = santri.filter(s => s.nama.toLowerCase().includes(search));
-    if (kelas) santri = santri.filter(s => s.kelas == kelas);
-    if (status) santri = santri.filter(s => s.status === status);
-    
+function filterSantri(){
+    const search=document.getElementById('searchSantri').value.toLowerCase(),kelas=document.getElementById('filterKelas').value,status=document.getElementById('filterStatus').value;
+    let santri=DB.get('santri');
+    if(search)santri=santri.filter(s=>s.nama.toLowerCase().includes(search));
+    if(kelas)santri=santri.filter(s=>s.kelas==kelas);
+    if(status)santri=santri.filter(s=>s.status===status);
     renderSantriTable(santri);
 }
-
-function addSantri() {
-    const nama = document.getElementById('newSantriNama').value.trim();
-    const kelas = document.getElementById('newSantriKelas').value;
-    const wali = document.getElementById('newSantriWali').value.trim();
-    const hp = document.getElementById('newSantriHp').value.trim();
-    
-    if (!nama) { showToast('Nama harus diisi!', 'error'); return; }
-    
-    const santri = DB.get('santri');
-    const newId = santri.length > 0 ? Math.max(...santri.map(s => s.id)) + 1 : 1;
-    santri.push({
-        id: newId, nama, kelas: parseInt(kelas), gender: 'L', wali, hp,
-        hafalan: 0, nilai: 0, status: 'belum',
-        surah: 0, dzikir: 0, juz: 0, praktik: 0, akademik: 0, adab: 0
-    });
-    DB.set('santri', santri);
-    
-    closeModal('addSantriModal');
-    document.getElementById('newSantriNama').value = '';
-    document.getElementById('newSantriWali').value = '';
-    document.getElementById('newSantriHp').value = '';
-    showToast('Santri ditambahkan!', 'success');
-    loadSantri();
-    loadDashboard();
+function addSantri(){
+    const nama=document.getElementById('newSantriNama').value.trim(),kelas=document.getElementById('newSantriKelas').value,wali=document.getElementById('newSantriWali').value.trim(),hp=document.getElementById('newSantriHp').value.trim();
+    if(!nama){showToast('Nama harus diisi!','error');return}
+    const santri=DB.get('santri'),newId=santri.length>0?Math.max(...santri.map(s=>s.id))+1:1;
+    santri.push({id:newId,nama,kelas:parseInt(kelas),gender:'L',wali,hp,hafalan:0,nilai:0,status:'belum',surah:0,dzikir:0,juz:0,praktik:0,akademik:0,adab:0});
+    DB.set('santri',santri);closeModal('addSantriModal');document.getElementById('newSantriNama').value='';document.getElementById('newSantriWali').value='';document.getElementById('newSantriHp').value='';
+    showToast('Santri ditambahkan!','success');loadSantri();loadDashboard();
 }
-
-function viewSantri(id) {
-    const s = DB.get('santri').find(x => x.id === id);
-    if (!s) return;
-    
-    document.getElementById('santriDetailContent').innerHTML = `
-        <div style="text-align: center; margin-bottom: 20px;">
-            <img src="https://ui-avatars.com/api/?name=${encodeURIComponent(s.nama)}&background=d4af37&color=0f2922&size=80" style="border-radius: 50%; border: 3px solid var(--accent); margin-bottom: 10px;" alt="">
-            <h3 style="color: white;">${s.nama}</h3>
-            <p style="color: var(--text-muted); font-size: 13px;">Kelas ${s.kelas} | ${s.gender === 'L' ? 'Laki-laki' : 'Perempuan'}</p>
-            <span class="status status-${s.status === 'lulus' ? 'success' : s.status === 'proses' ? 'warning' : 'danger'}" style="font-size: 13px; padding: 6px 20px; margin-top: 8px;">${s.status === 'lulus' ? 'LULUS' : s.status === 'proses' ? 'SEDANG PROSES' : 'BELUM MULAI'}</span>
+function viewSantri(id){
+    const s=DB.get('santri').find(x=>x.id===id);if(!s)return;
+    document.getElementById('santriDetailContent').innerHTML=`
+        <div style="text-align:center;margin-bottom:18px"><img src="https://ui-avatars.com/api/?name=${encodeURIComponent(s.nama)}&background=c9a84c&color=0a1f18&size=70" style="border-radius:50%;border:3px solid var(--accent);margin-bottom:8px" alt=""><h3 style="color:#fff">${s.nama}</h3><p style="color:var(--text-muted);font-size:12px">Kelas ${s.kelas} | ${s.gender==='L'?'Laki-laki':'Perempuan'}</p><span class="status status-${s.status==='lulus'?'success':s.status==='proses'?'warning':'danger'}" style="font-size:13px;padding:5px 18px;margin-top:6px">${s.status==='lulus'?'LULUS':s.status==='proses'?'SEDANG PROSES':'BELUM MULAI'}</span></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px">
+            <div style="padding:10px;background:rgba(15,41,34,0.5);border-radius:6px"><div style="color:var(--text-muted);font-size:11px">Wali</div><div style="color:#fff;font-weight:600;font-size:13px">${s.wali||'-'}</div></div>
+            <div style="padding:10px;background:rgba(15,41,34,0.5);border-radius:6px"><div style="color:var(--text-muted);font-size:11px">No. HP</div><div style="color:#fff;font-weight:600;font-size:13px">${s.hp||'-'}</div></div>
         </div>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px;">
-            <div style="padding: 12px; background: rgba(15, 41, 34, 0.5); border-radius: 8px;">
-                <div style="color: var(--text-muted); font-size: 11px;">Wali Santri</div>
-                <div style="color: white; font-weight: 600;">${s.wali || '-'}</div>
-            </div>
-            <div style="padding: 12px; background: rgba(15, 41, 34, 0.5); border-radius: 8px;">
-                <div style="color: var(--text-muted); font-size: 11px;">No. HP</div>
-                <div style="color: white; font-weight: 600;">${s.hp || '-'}</div>
-            </div>
-        </div>
-        <h4 style="color: var(--accent); margin-bottom: 12px; font-size: 15px;">📊 Progres Hafalan</h4>
-        ${[
-            {l: 'Surah', v: s.surah || 0, c: 'green'},
-            {l: 'Dzikir', v: s.dzikir || 0, c: 'blue'},
-            {l: 'Juz', v: s.juz || 0, c: 'yellow'},
-            {l: 'Praktik', v: s.praktik || 0, c: 'info'},
-            {l: 'Akademik', v: s.akademik || 0, c: 'yellow'},
-            {l: 'Adab', v: s.adab || 0, c: 'purple'},
-        ].map(p => `
-            <div style="margin-bottom: 12px;">
-                <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
-                    <span style="color: var(--text-muted); font-size: 12px;">${p.l}</span>
-                    <span style="color: var(--accent); font-weight: bold; font-size: 12px;">${p.v}%</span>
-                </div>
-                <div style="height: 8px; background: rgba(15, 41, 34, 0.8); border-radius: 6px; overflow: hidden; border: 1px solid var(--border);">
-                    <div style="height: 100%; background: linear-gradient(90deg, var(--${p.c}), #34d399); border-radius: 6px; width: ${p.v}%;"></div>
-                </div>
-            </div>
-        `).join('')}
-        <div style="text-align: center; margin-top: 15px; padding: 15px; background: rgba(212, 175, 55, 0.1); border-radius: 10px; border: 1px solid var(--border);">
-            <div style="color: var(--text-muted); font-size: 12px;">Nilai Total</div>
-            <div style="color: var(--accent); font-size: 32px; font-weight: bold;">${s.nilai}</div>
-        </div>
-    `;
+        <h4 style="color:var(--accent);margin-bottom:10px;font-size:14px">📊 Progres Hafalan</h4>
+        ${[{l:'Surah',v:s.surah||0,c:'green'},{l:'Dzikir',v:s.dzikir||0,c:'blue'},{l:'Juz',v:s.juz||0,c:'yellow'},{l:'Praktik',v:s.praktik||0,c:'info'},{l:'Akademik',v:s.akademik||0,c:'yellow'},{l:'Adab',v:s.adab||0,c:'purple'}].map(p=>`<div class="progress-container"><div class="progress-header"><span class="progress-label">${p.l}</span><span class="progress-value">${p.v}%</span></div><div class="progress-bar"><div class="progress-fill ${p.c}" style="width:${p.v}%"></div></div></div>`).join('')}
+        <div style="text-align:center;margin-top:12px;padding:12px;background:rgba(201,168,76,0.1);border-radius:8px;border:1px solid var(--border)"><div style="color:var(--text-muted);font-size:12px">Nilai Total</div><div style="color:var(--accent);font-size:28px;font-weight:bold">${s.nilai}</div></div>`;
     openModal('viewSantriModal');
 }
-
-function editSantri(id) {
-    const santri = DB.get('santri');
-    const item = santri.find(s => s.id === id);
-    if (!item) return;
-    
-    const newName = prompt('Nama:', item.nama);
-    if (newName === null) return;
-    item.nama = newName;
-    item.kelas = parseInt(prompt('Kelas:', item.kelas)) || item.kelas;
-    item.nilai = parseInt(prompt('Nilai:', item.nilai)) || item.nilai;
-    item.status = prompt('Status (lulus/proses/belum):', item.status) || item.status;
-    item.surah = parseInt(prompt('Progress Surah (%):', item.surah)) || 0;
-    item.dzikir = parseInt(prompt('Progress Dzikir (%):', item.dzikir)) || 0;
-    item.juz = parseInt(prompt('Progress Juz (%):', item.juz)) || 0;
-    item.praktik = parseInt(prompt('Progress Praktik (%):', item.praktik)) || 0;
-    item.akademik = parseInt(prompt('Progress Akademik (%):', item.akademik)) || 0;
-    item.adab = parseInt(prompt('Progress Adab (%):', item.adab)) || 0;
-    item.hafalan = Math.round((item.surah + item.dzikir + item.juz) / 3);
-    
-    DB.set('santri', santri);
-    loadSantri();
-    showToast('Data santri berhasil diupdate!', 'success');
+function editSantri(id){
+    const santri=DB.get('santri'),item=santri.find(s=>s.id===id);if(!item)return;
+    const newName=prompt('Nama:',item.nama);if(newName===null)return;item.nama=newName;
+    item.kelas=parseInt(prompt('Kelas:',item.kelas))||item.kelas;
+    item.nilai=parseInt(prompt('Nilai:',item.nilai))||item.nilai;
+    item.status=prompt('Status (lulus/proses/belum):',item.status)||item.status;
+    item.surah=parseInt(prompt('Surah (%):',item.surah))||0;
+    item.dzikir=parseInt(prompt('Dzikir (%):',item.dzikir))||0;
+    item.juz=parseInt(prompt('Juz (%):',item.juz))||0;
+    item.praktik=parseInt(prompt('Praktik (%):',item.praktik))||0;
+    item.akademik=parseInt(prompt('Akademik (%):',item.akademik))||0;
+    item.adab=parseInt(prompt('Adab (%):',item.adab))||0;
+    item.hafalan=Math.round((item.surah+item.dzikir+item.juz)/3);
+    DB.set('santri',santri);loadSantri();showToast('Data diupdate!','success');
 }
-
-function deleteSantri(id) {
-    if (!confirm('Yakin ingin menghapus santri ini?')) return;
-    const santri = DB.get('santri').filter(s => s.id !== id);
-    DB.set('santri', santri);
-    loadSantri();
-    showToast('Santri berhasil dihapus!', 'warning');
-}
-
-function exportSantriCSV() {
-    const santri = DB.get('santri');
-    let csv = 'No,Nama,Kelas,Gender,Wali,HP,Nilai,Status\n';
-    santri.forEach((s, i) => {
-        csv += `${i+1},"${s.nama}",${s.kelas},${s.gender},"${s.wali}","${s.hp}",${s.nilai},${s.status}\n`;
-    });
-    const blob = new Blob([csv], {type: 'text/csv'});
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'data_santri_mutqin_bm.csv';
-    a.click();
-    URL.revokeObjectURL(url);
-    showToast('Data santri berhasil diexport!', 'success');
+function deleteSantri(id){if(!confirm('Hapus santri ini?'))return;DB.set('santri',DB.get('santri').filter(s=>s.id!==id));loadSantri();showToast('Santri dihapus!','warning')}
+function exportSantriCSV(){
+    const santri=DB.get('santri');let csv='No,Nama,Kelas,Gender,Wali,HP,Nilai,Status\n';
+    santri.forEach((s,i)=>{csv+=`${i+1},"${s.nama}",${s.kelas},${s.gender},"${s.wali}","${s.hp}",${s.nilai},${s.status}\n`});
+    const blob=new Blob([csv],{type:'text/csv'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='data_santri_mutqin_bm.csv';a.click();URL.revokeObjectURL(url);showToast('Data diexport!','success');
 }
 
 // ==================== BULK IMPORT ====================
-let pendingImport = [];
-
-function downloadTemplate() {
-    const csv = 'Nama,Kelas\nAhmad Fauzi,3\nMuhammad Rizky,5\nAbdullah Hakim,2\nFatimah Azzahra,4\nUmar bin Khattab,6\n';
-    const blob = new Blob([csv], {type: 'text/csv;charset=utf-8;'});
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'template_santri_mutqin_bm.csv';
-    a.click();
-    URL.revokeObjectURL(url);
-    showToast('Template didownload!', 'success');
+let pendingImport=[];
+function downloadTemplate(){
+    const csv='Nama,Kelas\nAhmad Fauzi,3\nMuhammad Rizky,5\nAbdullah Hakim,2\nFatimah Azzahra,4\nUmar bin Khattab,6\n';
+    const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='template_santri_mutqin_bm.csv';a.click();URL.revokeObjectURL(url);showToast('Template didownload!','success');
 }
 
-function handleCSVUpload(event) {
-    const file = event.target.files[0];
-    if (!file) return;
-    
-    document.getElementById('csvFileName').textContent = '📄 ' + file.name;
-    const reader = new FileReader();
-    reader.onload = function(e) {
-        try {
-            const lines = e.target.result.split('\n').filter(l => l.trim());
-            if (lines.length < 2) { showToast('File kosong atau tidak valid!', 'error'); return; }
-            
-            const result = document.getElementById('importResult');
-            result.classList.remove('show');
-            
-            pendingImport = [];
-            let errors = [];
-            const headers = lines[0].toLowerCase().split(',').map(h => h.trim().replace(/"/g, ''));
-            const nameIdx = headers.findIndex(h => h.includes('nama') || h.includes('name'));
-            const classIdx = headers.findIndex(h => h.includes('kelas') || h.includes('class') || h.includes('grade'));
-            
-            if (nameIdx === -1) {
-                result.innerHTML = '<h4 style="color: var(--danger); margin-bottom: 8px;">❌ Kolom "Nama" tidak ditemukan!</h4><p style="color: var(--text-muted); font-size: 12px;">Pastikan file CSV memiliki kolom "Nama" dan "Kelas"</p>';
-                result.classList.add('show');
-                result.style.background = 'rgba(239, 68, 68, 0.1)';
-                result.style.borderColor = 'var(--danger)';
-                return;
+function handleCSVUpload(event){
+    const file=event.target.files[0];if(!file)return;
+    document.getElementById('csvFileName').textContent='📄 '+file.name;
+    const reader=new FileReader();
+    reader.onload=function(e){
+        try{
+            const lines=e.target.result.split('\n').filter(l=>l.trim());
+            if(lines.length<2){showToast('File kosong atau tidak valid!','error');return}
+            const result=document.getElementById('importResult');
+            result.classList.remove('import-error','show');result.classList.add('show');
+
+            pendingImport=[];let errors=[];
+            const headers=lines[0].toLowerCase().split(',').map(h=>h.trim().replace(/"/g,''));
+            const nameIdx=headers.findIndex(h=>h.includes('nama')||h.includes('name'));
+            const classIdx=headers.findIndex(h=>h.includes('kelas')||h.includes('class')||h.includes('grade'));
+
+            if(nameIdx===-1){result.innerHTML='<h4 style="color:var(--danger)">❌ Kolom "Nama" tidak ditemukan!</h4><p style="color:var(--text-muted);font-size:12px">Pastikan file CSV memiliki kolom "Nama" dan "Kelas"</p>';result.classList.add('import-error');return}
+            if(classIdx===-1){result.innerHTML='<h4 style="color:var(--danger)">❌ Kolom "Kelas" tidak ditemukan!</h4><p style="color:var(--text-muted);font-size:12px">Pastikan file CSV memiliki kolom "Nama" dan "Kelas"</p>';result.classList.add('import-error');return}
+
+            for(let i=1;i<lines.length;i++){
+                const cols=lines[i].split(',').map(c=>c.trim().replace(/"/g,''));
+                if(cols.length<2||!cols[nameIdx])continue;
+                const nama=cols[nameIdx].trim();
+                const kelas=parseInt(cols[classIdx]);
+                if(!nama||isNaN(kelas)||kelas<1||kelas>6){errors.push(`Baris ${i+1}: "${cols.join(',')}" - format salah`);continue}
+                pendingImport.push({nama,kelas});
             }
-            if (classIdx === -1) {
-                result.innerHTML = '<h4 style="color: var(--danger); margin-bottom: 8px;">❌ Kolom "Kelas" tidak ditemukan!</h4><p style="color: var(--text-muted); font-size: 12px;">Pastikan file CSV memiliki kolom "Nama" dan "Kelas"</p>';
-                result.classList.add('show');
-                result.style.background = 'rgba(239, 68, 68, 0.1)';
-                result.style.borderColor = 'var(--danger)';
-                return;
-            }
-            
-            for (let i = 1; i < lines.length; i++) {
-                const cols = lines[i].split(',').map(c => c.trim().replace(/"/g, ''));
-                if (cols.length < 2 || !cols[nameIdx]) continue;
-                const nama = cols[nameIdx].trim();
-                const kelas = parseInt(cols[classIdx]);
-                if (!nama || isNaN(kelas) || kelas < 1 || kelas > 6) {
-                    errors.push(`Baris ${i+1}: "${cols.join(',')}" - format salah`);
-                    continue;
-                }
-                pendingImport.push({nama, kelas});
-            }
-            
-            if (pendingImport.length === 0) {
-                result.innerHTML = '<h4 style="color: var(--danger); margin-bottom: 8px;">❌ Tidak ada data valid!</h4><p style="color: var(--text-muted); font-size: 12px;">Periksa format CSV Anda</p>';
-                result.classList.add('show');
-                result.style.background = 'rgba(239, 68, 68, 0.1)';
-                result.style.borderColor = 'var(--danger)';
-                return;
-            }
-            
-            let html = `<h4 style="color: var(--success); margin-bottom: 8px;">✅ ${pendingImport.length} santri ditemukan</h4><p style="color: var(--text-muted); font-size: 12px; margin-bottom: 10px;">Data yang akan diimport:</p>
-                <div style="max-height: 200px; overflow-y: auto;">
-                <table style="width: 100%; font-size: 12px;">
-                <thead><tr style="background: rgba(212, 175, 55, 0.1);"><th style="color: var(--accent); padding: 6px;">No</th><th style="color: var(--accent); padding: 6px;">Nama</th><th style="color: var(--accent); padding: 6px;">Kelas</th></tr></thead>
-                <tbody>`;
-            pendingImport.forEach((p, i) => {
-                html += `<tr><td style="padding: 6px; color: var(--text-muted);">${i+1}</td><td style="padding: 6px; color: var(--text-muted);">${p.nama}</td><td style="padding: 6px; color: var(--text-muted);">Kelas ${p.kelas}</td></tr>`;
-            });
-            html += '</tbody></table></div>';
-            
-            if (errors.length > 0) {
-                html += `<p style="color: var(--warning); margin-top: 10px; font-size: 11px;">⚠️ ${errors.length} baris dilewati (format tidak valid)</p>`;
-            }
-            
-            result.innerHTML = html;
-            result.classList.add('show');
-            result.style.background = 'rgba(16, 185, 129, 0.1)';
-            result.style.borderColor = 'var(--success)';
-            document.getElementById('btnConfirmImport').style.display = 'inline-flex';
-            
-        } catch (err) {
-            const result = document.getElementById('importResult');
-            result.innerHTML = `<h4 style="color: var(--danger); margin-bottom: 8px;">❌ Error membaca file</h4><p style="color: var(--text-muted); font-size: 12px;">${err.message}</p>`;
-            result.classList.add('show');
-            result.style.background = 'rgba(239, 68, 68, 0.1)';
-            result.style.borderColor = 'var(--danger)';
+
+            if(pendingImport.length===0){result.innerHTML='<h4 style="color:var(--danger)">❌ Tidak ada data valid!</h4><p style="color:var(--text-muted);font-size:12px">Periksa format CSV Anda</p>';result.classList.add('import-error');return}
+
+            let html=`<h4 style="color:var(--success)">✅ ${pendingImport.length} santri ditemukan</h4><p style="color:var(--text-muted);font-size:12px;margin-bottom:8px">Data yang akan diimport:</p>
+                <table><thead><tr><th>No</th><th>Nama</th><th>Kelas</th></tr></thead><tbody>`;
+            pendingImport.forEach((p,i)=>{html+=`<tr><td>${i+1}</td><td>${p.nama}</td><td>Kelas ${p.kelas}</td></tr>`});
+            html+='</tbody></table>';
+            if(errors.length>0)html+=`<p style="color:var(--warning);margin-top:10px;font-size:12px">⚠️ ${errors.length} baris dilewati (format tidak valid)</p>`;
+            result.innerHTML=html;
+            document.getElementById('btnConfirmImport').style.display='inline-flex';
+        }catch(err){
+            const result=document.getElementById('importResult');
+            result.innerHTML=`<h4 style="color:var(--danger)">❌ Error membaca file</h4><p style="color:var(--text-muted);font-size:12px">${err.message}</p>`;
+            result.classList.add('import-error','show');
         }
     };
     reader.readAsText(file);
 }
 
-function confirmImport() {
-    if (pendingImport.length === 0) return;
-    
-    const santri = DB.get('santri');
-    let newCount = 0;
-    
-    pendingImport.forEach(p => {
-        if (!santri.find(s => s.nama.toLowerCase() === p.nama.toLowerCase())) {
-            const newId = santri.length > 0 ? Math.max(...santri.map(s => s.id)) + 1 : 1;
-            santri.push({
-                id: newId, nama: p.nama, kelas: p.kelas, gender: 'L', wali: '', hp: '',
-                hafalan: 0, nilai: 0, status: 'belum',
-                surah: 0, dzikir: 0, juz: 0, praktik: 0, akademik: 0, adab: 0
-            });
+function confirmImport(){
+    if(pendingImport.length===0)return;
+    const santri=DB.get('santri');
+    let newCount=0;
+    pendingImport.forEach(p=>{
+        // Check if exists
+        if(!santri.find(s=>s.nama.toLowerCase()===p.nama.toLowerCase())){
+            const newId=santri.length>0?Math.max(...santri.map(s=>s.id))+1:1;
+            santri.push({id:newId,nama:p.nama,kelas:p.kelas,gender:'L',wali:'',hp:'',hafalan:0,nilai:0,status:'belum',surah:0,dzikir:0,juz:0,praktik:0,akademik:0,adab:0});
             newCount++;
         }
     });
-    
-    DB.set('santri', santri);
-    pendingImport = [];
-    
+    DB.set('santri',santri);
+    pendingImport=[];
     closeModal('bulkImportModal');
-    document.getElementById('btnConfirmImport').style.display = 'none';
+    document.getElementById('btnConfirmImport').style.display='none';
     document.getElementById('importResult').classList.remove('show');
-    document.getElementById('csvFileName').textContent = '';
-    document.getElementById('csvFileInput').value = '';
-    
-    showToast(`${newCount} santri berhasil diimport!`, 'success');
-    loadSantri();
-    loadDashboard();
+    document.getElementById('csvFileName').textContent='';
+    document.getElementById('csvFileInput').value='';
+    showToast(`${newCount} santri berhasil diimport!`,'success');
+    loadSantri();loadDashboard();
 }
 
 // ==================== LAPORAN ====================
-function loadLaporan() {
-    const santri = DB.get('santri');
-    const lulus = santri.filter(s => s.status === 'lulus').length;
-    const proses = santri.filter(s => s.status === 'proses').length;
-    const belum = santri.filter(s => s.status === 'belum').length;
-    const avg = santri.length > 0 ? (santri.reduce((a, s) => a + s.nilai, 0) / santri.length).toFixed(1) : 0;
-    
-    document.getElementById('rptTotal').textContent = santri.length;
-    document.getElementById('rptLulus').textContent = lulus;
-    document.getElementById('rptProses').textContent = proses;
-    document.getElementById('rptBelum').textContent = belum;
-    document.getElementById('rptAvg').textContent = avg;
-    
-    // Tren Chart
-    const tctx = document.getElementById('trendChart');
-    if (window.trendChart) window.trendChart.destroy();
-    window.trendChart = new Chart(tctx, {
-        type: 'line',
-        data: {
-            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun'],
-            datasets: [
-                {
-                    label: 'Lulus',
-                     [20, 35, 55, 80, 95, lulus],
-                    borderColor: '#10b981',
-                    backgroundColor: 'rgba(16, 185, 129, 0.1)',
-                    fill: true,
-                    tension: 0.4
-                },
-                {
-                    label: 'Proses',
-                     [40, 50, 60, 70, 85, proses],
-                    borderColor: '#f59e0b',
-                    backgroundColor: 'rgba(245, 158, 11, 0.1)',
-                    fill: true,
-                    tension: 0.4
-                }
-            ]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: { labels: { color: '#80cbc4' } }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    grid: { color: 'rgba(212, 175, 55, 0.1)' },
-                    ticks: { color: '#80cbc4' }
-                },
-                x: {
-                    grid: { display: false },
-                    ticks: { color: '#80cbc4' }
-                }
-            }
-        }
-    });
-    
-    // Kelas Chart
-    const kctx = document.getElementById('kelasChart');
-    if (window.kelasChart) window.kelasChart.destroy();
-    
-    const kelasData = {};
-    santri.forEach(s => {
-        if (!kelasData[s.kelas]) kelasData[s.kelas] = 0;
-        kelasData[s.kelas]++;
-    });
-    
-    const kl = Object.keys(kelasData).map(k => `Kelas ${k}`);
-    window.kelasChart = new Chart(kctx, {
-        type: 'pie',
-         {
-            labels: kl,
-            datasets: [{
-                 kl.map(l => kelasData[l.replace('Kelas ', '')] || 0),
-                backgroundColor: ['#10b981', '#3b82f6', '#f59e0b', '#ef4444', '#8b5cf6', '#ec4899']
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: { labels: { color: '#80cbc4' } }
-            }
-        }
-    });
+function loadLaporan(){
+    const santri=DB.get('santri'),lulus=santri.filter(s=>s.status==='lulus').length,proses=santri.filter(s=>s.status==='proses').length,belum=santri.filter(s=>s.status==='belum').length,avg=santri.length>0?(santri.reduce((a,s)=>a+s.nilai,0)/santri.length).toFixed(1):0;
+    document.getElementById('rptTotal').textContent=santri.length;document.getElementById('rptLulus').textContent=lulus;document.getElementById('rptProses').textContent=proses;document.getElementById('rptBelum').textContent=belum;document.getElementById('rptAvg').textContent=avg;
+    const kelasData={};santri.forEach(s=>{if(!kelasData[s.kelas])kelasData[s.kelas]={total:0,lulus:0,proses:0,belum:0,nilai:0};kelasData[s.kelas].total++;kelasData[s.kelas][s.status]++;kelasData[s.kelas].nilai+=s.nilai});
+    document.getElementById('laporanTable').innerHTML=Object.keys(kelasData).sort().map(k=>{const d=kelasData[k];const a=(d.nilai/d.total).toFixed(1);const p=((d.lulus/d.total)*100).toFixed(1);return`<tr><td>Kelas ${k}</td><td>${d.total}</td><td style="color:var(--success)">${d.lulus}</td><td style="color:var(--warning)">${d.proses}</td><td style="color:var(--danger)">${d.belum}</td><td>${a}</td><td>${p}%</td></tr>`}).join('');
+
+    const tctx=document.getElementById('trendChart');if(tctx._chart)tctx._chart.destroy();
+    tctx._chart=new Chart(tctx,{type:'line',{labels:['Jan','Feb','Mar','Apr','Mei','Jun'],datasets:[{label:'Lulus',[20,35,55,80,95,lulus],borderColor:'#10b981',backgroundColor:'rgba(16,185,129,0.1)',fill:true,tension:0.4},{label:'Proses',data:[40,50,60,70,85,proses],borderColor:'#f59e0b',backgroundColor:'rgba(245,158,11,0.1)',fill:true,tension:0.4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#80cbc4'}}},scales:{y:{beginAtZero:true,grid:{color:'rgba(201,168,76,0.1)'},ticks:{color:'#80cbc4'}},x:{grid:{display:false},ticks:{color:'#80cbc4'}}}}});
+
+    const kctx=document.getElementById('kelasChart');if(kctx._chart)kctx._chart.destroy();
+    const kl=Object.keys(kelasData).map(k=>`Kelas ${k}`);
+    kctx._chart=new Chart(kctx,{type:'pie',{labels:kl,datasets:[{data:kl.map(l=>kelasData[l.replace('Kelas ','')]?.total||0),backgroundColor:['#10b981','#3b82f6','#f59e0b','#ef4444','#8b5cf6','#ec4899']}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#80cbc4'}}}}});
 }
 
 // ==================== SERTIFIKAT ====================
-function loadSertifikat() {
-    const certs = DB.get('certs');
-    const container = document.getElementById('certList');
-    const empty = document.getElementById('certEmpty');
-    const typeLabels = {hafalan: 'Hafalan Al-Quran', jenazah: 'Pengurusan Jenazah', lulus: 'Kelulusan Madin'};
-    const typeIcons = {hafalan: '📖', jenazah: '🕌', lulus: '🎓'};
-    
-    if (certs.length === 0) {
-        container.innerHTML = '';
-        empty.style.display = 'block';
-        return;
-    }
-    
-    empty.style.display = 'none';
-    container.innerHTML = certs.map(c => `
-        <div class="card" style="margin-bottom: 0;">
-            <div class="card-body">
-                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
-                    <span style="font-size: 30px;">${typeIcons[c.type] || '📜'}</span>
-                    <div style="flex: 1;">
-                        <h4 style="color: white; font-size: 15px; margin-bottom: 3px;">${c.santri}</h4>
-                        <p style="color: var(--text-muted); font-size: 12px;">${typeLabels[c.type] || c.type} | ${c.date}</p>
-                    </div>
-                </div>
-                <p style="color: var(--text-muted); font-size: 12px; margin-bottom: 12px;">${c.desc || ''}</p>
-                <div style="display: flex; gap: 8px;">
-                    <button class="btn btn-secondary btn-sm" onclick="previewCert(${c.id})"><i class="fas fa-eye"></i> Preview</button>
-                    <button class="btn btn-danger btn-sm" onclick="deleteCert(${c.id})"><i class="fas fa-trash"></i></button>
-                </div>
-            </div>
-        </div>
-    `).join('');
+function loadSertifikat(){
+    const certs=DB.get('certs');
+    const container=document.getElementById('certList'),empty=document.getElementById('certEmpty');
+    const typeLabels={hafalan:'Hafalan Al-Quran',jenazah:'Pengurusan Jenazah',lulus:'Kelulusan Madin',khatib:'Praktik Khatib',bilal:'Praktik Bilal'};
+    const typeIcons={hafalan:'📖',jenazah:'🕌',lulus:'🎓',khatib:'🎤',bilal:''};
+    if(certs.length===0){container.innerHTML='';empty.style.display='block';return}
+    empty.style.display='none';
+    container.innerHTML=certs.map(c=>`<div class="card" style="margin-bottom:0"><div class="card-body"><div style="display:flex;align-items:center;gap:10px;margin-bottom:10px"><span style="font-size:26px">${typeIcons[c.type]||'📜'}</span><div style="flex:1"><h4 style="color:#fff;font-size:14px">${c.santri}</h4><p style="color:var(--text-muted);font-size:11px">${typeLabels[c.type]||c.type} | ${c.date}</p></div></div><p style="color:var(--text-muted);font-size:12px;margin-bottom:10px">${c.desc||''}</p><div style="display:flex;gap:6px"><button class="btn btn-secondary btn-sm" onclick="previewCert(${c.id})"><i class="fas fa-eye"></i> Preview</button><button class="btn btn-danger btn-sm" onclick="deleteCert(${c.id})"><i class="fas fa-trash"></i></button></div></div></div>`).join('');
+}
+function filterCert(){
+    const search=document.getElementById('searchCert').value.toLowerCase(),type=document.getElementById('filterCertType').value;
+    let certs=DB.get('certs');if(search)certs=certs.filter(c=>c.santri.toLowerCase().includes(search));if(type)certs=certs.filter(c=>c.type===type);
+    const container=document.getElementById('certList');
+    const typeLabels={hafalan:'Hafalan Al-Quran',jenazah:'Pengurusan Jenazah',lulus:'Kelulusan Madin',khatib:'Praktik Khatib',bilal:'Praktik Bilal'};
+    const typeIcons={hafalan:'📖',jenazah:'🕌',lulus:'🎓',khatib:'🎤',bilal:'🔊'};
+    container.innerHTML=certs.map(c=>`<div class="card" style="margin-bottom:0"><div class="card-body"><div style="display:flex;align-items:center;gap:10px;margin-bottom:10px"><span style="font-size:26px">${typeIcons[c.type]||'📜'}</span><div style="flex:1"><h4 style="color:#fff;font-size:14px">${c.santri}</h4><p style="color:var(--text-muted);font-size:11px">${typeLabels[c.type]||c.type} | ${c.date}</p></div></div><p style="color:var(--text-muted);font-size:12px;margin-bottom:10px">${c.desc||''}</p><div style="display:flex;gap:6px"><button class="btn btn-secondary btn-sm" onclick="previewCert(${c.id})"><i class="fas fa-eye"></i> Preview</button><button class="btn btn-danger btn-sm" onclick="deleteCert(${c.id})"><i class="fas fa-trash"></i></button></div></div></div>`).join('')||'<div class="empty-state"><i class="fas fa-certificate"></i><h3>Tidak ditemukan</h3></div>';
 }
 
-function filterCert() {
-    const search = document.getElementById('searchCert').value.toLowerCase();
-    const type = document.getElementById('filterCertType').value;
-    let certs = DB.get('certs');
-    
-    if (search) certs = certs.filter(c => c.santri.toLowerCase().includes(search));
-    if (type) certs = certs.filter(c => c.type === type);
-    
-    const container = document.getElementById('certList');
-    const empty = document.getElementById('certEmpty');
-    const typeLabels = {hafalan: 'Hafalan Al-Quran', jenazah: 'Pengurusan Jenazah', lulus: 'Kelulusan Madin'};
-    const typeIcons = {hafalan: '📖', jenazah: '🕌', lulus: '🎓'};
-    
-    if (certs.length === 0) {
-        container.innerHTML = '';
-        empty.style.display = 'block';
-        return;
-    }
-    
-    empty.style.display = 'none';
-    container.innerHTML = certs.map(c => `
-        <div class="card" style="margin-bottom: 0;">
-            <div class="card-body">
-                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
-                    <span style="font-size: 30px;">${typeIcons[c.type] || '📜'}</span>
-                    <div style="flex: 1;">
-                        <h4 style="color: white; font-size: 15px; margin-bottom: 3px;">${c.santri}</h4>
-                        <p style="color: var(--text-muted); font-size: 12px;">${typeLabels[c.type] || c.type} | ${c.date}</p>
-                    </div>
-                </div>
-                <p style="color: var(--text-muted); font-size: 12px; margin-bottom: 12px;">${c.desc || ''}</p>
-                <div style="display: flex; gap: 8px;">
-                    <button class="btn btn-secondary btn-sm" onclick="previewCert(${c.id})"><i class="fas fa-eye"></i> Preview</button>
-                    <button class="btn btn-danger btn-sm" onclick="deleteCert(${c.id})"><i class="fas fa-trash"></i></button>
-                </div>
-            </div>
-        </div>
-    `).join('');
+function generateCertificate(){
+    const santri=document.getElementById('certSantri').value,type=document.getElementById('certType').value,date=document.getElementById('certDate').value,desc=document.getElementById('certDesc').value.trim();
+    if(!santri||!date){showToast('Pilih santri dan tanggal!','error');return}
+    const certs=DB.get('certs'),newId=certs.length>0?Math.max(...certs.map(c=>c.id))+1:1;
+    const certNo=`BM-${new Date().getFullYear()}-${String(newId).padStart(3,'0')}`;
+    certs.push({id:newId,santri,type,date,desc,certNo});
+    DB.set('certs',certs);closeModal('certModal');document.getElementById('certDesc').value='';
+    showToast('Sertifikat berhasil dibuat!','success');loadSertifikat();
 }
 
-function generateCertificate() {
-    const santri = document.getElementById('certSantri').value;
-    const type = document.getElementById('certType').value;
-    const date = document.getElementById('certDate').value;
-    const desc = document.getElementById('certDesc').value.trim();
-    
-    if (!santri || !date) { showToast('Pilih santri dan tanggal!', 'error'); return; }
-    
-    const certs = DB.get('certs');
-    const newId = certs.length > 0 ? Math.max(...certs.map(c => c.id)) + 1 : 1;
-    const certNo = `BM-${new Date().getFullYear()}-${String(newId).padStart(3, '0')}`;
-    
-    certs.push({id: newId, santri, type, date, desc, certNo});
-    DB.set('certs', certs);
-    
-    closeModal('certModal');
-    document.getElementById('certDesc').value = '';
-    showToast('Sertifikat berhasil dibuat!', 'success');
-    loadSertifikat();
-}
-
-function previewCert(id) {
-    const cert = DB.get('certs').find(c => c.id === id);
-    if (!cert) return;
-    
-    const typeLabels = {
-        hafalan: 'SERTIFIKAT HAFALAN AL-QURAN',
-        jenazah: 'SERTIFIKAT PENGURUSAN JENAZAH',
-        lulus: 'SERTIFIKAT KELULUSAN MADIN'
+function previewCert(id){
+    const cert=DB.get('certs').find(c=>c.id===id);if(!cert)return;
+    const typeLabels={hafalan:'SERTIFIKAT HAFALAN AL-QURAN',jenazah:'SERTIFIKAT PENGURUSAN JENAZAH',lulus:'SERTIFIKAT KELULUSAN MADIN',khatib:'SERTIFIKAT PRAKTIK KHATIB',bilal:'SERTIFIKAT PRAKTIK BILAL'};
+    const typeDescriptions={
+        hafalan:`telah menyelesaikan program hafalan Al-Quran dengan <strong>memuaskan</strong> di Ponpes Bahrul Maghfiroh`,
+        jenazah:`telah menyelesaikan pelatihan <strong>pengurusan jenazah</strong> dan dinyatakan kompeten dalam melaksanakan kewajiban fardhu kifayah`,
+        lulus:`telah <strong>lulus</strong> dari program pendidikan Madrasah Diniyah di Ponpes Bahrul Maghfiroh`,
+        khatib:`telah menyelesaikan praktik menjadi <strong>Khatib Jumat</strong> dengan baik dan memenuhi standar yang ditetapkan`,
+        bilal:`telah menyelesaikan praktik menjadi <strong>Bilal (Muezzin)</strong> dengan baik dan memenuhi standar yang ditetapkan`,
     };
-    
-    const typeDescriptions = {
-        hafalan: `telah menyelesaikan program hafalan Al-Quran dengan <strong>memuaskan</strong> di Ponpes Bahrul Maghfiroh`,
-        jenazah: `telah menyelesaikan pelatihan <strong>pengurusan jenazah</strong> dan dinyatakan kompeten dalam melaksanakan kewajiban fardhu kifayah`,
-        lulus: `telah <strong>lulus</strong> dari program pendidikan Madrasah Diniyah di Ponpes Bahrul Maghfiroh`
-    };
-    
-    const content = `
+
+    const content=`
         <div class="cert-container" id="printableCert">
             <div class="certificate-frame">
                 <div class="certificate-inner">
@@ -1591,14 +1039,14 @@ function previewCert(id) {
                     <div class="cert-corner cert-corner-bl"></div>
                     <div class="cert-corner cert-corner-br"></div>
                     <div class="cert-watermark">☪</div>
-                    <div class="cert-id">No. ${cert.certNo || 'BM-2026-' + String(cert.id).padStart(3, '0')}</div>
+                    <div class="cert-id">No. ${cert.certNo||'BM-2026-'+String(cert.id).padStart(3,'0')}</div>
 
                     <div class="cert-header-section">
                         <div class="cert-logo">📖</div>
                         <div class="cert-institution">PONPES BAHRUL MAGHFIROH</div>
                         <div class="cert-institution-sub">Standar Kelulusan Hafalan - Mutqin BM</div>
                         <div class="cert-ornament"></div>
-                        <div class="cert-title">${typeLabels[cert.type] || 'SERTIFIKAT'}</div>
+                        <div class="cert-title">${typeLabels[cert.type]||'SERTIFIKAT'}</div>
                         <div class="cert-subtitle">Certificate of Achievement</div>
                     </div>
 
@@ -1606,15 +1054,14 @@ function previewCert(id) {
                         <div class="cert-presented">Diberikan kepada</div>
                         <div class="cert-name">${cert.santri}</div>
                         <div class="cert-achievement">
-                            ${typeDescriptions[cert.type] || `telah menyelesaikan program dengan baik`}
-                            ${cert.desc ? `<br><span style="font-style: italic; color: #666;">${cert.desc}</span>` : ''}
+                            ${typeDescriptions[cert.type]||`telah menyelesaikan program dengan baik`}
+                            ${cert.desc?`<br><span style="font-style:italic;color:#666">${cert.desc}</span>`:''}
                         </div>
 
-                        <div style="display: flex; justify-content: center; gap: 30px; margin: 20px 0; flex-wrap: wrap;">
-                            <div style="text-align: center;">
-                                <div style="font-size: 10px; color: #888; text-transform: uppercase; letter-spacing: 1px;">Tanggal</div>
-                                <div style="font-size: 14px; color: #1a4731; font-weight: 600; margin-top: 3px;">${formatDateID(cert.date)}</div>
-                            </div>
+                        <div class="cert-details">
+                            <div class="cert-detail-item"><div class="cert-detail-label">Kelas</div><div class="cert-detail-value">${cert.santriKelas||'-'}</div></div>
+                            <div class="cert-detail-item"><div class="cert-detail-label">Program</div><div class="cert-detail-value">${typeLabels[cert.type]?typeLabels[cert.type].replace('SERTIFIKAT ',''):cert.type}</div></div>
+                            <div class="cert-detail-item"><div class="cert-detail-label">Tanggal</div><div class="cert-detail-value">${formatDateID(cert.date)}</div></div>
                         </div>
                     </div>
 
@@ -1637,99 +1084,118 @@ function previewCert(id) {
                     </div>
                 </div>
             </div>
-        </div>
-    `;
-    
-    document.getElementById('certPreviewContent').innerHTML = content;
+        </div>`;
+
+    document.getElementById('certPreviewContent').innerHTML=content;
     openModal('certPreviewModal');
 }
 
-function formatDateID(dateStr) {
-    if (!dateStr) return '-';
-    const months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
-    const d = new Date(dateStr);
-    return `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
+function formatDateID(dateStr){
+    if(!dateStr)return'-';
+    const months=['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+    const d=new Date(dateStr);
+    return`${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
 }
 
-function printCertificate() {
-    window.print();
+function printCertificate(){
+    const content=document.getElementById('printableCert').innerHTML;
+    const win=window.open('','_blank');
+    win.document.write(`<!DOCTYPE html><html><head><title>Sertifikat - Mutqin BM</title><style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:Georgia,'Times New Roman',serif;padding:20px}
+        .cert-container{max-width:800px;margin:0 auto}
+        .certificate-frame{background:#fffdf7;border:3px solid #c9a84c;border-radius:8px;padding:5px}
+        .certificate-inner{border:2px solid #c9a84c;padding:40px 35px;position:relative;background:linear-gradient(180deg,#fffdf7 0%,#f9f5e8 100%)}
+        .certificate-inner::before{content:'';position:absolute;top:8px;left:8px;right:8px;bottom:8px;border:1px solid rgba(201,168,76,0.3);pointer-events:none}
+        .cert-corner{position:absolute;width:40px;height:40px;opacity:0.6}
+        .cert-corner-tl{top:15px;left:15px;border-top:3px solid #c9a84c;border-left:3px solid #c9a84c}
+        .cert-corner-tr{top:15px;right:15px;border-top:3px solid #c9a84c;border-right:3px solid #c9a84c}
+        .cert-corner-bl{bottom:15px;left:15px;border-bottom:3px solid #c9a84c;border-left:3px solid #c9a84c}
+        .cert-corner-br{bottom:15px;right:15px;border-bottom:3px solid #c9a84c;border-right:3px solid #c9a84c}
+        .cert-header-section{text-align:center;margin-bottom:25px}
+        .cert-logo{font-size:40px;margin-bottom:8px}
+        .cert-institution{font-size:16px;color:#1a4731;font-weight:bold;letter-spacing:2px;text-transform:uppercase;margin-bottom:2px}
+        .cert-institution-sub{font-size:11px;color:#666;letter-spacing:1px;margin-bottom:15px}
+        .cert-ornament{width:200px;height:2px;background:linear-gradient(90deg,transparent,#c9a84c,transparent);margin:0 auto 20px}
+        .cert-title{font-size:28px;color:#c9a84c;font-weight:bold;letter-spacing:4px;text-transform:uppercase;margin-bottom:5px}
+        .cert-subtitle{font-size:12px;color:#888;letter-spacing:3px;text-transform:uppercase;margin-bottom:20px}
+        .cert-body{text-align:center;margin:20px 0}
+        .cert-presented{font-size:13px;color:#555;margin-bottom:15px}
+        .cert-name{font-size:32px;color:#1a4731;font-weight:bold;margin:10px 0 15px;padding-bottom:10px;border-bottom:2px solid #c9a84c;display:inline-block}
+        .cert-achievement{font-size:14px;color:#444;line-height:1.7;margin:15px 0}
+        .cert-details{display:flex;justify-content:center;gap:30px;margin:20px 0;flex-wrap:wrap}
+        .cert-detail-item{text-align:center}
+        .cert-detail-label{font-size:10px;color:#888;text-transform:uppercase;letter-spacing:1px}
+        .cert-detail-value{font-size:14px;color:#1a4731;font-weight:600;margin-top:3px}
+        .cert-footer{display:flex;justify-content:space-around;align-items:flex-end;margin-top:40px;padding-top:20px}
+        .cert-signature{text-align:center;min-width:120px}
+        .cert-sig-line{width:140px;border-bottom:1px solid #333;margin:0 auto 5px;height:40px}
+        .cert-sig-name{font-size:12px;color:#1a4731;font-weight:600}
+        .cert-sig-title{font-size:10px;color:#888}
+        .cert-seal{width:80px;height:80px;border:3px solid #c9a84c;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:30px;background:rgba(201,168,76,0.05);margin:0 auto}
+        .cert-date-section{text-align:center;margin-top:15px}
+        .cert-date-text{font-size:11px;color:#888}
+        .cert-id{position:absolute;top:15px;right:20px;font-size:9px;color:#aaa}
+        .cert-watermark{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:120px;opacity:0.03;pointer-events:none}
+        strong{color:#1a4731}
+    </style></head><body>${content}</body></html>`);
+    win.document.close();
+    setTimeout(()=>{win.print()},500);
 }
 
-function deleteCert(id) {
-    if (!confirm('Hapus sertifikat?')) return;
-    DB.set('certs', DB.get('certs').filter(c => c.id !== id));
-    loadSertifikat();
-    showToast('Sertifikat dihapus!', 'warning');
+function deleteCert(id){if(!confirm('Hapus sertifikat?'))return;DB.set('certs',DB.get('certs').filter(c=>c.id!==id));loadSertifikat();showToast('Sertifikat dihapus!','warning')}
+
+// ==================== KEGIATAN ====================
+function loadKegiatan(){
+    const kegiatan=DB.get('kegiatan'),container=document.getElementById('kegiatanList'),empty=document.getElementById('kegiatanEmpty');
+    const typeLabels={hafalan:'Setoran Hafalan',ujian:'Ujian Hafalan',praktik:'Praktik Ibadah',jenazah:'Pengurusan Jenazah',khatam:'Khataman'};
+    const typeColors={hafalan:'green',ujian:'blue',praktik:'yellow',jenazah:'warning',khatam:'info'};
+    if(kegiatan.length===0){container.innerHTML='';empty.style.display='block';return}
+    empty.style.display='none';
+    container.innerHTML=kegiatan.map(k=>`<div class="card" style="margin-bottom:0"><div class="card-body"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px"><h4 style="color:#fff;font-size:14px">${k.judul}</h4><span class="status status-${typeColors[k.type]||'info'}">${typeLabels[k.type]||k.type}</span></div><p style="color:var(--text-muted);font-size:11px;margin-bottom:8px"><i class="fas fa-calendar"></i> ${k.date}</p><p style="color:var(--text-muted);font-size:12px;margin-bottom:10px">${k.desc}</p><button class="btn btn-danger btn-sm" onclick="deleteKegiatan(${k.id})"><i class="fas fa-trash"></i></button></div></div>`).join('');
 }
+function filterKegiatan(){
+    const search=document.getElementById('searchKegiatan').value.toLowerCase(),type=document.getElementById('filterKegiatanType').value;
+    let kegiatan=DB.get('kegiatan');if(search)kegiatan=kegiatan.filter(k=>k.judul.toLowerCase().includes(search));if(type)kegiatan=kegiatan.filter(k=>k.type===type);
+    const container=document.getElementById('kegiatanList'),empty=document.getElementById('kegiatanEmpty');
+    if(kegiatan.length===0){container.innerHTML='';empty.style.display='block';return}
+    empty.style.display='none';
+    const typeLabels={hafalan:'Setoran Hafalan',ujian:'Ujian Hafalan',praktik:'Praktik Ibadah',jenazah:'Pengurusan Jenazah',khatam:'Khataman'};
+    const typeColors={hafalan:'green',ujian:'blue',praktik:'yellow',jenazah:'warning',khatam:'info'};
+    container.innerHTML=kegiatan.map(k=>`<div class="card" style="margin-bottom:0"><div class="card-body"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px"><h4 style="color:#fff;font-size:14px">${k.judul}</h4><span class="status status-${typeColors[k.type]||'info'}">${typeLabels[k.type]||k.type}</span></div><p style="color:var(--text-muted);font-size:11px;margin-bottom:8px"><i class="fas fa-calendar"></i> ${k.date}</p><p style="color:var(--text-muted);font-size:12px;margin-bottom:10px">${k.desc}</p><button class="btn btn-danger btn-sm" onclick="deleteKegiatan(${k.id})"><i class="fas fa-trash"></i></button></div></div>`).join('');
+}
+function uploadKegiatan(){
+    const judul=document.getElementById('kegiatanJudul').value.trim(),type=document.getElementById('kegiatanType').value,date=document.getElementById('kegiatanDate').value,desc=document.getElementById('kegiatanDesc').value.trim();
+    if(!judul){showToast('Judul harus diisi!','error');return}
+    const kegiatan=DB.get('kegiatan'),newId=kegiatan.length>0?Math.max(...kegiatan.map(k=>k.id))+1:1;
+    kegiatan.unshift({id:newId,judul,type,date:date||new Date().toISOString().split('T')[0],desc});
+    DB.set('kegiatan',kegiatan);closeModal('uploadModal');document.getElementById('kegiatanJudul').value='';document.getElementById('kegiatanDesc').value='';
+    showToast('Kegiatan ditambahkan!','success');loadKegiatan();
+}
+function deleteKegiatan(id){if(!confirm('Hapus kegiatan?'))return;DB.set('kegiatan',DB.get('kegiatan').filter(k=>k.id!==id));loadKegiatan();showToast('Kegiatan dihapus!','warning')}
 
 // ==================== PENGATURAN ====================
-function saveSettings() {
-    const settings = {
-        namaPonpes: document.getElementById('setNamaPonpes').value,
-        namaAplikasi: document.getElementById('setNamaAplikasi').value,
-        bobot: {
-            hafalan: document.getElementById('setBobotHafalan').value,
-            praktik: document.getElementById('setBobotPraktik').value,
-            madin: document.getElementById('setBobotMadin').value,
-            adab: document.getElementById('setBobotAdab').value
-        }
-    };
-    DB.set('settings', settings);
-    showToast('Pengaturan disimpan!', 'success');
+function saveSettings(){
+    const settings={namaPonpes:document.getElementById('setNamaPonpes').value,namaAplikasi:document.getElementById('setNamaAplikasi').value,alamat:document.getElementById('setAlamat').value,kota:document.getElementById('setKota').value,bobot:{hafalan:document.getElementById('setBobotHafalan').value,praktik:document.getElementById('setBobotPraktik').value,madin:document.getElementById('setBobotMadin').value,adab:document.getElementById('setBobotAdab').value}};
+    DB.set('settings',settings);showToast('Pengaturan disimpan!','success');
 }
-
-function exportAllData() {
-    const data = {
-        santri: DB.get('santri'),
-        hafalan: DB.get('hafalan'),
-        certs: DB.get('certs'),
-        settings: DB.get('settings', {}),
-        exportDate: new Date().toISOString()
-    };
-    const blob = new Blob([JSON.stringify(data, null, 2)], {type: 'application/json'});
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `backup_mutqin_bm_${new Date().toISOString().split('T')[0]}.json`;
-    a.click();
-    URL.revokeObjectURL(url);
-    showToast('Data berhasil diexport!', 'success');
+function exportAllData(){
+    const data={santri:DB.get('santri'),hafalan:DB.get('hafalan'),certs:DB.get('certs'),kegiatan:DB.get('kegiatan'),settings:DB.get('settings',{}),exportDate:new Date().toISOString()};
+    const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=`backup_mutqin_bm_${new Date().toISOString().split('T')[0]}.json`;a.click();URL.revokeObjectURL(url);showToast('Data diexport!','success');
 }
-
-function importAllData(event) {
-    const file = event.target.files[0];
-    if (!file) return;
-    
-    const reader = new FileReader();
-    reader.onload = function(e) {
-        try {
-            const data = JSON.parse(e.target.result);
-            if (data.santri) DB.set('santri', data.santri);
-            if (data.hafalan) DB.set('hafalan', data.hafalan);
-            if (data.certs) DB.set('certs', data.certs);
-            if (data.settings) DB.set('settings', data.settings);
-            showToast('Data berhasil diimport! Halaman akan reload...', 'success');
-            setTimeout(() => location.reload(), 1500);
-        } catch {
-            showToast('File tidak valid!', 'error');
-        }
-    };
+function importAllData(event){
+    const file=event.target.files[0];if(!file)return;
+    const reader=new FileReader();
+    reader.onload=function(e){try{const data=JSON.parse(e.target.result);if(data.santri)DB.set('santri',data.santri);if(data.hafalan)DB.set('hafalan',data.hafalan);if(data.certs)DB.set('certs',data.certs);if(data.kegiatan)DB.set('kegiatan',data.kegiatan);if(data.settings)DB.set('settings',data.settings);showToast('Data diimport! Reload...','success');setTimeout(()=>location.reload(),1500)}catch{showToast('File tidak valid!','error')}};
     reader.readAsText(file);
 }
 
 // ==================== LOAD ALL ====================
-function loadAllData() {
-    loadDashboard();
-}
+function loadAllData(){loadDashboard()}
 
 // ==================== INIT ====================
-initData();
-checkAuth();
-
-// Set default date for date inputs
-document.querySelectorAll('input[type="date"]').forEach(input => {
-    if (!input.value) input.value = new Date().toISOString().split('T')[0];
-});
+initData();checkAuth();
+document.querySelectorAll('input[type="date"]').forEach(i=>{if(!i.value)i.value=new Date().toISOString().split('T')[0]});
 </script>
 </body>
 </html>
