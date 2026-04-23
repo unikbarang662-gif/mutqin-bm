@@ -6,8 +6,6 @@
     <title>Mutqin BM - Standar Kelulusan Ponpes Bahrul Maghfiroh</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
@@ -29,7 +27,6 @@
             min-height: 100vh;
         }
 
-        /* LOGIN */
         #login-page {
             display: flex;
             align-items: center;
@@ -49,8 +46,9 @@
             box-shadow: 0 0 50px rgba(212, 175, 55, 0.3);
         }
 
-        .logo-img {
+        .logo-svg {
             width: 150px;
+            height: 150px;
             margin-bottom: 20px;
             filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.6));
         }
@@ -112,7 +110,6 @@
             box-shadow: 0 8px 25px rgba(212, 175, 55, 0.6);
         }
 
-        /* DASHBOARD */
         #dashboard-page { display: none; }
 
         .sidebar {
@@ -132,7 +129,7 @@
             margin-bottom: 30px;
         }
 
-        .sidebar-logo img { width: 120px; margin-bottom: 15px; }
+        .sidebar-logo svg { width: 120px; height: 120px; margin-bottom: 15px; }
         .sidebar-logo h2 { color: var(--gold); font-family: 'Times New Roman', serif; font-size: 1.6rem; }
         .sidebar-logo p { color: var(--gold-light); font-size: 0.8rem; }
 
@@ -310,7 +307,6 @@
 
         .hidden { display: none !important; }
 
-        /* CERTIFICATE */
         .cert-modal {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -344,7 +340,7 @@
         }
 
         .cert-header { text-align: center; margin-bottom: 30px; }
-        .cert-header img { width: 100px; margin-bottom: 15px; }
+        .cert-header svg { width: 100px; height: 100px; margin-bottom: 15px; }
         .cert-header h2 {
             font-family: 'Times New Roman', serif;
             font-size: 2.5rem;
@@ -406,7 +402,21 @@
     <!-- LOGIN -->
     <div id="login-page">
         <div class="login-box">
-            <img src="logo.png" alt="Logo Mutqin BM" class="logo-img" onerror="this.style.display='none'">
+            <!-- LOGO SVG -->
+            <svg class="logo-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="100" cy="100" r="95" fill="none" stroke="#d4af37" stroke-width="4"/>
+                <circle cx="100" cy="100" r="90" fill="none" stroke="#d4af37" stroke-width="2"/>
+                <path d="M100 30 A40 40 0 1 0 100 110 A40 40 0 1 1 100 30" fill="#d4af37"/>
+                <polygon points="100,45 103,53 112,53 105,59 108,67 100,62 92,67 95,59 88,53 97,53" fill="#0d5e3a"/>
+                <path d="M50 100 A50 50 0 0 1 150 100 L150 150 A50 50 0 0 1 50 150 Z" fill="#0d5e3a" stroke="#d4af37" stroke-width="3"/>
+                <path d="M65 120 Q100 135 135 120 L135 130 Q100 145 65 130 Z" fill="#d4af37"/>
+                <circle cx="70" cy="80" r="2" fill="#d4af37"/>
+                <circle cx="90" cy="70" r="3" fill="#d4af37"/>
+                <circle cx="110" cy="70" r="2" fill="#d4af37"/>
+                <circle cx="130" cy="80" r="2" fill="#d4af37"/>
+                <text x="100" y="175" text-anchor="middle" fill="#d4af37" font-size="10" font-weight="bold">PONDOK PESANTREN</text>
+                <text x="100" y="188" text-anchor="middle" fill="#fff" font-size="11" font-weight="bold">BAHRUL MAGHFIROH</text>
+            </svg>
             <h1 class="app-title">Mutqin BM</h1>
             <p class="app-subtitle">Standar Kelulusan Ponpes Bahrul Maghfiroh</p>
             <form onsubmit="handleLogin(event)">
@@ -427,7 +437,12 @@
     <div id="dashboard-page">
         <div class="sidebar">
             <div class="sidebar-logo">
-                <img src="logo.png" alt="Logo" onerror="this.style.display='none'">
+                <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="100" cy="100" r="95" fill="none" stroke="#d4af37" stroke-width="4"/>
+                    <path d="M100 30 A40 40 0 1 0 100 110 A40 40 0 1 1 100 30" fill="#d4af37"/>
+                    <polygon points="100,45 103,53 112,53 105,59 108,67 100,62 92,67 95,59 88,53 97,53" fill="#0d5e3a"/>
+                    <text x="100" y="180" text-anchor="middle" fill="#d4af37" font-size="10" font-weight="bold">BM</text>
+                </svg>
                 <h2>Mutqin BM</h2>
                 <p>Standar Kelulusan<br>Ponpes Bahrul Maghfiroh</p>
             </div>
@@ -447,7 +462,6 @@
                 <div style="color: var(--gold-light);">Administrator</div>
             </div>
 
-            <!-- DASHBOARD -->
             <div id="tab-dashboard">
                 <div class="stats-container">
                     <div class="stat-card total">
@@ -478,7 +492,6 @@
                 </div>
             </div>
 
-            <!-- DATA SANTRI -->
             <div id="tab-santri" class="hidden">
                 <div class="panel">
                     <h3>Data Santri</h3>
@@ -494,7 +507,6 @@
                 </div>
             </div>
 
-            <!-- INPUT HAFALAN -->
             <div id="tab-hafalan" class="hidden">
                 <div class="panel">
                     <h3>Input Hafalan Santri</h3>
@@ -503,7 +515,6 @@
                     </select>
 
                     <div id="formHafalan" class="hidden">
-                        <!-- 1. Surat Pilihan -->
                         <div class="hafalan-section">
                             <div class="hafalan-header" onclick="this.nextElementSibling.classList.toggle('open')">
                                 <span>1. Hafalan Surat Pilihan</span>
@@ -528,7 +539,6 @@
                             </div>
                         </div>
 
-                        <!-- 2. Aurad -->
                         <div class="hafalan-section">
                             <div class="hafalan-header" onclick="this.nextElementSibling.classList.toggle('open')">
                                 <span>2. Hafalan Aurad</span>
@@ -561,7 +571,6 @@
                             </div>
                         </div>
 
-                        <!-- 3. Praktik -->
                         <div class="hafalan-section">
                             <div class="hafalan-header" onclick="this.nextElementSibling.classList.toggle('open')">
                                 <span>3. Praktik & Kelulusan</span>
@@ -585,7 +594,7 @@
                                     <select disabled><option>Pilih Status</option><option>Lulus</option></select>
                                 </div>
                                 <div class="hafalan-item">
-                                    <label><input type="checkbox" onchange="enableSelect(this)"> Sikap & Adab (Sholat 5 Waktu, Madin, Formal)</label>
+                                    <label><input type="checkbox" onchange="enableSelect(this)"> Sikap & Adab</label>
                                     <select disabled><option>Pilih Nilai</option><option>Baik Sekali</option><option>Baik</option><option>Cukup</option></select>
                                 </div>
                                 <div class="save-btn">
@@ -594,10 +603,9 @@
                             </div>
                         </div>
 
-                        <!-- 4. Juz 30 -->
                         <div class="hafalan-section">
                             <div class="hafalan-header" onclick="this.nextElementSibling.classList.toggle('open')">
-                                <span>4. Hafalan Juz 30 (37 Surat)</span>
+                                <span>4. Hafalan Juz 30</span>
                                 <i class="fas fa-chevron-down"></i>
                             </div>
                             <div class="hafalan-body" id="juz30List"></div>
@@ -606,31 +614,25 @@
                 </div>
             </div>
 
-            <!-- LAPORAN -->
             <div id="tab-laporan" class="hidden">
                 <div class="panel">
-                    <h3>Laporan Grafik Presentasi Hasil Hafalan</h3>
+                    <h3>Laporan Grafik</h3>
                     <canvas id="laporanChart" style="max-height: 400px;"></canvas>
-                    <div style="text-align: center; margin-top: 20px;">
-                        <button class="btn btn-primary" onclick="downloadLaporan()"><i class="fas fa-file-pdf"></i> Download Laporan PDF</button>
-                    </div>
                 </div>
             </div>
 
-            <!-- SERTIFIKAT -->
             <div id="tab-sertifikat" class="hidden">
                 <div class="panel">
-                    <h3>Cetak Sertifikat Kelulusan</h3>
+                    <h3>Cetak Sertifikat</h3>
                     <select id="pilihSertifikat" class="form-input" onchange="previewSertifikat()">
                         <option value="">-- Pilih Santri Lulus --</option>
                     </select>
                 </div>
             </div>
 
-            <!-- UPLOAD -->
             <div id="tab-upload" class="hidden">
                 <div class="panel">
-                    <h3>Upload Data Santri (Excel/CSV)</h3>
+                    <h3>Upload Data</h3>
                     <input type="file" accept=".csv" id="fileUpload" onchange="handleUpload(event)" style="margin-bottom: 20px;">
                     <button class="btn btn-primary" onclick="downloadTemplate()"><i class="fas fa-download"></i> Download Template</button>
                 </div>
@@ -638,12 +640,15 @@
         </div>
     </div>
 
-    <!-- CERTIFICATE MODAL -->
     <div id="certModal" class="cert-modal">
         <div class="cert-wrapper">
             <button class="cert-close" onclick="closeCert()">&times;</button>
             <div class="cert-header">
-                <img src="logo.png" alt="Logo" onerror="this.style.display='none'">
+                <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="100" cy="100" r="95" fill="none" stroke="#0d5e3a" stroke-width="4"/>
+                    <path d="M100 30 A40 40 0 1 0 100 110 A40 40 0 1 1 100 30" fill="#0d5e3a"/>
+                    <text x="100" y="180" text-anchor="middle" fill="#0d5e3a" font-size="10" font-weight="bold">BM</text>
+                </svg>
                 <h2>Sertifikat Kelulusan</h2>
                 <h3>PONPES BAHRUL MAGHFIROH</h3>
             </div>
@@ -670,9 +675,8 @@
         let progressChart = null;
         let laporanChart = null;
 
-        // Sample data
         const sampleData = [
-            { id: 1, nama: 'Ahmad Fauzan', kelas: 'Kelas 5', status: 'Lulus', hafalan: { yasin: 'Mumtaz', waqiah: 'Mumtaz', mulk: 'Mumtaz', aurad: 'Jayyid Jiddan', sholat: 'Lulus', juz30: 'Ahsan', khotib: 'Lulus', madin_ula: 'Lulus', madin_wustho: 'Lulus', adab: 'Baik' } },
+            { id: 1, nama: 'Ahmad Fauzan', kelas: 'Kelas 5', status: 'Lulus', hafalan: { yasin: 'Mumtaz', waqiah: 'Mumtaz', mulk: 'Mumtaz' } },
             { id: 2, nama: 'Salma Azizah', kelas: 'Kelas 4', status: 'Proses', hafalan: {} },
             { id: 3, nama: 'Mohammad Lugman', kelas: 'Kelas 2', status: 'Belum', hafalan: {} }
         ];
@@ -701,7 +705,7 @@
         }
 
         function switchTab(tab, el) {
-            document.querySelectorAll('.tab-content, #tab-dashboard, #tab-santri, #tab-hafalan, #tab-laporan, #tab-sertifikat, #tab-upload').forEach(t => t.classList.add('hidden'));
+            document.querySelectorAll('#tab-dashboard, #tab-santri, #tab-hafalan, #tab-laporan, #tab-sertifikat, #tab-upload').forEach(t => t.classList.add('hidden'));
             document.getElementById('tab-' + tab).classList.remove('hidden');
             document.querySelectorAll('.nav-menu a').forEach(a => a.classList.remove('active'));
             el.classList.add('active');
@@ -722,11 +726,19 @@
             if(progressChart) progressChart.destroy();
             progressChart = new Chart(ctx, {
                 type: 'doughnut',
-                 {
+                data: {
                     labels: ['Lulus', 'Proses', 'Belum'],
-                    datasets: [{ data: [lulus, santriData.filter(s => s.status === 'Proses').length, santriData.filter(s => s.status === 'Belum').length], backgroundColor: ['#4CAF50', '#FF9800', '#f44336'] }]
+                    datasets: [{
+                        data: [lulus, santriData.filter(s => s.status === 'Proses').length, santriData.filter(s => s.status === 'Belum').length],
+                        backgroundColor: ['#4CAF50', '#FF9800', '#f44336']
+                    }]
                 },
-                options: { responsive: true, plugins: { legend: { position: 'bottom', labels: { color: 'white' } } } }
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { position: 'bottom', labels: { color: 'white' } }
+                    }
+                }
             });
         }
 
@@ -805,11 +817,24 @@
             if(laporanChart) laporanChart.destroy();
             laporanChart = new Chart(ctx, {
                 type: 'bar',
-                 {
+                data: {
                     labels: ['Yasin', 'Waqiah', 'Mulk', 'Aurad', 'Sholat', 'Juz30', 'Khotib', 'Madin'],
-                    datasets: [{ label: 'Jumlah Santri', data: [10, 8, 7, 9, 6, 5, 4, 8], backgroundColor: '#d4af37' }]
+                    datasets: [{
+                        label: 'Jumlah Santri',
+                        data: [10, 8, 7, 9, 6, 5, 4, 8],
+                        backgroundColor: '#d4af37'
+                    }]
                 },
-                options: { responsive: true, scales: { y: { beginAtZero: true, ticks: { color: 'white' } }, x: { ticks: { color: 'white' } } }, plugins: { legend: { labels: { color: 'white' } } } }
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: { beginAtZero: true, ticks: { color: 'white' } },
+                        x: { ticks: { color: 'white' } }
+                    },
+                    plugins: {
+                        legend: { labels: { color: 'white' } }
+                    }
+                }
             });
         }
 
@@ -838,7 +863,6 @@
             a.download = 'template.csv';
             a.click();
         }
-        function downloadLaporan() { alert('Download PDF siap!'); }
     </script>
 </body>
 </html>
