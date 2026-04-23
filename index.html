@@ -27,6 +27,7 @@
             min-height: 100vh;
         }
 
+        /* LOGIN */
         #login-page {
             display: flex;
             align-items: center;
@@ -46,11 +47,14 @@
             box-shadow: 0 0 50px rgba(212, 175, 55, 0.3);
         }
 
-        .logo-svg {
-            width: 150px;
-            height: 150px;
-            margin-bottom: 20px;
-            filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.6));
+        .logo-container {
+            margin-bottom: 25px;
+        }
+
+        .logo-container svg {
+            width: 200px;
+            height: auto;
+            filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.6));
         }
 
         .app-title {
@@ -58,6 +62,7 @@
             font-size: 2.8rem;
             color: var(--gold);
             margin-bottom: 5px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
         }
 
         .app-subtitle {
@@ -110,6 +115,7 @@
             box-shadow: 0 8px 25px rgba(212, 175, 55, 0.6);
         }
 
+        /* DASHBOARD */
         #dashboard-page { display: none; }
 
         .sidebar {
@@ -129,9 +135,9 @@
             margin-bottom: 30px;
         }
 
-        .sidebar-logo svg { width: 120px; height: 120px; margin-bottom: 15px; }
-        .sidebar-logo h2 { color: var(--gold); font-family: 'Times New Roman', serif; font-size: 1.6rem; }
-        .sidebar-logo p { color: var(--gold-light); font-size: 0.8rem; }
+        .sidebar-logo svg { width: 140px; height: auto; }
+        .sidebar-logo h2 { color: var(--gold); font-family: 'Times New Roman', serif; font-size: 1.4rem; margin-top: 10px; }
+        .sidebar-logo p { color: var(--gold-light); font-size: 0.75rem; }
 
         .nav-menu { list-style: none; padding: 0 15px; }
         .nav-menu li { margin-bottom: 8px; }
@@ -307,6 +313,7 @@
 
         .hidden { display: none !important; }
 
+        /* CERTIFICATE */
         .cert-modal {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -321,13 +328,36 @@
 
         .cert-wrapper {
             background: #fffef0;
-            width: 900px;
+            width: 850px;
             max-width: 95vw;
-            padding: 40px;
-            border: 8px double var(--gold);
+            padding: 0;
             position: relative;
             color: #000;
         }
+
+        .cert-outer-border {
+            border: 8px double var(--gold);
+            padding: 4px;
+            margin: 4px;
+        }
+
+        .cert-inner-border {
+            border: 2px solid var(--gold);
+            padding: 40px;
+            position: relative;
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M50 10 L60 40 L90 50 L60 60 L50 90 L40 60 L10 50 L40 40 Z' fill='none' stroke='%23d4af37' stroke-width='0.5' opacity='0.15'/%3E%3C/svg%3E");
+        }
+
+        .cert-corner {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            border: 3px solid var(--gold);
+        }
+        .cert-corner-tl { top: 10px; left: 10px; border-right: none; border-bottom: none; }
+        .cert-corner-tr { top: 10px; right: 10px; border-left: none; border-bottom: none; }
+        .cert-corner-bl { bottom: 10px; left: 10px; border-right: none; border-top: none; }
+        .cert-corner-br { bottom: 10px; right: 10px; border-left: none; border-top: none; }
 
         .cert-close {
             position: absolute;
@@ -337,24 +367,39 @@
             cursor: pointer;
             background: none;
             border: none;
+            color: #333;
+            z-index: 10;
         }
 
-        .cert-header { text-align: center; margin-bottom: 30px; }
-        .cert-header svg { width: 100px; height: 100px; margin-bottom: 15px; }
+        .cert-header { text-align: center; margin-bottom: 25px; }
+        .cert-header svg { width: 100px; height: auto; margin-bottom: 15px; }
         .cert-header h2 {
             font-family: 'Times New Roman', serif;
             font-size: 2.5rem;
             color: var(--primary);
-            margin-bottom: 10px;
+            margin-bottom: 8px;
+            font-weight: bold;
         }
+        .cert-header h3 { font-size: 1.2rem; color: #555; margin-bottom: 5px; }
+        .cert-header p { color: #777; font-size: 0.9rem; }
 
         .cert-name {
             text-align: center;
             font-size: 2.2rem;
             font-family: 'Times New Roman', serif;
+            color: #000;
             margin: 25px 0;
             padding-bottom: 10px;
             border-bottom: 3px solid var(--gold);
+            display: inline-block;
+            width: 100%;
+        }
+
+        .cert-desc {
+            text-align: center;
+            color: #555;
+            margin-bottom: 20px;
+            line-height: 1.6;
         }
 
         .cert-status {
@@ -366,11 +411,11 @@
             font-size: 1.5rem;
             font-weight: bold;
             display: inline-block;
-            margin: 20px 0;
+            margin: 15px 0;
             border: 2px solid var(--gold);
         }
 
-        .cert-items { margin: 30px 0; }
+        .cert-items { margin: 25px 0; }
         .cert-item {
             display: flex;
             justify-content: space-between;
@@ -378,15 +423,32 @@
             border-bottom: 1px dashed #d4af37;
         }
 
+        .cert-item span:first-child { color: #333; }
+        .cert-item span:last-child {
+            color: var(--primary);
+            font-weight: bold;
+            padding: 3px 12px;
+            background: rgba(13, 94, 58, 0.1);
+            border-radius: 4px;
+        }
+
         .cert-signatures {
             display: flex;
             justify-content: space-between;
-            margin-top: 50px;
+            margin-top: 40px;
+            padding: 0 30px;
         }
 
         .sig-box { text-align: center; width: 40%; }
-        .sig-line { border-top: 2px solid #333; margin-top: 70px; padding-top: 10px; font-weight: bold; }
-        .sig-title { font-size: 0.85rem; color: #666; }
+        .sig-line { border-top: 2px solid #333; margin-top: 70px; padding-top: 10px; font-weight: bold; color: #000; }
+        .sig-title { font-size: 0.85rem; color: #666; margin-top: 3px; }
+
+        .cert-footer {
+            text-align: center;
+            margin-top: 25px;
+            color: #888;
+            font-size: 0.85rem;
+        }
 
         @media (max-width: 768px) {
             .sidebar { width: 70px; }
@@ -394,6 +456,8 @@
             .nav-menu a { justify-content: center; }
             .nav-menu a i { margin: 0; }
             .main-content { margin-left: 70px; padding: 15px; }
+            .cert-wrapper { width: 100%; }
+            .cert-inner-border { padding: 20px; }
         }
     </style>
 </head>
@@ -402,21 +466,49 @@
     <!-- LOGIN -->
     <div id="login-page">
         <div class="login-box">
-            <!-- LOGO SVG -->
-            <svg class="logo-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="100" cy="100" r="95" fill="none" stroke="#d4af37" stroke-width="4"/>
-                <circle cx="100" cy="100" r="90" fill="none" stroke="#d4af37" stroke-width="2"/>
-                <path d="M100 30 A40 40 0 1 0 100 110 A40 40 0 1 1 100 30" fill="#d4af37"/>
-                <polygon points="100,45 103,53 112,53 105,59 108,67 100,62 92,67 95,59 88,53 97,53" fill="#0d5e3a"/>
-                <path d="M50 100 A50 50 0 0 1 150 100 L150 150 A50 50 0 0 1 50 150 Z" fill="#0d5e3a" stroke="#d4af37" stroke-width="3"/>
-                <path d="M65 120 Q100 135 135 120 L135 130 Q100 145 65 130 Z" fill="#d4af37"/>
-                <circle cx="70" cy="80" r="2" fill="#d4af37"/>
-                <circle cx="90" cy="70" r="3" fill="#d4af37"/>
-                <circle cx="110" cy="70" r="2" fill="#d4af37"/>
-                <circle cx="130" cy="80" r="2" fill="#d4af37"/>
-                <text x="100" y="175" text-anchor="middle" fill="#d4af37" font-size="10" font-weight="bold">PONDOK PESANTREN</text>
-                <text x="100" y="188" text-anchor="middle" fill="#fff" font-size="11" font-weight="bold">BAHRUL MAGHFIROH</text>
-            </svg>
+            <div class="logo-container">
+                <!-- LOGO EXACTLY LIKE USER PROVIDED -->
+                <svg viewBox="0 0 300 280" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Outer Arch -->
+                    <path d="M50 120 Q50 30 150 30 Q250 30 250 120 L250 140 Q250 200 200 200 L200 220 Q200 230 150 230 Q100 230 100 220 L100 200 Q50 200 50 140 Z" fill="#0d5e3a" stroke="#d4af37" stroke-width="4"/>
+                    <path d="M60 120 Q60 40 150 40 Q240 40 240 120 L240 140 Q240 190 195 190 L195 210 Q195 220 150 220 Q105 220 105 210 L105 190 Q60 190 60 140 Z" fill="none" stroke="#d4af37" stroke-width="2"/>
+                    
+                    <!-- Crescent Moon -->
+                    <path d="M150 50 A35 35 0 1 0 150 120 A35 35 0 1 1 150 50" fill="#d4af37"/>
+                    
+                    <!-- Star -->
+                    <polygon points="150,60 153,68 162,68 155,74 158,82 150,77 142,82 145,74 138,68 147,68" fill="#d4af37"/>
+                    
+                    <!-- Inner Stars -->
+                    <circle cx="100" cy="80" r="3" fill="#d4af37"/>
+                    <circle cx="120" cy="65" r="4" fill="#d4af37"/>
+                    <circle cx="180" cy="65" r="4" fill="#d4af37"/>
+                    <circle cx="200" cy="80" r="3" fill="#d4af37"/>
+                    <circle cx="110" cy="95" r="3" fill="#d4af37"/>
+                    <circle cx="190" cy="95" r="3" fill="#d4af37"/>
+                    <circle cx="130" cy="70" r="2" fill="#d4af37"/>
+                    <circle cx="170" cy="70" r="2" fill="#d4af37"/>
+                    
+                    <!-- Book -->
+                    <path d="M90 150 Q150 170 210 150 L210 160 Q150 180 90 160 Z" fill="#d4af37"/>
+                    <path d="M90 155 Q150 175 210 155" fill="none" stroke="#0d5e3a" stroke-width="2"/>
+                    
+                    <!-- Feather/Quill -->
+                    <path d="M145 130 Q150 120 155 130 L155 145 Q150 150 145 145 Z" fill="#fff"/>
+                    <path d="M145 130 L155 130" stroke="#0d5e3a" stroke-width="1"/>
+                    
+                    <!-- Text -->
+                    <text x="150" y="200" text-anchor="middle" fill="#d4af37" font-size="8" font-weight="bold" font-family="Arial">PONDOK PESANTREN</text>
+                    <text x="150" y="212" text-anchor="middle" fill="#fff" font-size="9" font-weight="bold" font-family="Arial">BAHRUL MAGHFIROH</text>
+                    
+                    <!-- Title -->
+                    <text x="150" y="250" text-anchor="middle" fill="#fff" font-size="32" font-weight="bold" font-family="Times New Roman">Mutqin BM</text>
+                    <text x="150" y="268" text-anchor="middle" fill="#d4af37" font-size="10" font-family="Arial">Standar Kelulusan Ponpes Bahrul Maghfiroh</text>
+                    
+                    <!-- Bottom Ornament -->
+                    <path d="M100 275 Q150 285 200 275" fill="none" stroke="#d4af37" stroke-width="2"/>
+                </svg>
+            </div>
             <h1 class="app-title">Mutqin BM</h1>
             <p class="app-subtitle">Standar Kelulusan Ponpes Bahrul Maghfiroh</p>
             <form onsubmit="handleLogin(event)">
@@ -437,11 +529,12 @@
     <div id="dashboard-page">
         <div class="sidebar">
             <div class="sidebar-logo">
-                <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="100" cy="100" r="95" fill="none" stroke="#d4af37" stroke-width="4"/>
-                    <path d="M100 30 A40 40 0 1 0 100 110 A40 40 0 1 1 100 30" fill="#d4af37"/>
-                    <polygon points="100,45 103,53 112,53 105,59 108,67 100,62 92,67 95,59 88,53 97,53" fill="#0d5e3a"/>
-                    <text x="100" y="180" text-anchor="middle" fill="#d4af37" font-size="10" font-weight="bold">BM</text>
+                <svg viewBox="0 0 300 280" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M50 120 Q50 30 150 30 Q250 30 250 120 L250 140 Q250 200 200 200 L200 220 Q200 230 150 230 Q100 230 100 220 L100 200 Q50 200 50 140 Z" fill="#0d5e3a" stroke="#d4af37" stroke-width="4"/>
+                    <path d="M150 50 A35 35 0 1 0 150 120 A35 35 0 1 1 150 50" fill="#d4af37"/>
+                    <polygon points="150,60 153,68 162,68 155,74 158,82 150,77 142,82 145,74 138,68 147,68" fill="#d4af37"/>
+                    <path d="M90 150 Q150 170 210 150 L210 160 Q150 180 90 160 Z" fill="#d4af37"/>
+                    <text x="150" y="250" text-anchor="middle" fill="#fff" font-size="28" font-weight="bold" font-family="Times New Roman">Mutqin BM</text>
                 </svg>
                 <h2>Mutqin BM</h2>
                 <p>Standar Kelulusan<br>Ponpes Bahrul Maghfiroh</p>
@@ -515,6 +608,7 @@
                     </select>
 
                     <div id="formHafalan" class="hidden">
+                        <!-- 1. Surat Pilihan -->
                         <div class="hafalan-section">
                             <div class="hafalan-header" onclick="this.nextElementSibling.classList.toggle('open')">
                                 <span>1. Hafalan Surat Pilihan</span>
@@ -539,6 +633,7 @@
                             </div>
                         </div>
 
+                        <!-- 2. Aurad -->
                         <div class="hafalan-section">
                             <div class="hafalan-header" onclick="this.nextElementSibling.classList.toggle('open')">
                                 <span>2. Hafalan Aurad</span>
@@ -571,6 +666,7 @@
                             </div>
                         </div>
 
+                        <!-- 3. Praktik -->
                         <div class="hafalan-section">
                             <div class="hafalan-header" onclick="this.nextElementSibling.classList.toggle('open')">
                                 <span>3. Praktik & Kelulusan</span>
@@ -603,9 +699,10 @@
                             </div>
                         </div>
 
+                        <!-- 4. Juz 30 -->
                         <div class="hafalan-section">
                             <div class="hafalan-header" onclick="this.nextElementSibling.classList.toggle('open')">
-                                <span>4. Hafalan Juz 30</span>
+                                <span>4. Hafalan Juz 30 (37 Surat)</span>
                                 <i class="fas fa-chevron-down"></i>
                             </div>
                             <div class="hafalan-body" id="juz30List"></div>
@@ -623,7 +720,7 @@
 
             <div id="tab-sertifikat" class="hidden">
                 <div class="panel">
-                    <h3>Cetak Sertifikat</h3>
+                    <h3>Cetak Sertifikat Kelulusan</h3>
                     <select id="pilihSertifikat" class="form-input" onchange="previewSertifikat()">
                         <option value="">-- Pilih Santri Lulus --</option>
                     </select>
@@ -632,38 +729,65 @@
 
             <div id="tab-upload" class="hidden">
                 <div class="panel">
-                    <h3>Upload Data</h3>
+                    <h3>Upload Data Santri (Excel/CSV)</h3>
                     <input type="file" accept=".csv" id="fileUpload" onchange="handleUpload(event)" style="margin-bottom: 20px;">
-                    <button class="btn btn-primary" onclick="downloadTemplate()"><i class="fas fa-download"></i> Download Template</button>
+                    <button class="btn btn-primary" onclick="downloadTemplate()"><i class="fas fa-download"></i> Download Template CSV</button>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- CERTIFICATE MODAL -->
     <div id="certModal" class="cert-modal">
         <div class="cert-wrapper">
-            <button class="cert-close" onclick="closeCert()">&times;</button>
-            <div class="cert-header">
-                <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="100" cy="100" r="95" fill="none" stroke="#0d5e3a" stroke-width="4"/>
-                    <path d="M100 30 A40 40 0 1 0 100 110 A40 40 0 1 1 100 30" fill="#0d5e3a"/>
-                    <text x="100" y="180" text-anchor="middle" fill="#0d5e3a" font-size="10" font-weight="bold">BM</text>
-                </svg>
-                <h2>Sertifikat Kelulusan</h2>
-                <h3>PONPES BAHRUL MAGHFIROH</h3>
-            </div>
-            <div class="cert-name" id="certNama">Nama Santri</div>
-            <p style="text-align: center;">Telah menyelesaikan program MUTQIN BM</p>
-            <div style="text-align: center;"><div class="cert-status">LULUS</div></div>
-            <div class="cert-items" id="certItems"></div>
-            <div class="cert-signatures">
-                <div class="sig-box">
-                    <div class="sig-line">Ust. Drs. H. Abbul Malik, Lc., M.M.Pd.</div>
-                    <div class="sig-title">Pengasuh</div>
-                </div>
-                <div class="sig-box">
-                    <div class="sig-line">Ust. H. Muhammad Amin</div>
-                    <div class="sig-title">Kepala Dewan Tahfizh</div>
+            <div class="cert-outer-border">
+                <div class="cert-inner-border">
+                    <button class="cert-close" onclick="closeCert()">&times;</button>
+                    <div class="cert-corner cert-corner-tl"></div>
+                    <div class="cert-corner cert-corner-tr"></div>
+                    <div class="cert-corner cert-corner-bl"></div>
+                    <div class="cert-corner cert-corner-br"></div>
+                    
+                    <div class="cert-header">
+                        <svg viewBox="0 0 300 280" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M50 120 Q50 30 150 30 Q250 30 250 120 L250 140 Q250 200 200 200 L200 220 Q200 230 150 230 Q100 230 100 220 L100 200 Q50 200 50 140 Z" fill="#0d5e3a" stroke="#d4af37" stroke-width="4"/>
+                            <path d="M150 50 A35 35 0 1 0 150 120 A35 35 0 1 1 150 50" fill="#d4af37"/>
+                            <polygon points="150,60 153,68 162,68 155,74 158,82 150,77 142,82 145,74 138,68 147,68" fill="#d4af37"/>
+                            <text x="150" y="250" text-anchor="middle" fill="#fff" font-size="28" font-weight="bold" font-family="Times New Roman">Mutqin BM</text>
+                        </svg>
+                        <h2>Sertifikat Kelulusan</h2>
+                        <h3>PONPES BAHRUL MAGHFIROH</h3>
+                        <p>Mutqin BM - Program Hafalan</p>
+                    </div>
+
+                    <div class="cert-name" id="certNama">Nama Santri</div>
+
+                    <div class="cert-desc">
+                        Dinyatakan telah <strong style="color: var(--primary);">MENYELESAIKAN MUTQIN BM</strong><br>
+                        Program Hafalan Sesuai Standar Kelulusan Pondok Bahrul Maghfiroh
+                    </div>
+
+                    <div style="text-align: center;">
+                        <div class="cert-status">LULUS</div>
+                    </div>
+
+                    <div class="cert-items" id="certItems"></div>
+
+                    <div class="cert-signatures">
+                        <div class="sig-box">
+                            <div class="sig-line">Ust. Drs. H. Abbul Malik, Lc., M.M.Pd.</div>
+                            <div class="sig-title">Pengasuh</div>
+                        </div>
+                        <div class="sig-box">
+                            <div class="sig-line">Ust. H. Muhammad Amin</div>
+                            <div class="sig-title">Kepala Dewan Tahfizh</div>
+                        </div>
+                    </div>
+
+                    <div class="cert-footer">
+                        No. Sertifikat: <span id="certNo">BM/00123</span> | 
+                        <span id="certDate"></span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -676,7 +800,7 @@
         let laporanChart = null;
 
         const sampleData = [
-            { id: 1, nama: 'Ahmad Fauzan', kelas: 'Kelas 5', status: 'Lulus', hafalan: { yasin: 'Mumtaz', waqiah: 'Mumtaz', mulk: 'Mumtaz' } },
+            { id: 1, nama: 'Ahmad Fauzan', kelas: 'Kelas 5', status: 'Lulus', hafalan: { yasin: 'Mumtaz', waqiah: 'Mumtaz', mulk: 'Mumtaz', aurad: 'Jayyid Jiddan', sholat: 'Lulus', juz30: 'Ahsan', khotib: 'Lulus', madin_ula: 'Lulus', madin_wustho: 'Lulus', adab: 'Baik' } },
             { id: 2, nama: 'Salma Azizah', kelas: 'Kelas 4', status: 'Proses', hafalan: {} },
             { id: 3, nama: 'Mohammad Lugman', kelas: 'Kelas 2', status: 'Belum', hafalan: {} }
         ];
@@ -747,7 +871,7 @@
             tbody.innerHTML = '';
             santriData.forEach((s, i) => {
                 const badge = s.status === 'Lulus' ? 'badge-lulus' : s.status === 'Proses' ? 'badge-proses' : 'badge-belum';
-                tbody.innerHTML += `<tr><td>${i+1}</td><td>${s.nama}</td><td>${s.kelas}</td><td><span class="badge ${badge}">${s.status}</span></td><td><button class="btn btn-primary btn-sm" onclick="editSantri(${i})">Edit</button></td></tr>`;
+                tbody.innerHTML += '<tr><td>' + (i+1) + '</td><td>' + s.nama + '</td><td>' + s.kelas + '</td><td><span class="badge ' + badge + '">' + s.status + '</span></td><td><button class="btn btn-primary btn-sm" onclick="editSantri(' + i + ')">Edit</button></td></tr>';
             });
         }
 
@@ -773,7 +897,7 @@
 
         function exportCSV() {
             let csv = 'Nama,Kelas,Status\n';
-            santriData.forEach(s => csv += `${s.nama},${s.kelas},${s.status}\n`);
+            santriData.forEach(s => csv += s.nama + ',' + s.kelas + ',' + s.status + '\n');
             const blob = new Blob([csv], {type: 'text/csv'});
             const a = document.createElement('a');
             a.href = URL.createObjectURL(blob);
@@ -784,7 +908,7 @@
         function loadSantriSelect() {
             const sel = document.getElementById('pilihSantri');
             sel.innerHTML = '<option value="">-- Pilih Santri --</option>';
-            santriData.forEach(s => sel.innerHTML += `<option value="${s.id}">${s.nama} (${s.kelas})</option>`);
+            santriData.forEach(s => sel.innerHTML += '<option value="' + s.id + '">' + s.nama + ' (' + s.kelas + ')</option>');
         }
 
         function loadFormHafalan() {
@@ -801,14 +925,14 @@
             const surat = ['An-Naba', 'An-Nazi\'at', 'Abasa', 'At-Takwir', 'Al-Infitar', 'Al-Mutaffifin', 'Al-Insyiqaq', 'Al-Buruj', 'At-Thariq', 'Al-A\'la', 'Al-Ghasyiyah', 'Al-Fajr', 'Al-Balad', 'Asy-Syams', 'Al-Lail', 'Ad-Duha', 'Asy-Syarh', 'At-Tin', 'Al-Alaq', 'Al-Qadr', 'Al-Bayyinah', 'Az-Zalzalah', 'Al-Adiyat', 'Al-Qari\'ah', 'At-Takasur', 'Al-Asr', 'Al-Humazah', 'Al-Fil', 'Quraisy', 'Al-Ma\'un', 'Al-Kautsar', 'Al-Kafirun', 'An-Nasr', 'Al-Lahab', 'Al-Ikhlas', 'Al-Falaq', 'An-Nas'];
             let html = '<div class="save-btn"><button class="btn btn-primary" onclick="simpanHafalan(\'juz30\')">Simpan Juz 30</button></div>';
             surat.forEach((s, i) => {
-                html += `<div class="hafalan-item"><label><input type="checkbox" onchange="enableSelect(this)"> ${i+1}. ${s}</label><select disabled><option>Nilai</option><option>Mumtaz</option><option>Jayyid</option></select></div>`;
+                html += '<div class="hafalan-item"><label><input type="checkbox" onchange="enableSelect(this)"> ' + (i+1) + '. ' + s + '</label><select disabled><option>Nilai</option><option>Mumtaz</option><option>Jayyid</option></select></div>';
             });
             document.getElementById('juz30List').innerHTML = html;
         }
 
         function simpanHafalan(kategori) {
             if(!currentSantri) { alert('Pilih santri!'); return; }
-            alert(`Data ${kategori} tersimpan!`);
+            alert('Data ' + kategori + ' tersimpan!');
             saveData();
         }
 
@@ -841,7 +965,7 @@
         function loadSertifikatSelect() {
             const sel = document.getElementById('pilihSertifikat');
             sel.innerHTML = '<option value="">-- Pilih --</option>';
-            santriData.filter(s => s.status === 'Lulus').forEach(s => sel.innerHTML += `<option value="${s.id}">${s.nama}</option>`);
+            santriData.filter(s => s.status === 'Lulus').forEach(s => sel.innerHTML += '<option value="' + s.id + '">' + s.nama + '</option>');
         }
 
         function previewSertifikat() {
@@ -849,18 +973,49 @@
             if(!id) return;
             const s = santriData.find(x => x.id === id);
             document.getElementById('certNama').textContent = s.nama;
+            document.getElementById('certNo').textContent = 'BM/' + String(s.id).padStart(5, '0');
+            document.getElementById('certDate').textContent = new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
             let items = '';
-            Object.keys(s.hafalan).forEach(k => items += `<div class="cert-item"><span>${k.toUpperCase()}</span><span>${s.hafalan[k]}</span></div>`);
+            Object.keys(s.hafalan).forEach(k => items += '<div class="cert-item"><span>' + k.toUpperCase() + '</span><span>' + s.hafalan[k] + '</span></div>');
             document.getElementById('certItems').innerHTML = items || '<div class="cert-item"><span>Belum ada data</span></div>';
             document.getElementById('certModal').classList.add('active');
         }
 
         function closeCert() { document.getElementById('certModal').classList.remove('active'); }
-        function handleUpload(e) { alert('Upload CSV berhasil!'); }
+        
+        function handleUpload(e) {
+            const file = e.target.files[0];
+            if(!file) return;
+            const reader = new FileReader();
+            reader.onload = function(ev) {
+                const lines = ev.target.result.split('\n');
+                let count = 0;
+                lines.forEach(line => {
+                    const parts = line.split(',');
+                    if(parts.length >= 2) {
+                        const nama = parts[0].trim();
+                        const kelas = parts[1].trim();
+                        if(nama && !santriData.find(s => s.nama.toLowerCase() === nama.toLowerCase())) {
+                            santriData.push({ id: Date.now(), nama, kelas: kelas || 'Kelas 1', status: 'Belum', hafalan: {} });
+                            count++;
+                        }
+                    }
+                });
+                saveData();
+                renderTable();
+                updateDashboard();
+                alert('Berhasil import ' + count + ' data santri!');
+            };
+            reader.readAsText(file);
+        }
+
         function downloadTemplate() {
+            const csv = 'Nama,Kelas\nAhmad Fauzan,Kelas 5\nSalma Azizah,Kelas 4\nMohammad Lugman,Kelas 2';
+            const blob = new Blob([csv], {type: 'text/csv'});
+            const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
-            a.href = 'data:text/csv;charset=utf-8,Nama,Kelas\nAhmad Fauzan,Kelas 5';
-            a.download = 'template.csv';
+            a.href = url;
+            a.download = 'template_santri.csv';
             a.click();
         }
     </script>
