@@ -20,13 +20,7 @@
             --white: #ffffff;
             --gray: #f5f5f5;
             --text-dark: #333333;
-        }
-
-        /* SVG Logo Styles */
-        .logo-svg {
-            width: 180px;
-            height: auto;
-            filter: drop-shadow(0 4px 15px rgba(0,0,0,0.3));
+            --sidebar-width: 260px;
         }
 
         /* ==================== LOGIN PAGE ==================== */
@@ -37,6 +31,18 @@
             align-items: center;
             justify-content: center;
             padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #login-page::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(212, 175, 55, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(212, 175, 55, 0.1) 0%, transparent 20%);
+            pointer-events: none;
         }
 
         .login-container {
@@ -48,6 +54,7 @@
             width: 100%;
             display: grid;
             grid-template-columns: 1fr 1fr;
+            z-index: 1;
         }
 
         .login-left {
@@ -59,6 +66,13 @@
             justify-content: center;
             color: var(--white);
             text-align: center;
+            position: relative;
+        }
+
+        .login-left img {
+            width: 180px;
+            margin-bottom: 25px;
+            filter: drop-shadow(0 4px 15px rgba(0,0,0,0.3));
         }
 
         .login-left h1 {
@@ -120,147 +134,424 @@
         .forgot-password { text-align: center; margin-top: 15px; }
         .forgot-password a { color: var(--primary-green); text-decoration: none; font-size: 0.85rem; }
 
+        .upload-excel-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: var(--primary-green);
+            text-decoration: none;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+        .upload-excel-link:hover { text-decoration: underline; }
+
         /* ==================== DASHBOARD ==================== */
-        #dashboard-page { display: none; min-height: 100vh; background: var(--gray); }
-
-        .dashboard-header {
-            background: linear-gradient(135deg, var(--primary-green), var(--dark-green));
-            color: var(--white); padding: 15px 35px;
-            display: flex; justify-content: space-between; align-items: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        #dashboard-page { 
+            display: none; 
+            min-height: 100vh; 
+            background: var(--gray);
+            display: flex;
         }
 
-        .dashboard-header .logo-area { display: flex; align-items: center; gap: 12px; }
-        .dashboard-header .logo-area h2 { color: var(--gold); font-family: 'Times New Roman', serif; font-size: 1.3rem; }
-        .dashboard-header .logo-area p { font-size: 0.75rem; opacity: 0.8; }
-
-        .dashboard-header .user-info { display: flex; align-items: center; gap: 12px; }
-        .dashboard-header .user-info span { text-align: right; }
-        .dashboard-header .user-info .name { font-weight: bold; color: var(--gold); }
-
-        .btn-logout {
-            background: rgba(255,255,255,0.15); color: var(--white); border: 1px solid rgba(255,255,255,0.3);
-            padding: 8px 18px; border-radius: 8px; cursor: pointer; transition: all 0.3s; font-size: 0.9rem;
+        /* SIDEBAR */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: linear-gradient(180deg, var(--dark-green), var(--primary-green));
+            color: white;
+            padding: 20px 0;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+            position: fixed;
+            height: 100vh;
+            z-index: 100;
         }
-        .btn-logout:hover { background: rgba(255,255,255,0.25); }
 
-        .dashboard-content { padding: 25px 35px; }
+        .sidebar-logo {
+            padding: 0 20px 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            margin-bottom: 20px;
+            text-align: center;
+        }
 
-        .welcome-text { margin-bottom: 25px; }
-        .welcome-text h1 { color: var(--primary-green); font-size: 1.5rem; margin-bottom: 3px; }
-        .welcome-text p { color: #666; font-size: 0.9rem; }
+        .sidebar-logo img {
+            width: 120px;
+            margin-bottom: 10px;
+        }
+
+        .sidebar-logo h3 {
+            color: var(--gold);
+            font-family: 'Times New Roman', serif;
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+
+        .sidebar-logo p {
+            font-size: 0.75rem;
+            opacity: 0.8;
+            color: var(--gold-light);
+        }
+
+        .nav-links {
+            list-style: none;
+            padding: 0 15px;
+            flex: 1;
+        }
+
+        .nav-links li {
+            margin-bottom: 5px;
+        }
+
+        .nav-links a {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s;
+            font-size: 0.95rem;
+        }
+
+        .nav-links a i {
+            margin-right: 12px;
+            width: 20px;
+            text-align: center;
+            color: var(--gold);
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            background: rgba(255,255,255,0.1);
+            color: white;
+        }
+
+        .nav-links a.active {
+            border-left: 3px solid var(--gold);
+        }
+
+        .sidebar-footer {
+            padding: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .btn-logout-sidebar {
+            width: 100%;
+            padding: 12px;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .btn-logout-sidebar:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        /* MAIN CONTENT */
+        .main-content {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 30px;
+            overflow-y: auto;
+        }
+
+        .header-welcome {
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-welcome h1 {
+            color: var(--primary-green);
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+
+        .header-welcome p {
+            color: #666;
+        }
+
+        .user-info-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-info-header span {
+            text-align: right;
+        }
+
+        .user-info-header .name {
+            font-weight: bold;
+            color: var(--primary-green);
+        }
 
         /* Stats Cards */
-        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 18px; margin-bottom: 25px; }
-        .stat-card {
-            background: var(--white); border-radius: 12px; padding: 20px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.06); display: flex; align-items: center;
-            justify-content: space-between; border-left: 4px solid var(--primary-green);
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 18px;
+            margin-bottom: 25px;
         }
+
+        .stat-card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-left: 4px solid var(--primary-green);
+        }
+
         .stat-card.total { border-left-color: #2196F3; }
         .stat-card.lulus { border-left-color: #4CAF50; }
         .stat-card.proses { border-left-color: #FF9800; }
+
         .stat-info h3 { color: #888; font-size: 0.8rem; margin-bottom: 3px; }
         .stat-info .number { font-size: 1.8rem; font-weight: bold; color: var(--text-dark); }
-        .stat-icon { width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+        }
+
         .stat-card.total .stat-icon { background: #E3F2FD; color: #2196F3; }
         .stat-card.lulus .stat-icon { background: #E8F5E9; color: #4CAF50; }
         .stat-card.proses .stat-icon { background: #FFF3E0; color: #FF9800; }
 
-        /* Navigation Tabs */
-        .nav-tabs {
-            display: flex; gap: 6px; margin-bottom: 20px; background: var(--white);
-            padding: 8px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-            overflow-x: auto; flex-wrap: wrap;
-        }
-        .nav-tab {
-            padding: 10px 18px; background: none; border: none; color: #666;
-            cursor: pointer; border-radius: 8px; font-weight: 600; transition: all 0.3s;
-            white-space: nowrap; font-size: 0.85rem; display: flex; align-items: center; gap: 6px;
-        }
-        .nav-tab:hover { background: var(--gray); }
-        .nav-tab.active { background: var(--primary-green); color: white; }
-
-        .tab-content { display: none; }
-        .tab-content.active { display: block; }
-
         /* Panel */
         .panel {
-            background: var(--white); border-radius: 12px; padding: 25px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.06); margin-bottom: 20px;
+            background: var(--white);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            margin-bottom: 20px;
         }
+
         .panel h3 {
-            color: var(--primary-green); margin-bottom: 18px; padding-bottom: 10px;
-            border-bottom: 2px solid var(--gray); display: flex; align-items: center; gap: 10px; font-size: 1.1rem;
+            color: var(--primary-green);
+            margin-bottom: 18px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--gray);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.1rem;
         }
+
         .panel h3 i { color: var(--gold); }
 
         /* Hafalan Category */
         .hafalan-category {
-            background: #f8f9fa; border-radius: 10px; margin-bottom: 15px;
-            border: 1px solid #e0e0e0; overflow: hidden;
+            background: #f8f9fa;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #e0e0e0;
+            overflow: hidden;
         }
+
         .hafalan-category-header {
-            background: var(--primary-green); color: white; padding: 14px 18px;
-            display: flex; justify-content: space-between; align-items: center; cursor: pointer;
+            background: var(--primary-green);
+            color: white;
+            padding: 14px 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
         }
-        .hafalan-category-header h4 { font-size: 1rem; display: flex; align-items: center; gap: 8px; }
-        .hafalan-category-header .arrow { transition: transform 0.3s; }
-        .hafalan-category-header.open .arrow { transform: rotate(180deg); }
+
+        .hafalan-category-header h4 {
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .hafalan-category-header .arrow {
+            transition: transform 0.3s;
+        }
+
+        .hafalan-category-header.open .arrow {
+            transform: rotate(180deg);
+        }
         
-        .hafalan-category-body { padding: 15px 18px; display: none; }
-        .hafalan-category-body.open { display: block; }
+        .hafalan-category-body {
+            padding: 15px 18px;
+            display: none;
+        }
+
+        .hafalan-category-body.open {
+            display: block;
+        }
 
         .hafalan-item {
-            display: flex; align-items: center; justify-content: space-between;
-            padding: 10px 12px; margin-bottom: 8px; background: white;
-            border-radius: 8px; border: 1px solid #e8e8e8; transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 12px;
+            margin-bottom: 8px;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #e8e8e8;
+            transition: all 0.2s;
         }
-        .hafalan-item:hover { border-color: var(--primary-green); background: #f0f7f4; }
 
-        .hafalan-item .left { display: flex; align-items: center; gap: 10px; flex: 1; }
-        .hafalan-item .checkbox {
-            width: 22px; height: 22px; border: 2px solid #ccc; border-radius: 5px;
-            display: flex; align-items: center; justify-content: center; cursor: pointer;
-            transition: all 0.2s; flex-shrink: 0;
+        .hafalan-item:hover {
+            border-color: var(--primary-green);
+            background: #f0f7f4;
         }
-        .hafalan-item .checkbox.checked { background: var(--primary-green); border-color: var(--primary-green); color: white; }
-        .hafalan-item .label { font-size: 0.9rem; color: var(--text-dark); }
+
+        .hafalan-item .left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex: 1;
+        }
+
+        .hafalan-item .checkbox {
+            width: 22px;
+            height: 22px;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+
+        .hafalan-item .checkbox.checked {
+            background: var(--primary-green);
+            border-color: var(--primary-green);
+            color: white;
+        }
+
+        .hafalan-item .label {
+            font-size: 0.9rem;
+            color: var(--text-dark);
+        }
 
         .hafalan-item select {
-            padding: 6px 10px; border: 1px solid #ddd; border-radius: 6px;
-            font-size: 0.85rem; min-width: 130px;
+            padding: 6px 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            min-width: 130px;
         }
-        .hafalan-item select:disabled { opacity: 0.5; }
+
+        .hafalan-item select:disabled {
+            opacity: 0.5;
+        }
 
         .category-status {
-            margin-top: 12px; padding: 12px; border-radius: 8px;
-            display: flex; justify-content: space-between; align-items: center;
+            margin-top: 12px;
+            padding: 12px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-        .category-status.complete { background: #e8f5e9; border: 1px solid #4CAF50; }
-        .category-status.incomplete { background: #fff3e0; border: 1px solid #FF9800; }
-        .category-status .status-text { font-weight: bold; font-size: 0.9rem; }
+
+        .category-status.complete {
+            background: #e8f5e9;
+            border: 1px solid #4CAF50;
+        }
+
+        .category-status.incomplete {
+            background: #fff3e0;
+            border: 1px solid #FF9800;
+        }
+
+        .category-status .status-text {
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
         .category-status .status-badge {
-            padding: 4px 12px; border-radius: 15px; font-size: 0.8rem; font-weight: bold;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
         }
+
         .status-selesai { background: #4CAF50; color: white; }
         .status-belum { background: #FF9800; color: white; }
 
-        /* Table */
-        .data-table { width: 100%; border-collapse: collapse; }
-        .data-table th, .data-table td { padding: 12px; text-align: left; border-bottom: 1px solid #eee; font-size: 0.9rem; }
-        .data-table th { background: var(--primary-green); color: white; font-weight: 600; font-size: 0.85rem; }
-        .data-table tr:hover { background: #f5f5f5; }
+        .save-category-btn {
+            margin-top: 15px;
+            padding: 10px 20px;
+            background: var(--primary-green);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
 
-        .badge { padding: 4px 10px; border-radius: 15px; font-size: 0.8rem; font-weight: 600; }
+        .save-category-btn:hover {
+            background: var(--dark-green);
+            transform: translateY(-2px);
+        }
+
+        /* Table */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .data-table th, .data-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+            font-size: 0.9rem;
+        }
+
+        .data-table th {
+            background: var(--primary-green);
+            color: white;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+
+        .data-table tr:hover {
+            background: #f5f5f5;
+        }
+
+        .badge {
+            padding: 4px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
         .badge-success { background: #e8f5e9; color: #2e7d32; }
         .badge-warning { background: #fff3e0; color: #e65100; }
         .badge-danger { background: #ffebee; color: #c62828; }
 
         .btn {
-            padding: 8px 16px; border: none; border-radius: 6px; cursor: pointer;
-            font-size: 0.85rem; transition: all 0.3s; margin-right: 5px; font-weight: 600;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.3s;
+            margin-right: 5px;
+            font-weight: 600;
         }
+
         .btn-primary { background: var(--primary-green); color: white; }
         .btn-primary:hover { background: var(--dark-green); }
         .btn-success { background: #4CAF50; color: white; }
@@ -270,21 +561,53 @@
 
         /* Upload Area */
         .upload-area {
-            border: 2px dashed var(--primary-green); border-radius: 12px;
-            padding: 35px; text-align: center; cursor: pointer; transition: all 0.3s;
+            border: 2px dashed var(--primary-green);
+            border-radius: 12px;
+            padding: 35px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
         }
-        .upload-area:hover { background: #e8f5e9; }
-        .upload-area i { font-size: 2.5rem; color: var(--primary-green); margin-bottom: 12px; }
-        .upload-area h4 { color: var(--primary-green); margin-bottom: 8px; }
-        .upload-area p { color: #666; font-size: 0.85rem; }
+
+        .upload-area:hover {
+            background: #e8f5e9;
+        }
+
+        .upload-area i {
+            font-size: 2.5rem;
+            color: var(--primary-green);
+            margin-bottom: 12px;
+        }
+
+        .upload-area h4 {
+            color: var(--primary-green);
+            margin-bottom: 8px;
+        }
+
+        .upload-area p {
+            color: #666;
+            font-size: 0.85rem;
+        }
 
         /* ==================== CERTIFICATE STYLES ==================== */
         .cert-modal {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.7); z-index: 1000; align-items: center;
-            justify-content: center; overflow-y: auto; padding: 20px;
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            overflow-y: auto;
+            padding: 20px;
         }
-        .cert-modal.active { display: flex; }
+
+        .cert-modal.active {
+            display: flex;
+        }
 
         .certificate-wrapper {
             background: #fffef0;
@@ -300,73 +623,153 @@
             padding: 4px;
             margin: 4px;
         }
+
         .certificate-inner-border {
             border: 1px solid var(--gold);
             padding: 40px 50px;
             position: relative;
-            background-image: url("data:image/svg+xml,%3Csvg width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='p' width='40' height='40' patternUnits='userSpaceOnUse'%3E%3Cpath d='M20 0L40 20L20 40L0 20Z' fill='none' stroke='%23d4af37' stroke-width='0.3' opacity='0.15'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='200' height='200' fill='url(%23p)'/%3E%3C/svg%3E");
+            background-image: url("image/svg+xml,%3Csvg width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='p' width='40' height='40' patternUnits='userSpaceOnUse'%3E%3Cpath d='M20 0L40 20L20 40L0 20Z' fill='none' stroke='%23d4af37' stroke-width='0.3' opacity='0.15'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='200' height='200' fill='url(%23p)'/%3E%3C/svg%3E");
         }
 
         .cert-corner {
-            position: absolute; width: 80px; height: 80px;
+            position: absolute;
+            width: 80px;
+            height: 80px;
         }
-        .cert-corner svg { width: 100%; height: 100%; }
+
+        .cert-corner svg {
+            width: 100%;
+            height: 100%;
+        }
+
         .cert-corner-tl { top: 0; left: 0; }
         .cert-corner-tr { top: 0; right: 0; transform: scaleX(-1); }
         .cert-corner-bl { bottom: 0; left: 0; transform: scaleY(-1); }
         .cert-corner-br { bottom: 0; right: 0; transform: scale(-1,-1); }
 
         .cert-close {
-            position: absolute; top: 10px; right: 15px; cursor: pointer;
-            font-size: 1.3rem; color: #666; z-index: 10; background: none; border: none;
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            cursor: pointer;
+            font-size: 1.3rem;
+            color: #666;
+            z-index: 10;
+            background: none;
+            border: none;
         }
 
-        .cert-header { text-align: center; margin-bottom: 15px; position: relative; }
-        .cert-header .cert-top-text { font-size: 0.85rem; color: var(--primary-green); font-weight: bold; letter-spacing: 1px; }
-        .cert-header .cert-main-title {
-            font-family: 'Times New Roman', serif; font-size: 2.2rem; color: var(--primary-green);
-            font-weight: bold; margin: 8px 0; letter-spacing: 1px;
+        .cert-header {
+            text-align: center;
+            margin-bottom: 15px;
+            position: relative;
         }
+
+        .cert-header img {
+            width: 90px;
+            margin-bottom: 8px;
+        }
+
+        .cert-header .cert-top-text {
+            font-size: 0.85rem;
+            color: var(--primary-green);
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .cert-header .cert-main-title {
+            font-family: 'Times New Roman', serif;
+            font-size: 2.2rem;
+            color: var(--primary-green);
+            font-weight: bold;
+            margin: 8px 0;
+            letter-spacing: 1px;
+        }
+
         .cert-header .cert-subtitle {
-            font-size: 0.8rem; color: #888; letter-spacing: 2px; text-transform: uppercase;
+            font-size: 0.8rem;
+            color: #888;
+            letter-spacing: 2px;
+            text-transform: uppercase;
         }
 
         .cert-name {
-            text-align: center; font-size: 2rem; color: var(--text-dark);
-            font-family: 'Times New Roman', serif; font-weight: bold;
-            margin: 20px 0; padding-bottom: 8px;
+            text-align: center;
+            font-size: 2rem;
+            color: var(--text-dark);
+            font-family: 'Times New Roman', serif;
+            font-weight: bold;
+            margin: 20px 0;
+            padding-bottom: 8px;
             border-bottom: 2px solid var(--gold);
             display: inline-block;
         }
-        .cert-name-wrapper { text-align: center; }
+
+        .cert-name-wrapper {
+            text-align: center;
+        }
 
         .cert-desc {
-            text-align: center; font-size: 0.95rem; color: #555;
-            margin: 15px 0; line-height: 1.6;
+            text-align: center;
+            font-size: 0.95rem;
+            color: #555;
+            margin: 15px 0;
+            line-height: 1.6;
         }
-        .cert-desc strong { color: var(--primary-green); }
+
+        .cert-desc strong {
+            color: var(--primary-green);
+        }
 
         .cert-lulus-badge {
-            text-align: center; margin: 18px 0;
+            text-align: center;
+            margin: 18px 0;
         }
+
         .cert-lulus-badge span {
-            background: var(--primary-green); color: var(--gold);
-            padding: 8px 50px; border-radius: 4px; font-size: 1.4rem;
-            font-weight: bold; font-family: 'Times New Roman', serif;
-            letter-spacing: 3px; display: inline-block;
+            background: var(--primary-green);
+            color: var(--gold);
+            padding: 8px 50px;
+            border-radius: 4px;
+            font-size: 1.4rem;
+            font-weight: bold;
+            font-family: 'Times New Roman', serif;
+            letter-spacing: 3px;
+            display: inline-block;
             border: 2px solid var(--gold);
         }
 
-        .cert-items-list { margin: 20px 0; }
+        .cert-items-list {
+            margin: 20px 0;
+        }
+
         .cert-item-row {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 8px 10px; border-bottom: 1px dashed #d4af37;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 10px;
+            border-bottom: 1px dashed #d4af37;
         }
-        .cert-item-row .item-left { display: flex; align-items: center; gap: 8px; font-size: 0.85rem; color: var(--text-dark); }
-        .cert-item-row .item-left .check-icon { color: var(--primary-green); }
+
+        .cert-item-row .item-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+            color: var(--text-dark);
+        }
+
+        .cert-item-row .item-left .check-icon {
+            color: var(--primary-green);
+        }
+
         .cert-item-row .item-badge {
-            padding: 3px 14px; border-radius: 4px; font-size: 0.78rem; font-weight: bold;
+            padding: 3px 14px;
+            border-radius: 4px;
+            font-size: 0.78rem;
+            font-weight: bold;
         }
+
         .badge-mumtaz { background: #FFD700; color: #333; }
         .badge-jayyid-jiddan { background: #4CAF50; color: white; }
         .badge-jayyid { background: #8BC34A; color: white; }
@@ -374,109 +777,224 @@
         .badge-lulus-check { background: var(--primary-green); color: white; padding: 3px 10px; border-radius: 4px; }
 
         .cert-signatures {
-            display: flex; justify-content: space-between; margin-top: 40px;
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
             padding: 0 20px;
         }
-        .sig-box { text-align: center; width: 250px; }
-        .sig-name { font-weight: bold; font-size: 0.85rem; color: var(--text-dark); }
-        .sig-title { font-size: 0.8rem; color: #666; margin-top: 2px; }
-        .sig-line {
-            border-top: 1px solid #333; margin-top: 55px; margin-bottom: 5px;
+
+        .sig-box {
+            text-align: center;
+            width: 250px;
         }
+
+        .sig-name {
+            font-weight: bold;
+            font-size: 0.85rem;
+            color: var(--text-dark);
+        }
+
+        .sig-title {
+            font-size: 0.8rem;
+            color: #666;
+            margin-top: 2px;
+        }
+
+        .sig-line {
+            border-top: 1px solid #333;
+            margin-top: 55px;
+            margin-bottom: 5px;
+        }
+
         .sig-stamp {
-            position: absolute; bottom: 30px; right: 60px;
-            width: 70px; height: 70px; border: 2px solid var(--gold);
-            border-radius: 50%; display: flex; align-items: center;
-            justify-content: center; font-size: 0.6rem; color: var(--gold);
-            text-align: center; line-height: 1.2;
+            position: absolute;
+            bottom: 30px;
+            right: 60px;
+            width: 70px;
+            height: 70px;
+            border: 2px solid var(--gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.6rem;
+            color: var(--gold);
+            text-align: center;
+            line-height: 1.2;
         }
 
         .cert-footer {
-            text-align: center; margin-top: 20px; font-size: 0.75rem; color: #888;
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.75rem;
+            color: #888;
         }
 
         /* Modal */
         .modal {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.5); z-index: 900; align-items: center;
-            justify-content: center; padding: 20px;
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 900;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
         }
-        .modal.active { display: flex; }
+
+        .modal.active {
+            display: flex;
+        }
+
         .modal-content {
-            background: white; border-radius: 15px; max-width: 500px; width: 100%;
+            background: white;
+            border-radius: 15px;
+            max-width: 500px;
+            width: 100%;
             box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
+
         .modal-header {
-            background: var(--primary-green); color: white; padding: 18px 25px;
-            display: flex; justify-content: space-between; align-items: center;
+            background: var(--primary-green);
+            color: white;
+            padding: 18px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             border-radius: 15px 15px 0 0;
         }
-        .modal-header h3 { margin: 0; font-size: 1.1rem; }
-        .btn-close-modal { background: none; border: none; color: white; font-size: 1.3rem; cursor: pointer; }
-        .modal-body { padding: 25px; }
+
+        .modal-header h3 {
+            margin: 0;
+            font-size: 1.1rem;
+        }
+
+        .btn-close-modal {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.3rem;
+            cursor: pointer;
+        }
+
+        .modal-body {
+            padding: 25px;
+        }
 
         /* Chart Container */
-        .chart-container { position: relative; height: 300px; margin: 15px 0; }
+        .chart-container {
+            position: relative;
+            height: 300px;
+            margin: 15px 0;
+        }
 
         /* Responsive */
         @media (max-width: 768px) {
-            .login-container { grid-template-columns: 1fr; }
-            .login-left { padding: 30px 20px; }
-            .certificate-inner-border { padding: 25px 20px; }
-            .cert-signatures { flex-direction: column; gap: 20px; }
-            .sig-box { width: 100%; }
-            .dashboard-header { flex-direction: column; gap: 10px; }
-            .dashboard-content { padding: 15px; }
-            .nav-tabs { gap: 4px; padding: 6px; }
-            .nav-tab { padding: 8px 12px; font-size: 0.8rem; }
+            .login-container {
+                grid-template-columns: 1fr;
+            }
+            .login-left {
+                padding: 30px 20px;
+            }
+            .certificate-inner-border {
+                padding: 25px 20px;
+            }
+            .cert-signatures {
+                flex-direction: column;
+                gap: 20px;
+            }
+            .sig-box {
+                width: 100%;
+            }
+            .sidebar {
+                width: 70px;
+                padding: 10px 0;
+            }
+            .sidebar-logo, .sidebar-footer, .nav-links a span {
+                display: none;
+            }
+            .nav-links a {
+                justify-content: center;
+                padding: 15px;
+            }
+            .nav-links a i {
+                margin-right: 0;
+                font-size: 1.2rem;
+            }
+            .main-content {
+                margin-left: 70px;
+                padding: 15px;
+            }
         }
 
         /* Print styles */
         @media print {
-            body * { visibility: hidden; }
-            .cert-modal, .cert-modal * { visibility: visible; }
-            .cert-modal { position: absolute; left: 0; top: 0; }
-            .cert-close { display: none; }
+            body * {
+                visibility: hidden;
+            }
+            .cert-modal, .cert-modal * {
+                visibility: visible;
+            }
+            .cert-modal {
+                position: absolute;
+                left: 0;
+                top: 0;
+            }
+            .cert-close {
+                display: none;
+            }
         }
 
-        .hafalan-select-wrapper { display: flex; align-items: center; gap: 10px; flex: 1; justify-content: space-between; }
-        .hafalan-select-wrapper .left { display: flex; align-items: center; gap: 10px; }
+        .hafalan-select-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex: 1;
+            justify-content: space-between;
+        }
+
+        .hafalan-select-wrapper .left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .loading-overlay.hidden {
+            display: none;
+        }
     </style>
 </head>
 <body>
 
-<!-- SVG Logo Definition -->
-<svg style="display:none;">
-    <symbol id="logo-mutqin" viewBox="0 0 200 200">
-        <!-- Crescent and Star -->
-        <path d="M100 20 A30 30 0 1 0 100 80 A30 30 0 1 1 100 20" fill="#d4af37"/>
-        <polygon points="100,35 103,43 112,43 105,49 108,57 100,52 92,57 95,49 88,43 97,43" fill="#d4af37"/>
-        <!-- Arch -->
-        <path d="M30 100 A70 70 0 0 1 170 100 L170 110 A60 60 0 0 0 30 110 Z" fill="#0d5e3a"/>
-        <path d="M40 100 A60 60 0 0 1 160 100" fill="none" stroke="#d4af37" stroke-width="3"/>
-        <!-- Book -->
-        <path d="M60 120 Q100 140 140 120 L140 130 Q100 150 60 130 Z" fill="#d4af37"/>
-        <path d="M60 125 Q100 145 140 125" fill="none" stroke="#0d5e3a" stroke-width="2"/>
-        <!-- Stars -->
-        <circle cx="70" cy="85" r="2" fill="#d4af37"/>
-        <circle cx="90" cy="75" r="3" fill="#d4af37"/>
-        <circle cx="110" cy="75" r="2" fill="#d4af37"/>
-        <circle cx="130" cy="85" r="2" fill="#d4af37"/>
-        <circle cx="80" cy="95" r="2" fill="#d4af37"/>
-        <circle cx="120" cy="95" r="2" fill="#d4af37"/>
-        <!-- Text -->
-        <text x="100" y="165" text-anchor="middle" fill="#d4af37" font-size="8" font-weight="bold">PONDOK PESANTREN</text>
-        <text x="100" y="175" text-anchor="middle" fill="#fff" font-size="9" font-weight="bold">BAHRUL MAGHFIROH</text>
-    </symbol>
-</svg>
+<!-- Loading Overlay -->
+<div id="loadingOverlay" class="loading-overlay hidden">
+    <div><i class="fas fa-spinner fa-spin"></i> Memuat data...</div>
+</div>
 
 <!-- ==================== LOGIN PAGE ==================== -->
 <div id="login-page">
     <div class="login-container">
         <div class="login-left">
-            <svg class="logo-svg" viewBox="0 0 200 200">
-                <use href="#logo-mutqin"></use>
-            </svg>
+            <!-- Ganti src dengan path logo Anda -->
+            <img src="logo.png" alt="Logo Mutqin BM" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTgwIiBoZWlnaHQ9IjE4MCIgdmlld0JveD0iMCAwIDE4MCAxODAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iOTAiIGN5PSI5MCIgcj0iODAiIGZpbGw9IiMwZDVlM2EiLz48dGV4dCB4PSI5MCIgeT0iOTUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiNkNGFmMzciIGZvbnQtc2l6ZT0iMjgiIGZvbnQtd2VpZ2h0PSJib2xkIj5NdXRxaW48L3RleHQ+PHRleHQgeD0iOTAiIHk9IjEyNSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iI2ZmZiIgZm9udC1zaXplPSIyNCIgZm9udC13ZWlnaHQ9ImJvbGQiPkJNPC90ZXh0Pjwvc3ZnPg=='">
             <h1>Mutqin BM</h1>
             <div class="divider"></div>
             <p class="subtitle">Standar Kelulusan<br>Ponpes Bahrul Maghfiroh</p>
@@ -503,45 +1021,49 @@
                     <a href="#" onclick="alert('Hubungi administrator untuk reset password')"><i class="fas fa-key"></i> Lupa Password?</a>
                 </div>
             </form>
+            <a class="upload-excel-link" onclick="document.getElementById('fileExcelLogin').click()">
+                <i class="fas fa-file-excel"></i> Upload Data Santri (Excel)
+            </a>
+            <input type="file" id="fileExcelLogin" accept=".csv" style="display:none;" onchange="handleFileUploadLogin(event)">
         </div>
     </div>
 </div>
 
 <!-- ==================== DASHBOARD ==================== -->
-<div id="dashboard-page">
-    <div class="dashboard-header">
-        <div class="logo-area">
-            <svg width="50" height="50" viewBox="0 0 200 200">
-                <use href="#logo-mutqin"></use>
-            </svg>
-            <div>
-                <h2>Mutqin BM</h2>
-                <p>Standar Kelulusan Ponpes Bahrul Maghfiroh</p>
-            </div>
+<div id="dashboard-page" style="display: none;">
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+        <div class="sidebar-logo">
+            <img src="logo.png" alt="Logo" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgdmlld0JveD0iMCAwIDEyMCAxMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iNjAiIGN5PSI2MCIgcj0iNTAiIGZpbGw9IiMwZDVlM2EiLz48dGV4dCB4PSI2MCIgeT0iNjUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiNkNGFmMzciIGZvbnQtc2l6ZT0iMTgiIGZvbnQtd2VpZ2h0PSJib2xkIj5NdXRxaW48L3RleHQ+PHRleHQgeD0iNjAiIHk9Ijg1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjZmZmIiBmb250LXNpemU9IjE2IiBmb250LXdlaWdodD0iYm9sZCI+Qk08L3RleHQ+PC9zdmc+'">
+            <h3>Mutqin BM</h3>
+            <p>Standar Kelulusan<br>Ponpes Bahrul Maghfiroh</p>
         </div>
-        <div class="user-info">
-            <span>
-                <div class="name"><i class="fas fa-user-circle"></i> Ust. Abdul Malik</div>
-                <div style="font-size: 0.75rem; opacity: 0.8;">Administrator</div>
-            </span>
-            <button class="btn-logout" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
+        <ul class="nav-links">
+            <li><a href="#" class="active" onclick="switchTab('dashboard', this)"><i class="fas fa-home"></i> <span>Dashboard</span></a></li>
+            <li><a href="#" onclick="switchTab('santri', this)"><i class="fas fa-users"></i> <span>Data Santri</span></a></li>
+            <li><a href="#" onclick="switchTab('hafalan', this)"><i class="fas fa-book-quran"></i> <span>Input Hafalan</span></a></li>
+            <li><a href="#" onclick="switchTab('laporan', this)"><i class="fas fa-chart-bar"></i> <span>Laporan</span></a></li>
+            <li><a href="#" onclick="switchTab('sertifikat', this)"><i class="fas fa-award"></i> <span>Sertifikat</span></a></li>
+            <li><a href="#" onclick="switchTab('upload', this)"><i class="fas fa-file-excel"></i> <span>Upload Data</span></a></li>
+        </ul>
+        <div class="sidebar-footer">
+            <button class="btn-logout-sidebar" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
         </div>
     </div>
 
-    <div class="dashboard-content">
-        <div class="welcome-text">
-            <h1><i class="fas fa-mosque"></i> Assalamu'alaikum, Ust. Abdul Malik!</h1>
-            <p>Selamat datang di Sistem Informasi Mutqin BM</p>
-        </div>
-
-        <!-- Navigation Tabs -->
-        <div class="nav-tabs">
-            <button class="nav-tab active" onclick="switchTab('dashboard', this)"><i class="fas fa-home"></i> Dashboard</button>
-            <button class="nav-tab" onclick="switchTab('santri', this)"><i class="fas fa-users"></i> Data Santri</button>
-            <button class="nav-tab" onclick="switchTab('hafalan', this)"><i class="fas fa-book-quran"></i> Input Hafalan</button>
-            <button class="nav-tab" onclick="switchTab('laporan', this)"><i class="fas fa-chart-bar"></i> Laporan</button>
-            <button class="nav-tab" onclick="switchTab('sertifikat', this)"><i class="fas fa-award"></i> Sertifikat</button>
-            <button class="nav-tab" onclick="switchTab('upload', this)"><i class="fas fa-file-excel"></i> Upload Data</button>
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+        <div class="header-welcome">
+            <div>
+                <h1><i class="fas fa-mosque"></i> Assalamu'alaikum, Ust. Abdul Malik!</h1>
+                <p>Selamat datang di Sistem Informasi Mutqin BM</p>
+            </div>
+            <div class="user-info-header">
+                <span>
+                    <div class="name"><i class="fas fa-user-circle"></i> Ust. Abdul Malik</div>
+                    <div style="font-size: 0.75rem; opacity: 0.8;">Administrator</div>
+                </span>
+            </div>
         </div>
 
         <!-- ==================== TAB: DASHBOARD ==================== -->
@@ -711,9 +1233,7 @@
 
                 <!-- Certificate Content -->
                 <div class="cert-header">
-                    <svg width="90" height="90" viewBox="0 0 200 200" style="margin-bottom:8px;">
-                        <use href="#logo-mutqin"></use>
-                    </svg>
+                    <img src="logo.png" alt="Logo" onerror="this.style.display='none'">
                     <div class="cert-top-text">PONPES BAHRUL MAGHFIROH</div>
                     <div class="cert-main-title">Sertifikat Kelulusan</div>
                     <div class="cert-subtitle" style="letter-spacing:1px;">Program Hafalan Mutqin BM</div>
@@ -777,9 +1297,14 @@
 </div>
 
 <script>
+// ==================== KONFIGURASI GOOGLE SHEETS ====================
+// GANTI DENGAN URL WEB APP ANDA DARI GOOGLE APPS SCRIPT
+const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbxxQ2Entgm40fphtlsxzpTdeyr-kTDD1uG5nFPDw88y_UC7znXX2inV1-MONzSJz1tz/exec';
+
 // ==================== DATA STRUCTURE ====================
 let dataSantri = [];
 let currentSantriId = null;
+let isLoading = false;
 
 // Surat-surat Juz 30
 const juz30Surat = [
@@ -841,7 +1366,7 @@ function createEmptyHafalan() {
             selesai: false, nilai_akhir: ''
         },
         sholat_jenazah: { status: false, nilai: '' },
-        juz30: {},
+        juz30: initJuz30(),
         khotib_bilal: { status: false, nilai: '' },
         madin_ula: { status: false, nilai: '' },
         madin_wustho: { status: false, nilai: '' },
@@ -864,575 +1389,37 @@ function initJuz30() {
     return juz30;
 }
 
-function loadData() {
-    const saved = localStorage.getItem('mutqin_bm_santri');
-    if (saved) {
-        dataSantri = JSON.parse(saved);
-    } else {
-        dataSantri = [
-            { id: 1, nama: 'Ahmad Fauzan', kelas: 'Kelas 5', status: 'Lulus', hafalan: createFullSample() },
-            { id: 2, nama: 'Salma Azizah', kelas: 'Kelas 4', status: 'Proses', hafalan: createEmptyHafalan() },
-            { id: 3, nama: 'Mohammad Lugman', kelas: 'Kelas 2', status: 'Belum', hafalan: createEmptyHafalan() }
-        ];
-        dataSantri[0].hafalan.juz30 = initJuz30();
-        saveData();
-    }
-}
-
-function saveData() {
-    localStorage.setItem('mutqin_bm_santri', JSON.stringify(dataSantri));
-}
-
-function createFullSample() {
-    const h = createEmptyHafalan();
-    h.surat_pilihan.yasin = { status: true, nilai: 'Mumtaz' };
-    h.surat_pilihan.waqiah = { status: true, nilai: 'Mumtaz' };
-    h.surat_pilihan.al_mulk = { status: true, nilai: 'Mumtaz' };
-    h.surat_pilihan.selesai = true;
-    h.surat_pilihan.nilai_akhir = 'Mumtaz';
-    h.aurad.wirid_setelah_sholat = { status: true, nilai: 'Jayyid Jiddan' };
-    h.aurad.doa_setelah_sholat = { status: true, nilai: 'Jayyid Jiddan' };
-    h.aurad.tahlil_ringkas = { status: true, nilai: 'Jayyid' };
-    h.aurad.tahlil_lengkap = { status: true, nilai: 'Jayyid' };
-    h.aurad.doa_tahlil = { status: true, nilai: 'Jayyid' };
-    h.aurad.selesai = true;
-    h.aurad.nilai_akhir = 'Jayyid Jiddan';
-    h.sholat_jenazah = { status: true, nilai: 'Jayyid' };
-    h.juz30 = initJuz30();
-    juz30Surat.forEach(s => { h.juz30[s.id] = { status: true, nilai: 'Ahsan' }; });
-    h.juz30.selesai = true;
-    h.juz30.nilai_akhir = 'Ahsan';
-    h.khotib_bilal = { status: true, nilai: 'Ahsan' };
-    h.madin_ula = { status: true, nilai: 'Lulus' };
-    h.madin_wustho = { status: true, nilai: 'Lulus' };
-    h.sikap_adab.sholat_5_waktu = { status: true, nilai: 'Baik' };
-    h.sikap_adab.sekolah_madin = { status: true, nilai: 'Baik' };
-    h.sikap_adab.sekolah_formal = { status: true, nilai: 'Baik' };
-    h.sikap_adab.selesai = true;
-    h.sikap_adab.nilai_akhir = 'Baik';
-    return h;
-}
-
-function handleLogin(e) {
-    e.preventDefault();
-    const u = document.getElementById('username').value;
-    const p = document.getElementById('password').value;
-    if (u === 'admin' && p === 'admin') {
-        document.getElementById('login-page').style.display = 'none';
-        document.getElementById('dashboard-page').style.display = 'block';
-        loadData();
-        updateDashboard();
-    } else {
-        alert('Username atau password salah! (admin/admin)');
-    }
-}
-
-function logout() {
-    document.getElementById('dashboard-page').style.display = 'none';
-    document.getElementById('login-page').style.display = 'flex';
-    document.getElementById('username').value = '';
-    document.getElementById('password').value = '';
-}
-
-function switchTab(tabId, btn) {
-    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
-    document.getElementById('tab-' + tabId).classList.add('active');
-    if (btn) btn.classList.add('active');
-    if (tabId === 'santri') renderTabelSantri();
-    if (tabId === 'hafalan') loadPilihanSantri();
-    if (tabId === 'laporan') renderLaporanChart();
-    if (tabId === 'sertifikat') loadPilihanSantriSertifikat();
-}
-
-function updateDashboard() {
-    const total = dataSantri.length;
-    const lulus = dataSantri.filter(s => s.status === 'Lulus').length;
-    const proses = dataSantri.filter(s => s.status === 'Proses').length;
-    document.getElementById('total-santri').textContent = total;
-    document.getElementById('sudah-lulus').textContent = lulus;
-    document.getElementById('sedang-proses').textContent = proses;
-    const pct = total > 0 ? ((lulus / total) * 100).toFixed(1) : 0;
-    document.getElementById('progress-pct').textContent = pct + '%';
-    renderProgressChart();
-    renderHafalanSummary();
-}
-
-let progressChartInst = null;
-let laporanChartInst = null;
-
-function renderProgressChart() {
-    const ctx = document.getElementById('progressChart');
-    if (progressChartInst) progressChartInst.destroy();
-    const lulus = dataSantri.filter(s => s.status === 'Lulus').length;
-    const proses = dataSantri.filter(s => s.status === 'Proses').length;
-    const belum = dataSantri.filter(s => s.status === 'Belum').length;
-    progressChartInst = new Chart(ctx, {
-        type: 'doughnut',
-        data: {
-            labels: ['Lulus', 'Proses', 'Belum'],
-            datasets: [{ data: [lulus, proses, belum], backgroundColor: ['#4CAF50', '#FF9800', '#f44336'], borderWidth: 0 }]
-        },
-        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { padding: 15, font: { size: 12 } } } } }
-    });
-}
-
-function renderLaporanChart() {
-    const ctx = document.getElementById('laporanChart');
-    if (laporanChartInst) laporanChartInst.destroy();
-    const categories = ['Surat Pilihan', 'Aurad', 'Sholat & Jenazah', 'Juz 30', 'Khotib & Bilal', 'Madin Ula', 'Madin Wustho', 'Sikap & Adab'];
-    const counts = categories.map(cat => dataSantri.filter(s => isCategoryComplete(s.hafalan, cat)).length);
-    laporanChartInst = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: categories,
-            datasets: [{ label: 'Jumlah Santri Menyelesaikan', data: counts, backgroundColor: '#0d5e3a', borderColor: '#083d26', borderWidth: 1, borderRadius: 5 }]
-        },
-        options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } }, x: { ticks: { font: { size: 10 } } } }, plugins: { legend: { labels: { font: { size: 12 } } } } }
-    });
-}
-
-function isCategoryComplete(h, cat) {
-    switch(cat) {
-        case 'Surat Pilihan': return h.surat_pilihan.selesai;
-        case 'Aurad': return h.aurad.selesai;
-        case 'Sholat & Jenazah': return h.sholat_jenazah.status;
-        case 'Juz 30': return h.juz30.selesai;
-        case 'Khotib & Bilal': return h.khotib_bilal.status;
-        case 'Madin Ula': return h.madin_ula.status;
-        case 'Madin Wustho': return h.madin_wustho.status;
-        case 'Sikap & Adab': return h.sikap_adab.selesai;
-        default: return false;
-    }
-}
-
-function renderHafalanSummary() {
-    const container = document.getElementById('hafalan-summary');
-    if (!container) return;
-    const cats = [
-        { key: 'surat_pilihan', label: 'Surat Pilihan' },
-        { key: 'aurad', label: 'Aurad' },
-        { key: 'sholat_jenazah', label: 'Sholat & Jenazah' },
-        { key: 'juz30', label: 'Juz 30' },
-        { key: 'khotib_bilal', label: 'Khotib & Bilal' },
-        { key: 'madin_ula', label: 'Madin Ula' },
-        { key: 'madin_wustho', label: 'Madin Wustho' },
-        { key: 'sikap_adab', label: 'Sikap & Adab' }
-    ];
-    let html = '';
-    cats.forEach(c => {
-        const count = dataSantri.filter(s => isCategoryComplete(s.hafalan, c.label)).length;
-        const pct = dataSantri.length > 0 ? Math.round((count / dataSantri.length) * 100) : 0;
-        html += '<div style="margin-bottom:12px;"><div style="display:flex; justify-content:space-between; font-size:0.85rem; margin-bottom:4px;"><span>' + c.label + '</span><span>' + count + '/' + dataSantri.length + ' (' + pct + '%)</span></div><div style="background:#e0e0e0; height:8px; border-radius:4px; overflow:hidden;"><div style="width:' + pct + '%; height:100%; background:var(--primary-green); border-radius:4px; transition:width 0.5s;"></div></div></div>';
-    });
-    container.innerHTML = html;
-}
-
-function renderTabelSantri(filter = '') {
-    const tbody = document.getElementById('tabelSantri');
-    tbody.innerHTML = '';
-    dataSantri.forEach((s, i) => {
-        if (s.nama.toLowerCase().includes(filter.toLowerCase())) {
-            const badgeClass = s.status === 'Lulus' ? 'badge-success' : s.status === 'Proses' ? 'badge-warning' : 'badge-danger';
-            tbody.innerHTML += '<tr><td>' + (i + 1) + '</td><td>' + s.nama + '</td><td>' + s.kelas + '</td><td><span class="badge ' + badgeClass + '">' + s.status + '</span></td><td><button class="btn btn-primary btn-sm" onclick="editSantri(' + s.id + ')"><i class="fas fa-edit"></i></button><button class="btn btn-danger btn-sm" onclick="hapusSantri(' + s.id + ')"><i class="fas fa-trash"></i></button></td></tr>';
-        }
-    });
-}
-
-function cariSantri(val) { renderTabelSantri(val); }
-
-function tambahSantri() {
-    const nama = document.getElementById('inputNamaSantri').value.trim();
-    const kelas = document.getElementById('inputKelasSantri').value;
-    if (!nama) { alert('Nama santri harus diisi!'); return; }
-    const newId = dataSantri.length > 0 ? Math.max(...dataSantri.map(s => s.id)) + 1 : 1;
-    const h = createEmptyHafalan();
-    h.juz30 = initJuz30();
-    dataSantri.push({ id: newId, nama: nama, kelas: kelas, status: 'Belum', hafalan: h });
-    saveData();
-    closeModal('modalTambahSantri');
-    renderTabelSantri();
-    updateDashboard();
-    document.getElementById('inputNamaSantri').value = '';
-    alert('Santri berhasil ditambahkan!');
-}
-
-function editSantri(id) {
-    const s = dataSantri.find(x => x.id === id);
-    if (!s) return;
-    const newNama = prompt('Edit Nama Santri:', s.nama);
-    if (newNama && newNama.trim()) {
-        s.nama = newNama.trim();
-        saveData();
-        renderTabelSantri();
-    }
-}
-
-function hapusSantri(id) {
-    if (confirm('Yakin ingin menghapus santri ini?')) {
-        dataSantri = dataSantri.filter(s => s.id !== id);
-        saveData();
-        renderTabelSantri();
-        updateDashboard();
-    }
-}
-
-function openModal(id) { document.getElementById(id).classList.add('active'); }
-function closeModal(id) { document.getElementById(id).classList.remove('active'); }
-
-function handleFileUpload(e) {
-    const file = e.target.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = function(ev) {
-        const lines = ev.target.result.split('\n').filter(l => l.trim());
-        let count = 0;
-        lines.forEach(line => {
-            const parts = line.split(',');
-            if (parts.length >= 2) {
-                const nama = parts[0].trim();
-                const kelas = parts[1].trim();
-                if (nama && !dataSantri.find(s => s.nama.toLowerCase() === nama.toLowerCase())) {
-                    const newId = dataSantri.length > 0 ? Math.max(...dataSantri.map(s => s.id)) + 1 : 1;
-                    const h = createEmptyHafalan();
-                    h.juz30 = initJuz30();
-                    dataSantri.push({ id: newId, nama: nama, kelas: kelas, status: 'Belum', hafalan: h });
-                    count++;
-                }
-            }
-        });
-        saveData();
-        updateDashboard();
-        alert('Berhasil import ' + count + ' data santri!');
-    };
-    reader.readAsText(file);
-    e.target.value = '';
-}
-
-function downloadTemplate() {
-    const csv = 'Nama,Kelas\nAhmad Fauzan,Kelas 5\nSalma Azizah,Kelas 4';
-    const blob = new Blob([csv], { type: 'text/csv' });
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
-    a.download = 'template_santri.csv';
-    a.click();
-}
-
-function exportCSV() {
-    let csv = 'No,Nama,Kelas,Status\n';
-    dataSantri.forEach((s, i) => { csv += (i+1) + ',' + s.nama + ',' + s.kelas + ',' + s.status + '\n'; });
-    const blob = new Blob([csv], { type: 'text/csv' });
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
-    a.download = 'data_santri_mutqin_bm.csv';
-    a.click();
-}
-
-function loadPilihanSantri() {
-    const sel = document.getElementById('pilihSantriHafalan');
-    sel.innerHTML = '<option value="">-- Pilih Santri --</option>';
-    dataSantri.forEach(s => {
-        sel.innerHTML += '<option value="' + s.id + '">' + s.nama + ' (' + s.kelas + ')</option>';
-    });
-}
-
-function loadHafalanForm() {
-    const id = parseInt(document.getElementById('pilihSantriHafalan').value);
-    if (!id) { document.getElementById('hafalanFormContainer').style.display = 'none'; return; }
-    currentSantriId = id;
-    const santri = dataSantri.find(s => s.id === id);
-    const container = document.getElementById('hafalanFormContainer');
-    if (!santri.hafalan.juz30 || !santri.hafalan.juz30.selesai === undefined) {
-        santri.hafalan.juz30 = initJuz30();
-    }
-    let html = '';
-    html += renderCategory('Surat Pilihan', 'surat_pilihan', santri.hafalan.surat_pilihan, [
-        { key: 'yasin', label: 'Surat Yasin' },
-        { key: 'waqiah', label: 'Surat Al-Waqiah' },
-        { key: 'al_mulk', label: 'Surat Al-Mulk' }
-    ]);
-    html += renderCategory('Hafalan Aurad', 'aurad', santri.hafalan.aurad, [
-        { key: 'wirid_setelah_sholat', label: 'Wirid Setelah Shalat' },
-        { key: 'doa_setelah_sholat', label: 'Doa Setelah Shalat' },
-        { key: 'tahlil_ringkas', label: 'Tahlil Ringkas' },
-        { key: 'tahlil_lengkap', label: 'Tahlil Lengkap' },
-        { key: 'doa_tahlil', label: 'Doa Tahlil' }
-    ]);
-    html += renderSingleItem('Praktik Sholat & Pengurusan Jenazah', 'sholat_jenazah', santri.hafalan.sholat_jenazah);
-    html += renderJuz30(santri.hafalan.juz30);
-    html += renderSingleItem('Praktik Khotib & Bilal', 'khotib_bilal', santri.hafalan.khotib_bilal);
-    html += renderSingleItem('Lulus Madin Ula', 'madin_ula', santri.hafalan.madin_ula);
-    html += renderSingleItem('Lulus Madin Wustho', 'madin_wustho', santri.hafalan.madin_wustho);
-    html += renderCategory('Sikap dan Adab', 'sikap_adab', santri.hafalan.sikap_adab, [
-        { key: 'sholat_5_waktu', label: 'Sholat 5 Waktu Berjamaah' },
-        { key: 'sekolah_madin', label: 'Sekolah Madin' },
-        { key: 'sekolah_formal', label: 'Sekolah Formal' }
-    ]);
-    html += '<div style="margin-top:20px; text-align:center;"><button class="btn btn-primary" onclick="simpanHafalan()" style="padding:14px 40px; font-size:1rem;"><i class="fas fa-save"></i> Simpan Semua Hafalan</button></div>';
-    container.innerHTML = html;
-    container.style.display = 'block';
-}
-
-function renderCategory(title, categoryKey, data, items) {
-    const allChecked = items.every(it => data[it.key] && data[it.key].status);
-    const isOpen = true;
-    let itemsHtml = '';
-    items.forEach(it => {
-        const itemData = data[it.key] || { status: false, nilai: '' };
-        const checked = itemData.status ? 'checked' : '';
-        const disabled = itemData.status ? '' : 'disabled';
-        itemsHtml += '<div class="hafalan-item"><div class="hafalan-select-wrapper"><div class="left"><div class="checkbox ' + checked + '" onclick="toggleItem(\'' + categoryKey + '\',\'' + it.key + '\', this)">' + (checked ? '<i class="fas fa-check"></i>' : '') + '</div><span class="label">' + it.label + '</span></div><select onchange="setNilai(\'' + categoryKey + '\',\'' + it.key + '\', this.value)" ' + disabled + '><option value="">Pilih Nilai</option>' + nilaiOptions.map(n => '<option value="' + n + '" ' + (itemData.nilai === n ? 'selected' : '') + '>' + n + '</option>').join('') + '</select></div></div>';
-    });
-    const statusClass = allChecked ? 'complete' : 'incomplete';
-    const statusText = allChecked ? '✅ SELESAI' : '⏳ BELUM SELESAI';
-    const statusBadge = allChecked ? 'status-selesai' : 'status-belum';
-    return '<div class="hafalan-category"><div class="hafalan-category-header ' + (isOpen ? 'open' : '') + '" onclick="toggleCategory(this)"><h4><i class="fas fa-book-quran"></i> ' + title + '</h4><span class="arrow"><i class="fas fa-chevron-down"></i></span></div><div class="hafalan-category-body ' + (isOpen ? 'open' : '') + '">' + itemsHtml + '<div class="category-status ' + statusClass + '"><span class="status-text">' + statusText + '</span><span class="status-badge ' + statusBadge + '" id="status_' + categoryKey + '">' + (allChecked ? 'SELESAI' : 'BELUM SELESAI') + '</span></div></div></div>';
-}
-
-function renderSingleItem(title, key, data) {
-    const checked = data.status ? 'checked' : '';
-    const disabled = data.status ? '' : 'disabled';
-    return '<div class="hafalan-category"><div class="hafalan-category-header open"><h4><i class="fas fa-clipboard-check"></i> ' + title + '</h4></div><div class="hafalan-category-body open"><div class="hafalan-item"><div class="hafalan-select-wrapper"><div class="left"><div class="checkbox ' + checked + '" onclick="toggleSingle(\'' + key + '\', this)">' + (checked ? '<i class="fas fa-check"></i>' : '') + '</div><span class="label">' + title + '</span></div><select onchange="setSingleNilai(\'' + key + '\', this.value)" ' + disabled + '><option value="">Pilih Nilai</option>' + nilaiOptions.map(n => '<option value="' + n + '" ' + (data.nilai === n ? 'selected' : '') + '>' + n + '</option>').join('') + '<option value="Lulus" ' + (data.nilai === 'Lulus' ? 'selected' : '') + '>Lulus</option><option value="Baik" ' + (data.nilai === 'Baik' ? 'selected' : '') + '>Baik</option></select></div></div></div></div>';
-}
-
-function renderJuz30(data) {
-    const allChecked = juz30Surat.every(s => data[s.id] && data[s.id].status);
-    let itemsHtml = '<div style="max-height:400px; overflow-y:auto;">';
-    juz30Surat.forEach((s, i) => {
-        const itemData = data[s.id] || { status: false, nilai: '' };
-        const checked = itemData.status ? 'checked' : '';
-        const disabled = itemData.status ? '' : 'disabled';
-        itemsHtml += '<div class="hafalan-item"><div class="hafalan-select-wrapper"><div class="left"><div class="checkbox ' + checked + '" onclick="toggleJuz30(\'' + s.id + '\', this)">' + (checked ? '<i class="fas fa-check"></i>' : '') + '</div><span class="label" style="font-size:0.85rem;">' + (i+1) + '. Surat ' + s.nama + '</span></div><select onchange="setJuz30Nilai(\'' + s.id + '\', this.value)" ' + disabled + ' style="min-width:120px;"><option value="">Nilai</option>' + nilaiOptions.map(n => '<option value="' + n + '" ' + (itemData.nilai === n ? 'selected' : '') + '>' + n + '</option>').join('') + '</select></div></div>';
-    });
-    itemsHtml += '</div>';
-    const statusClass = allChecked ? 'complete' : 'incomplete';
-    return '<div class="hafalan-category"><div class="hafalan-category-header open" onclick="toggleCategory(this)"><h4><i class="fas fa-quran"></i> Hafalan Juz 30 (' + juz30Surat.length + ' Surat)</h4><span class="arrow"><i class="fas fa-chevron-down"></i></span></div><div class="hafalan-category-body open">' + itemsHtml + '<div class="category-status ' + statusClass + '"><span class="status-text">' + (allChecked ? '✅ JUZ 30 SELESAI' : '⏳ JUZ 30 BELUM SELESAI') + '</span><span class="status-badge ' + (allChecked ? 'status-selesai' : 'status-belum') + '">' + (allChecked ? 'SELESAI' : 'BELUM SELESAI') + '</span></div></div></div>';
-}
-
-function toggleItem(catKey, itemKey, el) {
-    const santri = dataSantri.find(s => s.id === currentSantriId);
-    const cat = santri.hafalan[catKey];
-    cat[itemKey].status = !cat[itemKey].status;
-    if (cat[itemKey].status) {
-        el.classList.add('checked');
-        el.innerHTML = '<i class="fas fa-check"></i>';
-        el.parentElement.parentElement.querySelector('select').disabled = false;
-    } else {
-        el.classList.remove('checked');
-        el.innerHTML = '';
-        el.parentElement.parentElement.querySelector('select').disabled = true;
-        el.parentElement.parentElement.querySelector('select').value = '';
-        cat[itemKey].nilai = '';
-    }
-    updateCategoryStatus(catKey);
-}
-
-function setNilai(catKey, itemKey, val) {
-    const santri = dataSantri.find(s => s.id === currentSantriId);
-    santri.hafalan[catKey][itemKey].nilai = val;
-    updateCategoryStatus(catKey);
-}
-
-function toggleSingle(key, el) {
-    const santri = dataSantri.find(s => s.id === currentSantriId);
-    santri.hafalan[key].status = !santri.hafalan[key].status;
-    if (santri.hafalan[key].status) {
-        el.classList.add('checked');
-        el.innerHTML = '<i class="fas fa-check"></i>';
-        el.parentElement.parentElement.querySelector('select').disabled = false;
-    } else {
-        el.classList.remove('checked');
-        el.innerHTML = '';
-        el.parentElement.parentElement.querySelector('select').disabled = true;
-        el.parentElement.parentElement.querySelector('select').value = '';
-        santri.hafalan[key].nilai = '';
-    }
-}
-
-function setSingleNilai(key, val) {
-    const santri = dataSantri.find(s => s.id === currentSantriId);
-    santri.hafalan[key].nilai = val;
-}
-
-function toggleJuz30(suratId, el) {
-    const santri = dataSantri.find(s => s.id === currentSantriId);
-    santri.hafalan.juz30[suratId].status = !santri.hafalan.juz30[suratId].status;
-    if (santri.hafalan.juz30[suratId].status) {
-        el.classList.add('checked');
-        el.innerHTML = '<i class="fas fa-check"></i>';
-        el.parentElement.parentElement.querySelector('select').disabled = false;
-    } else {
-        el.classList.remove('checked');
-        el.innerHTML = '';
-        el.parentElement.parentElement.querySelector('select').disabled = true;
-        el.parentElement.parentElement.querySelector('select').value = '';
-        santri.hafalan.juz30[suratId].nilai = '';
-    }
-    updateJuz30Status();
-}
-
-function setJuz30Nilai(suratId, val) {
-    const santri = dataSantri.find(s => s.id === currentSantriId);
-    santri.hafalan.juz30[suratId].nilai = val;
-    updateJuz30Status();
-}
-
-function updateCategoryStatus(catKey) {
-    const santri = dataSantri.find(s => s.id === currentSantriId);
-    const cat = santri.hafalan[catKey];
-    let items;
-    if (catKey === 'surat_pilihan') items = ['yasin', 'waqiah', 'al_mulk'];
-    else if (catKey === 'aurad') items = ['wirid_setelah_sholat', 'doa_setelah_sholat', 'tahlil_ringkas', 'tahlil_lengkap', 'doa_tahlil'];
-    else if (catKey === 'sikap_adab') items = ['sholat_5_waktu', 'sekolah_madin', 'sekolah_formal'];
-    else return;
-    const allDone = items.every(it => cat[it] && cat[it].status && cat[it].nilai);
-    cat.selesai = allDone;
-    if (allDone) {
-        const nilaiMap = { 'Mumtaz': 4, 'Jayyid Jiddan': 3, 'Jayyid': 2, 'Ahsan': 1 };
-        let lowest = 'Mumtaz';
-        let lowestVal = 4;
-        items.forEach(it => {
-            const v = nilaiMap[cat[it].nilai] || 0;
-            if (v < lowestVal) { lowestVal = v; lowest = cat[it].nilai; }
-        });
-        cat.nilai_akhir = lowest;
-    }
-    const statusEl = document.getElementById('status_' + catKey);
-    if (statusEl) {
-        const parent = statusEl.parentElement;
-        if (allDone) {
-            parent.className = 'category-status complete';
-            statusEl.className = 'status-badge status-selesai';
-            statusEl.textContent = 'SELESAI';
-            parent.querySelector('.status-text').textContent = '✅ SELESAI';
-        } else {
-            parent.className = 'category-status incomplete';
-            statusEl.className = 'status-badge status-belum';
-            statusEl.textContent = 'BELUM SELESAI';
-            parent.querySelector('.status-text').textContent = '⏳ BELUM SELESAI';
-        }
-    }
-}
-
-function updateJuz30Status() {
-    const santri = dataSantri.find(s => s.id === currentSantriId);
-    const juz30 = santri.hafalan.juz30;
-    const allDone = juz30Surat.every(s => juz30[s.id] && juz30[s.id].status && juz30[s.id].nilai);
-    juz30.selesai = allDone;
-    if (allDone) {
-        const nilaiMap = { 'Mumtaz': 4, 'Jayyid Jiddan': 3, 'Jayyid': 2, 'Ahsan': 1 };
-        let lowest = 'Mumtaz', lowestVal = 4;
-        juz30Surat.forEach(s => {
-            const v = nilaiMap[juz30[s.id].nilai] || 0;
-            if (v < lowestVal) { lowestVal = v; lowest = juz30[s.id].nilai; }
-        });
-        juz30.nilai_akhir = lowest;
-    }
-}
-
-function toggleCategory(header) {
-    header.classList.toggle('open');
-    const body = header.nextElementSibling;
-    body.classList.toggle('open');
-}
-
-function simpanHafalan() {
-    const santri = dataSantri.find(s => s.id === currentSantriId);
-    if (!santri) return;
-    const h = santri.hafalan;
-    const allComplete = h.surat_pilihan.selesai && h.aurad.selesai && h.sholat_jenazah.status && h.sholat_jenazah.nilai && h.juz30.selesai && h.khotib_bilal.status && h.khotib_bilal.nilai && h.madin_ula.status && h.madin_ula.nilai && h.madin_wustho.status && h.madin_wustho.nilai && h.sikap_adab.selesai;
-    santri.status = allComplete ? 'Lulus' : (Object.values(h).some(v => typeof v === 'object' && v.selesai) ? 'Proses' : 'Belum');
-    saveData();
-    updateDashboard();
-    alert('✅ Hafalan berhasil disimpan! Status: ' + santri.status);
-    document.getElementById('hafalanFormContainer').style.display = 'none';
-    document.getElementById('pilihSantriHafalan').value = '';
-}
-
-function loadPilihanSantriSertifikat() {
-    const sel = document.getElementById('pilihSantriSertifikat');
-    sel.innerHTML = '<option value="">-- Pilih Santri --</option>';
-    dataSantri.filter(s => s.status === 'Lulus').forEach(s => {
-        sel.innerHTML += '<option value="' + s.id + '">' + s.nama + ' (' + s.kelas + ')</option>';
-    });
-}
-
-function previewSertifikat() {
-    const id = parseInt(document.getElementById('pilihSantriSertifikat').value);
-    if (!id) { alert('Pilih santri terlebih dahulu!'); return; }
-    const santri = dataSantri.find(s => s.id === id);
-    document.getElementById('certNama').textContent = santri.nama;
-    document.getElementById('certNo').textContent = 'BM/' + String(santri.id).padStart(4, '0');
-    const today = new Date();
-    document.getElementById('certTanggal').textContent = today.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
-    const h = santri.hafalan;
-    let itemsHtml = '';
-    itemsHtml += certItem('Hafal Surat Yaasin, Waqiah, Al Mulk', h.surat_pilihan.nilai_akhir, h.surat_pilihan.selesai);
-    itemsHtml += certItem('Hafal Tawasul, Tahlil, Istighosah, Doa', h.aurad.nilai_akhir, h.aurad.selesai);
-    itemsHtml += certItem('Praktik Sholat & Pengurusan Jenazah', h.sholat_jenazah.nilai, h.sholat_jenazah.status);
-    itemsHtml += certItem('Hafal Juz 30', h.juz30.nilai_akhir, h.juz30.selesai);
-    itemsHtml += certItem('Praktik Khotib & Bilal', h.khotib_bilal.nilai, h.khotib_bilal.status);
-    itemsHtml += certItem('Lulus Madin Ula', h.madin_ula.nilai, h.madin_ula.status);
-    itemsHtml += certItem('Lulus Madin Wustho', h.madin_wustho.nilai, h.madin_wustho.status);
-    itemsHtml += certItem('Sikap dan Adab Sholat Berjamaah & Madin', h.sikap_adab.nilai_akhir, h.sikap_adab.selesai);
-    document.getElementById('certItemsList').innerHTML = itemsHtml;
-    document.getElementById('certModal').classList.add('active');
-}
-
-function certItem(label, nilai, completed) {
-    const icon = completed ? '<i class="fas fa-check-square check-icon"></i>' : '<i class="far fa-square check-icon" style="color:#ccc;"></i>';
-    let badge = '';
-    if (completed && nilai) {
-        const badgeClass = nilai === 'Mumtaz' ? 'badge-mumtaz' : nilai === 'Jayyid Jiddan' ? 'badge-jayyid-jiddan' : nilai === 'Jayyid' ? 'badge-jayyid' : nilai === 'Ahsan' ? 'badge-ahsan' : 'badge-lulus-check';
-        badge = '<span class="item-badge ' + badgeClass + '">' + nilai + '</span>';
-    } else if (completed) {
-        badge = '<span class="item-badge badge-lulus-check">✓</span>';
-    } else {
-        badge = '<span class="item-badge" style="background:#ccc; color:#666;">-</span>';
-    }
-    return '<div class="cert-item-row"><div class="item-left">' + icon + ' ' + label + '</div>' + badge + '</div>';
-}
-
-function closeCertificate() {
-    document.getElementById('certModal').classList.remove('active');
-}
-
-function downloadSertifikatPDF() {
-    const el = document.getElementById('certificateArea');
-    html2canvas(el, { scale: 2, useCORS: true }).then(canvas => {
-        const { jsPDF } = window.jspdf;
-        const pdf = new jsPDF('p', 'mm', 'a4');
-        const imgW = 210;
-        const imgH = canvas.height * imgW / canvas.width;
-        pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, 0, imgW, imgH);
-        const nama = document.getElementById('certNama').textContent.replace(/\s+/g, '_');
-        pdf.save('Sertifikat_' + nama + '.pdf');
-    });
-}
-
-function downloadLaporanPDF() {
-    alert('Fitur download laporan lengkap akan dibuat berdasarkan data santri yang ada.');
-}
-
-function downloadLaporanIndividu() {
-    const id = prompt('Masukkan ID santri untuk download laporan:');
-    if (!id) return;
-    const santri = dataSantri.find(s => s.id === parseInt(id));
-    if (!santri) { alert('Santri tidak ditemukan!'); return; }
-    document.getElementById('pilihSantriSertifikat').value = id;
-    previewSertifikat();
-}
-
-window.onclick = function(e) {
-    if (e.target.classList.contains('modal')) e.target.classList.remove('active');
-};
-
-document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') {
-        document.querySelectorAll('.modal.active').forEach(m => m.classList.remove('active'));
-        closeCertificate();
-    }
-});
-</script>
-</body>
-</html>
+// ==================== LOAD / SAVE DATA FROM GOOGLE SHEETS ====================
+async function loadDataFromGoogleSheets() {
+    showLoading(true);
+    try {
+        const response = await fetch(`${GOOGLE_SHEETS_URL}?action=get`);
+        const data = await response.json();
+        
+        dataSantri = data.map(row => {
+            const hafalan = {
+                surat_pilihan: {
+                    yasin: { status: row['Surat_Yasin'] === 'Ya', nilai: '' },
+                    waqiah: { status: row['Surat_Waqiah'] === 'Ya', nilai: '' },
+                    al_mulk: { status: row['Surat_AlMulk'] === 'Ya', nilai: '' },
+                    selesai: false, nilai_akhir: ''
+                },
+                aurad: {
+                    wirid_setelah_sholat: { status: row['Aurad_Wirid'] === 'Ya', nilai: '' },
+                    doa_setelah_sholat: { status: row['Aurad_DoaSholat'] === 'Ya', nilai: '' },
+                    tahlil_ringkas: { status: row['Aurad_TahlilRingkas'] === 'Ya', nilai: '' },
+                    tahlil_lengkap: { status: row['Aurad_TahlilLengkap'] === 'Ya', nilai: '' },
+                    doa_tahlil: { status: row['Aurad_DoaTahlil'] === 'Ya', nilai: '' },
+                    selesai: false, nilai_akhir: ''
+                },
+                sholat_jenazah: { status: row['Sholat_Jenazah'] === 'Ya', nilai: '' },
+                juz30: {
+                    ...initJuz30(),
+                    selesai: row['Juz30_Selesai'] === 'Ya',
+                    nilai_akhir: row['Juz30_Nilai'] || ''
+                },
+                khotib_bilal: { status: row['Khotib_Bilal'] === 'Ya', nilai: '' },
+                madin_ula: { status: row['Madin_Ula'] === 'Ya', nilai: '' },
+                madin_wustho: { status: row['Madin_Wustho'] === 'Ya', nilai: '' },
+                sikap_adab: {
+                    sholat_5_waktu: { status: row['Adab_Sh
