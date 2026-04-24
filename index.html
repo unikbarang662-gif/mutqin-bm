@@ -3,280 +3,283 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mutqin BM - Standar Kelulusan Ponpes Bahrul Maghfiroh</title>
+    <title>Aplikasi Mutqin BM</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
     <style>
         :root {
-            --primary-dark: #021a0e; --secondary-green: #042918;
-            --gold-grad: linear-gradient(135deg, #d4af37 0%, #f9e29c 50%, #b8860b 100%);
-            --glass-white: rgba(255, 255, 255, 0.95);
+            --bm-green: #145a32;
+            --bm-gold: #d4af37;
+            --bm-light: #e9f7ef;
         }
-
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; }
-        body { background: var(--primary-dark); color: white; height: 100vh; overflow: hidden; }
-
-        /* --- LOGIN SCREEN --- */
-        #login-view { height: 100vh; display: flex; justify-content: center; align-items: center; background: radial-gradient(circle, #0a4d2c, #021a0e); }
-        .login-card { background: rgba(0,0,0,0.6); padding: 40px; border-radius: 20px; border: 1px solid #d4af37; text-align: center; width: 380px; backdrop-filter: blur(10px); }
-        .login-card h2 { background: var(--gold-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 25px; font-size: 28px; }
-        .login-card input { width: 100%; padding: 12px; margin-bottom: 15px; border-radius: 8px; border: none; outline: none; }
-
-        /* --- DASHBOARD LAYOUT --- */
-        #app-view { display: none; height: 100vh; flex-direction: column; }
-        header { padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(212,175,55,0.2); }
-        header h1 { font-size: 20px; color: #d4af37; letter-spacing: 2px; }
-
-        .layout { display: flex; flex: 1; padding: 20px; gap: 20px; overflow: hidden; }
-        nav { width: 260px; background: var(--secondary-green); border-radius: 20px; padding: 20px; display: flex; flex-direction: column; gap: 10px; }
-        .nav-link { padding: 12px 15px; border-radius: 12px; cursor: pointer; color: #ccc; display: flex; align-items: center; gap: 12px; transition: 0.3s; }
-        .nav-link.active { background: var(--gold-grad); color: black; font-weight: bold; }
-        .nav-link:hover:not(.active) { background: rgba(255,255,255,0.1); }
-
-        main { flex: 1; background: var(--glass-white); border-radius: 25px; color: #333; padding: 25px; overflow-y: auto; }
+        body { background-color: #f4f6f9; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         
-        /* --- STATS & CARDS --- */
-        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 25px; }
-        .stat-card { padding: 20px; border-radius: 15px; color: white; text-align: center; }
-
-        /* --- TABLE --- */
-        .data-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        .data-table th { text-align: left; padding: 15px; background: #f8f9fa; font-size: 12px; color: #666; border-bottom: 2px solid #eee; }
-        .data-table td { padding: 15px; border-bottom: 1px solid #f0f0f0; vertical-align: middle; }
+        /* Tema Mutqin BM */
+        .bg-bm-green { background-color: var(--bm-green) !important; color: white; }
+        .text-bm-gold { color: var(--bm-gold) !important; }
+        .btn-bm { background-color: var(--bm-gold); color: #fff; font-weight: bold; }
+        .btn-bm:hover { background-color: #b5952f; color: #fff; }
         
-        .badge { padding: 5px 12px; border-radius: 20px; font-size: 11px; font-weight: bold; color: white; }
-        .check-dot { height: 10px; width: 10px; border-radius: 50%; display: inline-block; margin-right: 5px; }
-
-        /* --- MODAL FORM --- */
-        .overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 1000; justify-content: center; align-items: center; }
-        .modal { background: white; width: 900px; max-width: 95%; border-radius: 20px; overflow: hidden; display: flex; flex-direction: column; max-height: 90vh; }
-        .modal-header { background: #0a4d2c; color: white; padding: 20px; text-align: center; }
-        .modal-body { padding: 25px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; overflow-y: auto; }
+        /* Tampilan Aplikasi */
+        #app-container { display: none; } /* Disembunyikan sebelum login */
+        .sidebar { background-color: var(--bm-green); min-height: 100vh; color: white; }
+        .sidebar .nav-link { color: rgba(255,255,255,0.8); margin-bottom: 5px; border-radius: 5px; }
+        .sidebar .nav-link:hover, .sidebar .nav-link.active { background-color: rgba(255,255,255,0.1); color: var(--bm-gold); }
         
-        .form-section { grid-column: span 3; background: #f1f8f4; padding: 10px 15px; border-radius: 8px; color: #0a4d2c; font-weight: bold; font-size: 14px; margin-top: 10px; }
-        .field { display: flex; flex-direction: column; gap: 5px; }
-        .field label { font-size: 11px; font-weight: bold; color: #666; }
-        .field input, .field select { padding: 10px; border: 1px solid #ddd; border-radius: 8px; }
-
-        /* --- CERTIFICATE --- */
-        #certificate-wrap { display: none; background: white; position: fixed; inset: 0; z-index: 9999; padding: 40px; }
-        .cert-inner { border: 15px solid #d4af37; height: 100%; border-image: url('https://i.imgur.com/n1f1W4D.png') 100 110 round; background: #fffcf5; text-align: center; padding: 50px; }
-        
-        .btn { padding: 12px 25px; border-radius: 10px; border: none; cursor: pointer; font-weight: bold; transition: 0.2s; }
-        .btn-gold { background: var(--gold-grad); color: #000; }
-        .btn-green { background: #0a4d2c; color: #fff; }
-
-        @media print { body * { display: none !important; } #certificate-wrap, #certificate-wrap * { display: block !important; } }
+        /* Sertifikat Print Layout */
+        .sertifikat-preview {
+            border: 5px double var(--bm-gold);
+            background-color: var(--bm-light);
+            padding: 40px;
+            text-align: center;
+            border-radius: 10px;
+        }
+        @media print {
+            body * { visibility: hidden; }
+            #print-area, #print-area * { visibility: visible; }
+            #print-area { position: absolute; left: 0; top: 0; width: 100%; }
+        }
     </style>
 </head>
 <body>
 
-    <div id="login-view">
-        <div class="login-card">
-            <img src="https://i.imgur.com/8Qj8Bv5.png" width="90" style="margin-bottom: 10px;">
-            <h2>MUTQIN BM</h2>
-            <p style="color: #aaa; font-size: 12px; margin-bottom: 25px;">Sistem Standar Kelulusan Hafalan</p>
-            <input type="text" id="login-user" placeholder="Username (admin)">
-            <input type="password" id="login-pass" placeholder="Password (admin)">
-            <button class="btn btn-gold" style="width: 100%;" onclick="auth()">LOGIN SYSTEM</button>
+    <div id="login-container" class="container d-flex justify-content-center align-items-center vh-100">
+        <div class="card shadow-lg p-4" style="width: 100%; max-width: 400px; border-top: 5px solid var(--bm-gold);">
+            <div class="text-center mb-4">
+                <h2 class="text-bm-green fw-bold">MUTQIN BM</h2>
+                <p class="text-muted">Sistem Standar Kelulusan Santri</p>
+            </div>
+            <form id="login-form">
+                <div class="mb-3">
+                    <label class="form-label">Username</label>
+                    <input type="text" id="username" class="form-control" placeholder="Masukkan username" required value="admin">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Password</label>
+                    <input type="password" id="password" class="form-control" placeholder="Masukkan password" required value="12345">
+                </div>
+                <button type="submit" class="btn btn-bm w-100">Login <i class="fas fa-sign-in-alt"></i></button>
+                <div class="text-center mt-3"><small class="text-muted">Gunakan: admin / 12345</small></div>
+            </form>
         </div>
     </div>
 
-    <div id="app-view">
-        <header>
-            <h1><i class="fa fa-mosque"></i> MUTQIN BM - PONPES BAHRUL MAGHFIROH</h1>
-            <div id="user-info" style="font-size: 14px; color: #d4af37;">Admin Syari'ah</div>
-        </header>
-
-        <div class="layout">
-            <nav>
-                <div class="nav-link active" onclick="switchTab('dashboard')"><i class="fa fa-th-large"></i> Dashboard</div>
-                <div class="nav-link" onclick="openForm()"><i class="fa fa-user-plus"></i> Input Data Santri</div>
-                <div class="nav-link" onclick="switchTab('ranking')"><i class="fa fa-trophy"></i> Ranking Santri</div>
-                <div class="nav-link" style="margin-top: auto; color: #ff6b6b;" onclick="location.reload()"><i class="fa fa-power-off"></i> Logout</div>
-            </nav>
-
-            <main id="content-area">
-                <div class="stats-grid">
-                    <div class="stat-card" style="background: #2980b9;">TOTAL SANTRI<h2 id="stat-total">0</h2></div>
-                    <div class="stat-card" style="background: #27ae60;">LULUS<h2 id="stat-lulus">0</h2></div>
-                    <div class="stat-card" style="background: #f39c12;">BERSYARAT<h2 id="stat-proses">0</h2></div>
-                    <div class="stat-card" style="background: #c0392b;">BELUM LULUS<h2 id="stat-belum">0</h2></div>
-                </div>
-
-                <h3 id="view-title">Monitoring Kelulusan</h3>
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>SANTRI</th>
-                            <th>STATUS AKHIR</th>
-                            <th>HAFALAN (40%)</th>
-                            <th>PRAKTIK (30%)</th>
-                            <th>MADIN (20%)</th>
-                            <th>AKSI</th>
-                        </tr>
-                    </thead>
-                    <tbody id="santri-rows"></tbody>
-                </table>
-            </main>
-        </div>
-    </div>
-
-    <div class="overlay" id="form-overlay">
-        <div class="modal">
-            <div class="modal-header"><h3>FORM PENILAIAN LENGKAP</h3></div>
-            <div class="modal-body">
-                <div class="field" style="grid-column: span 2;"><label>Nama Lengkap Santri</label><input type="text" id="f-nama"></div>
-                <div class="field"><label>Foto Kegiatan</label><input type="file" id="f-foto" accept="image/*"></div>
-
-                <div class="form-section">📘 KATEGORI HAFALAN (40%)</div>
-                <div class="field"><label>Yaasin, Waqiah, Mulk</label>
-                    <select id="v-h1"><option value="0">Merah (Belum)</option><option value="50">Kuning (Proses)</option><option value="100">Hijau (Lulus)</option></select>
-                </div>
-                <div class="field"><label>Tahlil, Istighosah, Wirid</label>
-                    <select id="v-h2"><option value="0">Merah (Belum)</option><option value="50">Kuning (Proses)</option><option value="100">Hijau (Lulus)</option></select>
-                </div>
-                <div class="field"><label>Hafalan Juz 30 (0-100)</label><input type="number" id="v-h3" placeholder="Nilai Angka"></div>
-
-                <div class="form-section">🕌 KATEGORI PRAKTIK (30%)</div>
-                <div class="field"><label>Sholat & Jenazah</label>
-                    <select id="v-p1"><option value="0">Belum</option><option value="100">Lulus</option></select>
-                </div>
-                <div class="field"><label>Khotib & Bilal</label>
-                    <select id="v-p2"><option value="0">Belum</option><option value="100">Lulus</option></select>
-                </div>
-
-                <div class="form-section">🎓 KATEGORI AKADEMIK (20%)</div>
-                <div class="field"><label>Lulus Madin Ula</label>
-                    <select id="v-m1"><option value="0">Belum</option><option value="100">Lulus</option></select>
-                </div>
-                <div class="field"><label>Lulus Madin Wusto</label>
-                    <select id="v-m2"><option value="0">Belum</option><option value="100">Lulus</option></select>
-                </div>
-
-                <div class="form-section">🌟 KATEGORI ADAB & SIKAP (10%)</div>
-                <div class="field"><label>Sholat Jamaah (0-100)</label><input type="number" id="v-a1"></div>
-                <div class="field" style="grid-column: span 2;"><label>Kedisiplinan & Akhlak (0-100)</label><input type="number" id="v-a2"></div>
+    <div id="app-container" class="container-fluid">
+        <div class="row">
+            <div class="col-md-2 sidebar p-3">
+                <h4 class="text-center text-bm-gold fw-bold mb-4 mt-2">Mutqin BM</h4>
+                <ul class="nav flex-column" id="menu-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#" onclick="showPage('dashboard', this)"><i class="fas fa-home me-2"></i> Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="showPage('data-santri', this)"><i class="fas fa-users me-2"></i> Data Santri</a>
+                    </li>
+                    <li class="nav-item mt-5">
+                        <a class="nav-link text-danger" href="#" onclick="logout()"><i class="fas fa-sign-out-alt me-2"></i> Logout</a>
+                    </li>
+                </ul>
             </div>
-            <div style="padding: 20px; background: #f9f9f9; display: flex; gap: 10px;">
-                <button class="btn btn-gold" style="flex: 1;" onclick="processSave()">SIMPAN DATA & HITUNG NILAI</button>
-                <button class="btn" onclick="closeForm()">BATAL</button>
-            </div>
-        </div>
-    </div>
 
-    <div id="certificate-wrap">
-        <div class="cert-inner">
-            <img src="https://i.imgur.com/8Qj8Bv5.png" width="110">
-            <h1 style="font-family: serif; color: #0a4d2c; font-size: 42px; margin-top: 15px;">SERTIFIKAT KELULUSAN</h1>
-            <p>Diberikan kepada santri Mutqin BM:</p>
-            <h2 id="c-nama" style="font-size: 48px; margin: 30px 0; border-bottom: 2px solid #333; display: inline-block; padding: 0 50px;">NAMA SANTRI</h2>
-            <div style="text-align: left; width: 65%; margin: 0 auto; line-height: 2; font-size: 18px;">
-                <p>✓ Hafalan Quran & Surat Pilihan: <strong>MUMTAZ</strong></p>
-                <p>✓ Praktik Ibadah & Khotbah: <strong>LULUS</strong></p>
-                <p>✓ Adab & Kedisiplinan: <strong>ISTIMEWA</strong></p>
-            </div>
-            <div style="margin-top: 60px; display: flex; justify-content: space-around;">
-                <div><br><strong>Pengasuh Ponpes</strong></div>
-                <div>Malang, <span id="c-date"></span><br><strong>Kepala Madin</strong></div>
-            </div>
-            <div style="margin-top: 50px;" class="no-print">
-                <button class="btn btn-green" onclick="window.print()">CETAK PDF</button>
-                <button class="btn" onclick="location.reload()">KEMBALI</button>
+            <div class="col-md-10 p-4" id="main-content">
+                
+                <div id="page-dashboard" class="page-content">
+                    <h3 class="mb-4 fw-bold">Dashboard Kelulusan</h3>
+                    
+                    <div class="row mb-4">
+                        <div class="col-md-4">
+                            <div class="card shadow-sm border-0 bg-primary text-white">
+                                <div class="card-body d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="mb-0">Total Santri</h6>
+                                        <h2 class="mb-0">120</h2>
+                                    </div>
+                                    <i class="fas fa-users fa-3x opacity-50"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card shadow-sm border-0 bg-success text-white">
+                                <div class="card-body d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="mb-0">Sudah Lulus</h6>
+                                        <h2 class="mb-0">85</h2>
+                                    </div>
+                                    <i class="fas fa-check-circle fa-3x opacity-50"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card shadow-sm border-0 bg-warning text-dark">
+                                <div class="card-body d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="mb-0">Proses Penilaian</h6>
+                                        <h2 class="mb-0">35</h2>
+                                    </div>
+                                    <i class="fas fa-spinner fa-3x opacity-50"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="card shadow-sm border-0">
+                                <div class="card-header bg-white fw-bold">Rata-rata Progress Hafalan Global</div>
+                                <div class="card-body">
+                                    <canvas id="progressChart" height="100"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="page-data-santri" class="page-content" style="display: none;">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h3 class="fw-bold">Manajemen Data Santri</h3>
+                        <button class="btn btn-bm"><i class="fas fa-plus"></i> Tambah Santri</button>
+                    </div>
+                    
+                    <div class="card shadow-sm border-0">
+                        <div class="card-body">
+                            <table class="table table-hover align-middle">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>NIS</th>
+                                        <th>Nama Santri</th>
+                                        <th>Kelas</th>
+                                        <th>Progress</th>
+                                        <th>Status</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>BM-001</td>
+                                        <td>Ahmad Faiz</td>
+                                        <td>12 A</td>
+                                        <td><div class="progress"><div class="progress-bar bg-success" style="width: 100%">100%</div></div></td>
+                                        <td><span class="badge bg-success">LULUS</span></td>
+                                        <td>
+                                            <button class="btn btn-sm btn-info text-white"><i class="fas fa-edit"></i> Nilai</button>
+                                            <button class="btn btn-sm btn-warning" onclick="tampilkanSertifikat('Ahmad Faiz', 'BM/2026/001')"><i class="fas fa-certificate"></i> Cetak</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>BM-002</td>
+                                        <td>Budi Santoso</td>
+                                        <td>12 B</td>
+                                        <td><div class="progress"><div class="progress-bar bg-warning" style="width: 80%">80%</div></div></td>
+                                        <td><span class="badge bg-warning">PROSES</span></td>
+                                        <td>
+                                            <button class="btn btn-sm btn-info text-white"><i class="fas fa-edit"></i> Nilai</button>
+                                            <button class="btn btn-sm btn-secondary" disabled><i class="fas fa-certificate"></i> Cetak</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="page-sertifikat" class="page-content" style="display: none;">
+                    <button class="btn btn-secondary mb-3" onclick="showPage('data-santri', document.querySelectorAll('.nav-link')[1])"><i class="fas fa-arrow-left"></i> Kembali</button>
+                    <button class="btn btn-bm mb-3 float-end" onclick="window.print()"><i class="fas fa-print"></i> Cetak PDF</button>
+                    
+                    <div id="print-area" class="sertifikat-preview mt-2">
+                        <h1 class="text-bm-green fw-bold mb-0">MUTQIN BM</h1>
+                        <h4 class="text-bm-gold mb-4">Pondok Pesantren Bahrul Maghfiroh</h4>
+                        <hr style="border: 2px solid var(--bm-gold);">
+                        <h2 class="mt-4">SERTIFIKAT KELULUSAN</h2>
+                        <p>Nomor: <span id="cert-nomor" class="fw-bold"></span></p>
+                        
+                        <p class="mt-4 mb-1">Diberikan kepada:</p>
+                        <h1 id="cert-nama" class="text-bm-green" style="font-family: serif; font-style: italic;"></h1>
+                        
+                        <p class="mt-4">Telah menyelesaikan standar kelulusan Hafalan, Praktek Ibadah, dan Adab dengan predikat:</p>
+                        <h3 class="text-bm-gold fw-bold border d-inline-block px-4 py-2 mt-2">MUMTAZ (Sangat Baik)</h3>
+                        
+                        <div class="row mt-5">
+                            <div class="col-6 text-center">
+                                <p class="mb-5">Ketua Tahfizh</p>
+                                <p class="fw-bold mb-0">( Ustadz Fulan, S.Pd.I )</p>
+                            </div>
+                            <div class="col-6 text-center">
+                                <p class="mb-5">Pengasuh Pondok Pesantren</p>
+                                <p class="fw-bold mb-0">( KH. Pengasuh BM )</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
 
     <script>
-        let santriDB = JSON.parse(localStorage.getItem('bm_vfinal_db')) || [];
-        let editIdx = -1;
+        // Logika Login
+        document.getElementById('login-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const user = document.getElementById('username').value;
+            const pass = document.getElementById('password').value;
+            
+            if(user === 'admin' && pass === '12345') {
+                document.getElementById('login-container').style.display = 'none';
+                document.getElementById('app-container').style.display = 'block';
+                initChart(); // Render grafik setelah login
+            } else {
+                alert('Username atau Password salah! (Gunakan admin/12345)');
+            }
+        });
 
-        function auth() {
-            const u = document.getElementById('login-user').value;
-            const p = document.getElementById('login-pass').value;
-            if(u === 'admin' && p === 'admin') {
-                document.getElementById('login-view').style.display = 'none';
-                document.getElementById('app-view').style.display = 'flex';
-                renderData();
-            } else { alert("User/Pass Salah!"); }
+        // Logika Logout
+        function logout() {
+            document.getElementById('app-container').style.display = 'none';
+            document.getElementById('login-container').style.display = 'flex';
         }
 
-        function calculateScore(s) {
-            const hafal = ((Number(s.h1) + Number(s.h2) + Number(s.h3)) / 3) * 0.4;
-            const praktik = ((Number(s.p1) + Number(s.p2)) / 2) * 0.3;
-            const madin = ((Number(s.m1) + Number(s.m2)) / 2) * 0.2;
-            const adab = ((Number(s.a1) + Number(s.a2)) / 2) * 0.1;
-            return hafal + praktik + madin + adab;
+        // Logika Navigasi Menu
+        function showPage(pageId, element) {
+            // Sembunyikan semua halaman
+            document.querySelectorAll('.page-content').forEach(el => el.style.display = 'none');
+            // Tampilkan halaman yang dipilih
+            document.getElementById('page-' + pageId).style.display = 'block';
+            
+            // Ubah class active di sidebar
+            document.querySelectorAll('.nav-link').forEach(el => el.classList.remove('active'));
+            if(element) element.classList.add('active');
         }
 
-        function renderData(isRanking = false) {
-            const list = document.getElementById('santri-rows');
-            list.innerHTML = "";
-            let l = 0, b = 0, bl = 0;
+        // Logika Tampilkan Sertifikat
+        function tampilkanSertifikat(nama, nomor) {
+            document.getElementById('cert-nama').innerText = nama;
+            document.getElementById('cert-nomor').innerText = nomor;
+            showPage('sertifikat', null);
+            document.querySelectorAll('.nav-link').forEach(el => el.classList.remove('active'));
+        }
 
-            let displayData = [...santriDB];
-            if(isRanking) displayData.sort((a, b) => calculateScore(b) - calculateScore(a));
-
-            displayData.forEach((s, i) => {
-                const total = calculateScore(s);
-                let status = "BELUM LULUS", color = "#c0392b";
-                if(total >= 85) { status = "LULUS"; color = "#27ae60"; l++; }
-                else if(total >= 65) { status = "LULUS BERSYARAT"; color = "#f39c12"; b++; }
-                else { bl++; }
-
-                list.innerHTML += `
-                    <tr>
-                        <td><strong>${s.nama}</strong></td>
-                        <td><span class="badge" style="background:${color}">${status}</span></td>
-                        <td>
-                            <span class="check-dot" style="background:${s.h1==100?'green':s.h1==50?'orange':'red'}"></span>
-                            <span class="check-dot" style="background:${s.h2==100?'green':s.h2==50?'orange':'red'}"></span>
-                        </td>
-                        <td><span class="check-dot" style="background:${s.p1==100?'green':'red'}"></span> Praktek</td>
-                        <td><strong>${total.toFixed(1)}</strong></td>
-                        <td style="text-align:right">
-                            <button onclick="editItem(${i})" class="btn-green" style="padding:5px 10px; border-radius:5px; border:none; cursor:pointer"><i class="fa fa-edit"></i></button>
-                            <button onclick="showCert(${i})" class="btn-gold" style="padding:5px 10px; border-radius:5px; border:none; cursor:pointer"><i class="fa fa-certificate"></i></button>
-                        </td>
-                    </tr>`;
+        // Inisialisasi Grafik Chart.js
+        function initChart() {
+            const ctx = document.getElementById('progressChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Surat Pilihan', 'Juz 30', 'Aurad', 'Praktek Ibadah', 'Madin & Adab'],
+                    datasets: [{
+                        label: 'Persentase Ketuntasan (%)',
+                        data: [90, 75, 85, 95, 100],
+                        backgroundColor: '#d4af37', // Warna Gold Mutqin
+                        borderRadius: 5
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: { beginAtZero: true, max: 100 }
+                    }
+                }
             });
-
-            document.getElementById('stat-total').innerText = santriDB.length;
-            document.getElementById('stat-lulus').innerText = l;
-            document.getElementById('stat-proses').innerText = b;
-            document.getElementById('stat-belum').innerText = bl;
-            localStorage.setItem('bm_vfinal_db', JSON.stringify(santriDB));
-        }
-
-        function processSave() {
-            const data = {
-                nama: document.getElementById('f-nama').value.toUpperCase(),
-                h1: document.getElementById('v-h1').value,
-                h2: document.getElementById('v-h2').value,
-                h3: document.getElementById('v-h3').value || 0,
-                p1: document.getElementById('v-p1').value,
-                p2: document.getElementById('v-p2').value,
-                m1: document.getElementById('v-m1').value,
-                m2: document.getElementById('v-m2').value,
-                a1: document.getElementById('v-a1').value || 0,
-                a2: document.getElementById('v-a2').value || 0
-            };
-            if(editIdx === -1) santriDB.push(data); else santriDB[editIdx] = data;
-            closeForm(); renderData();
-        }
-
-        function switchTab(type) {
-            document.getElementById('view-title').innerText = type === 'ranking' ? 'Ranking Nilai Tertinggi' : 'Monitoring Kelulusan';
-            renderData(type === 'ranking');
-        }
-
-        function openForm() { editIdx = -1; document.getElementById('form-overlay').style.display = 'flex'; }
-        function closeForm() { document.getElementById('form-overlay').style.display = 'none'; }
-        function editItem(i) { editIdx = i; document.getElementById('form-overlay').style.display = 'flex'; /* fill data logic here */ }
-        function showCert(i) {
-            document.getElementById('c-nama').innerText = santriDB[i].nama;
-            document.getElementById('c-date').innerText = new Date().toLocaleDateString('id-ID');
-            document.getElementById('app-view').style.display = 'none';
-            document.getElementById('certificate-wrap').style.display = 'block';
         }
     </script>
 </body>
