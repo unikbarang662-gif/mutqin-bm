@@ -3,114 +3,108 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mutqin BM - Official System v2.0</title>
+    <title>Mutqin BM - Official App</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* CSS PREMIUM THEME */
         :root {
-            --emerald: #021a0e;
-            --emerald-light: #0a4d2c;
+            --dark-green: #042918; --deep-bg: #021a0e; --gold: #d4af37;
             --gold-grad: linear-gradient(135deg, #d4af37 0%, #f9e29c 50%, #b8860b 100%);
-            --white-glass: rgba(255, 255, 255, 0.98);
+            --white: #ffffff; --gray: #f4f7f6;
         }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; }
+        body { background: var(--deep-bg); color: white; height: 100vh; overflow: hidden; }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
-        body { background: var(--emerald); color: white; height: 100vh; overflow: hidden; }
+        /* --- LOGIN PAGE --- */
+        #login-page { height: 100vh; display: flex; justify-content: center; align-items: center; background: radial-gradient(circle, var(--dark-green), var(--deep-bg)); }
+        .login-card { background: rgba(0,0,0,0.5); padding: 40px; border-radius: 20px; border: 1px solid var(--gold); text-align: center; width: 350px; backdrop-filter: blur(10px); }
+        .login-card h2 { background: var(--gold-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 20px; }
+        .login-card input { width: 100%; padding: 12px; margin-bottom: 10px; border-radius: 8px; border: none; }
 
-        /* LOGIN SCREEN */
-        #login-screen {
-            position: fixed; inset: 0; z-index: 9999; background: radial-gradient(circle, var(--emerald-light), var(--emerald));
-            display: flex; justify-content: center; align-items: center;
-        }
-        .login-box {
-            background: rgba(4, 41, 24, 0.9); border: 1.5px solid #d4af37; border-radius: 20px;
-            padding: 40px; width: 350px; text-align: center; box-shadow: 0 0 30px rgba(212,175,55,0.2);
-        }
-        .login-box h2 { background: var(--gold-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 25px; }
-        .login-box input { width: 100%; padding: 12px; margin-bottom: 15px; border-radius: 8px; border: none; }
-        .btn-gold { background: var(--gold-grad); color: black; font-weight: bold; width: 100%; border: none; padding: 12px; border-radius: 8px; cursor: pointer; }
-
-        /* DASHBOARD LAYOUT */
+        /* --- DASHBOARD LAYOUT --- */
         #main-app { display: none; height: 100vh; flex-direction: column; }
         header { padding: 15px; text-align: center; border-bottom: 1px solid rgba(212,175,55,0.2); }
-        header h1 { font-size: 22px; color: #d4af37; letter-spacing: 2px; }
-
-        .container { display: flex; flex: 1; padding: 20px; gap: 20px; overflow: hidden; }
+        .wrapper { display: flex; flex: 1; overflow: hidden; padding: 20px; gap: 20px; }
         
-        /* SIDEBAR */
-        nav { width: 240px; background: #042918; border-radius: 20px; padding: 20px; display: flex; flex-direction: column; gap: 10px; }
-        .nav-link { padding: 12px; border-radius: 10px; cursor: pointer; color: #ccc; transition: 0.3s; display: flex; align-items: center; gap: 10px; }
-        .nav-link.active { background: var(--gold-grad); color: black; font-weight: bold; }
-        .nav-link:hover:not(.active) { background: rgba(255,255,255,0.1); }
-
-        /* MAIN CONTENT */
-        main { flex: 1; background: var(--white-glass); border-radius: 25px; color: #333; padding: 25px; overflow-y: auto; }
-        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 25px; }
-        .stat-card { padding: 15px; border-radius: 15px; color: white; text-align: center; }
+        nav { width: 250px; background: var(--dark-green); border-radius: 20px; padding: 20px; display: flex; flex-direction: column; gap: 10px; border: 1px solid rgba(255,255,255,0.1); }
+        .nav-item { padding: 12px; border-radius: 10px; cursor: pointer; color: #ccc; transition: 0.3s; display: flex; align-items: center; gap: 10px; }
+        .nav-item.active { background: var(--gold-grad); color: black; font-weight: bold; }
         
-        /* TABLE STYLING */
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        th { text-align: left; padding: 12px; border-bottom: 2px solid #eee; color: #666; font-size: 13px; }
+        main { flex: 1; background: var(--white); border-radius: 25px; color: #333; padding: 25px; overflow-y: auto; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        
+        /* STATS */
+        .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 25px; }
+        .stat-box { padding: 20px; border-radius: 15px; color: white; text-align: center; }
+
+        /* TABLE */
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th { text-align: left; padding: 12px; border-bottom: 2px solid #eee; font-size: 12px; color: #888; }
         td { padding: 15px 12px; border-bottom: 1px solid #f0f0f0; font-size: 14px; }
-        .btn-action { padding: 6px 12px; border-radius: 5px; border: none; cursor: pointer; font-weight: bold; color: white; margin-right: 5px; }
+        .status-pill { padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: bold; color: white; }
 
-        /* MODAL */
-        .modal-bg { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 1000; justify-content: center; align-items: center; }
-        .modal-content { background: white; width: 500px; border-radius: 15px; overflow: hidden; color: #333; }
-        .modal-header { background: #0a4d2c; color: white; padding: 15px; text-align: center; }
-        .modal-body { padding: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .input-box { margin-bottom: 10px; grid-column: span 2; }
-        .input-box.half { grid-column: span 1; }
-        .input-box label { display: block; font-size: 12px; font-weight: bold; margin-bottom: 5px; }
-        .input-box input, select { width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 5px; }
+        /* MODAL FORM */
+        .overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 1000; justify-content: center; align-items: center; }
+        .modal { background: white; width: 800px; max-width: 95%; border-radius: 20px; overflow: hidden; color: #333; }
+        .modal-header { background: var(--dark-green); color: white; padding: 15px; text-align: center; }
+        .modal-body { padding: 20px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; max-height: 500px; overflow-y: auto; }
+        .form-group { display: flex; flex-direction: column; gap: 5px; }
+        .form-group label { font-size: 12px; font-weight: bold; color: #555; }
+        .form-group input, select { padding: 8px; border: 1px solid #ddd; border-radius: 5px; }
+        .full-width { grid-column: span 3; }
+        .section-tag { grid-column: span 3; background: #f0f7f3; padding: 5px 10px; border-radius: 5px; color: var(--dark-green); font-weight: bold; font-size: 13px; margin-top: 10px; }
 
-        /* CERTIFICATE PAGE */
-        #cert-page { display: none; background: white; color: #333; height: 100vh; width: 100%; position: fixed; inset: 0; z-index: 5000; padding: 50px; text-align: center; }
-        .cert-border { border: 15px solid transparent; border-image: url('https://i.imgur.com/n1f1W4D.png') 100 110 round; padding: 40px; height: 100%; position: relative; background: #fffcf5; }
-        .cert-name { font-size: 45px; border-bottom: 2px solid #333; display: inline-block; margin: 30px 0; padding: 0 50px; font-family: 'Playfair Display', serif; }
+        /* CERTIFICATE */
+        #cert-area { display: none; background: white; padding: 50px; position: fixed; inset: 0; z-index: 5000; }
+        .cert-frame { border: 15px solid #d4af37; padding: 40px; height: 100%; text-align: center; background: #fffcf5; border-image: url('https://i.imgur.com/n1f1W4D.png') 100 110 round; }
 
-        @media print {
-            body * { display: none !important; }
-            #cert-page, #cert-page * { display: block !important; }
-            #cert-page { border: none; position: absolute; inset: 0; }
-            .no-print { display: none !important; }
-        }
+        .btn { border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; transition: 0.2s; }
+        .btn-gold { background: var(--gold-grad); color: black; }
+        .btn-green { background: var(--dark-green); color: white; }
+        .btn-delete { background: #d32f2f; color: white; }
+
+        @media print { body * { display: none; } #cert-area, #cert-area * { display: block; } #cert-area { position: absolute; inset: 0; } .no-print { display: none; } }
     </style>
 </head>
 <body>
 
-    <div id="login-screen">
-        <div class="login-box">
-            <img src="https://i.imgur.com/8Qj8Bv5.png" width="80" style="filter: drop-shadow(0 0 5px gold); margin-bottom: 15px;">
-            <h2>MUTQIN BM LOGIN</h2>
-            <input type="text" id="username" placeholder="Username (admin)">
-            <input type="password" id="password" placeholder="Password (123)">
-            <button class="btn-gold" onclick="handleLogin()">MASUK APLIKASI</button>
+    <div id="login-page">
+        <div class="login-card">
+            <img src="https://i.imgur.com/8Qj8Bv5.png" width="80" style="margin-bottom:10px">
+            <h2>MUTQIN BM</h2>
+            <p style="color: #ccc; font-size: 12px; margin-bottom: 20px;">Ponpes Bahrul Maghfiroh Malang</p>
+            <input type="text" id="user" placeholder="Username">
+            <input type="password" id="pass" placeholder="Password">
+            <button class="btn btn-gold" style="width: 100%" onclick="doLogin()">MASUK SYSTEM</button>
         </div>
     </div>
 
     <div id="main-app">
-        <header><h1>MUTQIN BM - PONPES BAHRUL MAGHFIROH</h1></header>
-        <div class="container">
+        <header><h1><i class="fa fa-mosque"></i> MUTQIN BM DASHBOARD</h1></header>
+        <div class="wrapper">
             <nav>
-                <div class="nav-link active"><i class="fa fa-home"></i> Dashboard</div>
-                <div class="nav-link" onclick="openModalAdd()"><i class="fa fa-user-plus"></i> Tambah Santri</div>
-                <div class="nav-link" style="margin-top: auto; color: #ff6b6b;" onclick="location.reload()"><i class="fa fa-power-off"></i> Logout</div>
+                <div class="nav-item active"><i class="fa fa-home"></i> Dashboard</div>
+                <div class="nav-item" onclick="openModalAdd()"><i class="fa fa-user-plus"></i> Tambah Santri</div>
+                <div class="nav-item" onclick="exportData()"><i class="fa fa-download"></i> Backup Data</div>
+                <div class="nav-item" style="margin-top: auto; color: #ff7675;" onclick="location.reload()"><i class="fa fa-sign-out"></i> Logout</div>
             </nav>
             <main>
-                <div class="stats-grid">
-                    <div class="stat-card" style="background: #1a73e8;"><p>TOTAL SANTRI</p><h2 id="st-total">0</h2></div>
-                    <div class="stat-card" style="background: #126b40;"><p>SUDAH LULUS</p><h2 id="st-lulus">0</h2></div>
-                    <div class="stat-card" style="background: #e67e22;"><p>SEDANG PROSES</p><h2 id="st-proses">0</h2></div>
-                    <div class="stat-card" style="background: #d93025;"><p>BELUM MULAI</p><h2 id="st-belum">0</h2></div>
+                <div class="stats">
+                    <div class="stat-box" style="background: #1a73e8;">TOTAL SANTRI<h2 id="st-total">0</h2></div>
+                    <div class="stat-box" style="background: #126b40;">LULUS MUTQIN<h2 id="st-lulus">0</h2></div>
+                    <div class="stat-box" style="background: #e67e22;">PROSES<h2 id="st-proses">0</h2></div>
+                    <div class="stat-box" style="background: #d93025;">BELUM LULUS<h2 id="st-belum">0</h2></div>
                 </div>
-                <h3>Data Progress Hafalan</h3>
+
+                <div style="display:flex; justify-content:space-between; align-items:center">
+                    <h3>Monitoring Kelulusan Hafalan</h3>
+                    <div style="font-size: 12px; color: #666;">Bobot: Hafal(40%), Praktik(30%), Madin(20%), Adab(10%)</div>
+                </div>
+
                 <table>
                     <thead>
                         <tr>
                             <th>NAMA SANTRI</th>
-                            <th>STATUS</th>
-                            <th>NILAI RATA-RATA</th>
+                            <th>HASIL AKHIR</th>
+                            <th>CHECKLIST KURIKULUM</th>
                             <th style="text-align:right">AKSI</th>
                         </tr>
                     </thead>
@@ -120,137 +114,167 @@
         </div>
     </div>
 
-    <div class="modal-bg" id="modal-form">
-        <div class="modal-content">
-            <div class="modal-header"><h3 id="modal-title">Input Data Santri</h3></div>
+    <div class="overlay" id="modal-form">
+        <div class="modal">
+            <div class="modal-header"><h3 id="modal-title">Data Santri & Penilaian</h3></div>
             <div class="modal-body">
-                <div class="input-box"><label>Nama Lengkap</label><input type="text" id="in-nama"></div>
-                <div class="input-box half"><label>Status</label>
-                    <select id="in-status">
-                        <option value="Belum">Belum Mulai</option>
-                        <option value="Proses">Sedang Proses</option>
-                        <option value="Lulus">Lulus</option>
-                    </select>
-                </div>
-                <div class="input-box half"><label>Juz 30 (0-100)</label><input type="number" id="in-j30"></div>
-                <div class="input-box half"><label>Yasin (0-100)</label><input type="number" id="in-yasin"></div>
-                <div class="input-box half"><label>Al-Waqiah (0-100)</label><input type="number" id="in-waqiah"></div>
-                <div class="input-box half"><label>Al-Mulk (0-100)</label><input type="number" id="in-mulk"></div>
-                <div class="input-box half"><label>Tahlil/Aurad (0-100)</label><input type="number" id="in_aurad"></div>
-                <div class="input-box half"><label>Praktek Sholat (0-100)</label><input type="number" id="in_sholat"></div>
+                <div class="form-group full-width"><label>Nama Lengkap Santri</label><input type="text" id="f-nama"></div>
+                
+                <div class="section-tag">1. KATEGORI HAFALAN (40%)</div>
+                <div class="form-group"><label>Yaasin, Waqiah, Mulk</label><select id="n-ywm"><option value="0">Belum</option><option value="50">Proses</option><option value="100">Lulus</option></select></div>
+                <div class="form-group"><label>Tahlil, Wirid, Doa</label><select id="n-twd"><option value="0">Belum</option><option value="50">Proses</option><option value="100">Lulus</option></select></div>
+                <div class="form-group"><label>Juz 30 (Nilai 0-100)</label><input type="number" id="n-j30"></div>
+
+                <div class="section-tag">2. KATEGORI PRAKTIK (30%)</div>
+                <div class="form-group"><label>Praktek Sholat & Jenazah</label><select id="n-psj"><option value="0">Belum</option><option value="50">Proses</option><option value="100">Lulus</option></select></div>
+                <div class="form-group"><label>Khotib & Bilal</label><select id="n-kb"><option value="0">Belum</option><option value="50">Proses</option><option value="100">Lulus</option></select></div>
+                
+                <div class="section-tag">3. KATEGORI AKADEMIK MADIN (20%)</div>
+                <div class="form-group"><label>Lulus Madin Ula</label><select id="n-ula"><option value="0">TIDAK</option><option value="100">YA</option></select></div>
+                <div class="form-group"><label>Lulus Madin Wusto</label><select id="n-wusto"><option value="0">TIDAK</option><option value="100">YA</option></select></div>
+
+                <div class="section-tag">4. KATEGORI ADAB & SIKAP (10%)</div>
+                <div class="form-group"><label>Sholat Jamaah (0-100)</label><input type="number" id="n-shj"></div>
+                <div class="form-group"><label>Kedisiplinan (0-100)</label><input type="number" id="n-ds"></div>
             </div>
-            <button class="btn-gold" style="border-radius:0" onclick="saveSantri()">SIMPAN DATA</button>
-            <button class="no-print" style="width:100%; padding:10px; border:none; background:#eee;" onclick="closeModal()">Batal</button>
+            <div style="padding: 20px; display: flex; gap: 10px;">
+                <button class="btn btn-gold" style="flex:1" onclick="saveData()">SIMPAN DATA SANTRI</button>
+                <button class="btn" style="background:#eee" onclick="closeModal()">BATAL</button>
+            </div>
         </div>
     </div>
 
-    <div id="cert-page">
-        <div class="cert-border">
+    <div id="cert-area">
+        <div class="cert-frame">
             <img src="https://i.imgur.com/8Qj8Bv5.png" width="100">
-            <h1 style="color: #0a4d2c; font-family: serif; font-size: 40px;">SERTIFIKAT KELULUSAN</h1>
-            <p>Diberikan kepada santri Mutqin BM:</p>
-            <div class="cert-name" id="c-nama">NAMA SANTRI</div>
-            <div style="text-align: left; width: 60%; margin: 20px auto; line-height: 2;">
-                <p>● Hafalan Juz 30: <strong id="c-j30">MUMTAZ</strong></p>
-                <p>● Hafalan Surat Pilihan: <strong id="c-sp">MUMTAZ</strong></p>
-                <p>● Hafalan Aurad & Tahlil: <strong id="c-aurad">MUMTAZ</strong></p>
-                <p>● Praktek Sholat & Jenazah: <strong id="c-praktek">MUMTAZ</strong></p>
+            <h1 style="font-family:serif; color:var(--dark-green); font-size:40px; margin-top:20px">SERTIFIKAT MUTQIN BM</h1>
+            <p>Diberikan kepada santri Ponpes Bahrul Maghfiroh:</p>
+            <h2 id="c-nama" style="font-size: 45px; border-bottom: 2px solid #333; display:inline-block; margin: 30px 0; padding: 0 40px;">NAMA SANTRI</h2>
+            <div style="text-align: left; width: 70%; margin: 0 auto; line-height: 1.8;">
+                <p>✓ Hafal Surah Pilihan & Juz 30: <strong>MUTQIN</strong></p>
+                <p>✓ Praktek Ibadah & Jenazah: <strong>LULUS</strong></p>
+                <p>✓ Akademik Madin & Adab: <strong>BAIK</strong></p>
             </div>
-            <button class="btn-gold no-print" style="width:200px" onclick="window.print()">CETAK SEKARANG</button>
-            <button class="no-print" style="margin-left:10px; padding:10px" onclick="location.reload()">KEMBALI</button>
+            <div style="margin-top: 50px; display:flex; justify-content:space-around">
+                <div><br>Pengasuh Ponpes</div>
+                <div>Malang, <span id="c-date"></span><br>Kepala Madin</div>
+            </div>
+            <div class="no-print" style="margin-top:40px">
+                <button class="btn btn-gold" onclick="window.print()">PRINT SEKARANG</button>
+                <button class="btn" style="background:#444; color:white" onclick="location.reload()">KEMBALI</button>
+            </div>
         </div>
     </div>
 
     <script>
-        let db = JSON.parse(localStorage.getItem('mutqin_official_db')) || [];
+        let db = JSON.parse(localStorage.getItem('mutqin_db_v3')) || [];
         let editIdx = -1;
 
-        function handleLogin() {
-            const u = document.getElementById('username').value;
-            const p = document.getElementById('password').value;
-            if(u === 'admin' && p === '123') {
-                document.getElementById('login-screen').style.display = 'none';
+        function doLogin() {
+            if(document.getElementById('user').value === 'admin' && document.getElementById('pass').value === '123') {
+                document.getElementById('login-page').style.display = 'none';
                 document.getElementById('main-app').style.display = 'flex';
                 render();
-            } else { alert('Akses Ditolak! Gunakan admin / 123'); }
+            } else { alert("Login Gagal!"); }
         }
 
         function render() {
             const list = document.getElementById('santri-list');
             list.innerHTML = "";
-            let l = 0, p = 0, b = 0;
+            let lul = 0, pro = 0, bel = 0;
 
             db.forEach((s, i) => {
-                if(s.status === 'Lulus') l++; else if(s.status === 'Proses') p++; else b++;
-                const avg = (Number(s.j30)+Number(s.yasin)+Number(s.waqiah)+Number(s.mulk)+Number(s.aurad)+Number(s.sholat))/6;
-                
-                list.innerHTML += `<tr>
-                    <td><strong>${s.nama}</strong></td>
-                    <td><span style="color:${s.status=='Lulus'?'green':'orange'}">${s.status}</span></td>
-                    <td>${avg.toFixed(1)}</td>
-                    <td style="text-align:right">
-                        <button class="btn-action" style="background:#0a4d2c" onclick="editSantri(${i})"><i class="fa fa-edit"></i></button>
-                        <button class="btn-action" style="background:#d4af37" onclick="viewCert(${i})"><i class="fa fa-certificate"></i></button>
-                        <button class="btn-action" style="background:#d32f2f" onclick="deleteSantri(${i})"><i class="fa fa-trash"></i></button>
-                    </td>
-                </tr>`;
+                // Hitung Nilai Akhir
+                const vHafal = ((Number(s.ywm) + Number(s.twd) + Number(s.j30)) / 3) * 0.4;
+                const vPraktek = ((Number(s.psj) + Number(s.kb)) / 2) * 0.3;
+                const vMadin = ((Number(s.ula) + Number(s.wusto)) / 2) * 0.2;
+                const vAdab = ((Number(s.shj) + Number(s.ds)) / 2) * 0.1;
+                const total = vHafal + vPraktek + vMadin + vAdab;
+
+                let status = "BELUM LULUS", color = "#d93025";
+                if(total >= 85) { status = "LULUS"; color = "#126b40"; lul++; }
+                else if(total >= 65) { status = "LULUS BERSYARAT"; color = "#e67e22"; pro++; }
+                else { bel++; }
+
+                list.innerHTML += `
+                    <tr>
+                        <td><strong>${s.nama}</strong><br><small style="color:#888">Nilai: ${total.toFixed(1)}/100</small></td>
+                        <td><span class="status-pill" style="background:${color}">${status}</span></td>
+                        <td>
+                            <span title="Yaasin" style="color:${s.ywm==100?'green':s.ywm==50?'orange':'red'}">●</span>
+                            <span title="Tahlil" style="color:${s.twd==100?'green':s.twd==50?'orange':'red'}">●</span>
+                            <span title="Juz 30" style="color:${s.j30>=75?'green':'red'}">●</span>
+                            <span title="Praktek" style="color:${s.psj==100?'green':s.psj==50?'orange':'red'}">●</span>
+                        </td>
+                        <td style="text-align:right">
+                            <button class="btn btn-green" style="padding:5px 10px" onclick="editSantri(${i})"><i class="fa fa-edit"></i></button>
+                            <button class="btn btn-gold" style="padding:5px 10px" onclick="showCert(${i})"><i class="fa fa-certificate"></i></button>
+                            <button class="btn btn-delete" style="padding:5px 10px" onclick="deleteSantri(${i})"><i class="fa fa-trash"></i></button>
+                        </td>
+                    </tr>`;
             });
+
             document.getElementById('st-total').innerText = db.length;
-            document.getElementById('st-lulus').innerText = l;
-            document.getElementById('st-proses').innerText = p;
-            document.getElementById('st-belum').innerText = b;
-            localStorage.setItem('mutqin_official_db', JSON.stringify(db));
+            document.getElementById('st-lulus').innerText = lul;
+            document.getElementById('st-proses').innerText = pro;
+            document.getElementById('st-belum').innerText = bel;
+            localStorage.setItem('mutqin_db_v3', JSON.stringify(db));
         }
 
         function openModalAdd() {
-            editIdx = -1; document.getElementById('modal-title').innerText = "Tambah Santri";
-            document.querySelectorAll('.modal-body input').forEach(i => i.value = "");
+            editIdx = -1; document.getElementById('modal-title').innerText = "Tambah Santri Baru";
+            document.getElementById('f-nama').value = "";
+            document.querySelectorAll('.modal-body input, .modal-body select').forEach(el => el.value = el.tagName === 'SELECT' ? "0" : "");
             document.getElementById('modal-form').style.display = 'flex';
         }
 
         function editSantri(i) {
             editIdx = i; const s = db[i];
-            document.getElementById('in-nama').value = s.nama;
-            document.getElementById('in-status').value = s.status;
-            document.getElementById('in-j30').value = s.j30;
-            document.getElementById('in-yasin').value = s.yasin;
-            document.getElementById('in-waqiah').value = s.waqiah;
-            document.getElementById('in-mulk').value = s.mulk;
-            document.getElementById('in_aurad').value = s.aurad;
-            document.getElementById('in_sholat').value = s.sholat;
+            document.getElementById('modal-title').innerText = "Edit Data: " + s.nama;
+            document.getElementById('f-nama').value = s.nama;
+            document.getElementById('n-ywm').value = s.ywm;
+            document.getElementById('n-twd').value = s.twd;
+            document.getElementById('n-j30').value = s.j30;
+            document.getElementById('n-psj').value = s.psj;
+            document.getElementById('n-kb').value = s.kb;
+            document.getElementById('n-ula').value = s.ula;
+            document.getElementById('n-wusto').value = s.wusto;
+            document.getElementById('n-shj').value = s.shj;
+            document.getElementById('n-ds').value = s.ds;
             document.getElementById('modal-form').style.display = 'flex';
         }
 
-        function saveSantri() {
+        function saveData() {
             const data = {
-                nama: document.getElementById('in-nama').value.toUpperCase(),
-                status: document.getElementById('in-status').value,
-                j30: document.getElementById('in-j30').value || 0,
-                yasin: document.getElementById('in-yasin').value || 0,
-                waqiah: document.getElementById('in-waqiah').value || 0,
-                mulk: document.getElementById('in-mulk').value || 0,
-                aurad: document.getElementById('in_aurad').value || 0,
-                sholat: document.getElementById('in_sholat').value || 0,
+                nama: document.getElementById('f-nama').value.toUpperCase(),
+                ywm: document.getElementById('n-ywm').value,
+                twd: document.getElementById('n-twd').value,
+                j30: document.getElementById('n-j30').value || 0,
+                psj: document.getElementById('n-psj').value,
+                kb: document.getElementById('n-kb').value,
+                ula: document.getElementById('n-ula').value,
+                wusto: document.getElementById('n-wusto').value,
+                shj: document.getElementById('n-shj').value || 0,
+                ds: document.getElementById('n-ds').value || 0
             };
             if(editIdx === -1) db.push(data); else db[editIdx] = data;
             closeModal(); render();
         }
 
-        function getGrade(n) { return n >= 90 ? "MUMTAZ" : n >= 80 ? "JAYYID JIDDAN" : "JAYYID"; }
-
-        function viewCert(i) {
-            const s = db[i];
-            document.getElementById('c-nama').innerText = s.nama;
-            document.getElementById('c-j30').innerText = getGrade(s.j30);
-            document.getElementById('c-sp').innerText = getGrade(s.yasin);
-            document.getElementById('c-aurad').innerText = getGrade(s.aurad);
-            document.getElementById('c-praktek').innerText = getGrade(s.sholat);
+        function showCert(i) {
+            document.getElementById('c-nama').innerText = db[i].nama;
+            document.getElementById('c-date').innerText = new Date().toLocaleDateString('id-ID');
             document.getElementById('main-app').style.display = 'none';
-            document.getElementById('cert-page').style.display = 'block';
+            document.getElementById('cert-area').style.display = 'block';
         }
 
-        function deleteSantri(i) { if(confirm('Hapus santri ini?')) { db.splice(i,1); render(); } }
+        function deleteSantri(i) { if(confirm('Hapus data santri ini?')) { db.splice(i, 1); render(); } }
         function closeModal() { document.getElementById('modal-form').style.display = 'none'; }
+        function exportData() {
+            const blob = new Blob([JSON.stringify(db)], {type: 'application/json'});
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a'); a.href = url; a.download = 'backup_mutqin.json'; a.click();
+        }
     </script>
 </body>
 </html>
