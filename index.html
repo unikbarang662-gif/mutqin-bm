@@ -3,192 +3,259 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistem Mutqin BM - Ponpes Bahrul Maghfiroh</title>
+    <title>Mutqin BM - Standar Kelulusan</title>
     <style>
         :root {
-            --primary-green: #0a4d2c;
-            --gold: #b8860b;
-            --light-bg: #f4f7f5;
+            --deep-emerald: #042918;
+            --gold-gradient: linear-gradient(135deg, #d4af37, #f9e29c, #b8860b);
+            --glass-white: rgba(255, 255, 255, 0.95);
+            --sidebar-green: #063a22;
         }
-        body { font-family: 'Segoe UI', Arial, sans-serif; background-color: var(--light-bg); margin: 0; padding: 20px; color: #333; }
-        .container { max-width: 900px; margin: auto; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
-        
-        .header { text-align: center; margin-bottom: 30px; border-bottom: 3px solid var(--primary-green); padding-bottom: 15px; }
-        .header h1 { color: var(--primary-green); margin: 0; text-transform: uppercase; letter-spacing: 1px; }
-        
-        .section { margin-bottom: 25px; padding: 20px; border: 1px solid #ddd; border-radius: 10px; background: #fff; }
-        .section h3 { margin-top: 0; color: var(--primary-green); border-left: 5px solid var(--gold); padding-left: 15px; }
-        
-        .grid-input { display: grid; grid-template-columns: 1fr 120px; gap: 15px; align-items: center; margin-bottom: 10px; }
-        .grid-input label { font-weight: 500; }
-        
-        input[type="number"] { padding: 8px; border: 1px solid #ccc; border-radius: 5px; width: 100%; box-sizing: border-box; }
-        input[type="text"] { padding: 12px; border: 1px solid #ccc; border-radius: 5px; width: 100%; font-size: 16px; box-sizing: border-box; }
-        
-        .status-box { background: #e8f0eb; padding: 10px 15px; border-radius: 5px; margin-top: 10px; display: flex; justify-content: space-between; font-weight: bold; }
-        .status-done { color: #155724; background: #d4edda; }
 
-        .btn-action { background: var(--primary-green); color: white; border: none; padding: 15px; border-radius: 8px; width: 100%; font-size: 18px; font-weight: bold; cursor: pointer; transition: 0.3s; margin-top: 20px; }
-        .btn-action:hover { background: #06311c; }
-
-        /* Gaya Sertifikat */
-        #certificate-wrapper { display: none; margin-top: 50px; padding: 40px; border: 15px double var(--primary-green); background: #fffcf2; position: relative; color: #1a1a1a; text-align: center; }
-        .cert-header { font-size: 14px; font-weight: bold; color: var(--primary-green); }
-        .cert-title { font-size: 36px; font-family: 'Georgia', serif; margin: 20px 0; color: var(--primary-green); }
-        .cert-name { font-size: 32px; font-weight: bold; margin: 15px 0; border-bottom: 2px solid #333; display: inline-block; padding: 0 50px; }
-        .cert-status { background: var(--primary-green); color: white; display: inline-block; padding: 10px 60px; font-size: 24px; border-radius: 5px; margin: 20px 0; }
-        
-        .cert-table { width: 100%; margin-top: 20px; border-collapse: collapse; text-align: left; }
-        .cert-table td { padding: 10px; border-bottom: 1px solid #ddd; }
-        .badge { background: var(--gold); color: white; padding: 4px 12px; border-radius: 20px; font-size: 14px; font-weight: bold; float: right; }
-        
-        @media print {
-            .container > *:not(#certificate-wrapper) { display: none; }
-            body { padding: 0; }
-            #certificate-wrapper { display: block; border: none; }
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--deep-emerald);
+            background-image: url('https://www.transparenttextures.com/patterns/dark-matter.png'), 
+                              radial-gradient(circle at top, #0a4d2c 0%, #042918 100%);
+            color: white;
+            height: 100vh;
+            overflow: hidden;
         }
+
+        /* HEADER AREA */
+        .header {
+            text-align: center;
+            padding: 20px 0;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.5), transparent);
+        }
+        .header img { width: 100px; height: auto; margin-bottom: 10px; }
+        .header h1 { 
+            margin: 0; 
+            font-size: 28px; 
+            background: var(--gold-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: bold;
+        }
+        .header p { margin: 5px 0 0; font-size: 12px; color: #aaa; letter-spacing: 1px; }
+
+        /* MAIN LAYOUT */
+        .main-wrapper {
+            display: flex;
+            height: calc(100vh - 140px);
+            padding: 0 20px 20px;
+            gap: 20px;
+        }
+
+        /* SIDEBAR */
+        .sidebar {
+            width: 200px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            padding: 20px;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+        }
+        .nav-item {
+            padding: 12px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .nav-item.active { background: var(--gold-gradient); color: #000; font-weight: bold; }
+        .nav-item:hover:not(.active) { background: rgba(255,255,255,0.1); }
+
+        /* CONTENT AREA */
+        .content {
+            flex: 1;
+            background: var(--glass-white);
+            border-radius: 20px;
+            color: #333;
+            overflow-y: auto;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        /* CARD STATS */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        .stat-card {
+            padding: 15px;
+            border-radius: 12px;
+            color: white;
+            text-align: center;
+        }
+        .bg-total { background: #1a73e8; }
+        .bg-lulus { background: #126b40; }
+        .bg-proses { background: #e67e22; }
+        .bg-belum { background: #d93025; }
+
+        /* TABLE */
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th { text-align: left; padding: 12px; border-bottom: 2px solid #eee; color: #666; font-size: 13px; }
+        td { padding: 12px; border-bottom: 1px solid #eee; font-size: 14px; }
+        .btn-input {
+            background: var(--sidebar-green);
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        /* MODAL FORM */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            justify-content: center; align-items: center;
+        }
+        .modal-content {
+            background: white;
+            width: 90%; max-width: 600px;
+            border-radius: 15px;
+            color: #333;
+            max-height: 85vh;
+            overflow-y: auto;
+            padding: 0;
+        }
+        .modal-header {
+            background: var(--sidebar-green);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 15px 15px 0 0;
+            display: flex; justify-content: space-between;
+        }
+        .form-section { padding: 20px; border-bottom: 1px solid #eee; }
+        .form-section h4 { margin: 0 0 15px; color: var(--sidebar-green); border-bottom: 1px solid #ddd; padding-bottom: 5px; }
+        .input-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .input-row input { width: 60px; padding: 5px; text-align: center; }
+
+        .btn-save {
+            width: 100%;
+            padding: 15px;
+            background: var(--gold-gradient);
+            border: none;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 0 0 15px 15px;
+        }
+
+        /* CUSTOM SCROLLBAR */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-thumb { background: var(--gold-gradient); border-radius: 10px; }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <div class="header">
-        <h1>Dashboard Mutqin BM</h1>
-        <p>Pondok Pesantren Bahrul Maghfiroh</p>
+<div class="header">
+    <img src="https://i.imgur.com/8Qj8Bv5.png" alt="Logo"> <h1>MUTQIN BM</h1>
+    <p>Standar Kelulusan Ponpes Bahrul Maghfiroh</p>
+</div>
+
+<div class="main-wrapper">
+    <div class="sidebar">
+        <div class="nav-item active">🏠 Dashboard</div>
+        <div class="nav-item">📚 Data Santri</div>
+        <div class="nav-item">📜 Standar Hafalan</div>
+        <div class="nav-item">📊 Laporan</div>
+        <div class="nav-item" style="margin-top: 50px; color: #ff6b6b;">🚪 Log Out</div>
     </div>
 
-    <div class="section">
-        <h3>Data Santri</h3>
-        <input type="text" id="inputNama" placeholder="Nama Lengkap Santri...">
-    </div>
-
-    <div class="section">
-        <h3>1. Hafalan Surat Pilihan</h3>
-        <div class="grid-input">
-            <label>Surat Yaasin</label>
-            <input type="number" class="val-surat" data-name="Yasin" placeholder="0-100">
-        </div>
-        <div class="grid-input">
-            <label>Surat Al-Waqiah</label>
-            <input type="number" class="val-surat" data-name="Waqiah" placeholder="0-100">
-        </div>
-        <div class="grid-input">
-            <label>Surat Al-Mulk</label>
-            <input type="number" class="val-surat" data-name="Mulk" placeholder="0-100">
-        </div>
-        <div id="box-surat" class="status-box">Status: Menunggu Nilai</div>
-    </div>
-
-    <div class="section">
-        <h3>2. Hafalan Aurad</h3>
-        <div class="grid-input"><label>Wirid Setelah Shalat</label><input type="number" class="val-aurad"></div>
-        <div class="grid-input"><label>Doa Setelah Shalat</label><input type="number" class="val-aurad"></div>
-        <div class="grid-input"><label>Tahlil Ringkas</label><input type="number" class="val-aurad"></div>
-        <div class="grid-input"><label>Tahlil Lengkap</label><input type="number" class="val-aurad"></div>
-        <div class="grid-input"><label>Doa Tahlil</label><input type="number" class="val-aurad"></div>
-        <div id="box-aurad" class="status-box">Status: Menunggu Nilai</div>
-    </div>
-
-    <div class="section">
-        <h3>3. Hafalan Juz 30</h3>
-        <p><small>*Isi nilai rata-rata dari An-Naba' sampai An-Nas</small></p>
-        <div class="grid-input"><label>Nilai Rata-rata Juz 30</label><input type="number" id="val-juz30"></div>
-    </div>
-
-    <div class="section">
-        <h3>4. Ujian Praktek & Kelulusan</h3>
-        <div class="grid-input"><label>Praktek Sholat & Jenazah</label><input type="number" id="val-sholat"></div>
-        <div class="grid-input"><label>Praktek Khotib & Bilal</label><input type="number" id="val-khotib"></div>
-        <div class="grid-input"><label>Lulus Madin Ula (90-100)</label><input type="number" id="val-ula"></div>
-        <div class="grid-input"><label>Lulus Madin Wustho (90-100)</label><input type="number" id="val-wustho"></div>
-        <div class="grid-input"><label>Nilai Sikap & Adab</label><input type="number" id="val-adab"></div>
-    </div>
-
-    <button class="btn-action" onclick="generateCertificate()">PROSES & CETAK SERTIFIKAT</button>
-
-    <div id="certificate-wrapper">
-        <div class="cert-header">PONPES BAHRUL MAGHFIROH</div>
-        <div class="cert-title">Sertifikat Kelulusan</div>
-        <p>Dinyatakan telah <strong>MENYELESAIKAN MUTQIN BM</strong><br>Program Hafalan Sesuai Standar Kelulusan Pondok Bahrul</p>
+    <div class="content">
+        <h2 style="margin-top: 0; color: var(--sidebar-green);">Assalamu'alaikum, Ust. Abdul Malik!</h2>
         
-        <div class="cert-name" id="out-nama">NAMA SANTRI</div>
-        <br>
-        <div class="cert-status">LULUS</div>
+        <div class="stats-row">
+            <div class="stat-card bg-total">Total Santri<br><strong>243</strong></div>
+            <div class="stat-card bg-lulus">Sudah Lulus<br><strong>112</strong></div>
+            <div class="stat-card bg-proses">Sedang Proses<br><strong>98</strong></div>
+            <div class="stat-card bg-belum">Belum Mulai<br><strong>33</strong></div>
+        </div>
 
-        <table class="cert-table">
-            <tr><td>✅ Hafal Surat Yaasin, Waqiah, Al Mulk</td><td><span class="badge" id="out-surat">-</span></td></tr>
-            <tr><td>✅ Hafalan Aurad (Tahlil, Istighosah, Doa)</td><td><span class="badge" id="out-aurad">-</span></td></tr>
-            <tr><td>✅ Praktik Sholat & Pengurusan Jenazah</td><td><span class="badge" id="out-sholat">-</span></td></tr>
-            <tr><td>✅ Hafal Juz 30</td><td><span class="badge" id="out-juz30">-</span></td></tr>
-            <tr><td>✅ Praktik Khotib & Bilal</td><td><span class="badge" id="out-khotib">-</span></td></tr>
-            <tr><td>✅ Lulus Madin Ula & Wustho</td><td><span class="badge" id="out-madin">Lulus</span></td></tr>
-            <tr><td>✅ Sikap dan Adab Sholat Berjamaah & Madin</td><td><span class="badge" id="out-adab">-</span></td></tr>
+        <h3>Daftar Hafalan Santri</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nama Santri</th>
+                    <th>Kelas</th>
+                    <th>Status</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Ahmad Fauzan</strong></td>
+                    <td>Kelas 5</td>
+                    <td><span style="color: orange;">Sedang Proses</span></td>
+                    <td><button class="btn-input" onclick="openModal()">Input Nilai</button></td>
+                </tr>
+                <tr>
+                    <td><strong>Salma Azizah</strong></td>
+                    <td>Kelas 4</td>
+                    <td><span style="color: green;">Lulus</span></td>
+                    <td><button class="btn-input" onclick="openModal()">Input Nilai</button></td>
+                </tr>
+                </tbody>
         </table>
-        
-        <div style="margin-top: 40px; display: flex; justify-content: space-around; font-size: 14px;">
-            <div>Pengasuh,<br><br><br><strong>Ust. Drs. H. Abbul Malik, Lc., M.M.Pd.</strong></div>
-            <div>Kepala Dewan Tahfizh,<br><br><br><strong>Ust. H. Muhammad Amin</strong></div>
+    </div>
+</div>
+
+<div class="modal" id="inputModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <span>Input Nilai Santri: Ahmad Fauzan</span>
+            <span style="cursor:pointer" onclick="closeModal()">✖</span>
         </div>
         
-        <button class="btn-action" style="margin-top:40px; background:#444;" onclick="window.print()">CETAK SEKARANG (PDF)</button>
+        <div class="form-section">
+            <h4>1. Hafalan Surat Pilihan</h4>
+            <div class="input-row"><span>Surat Yaasin</span> <input type="number" placeholder="Nilai"></div>
+            <div class="input-row"><span>Surat Al-Waqiah</span> <input type="number" placeholder="Nilai"></div>
+            <div class="input-row"><span>Surat Al-Mulk</span> <input type="number" placeholder="Nilai"></div>
+        </div>
+
+        <div class="form-section">
+            <h4>2. Hafalan Aurad</h4>
+            <div class="input-row"><span>Wirid setelah shalat</span> <input type="number"></div>
+            <div class="input-row"><span>Doa setelah shalat</span> <input type="number"></div>
+            <div class="input-row"><span>Tahlil Ringkas</span> <input type="number"></div>
+            <div class="input-row"><span>Tahlil Lengkap</span> <input type="number"></div>
+            <div class="input-row"><span>Doa Tahlil</span> <input type="number"></div>
+        </div>
+
+        <div class="form-section">
+            <h4>3. Hafalan Juz 30</h4>
+            <div class="input-row"><span>Nilai Rata-rata Juz 30</span> <input type="number"></div>
+        </div>
+
+        <div class="form-section">
+            <h4>4. Kelulusan & Adab</h4>
+            <div class="input-row"><span>Praktek Sholat & Jenazah</span> <input type="number"></div>
+            <div class="input-row"><span>Lulus Madin Ula</span> <input type="checkbox"></div>
+            <div class="input-row"><span>Sikap dan Adab</span> <input type="number"></div>
+        </div>
+
+        <button class="btn-save" onclick="closeModal()">SIMPAN & UPDATE PROGRES</button>
     </div>
 </div>
 
 <script>
-    function getPredikat(n) {
-        if (!n || n == 0) return "-";
-        if (n >= 90) return "Mumtaz";
-        if (n >= 80) return "Jayyid Jiddan";
-        if (n >= 70) return "Jayyid";
-        return "Ahsan";
-    }
-
-    function hitungRataRata(className) {
-        let inputs = document.querySelectorAll('.' + className);
-        let total = 0, count = 0, filled = 0;
-        inputs.forEach(i => {
-            if(i.value !== "") { total += parseFloat(i.value); filled++; }
-            count++;
-        });
-        return { 
-            isComplete: filled === count, 
-            average: filled > 0 ? (total / filled).toFixed(0) : 0 
-        };
-    }
-
-    function generateCertificate() {
-        const nama = document.getElementById('inputNama').value;
-        if(!nama) { alert("Masukkan nama santri!"); return; }
-
-        const dataSurat = hitungRataRata('val-surat');
-        const dataAurad = hitungRataRata('val-aurad');
-        
-        // Update Status Box di UI Input
-        const boxSurat = document.getElementById('box-surat');
-        if(dataSurat.isComplete) {
-            boxSurat.innerHTML = `Selesai ✅ | Nilai: ${dataSurat.average} (${getPredikat(dataSurat.average)})`;
-            boxSurat.className = "status-box status-done";
-        }
-
-        const boxAurad = document.getElementById('box-aurad');
-        if(dataAurad.isComplete) {
-            boxAurad.innerHTML = `Selesai ✅ | Nilai: ${dataAurad.average} (${getPredikat(dataAurad.average)})`;
-            boxAurad.className = "status-box status-done";
-        }
-
-        // Isi Data ke Sertifikat
-        document.getElementById('out-nama').innerText = nama.toUpperCase();
-        document.getElementById('out-surat').innerText = getPredikat(dataSurat.average);
-        document.getElementById('out-aurad').innerText = getPredikat(dataAurad.average);
-        document.getElementById('out-sholat').innerText = getPredikat(document.getElementById('val-sholat').value);
-        document.getElementById('out-juz30').innerText = getPredikat(document.getElementById('val-juz30').value);
-        document.getElementById('out-khotib').innerText = getPredikat(document.getElementById('val-khotib').value);
-        document.getElementById('out-adab').innerText = getPredikat(document.getElementById('val-adab').value);
-
-        // Tampilkan Sertifikat
-        document.getElementById('certificate-wrapper').style.display = 'block';
-        window.scrollTo(0, document.body.scrollHeight);
-    }
+    function openModal() { document.getElementById('inputModal').style.display = 'flex'; }
+    function closeModal() { document.getElementById('inputModal').style.display = 'none'; }
 </script>
 
 </body>
