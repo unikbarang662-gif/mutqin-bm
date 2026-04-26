@@ -5,40 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mutqin BM - Ponpes Bahrul Maghfiroh</title>
     
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
-    
-    <!-- Chart.js -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    
-    <!-- jsPDF -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
-    
-    <!-- SheetJS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <script>
         tailwind.config = {
             theme: {
                 extend: {
-                    fontFamily: {
-                        'amiri': ['Amiri', 'serif'],
-                        'inter': ['Inter', 'sans-serif'],
-                    },
                     colors: {
-                        'islamic-green': '#064e3b',
-                        'islamic-dark': '#022c22',
+                        'bg-dark': '#0c1f3a',
+                        'bg-darker': '#071528',
+                        'green-dark': '#064e3b',
+                        'green-main': '#059669',
+                        'green-light': '#10b981',
                         'gold': '#d4af37',
                         'gold-light': '#f4e5c2',
+                        'gold-dark': '#b8941f',
                     }
                 }
             }
@@ -48,17 +38,33 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #022c22 0%, #064e3b 50%, #065f46 100%);
-            min-height: 100vh;
         }
         
         .font-arabic {
             font-family: 'Amiri', serif;
         }
         
-        .glass-effect {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
+        .bg-pattern {
+            background-color: #0c1f3a;
+            background-image: radial-gradient(circle at 20% 50%, rgba(6,78,59,0.3) 0%, transparent 50%),
+                              radial-gradient(circle at 80% 20%, rgba(212,175,55,0.1) 0%, transparent 50%),
+                              radial-gradient(circle at 40% 80%, rgba(6,78,59,0.2) 0%, transparent 50%);
+        }
+        
+        .glass {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+        }
+        
+        .glass-white {
+            background: rgba(255, 255, 255, 0.97);
+            backdrop-filter: blur(20px);
+        }
+        
+        .gold-border {
+            border: 2px solid #d4af37;
+            box-shadow: 0 0 20px rgba(212,175,55,0.15);
         }
         
         .gold-gradient {
@@ -72,65 +78,171 @@
             background-clip: text;
         }
         
-        .islamic-pattern {
-            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0L35 25L60 30L35 35L30 60L25 35L0 30L25 25L30 0Z' fill='%23d4af37' fill-opacity='0.05'/%3E%3C/svg%3E");
-        }
-        
-        .sidebar-item {
-            transition: all 0.3s ease;
-        }
-        
-        .sidebar-item:hover, .sidebar-item.active {
-            background: linear-gradient(90deg, rgba(212,175,55,0.2) 0%, transparent 100%);
-            border-right: 3px solid #d4af37;
-        }
-        
         .btn-gold {
             background: linear-gradient(135deg, #d4af37 0%, #b8941f 100%);
             transition: all 0.3s ease;
+            color: #0c1f3a;
+            font-weight: 600;
         }
         
         .btn-gold:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(212,175,55,0.4);
+            box-shadow: 0 8px 25px rgba(212,175,55,0.4);
         }
         
-        .card-islamic {
+        .btn-green {
+            background: linear-gradient(135deg, #059669 0%, #047857 100%);
+            color: white;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-green:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(5,150,105,0.4);
+        }
+        
+        .sidebar {
+            background: linear-gradient(180deg, #071528 0%, #0c1f3a 100%);
+            border-right: 1px solid rgba(212,175,55,0.2);
+        }
+        
+        .sidebar-link {
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+        }
+        
+        .sidebar-link:hover {
+            background: rgba(212,175,55,0.1);
+            border-left-color: #d4af37;
+        }
+        
+        .sidebar-link.active {
+            background: linear-gradient(90deg, rgba(212,175,55,0.15) 0%, transparent 100%);
+            border-left-color: #d4af37;
+            color: #d4af37;
+        }
+        
+        .card-stat {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(212,175,55,0.15);
+            border-radius: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        .card-stat:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+            border-color: rgba(212,175,55,0.3);
+        }
+        
+        .card-white {
             background: white;
-            border: 2px solid #d4af37;
-            box-shadow: 0 4px 15px rgba(6,78,59,0.1);
+            border-radius: 16px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            border: 1px solid #e5e7eb;
         }
         
-        .input-islamic {
+        .input-dark {
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(212,175,55,0.2);
+            color: white;
+            transition: all 0.3s ease;
+        }
+        
+        .input-dark:focus {
+            border-color: #d4af37;
+            box-shadow: 0 0 0 3px rgba(212,175,55,0.15);
+            outline: none;
+        }
+        
+        .input-dark::placeholder {
+            color: rgba(255,255,255,0.4);
+        }
+        
+        .input-light {
             border: 2px solid #e5e7eb;
             transition: all 0.3s ease;
         }
         
-        .input-islamic:focus {
+        .input-light:focus {
             border-color: #d4af37;
             box-shadow: 0 0 0 3px rgba(212,175,55,0.1);
+            outline: none;
         }
         
-        .certificate-border {
-            border: 8px double #d4af37;
+        .fade-in {
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            padding: 16px 24px;
+            border-radius: 12px;
+            color: white;
+            font-weight: 600;
+            z-index: 9999;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.4s ease;
+        }
+        
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        .toast-success {
+            background: linear-gradient(135deg, #059669, #047857);
+        }
+        
+        .toast-error {
+            background: linear-gradient(135deg, #dc2626, #b91c1c);
+        }
+        
+        .certificate-frame {
+            border: 6px double #d4af37;
+            background: linear-gradient(135deg, #fdfbf7, #f5f0e1);
             position: relative;
         }
         
-        .certificate-border::before {
+        .certificate-frame::before {
             content: '';
             position: absolute;
-            top: 10px;
-            left: 10px;
-            right: 10px;
-            bottom: 10px;
+            top: 8px;
+            left: 8px;
+            right: 8px;
+            bottom: 8px;
             border: 2px solid #d4af37;
             pointer-events: none;
         }
         
-        .ornament {
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 20'%3E%3Cpath d='M50 0 Q60 10 50 20 Q40 10 50 0' fill='%23d4af37'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: center;
+        .loading-dots {
+            display: inline-flex;
+            gap: 4px;
+        }
+        
+        .loading-dots span {
+            width: 8px;
+            height: 8px;
+            background: #d4af37;
+            border-radius: 50%;
+            animation: bounce 1.4s infinite ease-in-out both;
+        }
+        
+        .loading-dots span:nth-child(1) { animation-delay: -0.32s; }
+        .loading-dots span:nth-child(2) { animation-delay: -0.16s; }
+        
+        @keyframes bounce {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1); }
         }
         
         @media print {
@@ -138,80 +250,141 @@
             body { background: white; }
         }
         
-        .fade-in {
-            animation: fadeIn 0.5s ease-in;
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
         }
         
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        .status-selesai {
+            background: #dcfce7;
+            color: #166534;
         }
         
-        .loading-spinner {
-            border: 3px solid #f3f3f3;
-            border-top: 3px solid #d4af37;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
+        .status-proses {
+            background: #fef3c7;
+            color: #92400e;
         }
         
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        .status-belum {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+        
+        .check-green {
+            background: linear-gradient(135deg, #10b981, #059669);
+        }
+        
+        .check-gold {
+            background: linear-gradient(135deg, #d4af37, #b8941f);
         }
     </style>
 </head>
-<body class="font-inter">
+<body class="bg-pattern min-h-screen">
 
-    <!-- LOGIN PAGE -->
+    <!-- ==================== LOGIN PAGE ==================== -->
     <div id="loginPage" class="fixed inset-0 z-50 flex items-center justify-center p-4">
-        <div class="absolute inset-0 islamic-pattern opacity-20"></div>
-        <div class="absolute inset-0 bg-gradient-to-br from-islamic-dark via-islamic-green to-islamic-green"></div>
+        <div class="absolute inset-0 bg-gradient-to-br from-[#071528] via-[#0c1f3a] to-[#064e3b]"></div>
         
-        <div class="relative glass-effect rounded-2xl shadow-2xl p-8 w-full max-w-md border-4 border-gold">
+        <!-- Decorative elements -->
+        <div class="absolute top-10 left-10 text-gold/10 text-8xl">☪</div>
+        <div class="absolute bottom-10 right-10 text-gold/10 text-6xl">✦</div>
+        <div class="absolute top-1/4 right-1/4 text-gold/5 text-9xl">❋</div>
+        
+        <div class="relative glass rounded-2xl p-8 w-full max-w-md">
             <!-- Logo -->
             <div class="text-center mb-8">
-                <div class="inline-block p-4 rounded-full gold-gradient mb-4">
-                    <svg class="w-16 h-16 text-islamic-green" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z"/>
+                <div class="inline-block mb-4">
+                    <img src="https://i.imgur.com/placeholder.png" alt="Logo Mutqin BM" class="w-24 h-24 mx-auto" id="loginLogo">
+                    <!-- SVG Logo as fallback -->
+                    <svg id="logoSVG" class="w-28 h-28 mx-auto" viewBox="0 0 200 200">
+                        <defs>
+                            <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#d4af37"/>
+                                <stop offset="50%" style="stop-color:#f4e5c2"/>
+                                <stop offset="100%" style="stop-color:#d4af37"/>
+                            </linearGradient>
+                        </defs>
+                        <!-- Crescent and Star -->
+                        <path d="M100 25 C95 30, 85 35, 82 45 C80 55, 85 65, 95 70 C88 68, 85 62, 87 55 C89 48, 95 42, 100 38Z" fill="url(#goldGrad)"/>
+                        <polygon points="110,22 113,30 121,30 115,35 117,43 110,38 103,43 105,35 99,30 107,30" fill="url(#goldGrad)"/>
+                        <!-- Arch -->
+                        <path d="M30 120 Q30 40, 100 30 Q170 40, 170 120" stroke="url(#goldGrad)" stroke-width="3" fill="none"/>
+                        <path d="M40 120 Q40 50, 100 40 Q160 50, 160 120" stroke="url(#goldGrad)" stroke-width="1.5" fill="rgba(212,175,55,0.1)"/>
+                        <!-- Inner pattern -->
+                        <path d="M50 115 Q50 60, 100 50 Q150 60, 150 115" stroke="url(#goldGrad)" stroke-width="1" fill="none"/>
+                        <!-- Stars -->
+                        <circle cx="70" cy="55" r="2" fill="#d4af37"/>
+                        <circle cx="85" cy="48" r="2.5" fill="#d4af37"/>
+                        <circle cx="100" cy="45" r="3" fill="#d4af37"/>
+                        <circle cx="115" cy="48" r="2.5" fill="#d4af37"/>
+                        <circle cx="130" cy="55" r="2" fill="#d4af37"/>
+                        <circle cx="60" cy="70" r="1.5" fill="#d4af37"/>
+                        <circle cx="140" cy="70" r="1.5" fill="#d4af37"/>
+                        <!-- Book -->
+                        <path d="M65 100 L100 95 L135 100 L100 108Z" fill="url(#goldGrad)" opacity="0.8"/>
+                        <path d="M65 100 Q82 98, 100 95 Q118 98, 135 100" stroke="url(#goldGrad)" stroke-width="2" fill="none"/>
+                        <!-- Feather -->
+                        <path d="M100 75 Q105 85, 98 95" stroke="white" stroke-width="2" fill="none"/>
+                        <ellipse cx="98" cy="78" rx="3" ry="6" fill="white" opacity="0.9" transform="rotate(-15, 98, 78)"/>
+                        <!-- Open Book at bottom -->
+                        <path d="M40 130 Q70 120, 100 125 Q130 120, 160 130" stroke="url(#goldGrad)" stroke-width="3" fill="rgba(212,175,55,0.2)"/>
+                        <path d="M40 130 Q70 125, 100 130" stroke="url(#goldGrad)" stroke-width="1.5" fill="none"/>
+                        <path d="M100 130 Q130 125, 160 130" stroke="url(#goldGrad)" stroke-width="1.5" fill="none"/>
+                        <!-- Text -->
+                        <text x="100" y="155" text-anchor="middle" fill="url(#goldGrad)" font-size="10" font-weight="bold">PONDOK PESANTREN</text>
+                        <text x="100" y="168" text-anchor="middle" fill="white" font-size="11" font-weight="bold">BAHRUL MAGHFIROH</text>
+                        <!-- Bottom decoration -->
+                        <path d="M60 175 Q100 190, 140 175" stroke="url(#goldGrad)" stroke-width="1.5" fill="none"/>
+                        <path d="M70 178 Q100 188, 130 178" stroke="url(#goldGrad)" stroke-width="0.8" fill="none"/>
                     </svg>
                 </div>
-                <h1 class="text-4xl font-bold font-arabic text-islamic-green mb-2">القرآن</h1>
-                <h2 class="text-3xl font-bold text-islamic-green">Mutqin BM</h2>
-                <p class="text-gray-600 mt-2">Standar Kelulusan Ponpes Bahrul Maghfiroh</p>
+                <h1 class="text-4xl font-bold text-white mb-1">
+                    <span class="text-white">Mutqin</span><span class="gold-text">BM</span>
+                </h1>
+                <p class="text-gold text-sm font-medium">Standar Kelulusan Ponpes Bahrul Maghfiroh</p>
             </div>
             
             <!-- Login Form -->
-            <form id="loginForm" class="space-y-6">
+            <form id="loginForm" class="space-y-5">
                 <div>
-                    <label class="block text-sm font-semibold text-gray-700 mb-2">Username</label>
+                    <label class="block text-sm text-gray-300 mb-2 font-medium">Username</label>
                     <div class="relative">
-                        <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
-                        </span>
-                        <input type="text" id="username" class="input-islamic w-full pl-10 pr-4 py-3 rounded-lg" placeholder="Masukkan username" required>
+                        <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gold/60" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                        <input type="text" id="username" class="input-dark w-full pl-10 pr-4 py-3 rounded-xl" placeholder="Masukkan username" required>
                     </div>
                 </div>
                 
                 <div>
-                    <label class="block text-sm font-semibold text-gray-700 mb-2">Password</label>
+                    <label class="block text-sm text-gray-300 mb-2 font-medium">Password</label>
                     <div class="relative">
-                        <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
-                        </span>
-                        <input type="password" id="password" class="input-islamic w-full pl-10 pr-4 py-3 rounded-lg" placeholder="Masukkan password" required>
+                        <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gold/60" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                        <input type="password" id="password" class="input-dark w-full pl-10 pr-4 py-3 rounded-xl" placeholder="Masukkan password" required>
+                        <button type="button" id="togglePassword" class="absolute right-3 top-1/2 -translate-y-1/2 text-gold/60 hover:text-gold">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                        </button>
                     </div>
                 </div>
                 
-                <button type="submit" class="btn-gold w-full py-3 rounded-lg text-white font-semibold text-lg shadow-lg">
+                <div id="loginError" class="hidden text-red-400 text-sm text-center"></div>
+                
+                <button type="submit" id="loginBtn" class="btn-gold w-full py-3 rounded-xl text-lg">
                     Login
                 </button>
-                
-                <div class="text-center">
-                    <a href="#" class="text-sm text-gray-600 hover:text-islamic-green">Lupa Password?</a>
-                </div>
             </form>
+            
+            <!-- Credentials Info -->
+            <div class="mt-6 p-4 rounded-xl bg-gold/10 border border-gold/20">
+                <p class="text-gold text-sm font-semibold text-center mb-2">🔐 Data Login</p>
+                <div class="space-y-1 text-xs text-gray-300">
+                    <p class="flex justify-between"><span>Username:</span> <span class="text-white font-mono">admin</span></p>
+                    <p class="flex justify-between"><span>Password:</span> <span class="text-white font-mono">Mutqin2024</span></p>
+                </div>
+            </div>
             
             <div class="mt-6 text-center text-xs text-gray-500">
                 © 2024 Hafalan Santri BM. All rights reserved.
@@ -219,353 +392,1509 @@
         </div>
     </div>
 
-    <!-- MAIN APP (Hidden until login) -->
+    <!-- ==================== MAIN APP ==================== -->
     <div id="mainApp" class="hidden min-h-screen flex">
         
+        <!-- MOBILE HEADER -->
+        <div class="lg:hidden fixed top-0 left-0 right-0 z-40 bg-[#071528] border-b border-gold/20 px-4 py-3 flex items-center justify-between">
+            <button id="menuToggle" class="text-gold p-2">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+            </button>
+            <span class="text-white font-bold text-lg">Mutqin <span class="text-gold">BM</span></span>
+            <button id="logoutBtnMobile" class="text-red-400 p-2">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+            </button>
+        </div>
+
+        <!-- OVERLAY -->
+        <div id="overlay" class="fixed inset-0 bg-black/50 z-30 lg:hidden hidden"></div>
+
         <!-- SIDEBAR -->
-        <aside class="w-64 bg-islamic-dark text-white fixed h-full overflow-y-auto z-40 shadow-2xl">
-            <div class="p-6 border-b border-gold">
+        <aside id="sidebar" class="sidebar w-64 h-screen fixed left-0 top-0 z-40 lg:translate-x-0 -translate-x-full transition-transform duration-300 overflow-y-auto">
+            <div class="p-6 border-b border-gold/20">
                 <div class="text-center">
-                    <div class="text-4xl mb-2">📖</div>
-                    <h1 class="text-2xl font-bold font-arabic gold-text">القرآن</h1>
-                    <h2 class="text-xl font-bold mt-1">Mutqin BM</h2>
-                    <p class="text-xs text-gray-300 mt-1">Ponpes Bahrul Maghfiroh</p>
+                    <svg class="w-16 h-16 mx-auto mb-2" viewBox="0 0 200 200">
+                        <path d="M100 25 C95 30, 85 35, 82 45 C80 55, 85 65, 95 70 C88 68, 85 62, 87 55 C89 48, 95 42, 100 38Z" fill="#d4af37"/>
+                        <polygon points="110,22 113,30 121,30 115,35 117,43 110,38 103,43 105,35 99,30 107,30" fill="#d4af37"/>
+                        <path d="M30 120 Q30 40, 100 30 Q170 40, 170 120" stroke="#d4af37" stroke-width="3" fill="none"/>
+                        <path d="M65 100 L100 95 L135 100 L100 108Z" fill="#d4af37" opacity="0.8"/>
+                        <path d="M40 130 Q70 120, 100 125 Q130 120, 160 130" stroke="#d4af37" stroke-width="3" fill="rgba(212,175,55,0.2)"/>
+                        <text x="100" y="155" text-anchor="middle" fill="#d4af37" font-size="9" font-weight="bold">PONDOK PESANTREN</text>
+                        <text x="100" y="168" text-anchor="middle" fill="white" font-size="10" font-weight="bold">BAHRUL MAGHFIROH</text>
+                    </svg>
+                    <h2 class="text-xl font-bold text-white">Mutqin <span class="text-gold">BM</span></h2>
+                    <p class="text-[10px] text-gray-400 mt-1">Standar Kelulusan</p>
                 </div>
             </div>
             
-            <nav class="mt-6 space-y-1">
-                <a href="#" data-page="dashboard" class="sidebar-item active flex items-center px-6 py-3 text-gray-300 hover:text-white">
+            <nav class="mt-4 space-y-1 pb-20">
+                <a href="#" data-page="dashboard" class="sidebar-link active flex items-center px-6 py-3 text-gray-400 hover:text-gold">
                     <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
                     Dashboard
                 </a>
-                <a href="#" data-page="santri" class="sidebar-item flex items-center px-6 py-3 text-gray-300 hover:text-white">
+                <a href="#" data-page="santri" class="sidebar-link flex items-center px-6 py-3 text-gray-400 hover:text-gold">
                     <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
                     Data Santri
                 </a>
-                <a href="#" data-page="hafalan" class="sidebar-item flex items-center px-6 py-3 text-gray-300 hover:text-white">
+                <a href="#" data-page="hafalan" class="sidebar-link flex items-center px-6 py-3 text-gray-400 hover:text-gold">
                     <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
                     Input Hafalan
                 </a>
-                <a href="#" data-page="aurad" class="sidebar-item flex items-center px-6 py-3 text-gray-300 hover:text-white">
+                <a href="#" data-page="aurad" class="sidebar-link flex items-center px-6 py-3 text-gray-400 hover:text-gold">
                     <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
                     Input Aurad
                 </a>
-                <a href="#" data-page="praktik" class="sidebar-item flex items-center px-6 py-3 text-gray-300 hover:text-white">
-                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+                <a href="#" data-page="praktik" class="sidebar-link flex items-center px-6 py-3 text-gray-400 hover:text-gold">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
                     Input Praktik
                 </a>
-                <a href="#" data-page="juz30" class="sidebar-item flex items-center px-6 py-3 text-gray-300 hover:text-white">
+                <a href="#" data-page="juz30" class="sidebar-link flex items-center px-6 py-3 text-gray-400 hover:text-gold">
                     <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
                     Hafalan Juz 30
                 </a>
-                <a href="#" data-page="khotib" class="sidebar-item flex items-center px-6 py-3 text-gray-300 hover:text-white">
+                <a href="#" data-page="khotib" class="sidebar-link flex items-center px-6 py-3 text-gray-400 hover:text-gold">
                     <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/></svg>
                     Khotib & Bilal
                 </a>
-                <a href="#" data-page="madin" class="sidebar-item flex items-center px-6 py-3 text-gray-300 hover:text-white">
-                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 14l9-5-9-5-9 5 9 5z"/><path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"/></svg>
+                <a href="#" data-page="madin" class="sidebar-link flex items-center px-6 py-3 text-gray-400 hover:text-gold">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 14l9-5-9-5-9 5 9 5z"/><path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"/></svg>
                     Lulus Madin
                 </a>
-                <a href="#" data-page="adab" class="sidebar-item flex items-center px-6 py-3 text-gray-300 hover:text-white">
+                <a href="#" data-page="adab" class="sidebar-link flex items-center px-6 py-3 text-gray-400 hover:text-gold">
                     <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
                     Sikap & Adab
                 </a>
-                <a href="#" data-page="upload" class="sidebar-item flex items-center px-6 py-3 text-gray-300 hover:text-white">
+                <a href="#" data-page="upload" class="sidebar-link flex items-center px-6 py-3 text-gray-400 hover:text-gold">
                     <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
                     Upload Massal
                 </a>
-                <a href="#" data-page="laporan" class="sidebar-item flex items-center px-6 py-3 text-gray-300 hover:text-white">
+                <a href="#" data-page="laporan" class="sidebar-link flex items-center px-6 py-3 text-gray-400 hover:text-gold">
                     <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
                     Laporan PDF
                 </a>
-                <a href="#" data-page="sertifikat" class="sidebar-item flex items-center px-6 py-3 text-gray-300 hover:text-white">
+                <a href="#" data-page="sertifikat" class="sidebar-link flex items-center px-6 py-3 text-gray-400 hover:text-gold">
                     <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg>
                     Sertifikat
                 </a>
             </nav>
-            
-            <div class="absolute bottom-0 left-0 right-0 p-4 border-t border-gold">
-                <button id="logoutBtn" class="flex items-center w-full px-6 py-3 text-red-300 hover:text-red-200 hover:bg-red-900/20 rounded-lg transition-colors">
-                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
-                    Logout
-                </button>
-            </div>
         </aside>
 
         <!-- MAIN CONTENT -->
-        <main class="flex-1 ml-64 p-8">
-            
-            <!-- DASHBOARD PAGE -->
-            <div id="dashboard" class="page fade-in">
-                <div class="mb-8">
-                    <h1 class="text-3xl font-bold text-white mb-2">Dashboard</h1>
-                    <p class="text-gray-300">Selamat datang di Sistem Mutqin BM</p>
-                </div>
+        <main class="flex-1 lg:ml-64 pt-16 lg:pt-0">
+            <div class="p-4 lg:p-8">
                 
-                <!-- Stats Cards -->
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                    <div class="card-islamic rounded-xl p-6">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <p class="text-gray-600 text-sm font-semibold">Total Santri</p>
-                                <p id="totalSantri" class="text-3xl font-bold text-islamic-green mt-1">0</p>
+                <!-- ========== DASHBOARD ========== -->
+                <div id="page-dashboard" class="page fade-in">
+                    <div class="mb-8">
+                        <h1 class="text-3xl font-bold text-white mb-2">📊 Dashboard</h1>
+                        <p class="text-gray-400">Selamat datang di Sistem Mutqin BM - Ponpes Bahrul Maghfiroh</p>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                        <div class="card-stat p-6">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-gray-400 text-sm font-semibold">Total Santri</p>
+                                    <p id="statTotal" class="text-3xl font-bold text-white mt-1">0</p>
+                                </div>
+                                <div class="bg-blue-500/20 p-3 rounded-xl">
+                                    <svg class="w-8 h-8 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                                </div>
                             </div>
-                            <div class="bg-blue-100 p-3 rounded-lg">
-                                <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+                        </div>
+                        <div class="card-stat p-6">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-gray-400 text-sm font-semibold">Hafalan Selesai</p>
+                                    <p id="statHafalan" class="text-3xl font-bold text-white mt-1">0</p>
+                                </div>
+                                <div class="bg-emerald-500/20 p-3 rounded-xl">
+                                    <svg class="w-8 h-8 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-stat p-6">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-gray-400 text-sm font-semibold">Aurad Selesai</p>
+                                    <p id="statAurad" class="text-3xl font-bold text-white mt-1">0</p>
+                                </div>
+                                <div class="bg-amber-500/20 p-3 rounded-xl">
+                                    <svg class="w-8 h-8 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-stat p-6">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-gray-400 text-sm font-semibold">Sertifikat</p>
+                                    <p id="statSertifikat" class="text-3xl font-bold text-white mt-1">0</p>
+                                </div>
+                                <div class="bg-purple-500/20 p-3 rounded-xl">
+                                    <svg class="w-8 h-8 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg>
+                                </div>
                             </div>
                         </div>
                     </div>
                     
-                    <div class="card-islamic rounded-xl p-6">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <p class="text-gray-600 text-sm font-semibold">Hafalan Selesai</p>
-                                <p id="hafalanSelesai" class="text-3xl font-bold text-islamic-green mt-1">0</p>
-                            </div>
-                            <div class="bg-emerald-100 p-3 rounded-lg">
-                                <svg class="w-8 h-8 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                            </div>
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <div class="card-white p-6">
+                            <h3 class="text-lg font-bold text-gray-800 mb-4">Progress Kelulusan</h3>
+                            <canvas id="progressChart" height="250"></canvas>
                         </div>
-                    </div>
-                    
-                    <div class="card-islamic rounded-xl p-6">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <p class="text-gray-600 text-sm font-semibold">Aurad Selesai</p>
-                                <p id="auradSelesai" class="text-3xl font-bold text-islamic-green mt-1">0</p>
-                            </div>
-                            <div class="bg-amber-100 p-3 rounded-lg">
-                                <svg class="w-8 h-8 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="card-islamic rounded-xl p-6">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <p class="text-gray-600 text-sm font-semibold">Sertifikat</p>
-                                <p id="totalSertifikat" class="text-3xl font-bold text-islamic-green mt-1">0</p>
-                            </div>
-                            <div class="bg-purple-100 p-3 rounded-lg">
-                                <svg class="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg>
-                            </div>
+                        <div class="card-white p-6">
+                            <h3 class="text-lg font-bold text-gray-800 mb-4">Distribusi Kelulusan</h3>
+                            <canvas id="pieChart" height="250"></canvas>
                         </div>
                     </div>
                 </div>
-                
-                <!-- Charts -->
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-                    <div class="card-islamic rounded-xl p-6">
-                        <h3 class="text-lg font-bold text-islamic-green mb-4">Progress Kelulusan</h3>
-                        <canvas id="progressChart" height="250"></canvas>
-                    </div>
-                    <div class="card-islamic rounded-xl p-6">
-                        <h3 class="text-lg font-bold text-islamic-green mb-4">Distribusi Kelulusan</h3>
-                        <canvas id="pieChart" height="250"></canvas>
-                    </div>
-                </div>
-            </div>
 
-            <!-- Other pages will be added here -->
-            <div id="santri" class="page hidden fade-in">
-                <h1 class="text-3xl font-bold text-white mb-6">Data Santri</h1>
-                <div class="card-islamic rounded-xl p-6">
-                    <p class="text-gray-600">Halaman Data Santri</p>
+                <!-- ========== DATA SANTRI ========== -->
+                <div id="page-santri" class="page hidden fade-in">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
+                        <div>
+                            <h1 class="text-3xl font-bold text-white mb-2">👥 Data Santri</h1>
+                            <p class="text-gray-400">Kelola data santri pondok pesantren</p>
+                        </div>
+                        <button id="btnAddSantri" class="btn-gold px-6 py-3 rounded-xl flex items-center gap-2">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                            Tambah Santri
+                        </button>
+                    </div>
+                    
+                    <div class="card-white p-6">
+                        <div class="flex flex-col sm:flex-row gap-4 mb-6">
+                            <input type="text" id="searchSantri" placeholder="🔍 Cari nama atau NIS..." class="input-light flex-1 px-4 py-2 rounded-xl">
+                            <select id="filterKelas" class="input-light px-4 py-2 rounded-xl">
+                                <option value="">Semua Kelas</option>
+                                <option value="1">Kelas 1</option>
+                                <option value="2">Kelas 2</option>
+                                <option value="3">Kelas 3</option>
+                                <option value="4">Kelas 4</option>
+                                <option value="5">Kelas 5</option>
+                                <option value="6">Kelas 6</option>
+                            </select>
+                        </div>
+                        
+                        <div class="overflow-x-auto">
+                            <table class="w-full">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase">NIS</th>
+                                        <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase">Nama</th>
+                                        <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase">Kelas</th>
+                                        <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase">Status</th>
+                                        <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase">Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="santriTableBody" class="divide-y divide-gray-100"></tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
-            </div>
 
+                <!-- ========== INPUT HAFALAN ========== -->
+                <div id="page-hafalan" class="page hidden fade-in">
+                    <div class="mb-6">
+                        <h1 class="text-3xl font-bold text-white mb-2">📖 Input Hafalan Surat Pilihan</h1>
+                        <p class="text-gray-400">Yasin, Al-Waqiah, dan Al-Mulk</p>
+                    </div>
+                    
+                    <div class="card-white p-6">
+                        <div class="mb-6">
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Pilih Santri</label>
+                            <select id="selectHafalanSantri" class="input-light w-full px-4 py-3 rounded-xl">
+                                <option value="">-- Pilih Santri --</option>
+                            </select>
+                        </div>
+                        
+                        <div id="hafalanForm" class="hidden space-y-6">
+                            <!-- Yasin -->
+                            <div class="p-6 rounded-xl bg-emerald-50 border-2 border-emerald-200">
+                                <h3 class="font-bold text-lg text-emerald-800 mb-4">1. Surat Yasin</h3>
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                    <div class="md:col-span-2">
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Nilai</label>
+                                        <select id="yasinNilai" class="input-light w-full px-4 py-2 rounded-xl">
+                                            <option value="">Pilih Nilai</option>
+                                            <option value="Mumtaz">⭐ Mumtaz</option>
+                                            <option value="Jayyid Jiddan">⭐ Jayyid Jiddan</option>
+                                            <option value="Jayyid">⭐ Jayyid</option>
+                                            <option value="Ahsan">⭐ Ahsan</option>
+                                            <option value="Maqbul">⭐ Maqbul</option>
+                                        </select>
+                                    </div>
+                                    <div class="flex items-end">
+                                        <label class="flex items-center gap-2 cursor-pointer">
+                                            <input type="checkbox" id="yasinSelesai" class="w-5 h-5 rounded text-emerald-600">
+                                            <span class="font-medium text-gray-700">✅ Selesai</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Waqiah -->
+                            <div class="p-6 rounded-xl bg-amber-50 border-2 border-amber-200">
+                                <h3 class="font-bold text-lg text-amber-800 mb-4">2. Surat Al-Waqiah</h3>
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                    <div class="md:col-span-2">
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Nilai</label>
+                                        <select id="waqiahNilai" class="input-light w-full px-4 py-2 rounded-xl">
+                                            <option value="">Pilih Nilai</option>
+                                            <option value="Mumtaz">⭐ Mumtaz</option>
+                                            <option value="Jayyid Jiddan">⭐ Jayyid Jiddan</option>
+                                            <option value="Jayyid">⭐ Jayyid</option>
+                                            <option value="Ahsan">⭐ Ahsan</option>
+                                            <option value="Maqbul">⭐ Maqbul</option>
+                                        </select>
+                                    </div>
+                                    <div class="flex items-end">
+                                        <label class="flex items-center gap-2 cursor-pointer">
+                                            <input type="checkbox" id="waqiahSelesai" class="w-5 h-5 rounded text-amber-600">
+                                            <span class="font-medium text-gray-700">✅ Selesai</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Al Mulk -->
+                            <div class="p-6 rounded-xl bg-purple-50 border-2 border-purple-200">
+                                <h3 class="font-bold text-lg text-purple-800 mb-4">3. Surat Al-Mulk</h3>
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                    <div class="md:col-span-2">
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Nilai</label>
+                                        <select id="alMulkNilai" class="input-light w-full px-4 py-2 rounded-xl">
+                                            <option value="">Pilih Nilai</option>
+                                            <option value="Mumtaz">⭐ Mumtaz</option>
+                                            <option value="Jayyid Jiddan">⭐ Jayyid Jiddan</option>
+                                            <option value="Jayyid">⭐ Jayyid</option>
+                                            <option value="Ahsan">⭐ Ahsan</option>
+                                            <option value="Maqbul">⭐ Maqbul</option>
+                                        </select>
+                                    </div>
+                                    <div class="flex items-end">
+                                        <label class="flex items-center gap-2 cursor-pointer">
+                                            <input type="checkbox" id="alMulkSelesai" class="w-5 h-5 rounded text-purple-600">
+                                            <span class="font-medium text-gray-700">✅ Selesai</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div id="hafalanStatusMsg" class="hidden p-4 rounded-xl bg-emerald-100 border border-emerald-300 flex items-center gap-3">
+                                <span class="text-2xl">🎉</span>
+                                <div>
+                                    <p class="font-bold text-emerald-800">Semua Hafalan Selesai!</p>
+                                    <p class="text-sm text-emerald-600">Santri telah menyelesaikan semua hafalan surat pilihan</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex justify-end">
+                                <button onclick="saveHafalan()" class="btn-green px-8 py-3 rounded-xl flex items-center gap-2">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"/></svg>
+                                    Simpan Data
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ========== INPUT AURAD ========== -->
+                <div id="page-aurad" class="page hidden fade-in">
+                    <div class="mb-6">
+                        <h1 class="text-3xl font-bold text-white mb-2">🕌 Input Aurad & Wirid</h1>
+                        <p class="text-gray-400">Wirid, doa, tahlil, dan tawasul</p>
+                    </div>
+                    
+                    <div class="card-white p-6">
+                        <div class="mb-6">
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Pilih Santri</label>
+                            <select id="selectAuradSantri" class="input-light w-full px-4 py-3 rounded-xl">
+                                <option value="">-- Pilih Santri --</option>
+                            </select>
+                        </div>
+                        
+                        <div id="auradForm" class="hidden">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                                <div class="p-4 rounded-xl bg-blue-50 border border-blue-200">
+                                    <h4 class="font-bold text-blue-800 mb-2">1. Wirid Setelah Shalat</h4>
+                                    <select id="aurad1Nilai" class="input-light w-full px-3 py-2 rounded-xl mb-2">
+                                        <option value="">Nilai</option>
+                                        <option value="Mumtaz">Mumtaz</option>
+                                        <option value="Jayyid Jiddan">Jayyid Jiddan</option>
+                                        <option value="Jayyid">Jayyid</option>
+                                        <option value="Ahsan">Ahsan</option>
+                                        <option value="Maqbul">Maqbul</option>
+                                    </select>
+                                    <label class="flex items-center gap-2"><input type="checkbox" id="aurad1Selesai" class="w-4 h-4 rounded text-emerald-600"><span class="text-sm">Selesai</span></label>
+                                </div>
+                                <div class="p-4 rounded-xl bg-green-50 border border-green-200">
+                                    <h4 class="font-bold text-green-800 mb-2">2. Doa Setelah Shalat</h4>
+                                    <select id="aurad2Nilai" class="input-light w-full px-3 py-2 rounded-xl mb-2">
+                                        <option value="">Nilai</option>
+                                        <option value="Mumtaz">Mumtaz</option>
+                                        <option value="Jayyid Jiddan">Jayyid Jiddan</option>
+                                        <option value="Jayyid">Jayyid</option>
+                                        <option value="Ahsan">Ahsan</option>
+                                        <option value="Maqbul">Maqbul</option>
+                                    </select>
+                                    <label class="flex items-center gap-2"><input type="checkbox" id="aurad2Selesai" class="w-4 h-4 rounded text-emerald-600"><span class="text-sm">Selesai</span></label>
+                                </div>
+                                <div class="p-4 rounded-xl bg-amber-50 border border-amber-200">
+                                    <h4 class="font-bold text-amber-800 mb-2">3. Tahlil Ringkas</h4>
+                                    <select id="aurad3Nilai" class="input-light w-full px-3 py-2 rounded-xl mb-2">
+                                        <option value="">Nilai</option>
+                                        <option value="Mumtaz">Mumtaz</option>
+                                        <option value="Jayyid Jiddan">Jayyid Jiddan</option>
+                                        <option value="Jayyid">Jayyid</option>
+                                        <option value="Ahsan">Ahsan</option>
+                                        <option value="Maqbul">Maqbul</option>
+                                    </select>
+                                    <label class="flex items-center gap-2"><input type="checkbox" id="aurad3Selesai" class="w-4 h-4 rounded text-emerald-600"><span class="text-sm">Selesai</span></label>
+                                </div>
+                                <div class="p-4 rounded-xl bg-purple-50 border border-purple-200">
+                                    <h4 class="font-bold text-purple-800 mb-2">4. Tahlil Lengkap</h4>
+                                    <select id="aurad4Nilai" class="input-light w-full px-3 py-2 rounded-xl mb-2">
+                                        <option value="">Nilai</option>
+                                        <option value="Mumtaz">Mumtaz</option>
+                                        <option value="Jayyid Jiddan">Jayyid Jiddan</option>
+                                        <option value="Jayyid">Jayyid</option>
+                                        <option value="Ahsan">Ahsan</option>
+                                        <option value="Maqbul">Maqbul</option>
+                                    </select>
+                                    <label class="flex items-center gap-2"><input type="checkbox" id="aurad4Selesai" class="w-4 h-4 rounded text-emerald-600"><span class="text-sm">Selesai</span></label>
+                                </div>
+                                <div class="p-4 rounded-xl bg-pink-50 border border-pink-200">
+                                    <h4 class="font-bold text-pink-800 mb-2">5. Doa Tahlil</h4>
+                                    <select id="aurad5Nilai" class="input-light w-full px-3 py-2 rounded-xl mb-2">
+                                        <option value="">Nilai</option>
+                                        <option value="Mumtaz">Mumtaz</option>
+                                        <option value="Jayyid Jiddan">Jayyid Jiddan</option>
+                                        <option value="Jayyid">Jayyid</option>
+                                        <option value="Ahsan">Ahsan</option>
+                                        <option value="Maqbul">Maqbul</option>
+                                    </select>
+                                    <label class="flex items-center gap-2"><input type="checkbox" id="aurad5Selesai" class="w-4 h-4 rounded text-emerald-600"><span class="text-sm">Selesai</span></label>
+                                </div>
+                                <div class="p-4 rounded-xl bg-indigo-50 border border-indigo-200">
+                                    <h4 class="font-bold text-indigo-800 mb-2">6. Tawasul</h4>
+                                    <select id="aurad6Nilai" class="input-light w-full px-3 py-2 rounded-xl mb-2">
+                                        <option value="">Nilai</option>
+                                        <option value="Mumtaz">Mumtaz</option>
+                                        <option value="Jayyid Jiddan">Jayyid Jiddan</option>
+                                        <option value="Jayyid">Jayyid</option>
+                                        <option value="Ahsan">Ahsan</option>
+                                        <option value="Maqbul">Maqbul</option>
+                                    </select>
+                                    <label class="flex items-center gap-2"><input type="checkbox" id="aurad6Selesai" class="w-4 h-4 rounded text-emerald-600"><span class="text-sm">Selesai</span></label>
+                                </div>
+                            </div>
+                            <div class="flex justify-end">
+                                <button onclick="saveAurad()" class="btn-green px-8 py-3 rounded-xl flex items-center gap-2">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"/></svg>
+                                    Simpan Data
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ========== INPUT PRAKTIK ========== -->
+                <div id="page-praktik" class="page hidden fade-in">
+                    <div class="mb-6">
+                        <h1 class="text-3xl font-bold text-white mb-2">🤲 Input Praktik</h1>
+                        <p class="text-gray-400">Shalat & pengurusan jenazah</p>
+                    </div>
+                    <div class="card-white p-6">
+                        <div class="mb-6">
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Pilih Santri</label>
+                            <select id="selectPraktikSantri" class="input-light w-full px-4 py-3 rounded-xl">
+                                <option value="">-- Pilih Santri --</option>
+                            </select>
+                        </div>
+                        <div id="praktikForm" class="hidden">
+                            <div class="p-6 rounded-xl bg-blue-50 border-2 border-blue-200 mb-6">
+                                <h3 class="font-bold text-lg text-blue-800 mb-4">Praktik Shalat & Pengurusan Jenazah</h3>
+                                <select id="praktikNilai" class="input-light w-full px-4 py-2 rounded-xl mb-4">
+                                    <option value="">Pilih Nilai</option>
+                                    <option value="Mumtaz">⭐ Mumtaz</option>
+                                    <option value="Jayyid Jiddan">⭐ Jayyid Jiddan</option>
+                                    <option value="Jayyid">⭐ Jayyid</option>
+                                    <option value="Ahsan">⭐ Ahsan</option>
+                                    <option value="Maqbul">⭐ Maqbul</option>
+                                </select>
+                                <label class="flex items-center gap-2"><input type="checkbox" id="praktikSelesai" class="w-5 h-5 rounded text-emerald-600"><span class="font-medium">✅ Praktik Selesai</span></label>
+                            </div>
+                            <div class="flex justify-end">
+                                <button onclick="savePraktik()" class="btn-green px-8 py-3 rounded-xl flex items-center gap-2">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"/></svg>
+                                    Simpan Data
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ========== HAFALAN JUZ 30 ========== -->
+                <div id="page-juz30" class="page hidden fade-in">
+                    <div class="mb-6">
+                        <h1 class="text-3xl font-bold text-white mb-2">📚 Hafalan Juz 30</h1>
+                        <p class="text-gray-400">Pilihan surat dari Juz Amma</p>
+                    </div>
+                    <div class="card-white p-6">
+                        <div class="mb-6">
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Pilih Santri</label>
+                            <select id="selectJuz30Santri" class="input-light w-full px-4 py-3 rounded-xl">
+                                <option value="">-- Pilih Santri --</option>
+                            </select>
+                        </div>
+                        <div id="juz30Form" class="hidden">
+                            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6" id="juz30SuratList"></div>
+                            <div class="p-4 rounded-xl bg-emerald-50 border border-emerald-200 mb-6">
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Nilai Keseluruhan</label>
+                                <select id="juz30Nilai" class="input-light w-full px-4 py-2 rounded-xl">
+                                    <option value="">Pilih Nilai</option>
+                                    <option value="Mumtaz">⭐ Mumtaz</option>
+                                    <option value="Jayyid Jiddan">⭐ Jayyid Jiddan</option>
+                                    <option value="Jayyid">⭐ Jayyid</option>
+                                    <option value="Ahsan">⭐ Ahsan</option>
+                                    <option value="Maqbul">⭐ Maqbul</option>
+                                </select>
+                            </div>
+                            <div class="flex justify-end">
+                                <button onclick="saveJuz30()" class="btn-green px-8 py-3 rounded-xl flex items-center gap-2">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"/></svg>
+                                    Simpan Data
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ========== KHOTIB & BILAL ========== -->
+                <div id="page-khotib" class="page hidden fade-in">
+                    <div class="mb-6">
+                        <h1 class="text-3xl font-bold text-white mb-2">🎤 Khotib & Bilal</h1>
+                        <p class="text-gray-400">Praktik khotib dan bilal</p>
+                    </div>
+                    <div class="card-white p-6">
+                        <div class="mb-6">
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Pilih Santri</label>
+                            <select id="selectKhotibSantri" class="input-light w-full px-4 py-3 rounded-xl">
+                                <option value="">-- Pilih Santri --</option>
+                            </select>
+                        </div>
+                        <div id="khotibForm" class="hidden">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                                <div class="p-6 rounded-xl bg-emerald-50 border-2 border-emerald-200">
+                                    <h4 class="font-bold text-emerald-800 mb-3">Praktik Khotib</h4>
+                                    <select id="khotibNilai" class="input-light w-full px-4 py-2 rounded-xl mb-3">
+                                        <option value="">Nilai Khotib</option>
+                                        <option value="Mumtaz">Mumtaz</option>
+                                        <option value="Jayyid Jiddan">Jayyid Jiddan</option>
+                                        <option value="Jayyid">Jayyid</option>
+                                        <option value="Ahsan">Ahsan</option>
+                                        <option value="Maqbul">Maqbul</option>
+                                    </select>
+                                    <label class="flex items-center gap-2"><input type="checkbox" id="khotibSelesai" class="w-5 h-5 rounded text-emerald-600"><span class="font-medium">✅ Selesai</span></label>
+                                </div>
+                                <div class="p-6 rounded-xl bg-blue-50 border-2 border-blue-200">
+                                    <h4 class="font-bold text-blue-800 mb-3">Praktik Bilal</h4>
+                                    <select id="bilalNilai" class="input-light w-full px-4 py-2 rounded-xl mb-3">
+                                        <option value="">Nilai Bilal</option>
+                                        <option value="Mumtaz">Mumtaz</option>
+                                        <option value="Jayyid Jiddan">Jayyid Jiddan</option>
+                                        <option value="Jayyid">Jayyid</option>
+                                        <option value="Ahsan">Ahsan</option>
+                                        <option value="Maqbul">Maqbul</option>
+                                    </select>
+                                    <label class="flex items-center gap-2"><input type="checkbox" id="bilalSelesai" class="w-5 h-5 rounded text-emerald-600"><span class="font-medium">✅ Selesai</span></label>
+                                </div>
+                            </div>
+                            <div class="flex justify-end">
+                                <button onclick="saveKhotib()" class="btn-green px-8 py-3 rounded-xl flex items-center gap-2">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"/></svg>
+                                    Simpan Data
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ========== LULUS MADIN ========== -->
+                <div id="page-madin" class="page hidden fade-in">
+                    <div class="mb-6">
+                        <h1 class="text-3xl font-bold text-white mb-2">🎓 Lulus Madin</h1>
+                        <p class="text-gray-400">Status kelulusan Madrasah Diniyah</p>
+                    </div>
+                    <div class="card-white p-6">
+                        <div class="mb-6">
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Pilih Santri</label>
+                            <select id="selectMadinSantri" class="input-light w-full px-4 py-3 rounded-xl">
+                                <option value="">-- Pilih Santri --</option>
+                            </select>
+                        </div>
+                        <div id="madinForm" class="hidden">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                                <div class="p-6 rounded-xl bg-blue-50 border-2 border-blue-200">
+                                    <h4 class="font-bold text-blue-800 mb-3">Madin Ula (Dasar)</h4>
+                                    <label class="flex items-center gap-3 p-4 bg-white rounded-xl border cursor-pointer">
+                                        <input type="checkbox" id="lulusUla" class="w-5 h-5 rounded text-emerald-600">
+                                        <span class="font-medium">✅ Lulus Madin Ula</span>
+                                    </label>
+                                </div>
+                                <div class="p-6 rounded-xl bg-emerald-50 border-2 border-emerald-200">
+                                    <h4 class="font-bold text-emerald-800 mb-3">Madin Wustho (Menengah)</h4>
+                                    <label class="flex items-center gap-3 p-4 bg-white rounded-xl border cursor-pointer">
+                                        <input type="checkbox" id="lulusWustho" class="w-5 h-5 rounded text-emerald-600">
+                                        <span class="font-medium">✅ Lulus Madin Wustho</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="flex justify-end">
+                                <button onclick="saveMadin()" class="btn-green px-8 py-3 rounded-xl flex items-center gap-2">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"/></svg>
+                                    Simpan Data
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ========== SIKAP & ADAB ========== -->
+                <div id="page-adab" class="page hidden fade-in">
+                    <div class="mb-6">
+                        <h1 class="text-3xl font-bold text-white mb-2">❤️ Sikap & Adab</h1>
+                        <p class="text-gray-400">Penilaian sikap dan adab santri</p>
+                    </div>
+                    <div class="card-white p-6">
+                        <div class="mb-6">
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Pilih Santri</label>
+                            <select id="selectAdabSantri" class="input-light w-full px-4 py-3 rounded-xl">
+                                <option value="">-- Pilih Santri --</option>
+                            </select>
+                        </div>
+                        <div id="adabForm" class="hidden">
+                            <div class="space-y-4 mb-6">
+                                <label class="flex items-start gap-3 p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-gray-100">
+                                    <input type="checkbox" id="adab1" class="w-5 h-5 rounded text-emerald-600 mt-1">
+                                    <div><span class="font-medium">🕌 Shalat 5 Waktu Berjamaah</span><p class="text-sm text-gray-600">Rutin melaksanakan shalat wajib berjamaah</p></div>
+                                </label>
+                                <label class="flex items-start gap-3 p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-gray-100">
+                                    <input type="checkbox" id="adab2" class="w-5 h-5 rounded text-emerald-600 mt-1">
+                                    <div><span class="font-medium">📚 Disiplin Sekolah Madin</span><p class="text-sm text-gray-600">Hadir tepat waktu dan aktif belajar</p></div>
+                                </label>
+                                <label class="flex items-start gap-3 p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-gray-100">
+                                    <input type="checkbox" id="adab3" class="w-5 h-5 rounded text-emerald-600 mt-1">
+                                    <div><span class="font-medium">🎒 Disiplin Sekolah Formal</span><p class="text-sm text-gray-600">Rajin dan berprestasi di sekolah</p></div>
+                                </label>
+                                <label class="flex items-start gap-3 p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-gray-100">
+                                    <input type="checkbox" id="adab4" class="w-5 h-5 rounded text-emerald-600 mt-1">
+                                    <div><span class="font-medium">🙏 Adab kepada Guru & Orang Tua</span><p class="text-sm text-gray-600">Sopan santun dan menghormati</p></div>
+                                </label>
+                                <label class="flex items-start gap-3 p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-gray-100">
+                                    <input type="checkbox" id="adab5" class="w-5 h-5 rounded text-emerald-600 mt-1">
+                                    <div><span class="font-medium">🤝 Adab kepada Teman</span><p class="text-sm text-gray-600">Bergaul dengan baik</p></div>
+                                </label>
+                            </div>
+                            <div class="flex justify-end">
+                                <button onclick="saveAdab()" class="btn-green px-8 py-3 rounded-xl flex items-center gap-2">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"/></svg>
+                                    Simpan Data
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ========== UPLOAD MASSAL ========== -->
+                <div id="page-upload" class="page hidden fade-in">
+                    <div class="mb-6">
+                        <h1 class="text-3xl font-bold text-white mb-2">📤 Upload Massal</h1>
+                        <p class="text-gray-400">Import data santri menggunakan Excel/CSV</p>
+                    </div>
+                    <div class="card-white p-6">
+                        <button id="downloadTemplate" class="btn-green px-6 py-3 rounded-xl flex items-center gap-2 mb-6">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                            Download Template CSV
+                        </button>
+                        <form id="uploadForm" class="space-y-4">
+                            <div class="border-2 border-dashed border-gray-300 rounded-xl p-8 text-center cursor-pointer hover:border-emerald-400" id="dropZone">
+                                <input type="file" id="fileInput" accept=".csv,.xlsx,.xls" class="hidden">
+                                <label for="fileInput" class="cursor-pointer">
+                                    <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg>
+                                    <p class="mt-2 text-sm text-gray-600"><span id="fileName">Klik untuk upload file</span></p>
+                                    <p class="text-xs text-gray-500 mt-1">Format: .csv, .xlsx, .xls</p>
+                                </label>
+                            </div>
+                            <button type="submit" class="btn-gold w-full py-3 rounded-xl">🚀 Upload Data</button>
+                        </form>
+                        <div id="uploadResult" class="hidden mt-4 p-4 rounded-xl"></div>
+                    </div>
+                </div>
+
+                <!-- ========== LAPORAN PDF ========== -->
+                <div id="page-laporan" class="page hidden fade-in">
+                    <div class="mb-6">
+                        <h1 class="text-3xl font-bold text-white mb-2">📄 Laporan PDF</h1>
+                        <p class="text-gray-400">Generate dan download laporan</p>
+                    </div>
+                    <div class="card-white p-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Pilih Santri</label>
+                                <select id="selectLaporanSantri" class="input-light w-full px-4 py-3 rounded-xl">
+                                    <option value="all">📊 Semua Santri</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Jenis Laporan</label>
+                                <select id="laporanType" class="input-light w-full px-4 py-3 rounded-xl">
+                                    <option value="hafalan">📖 Laporan Hafalan</option>
+                                    <option value="aurad">🕌 Laporan Aurad</option>
+                                    <option value="praktik">🤲 Laporan Praktik</option>
+                                    <option value="lengkap">📋 Laporan Lengkap</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="flex gap-3">
+                            <button onclick="generateLaporanPDF()" class="flex-1 btn-green py-3 rounded-xl flex items-center justify-center gap-2">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                                Download PDF
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ========== SERTIFIKAT ========== -->
+                <div id="page-sertifikat" class="page hidden fade-in">
+                    <div class="mb-6">
+                        <h1 class="text-3xl font-bold text-white mb-2">🏆 Generate Sertifikat</h1>
+                        <p class="text-gray-400">Buat sertifikat kelulusan Mutqin BM</p>
+                    </div>
+                    <div class="card-white p-6">
+                        <div class="mb-6">
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Pilih Santri yang Lulus</label>
+                            <select id="selectSertifikatSantri" class="input-light w-full px-4 py-3 rounded-xl">
+                                <option value="">-- Pilih Santri --</option>
+                            </select>
+                        </div>
+                        <div id="certPreview" class="hidden certificate-frame rounded-xl p-8 mb-6">
+                            <div class="text-center">
+                                <p class="text-emerald-800 font-bold text-lg">PONDOK PESANTREN BAHRUL MAGHFIROH</p>
+                                <p class="text-gray-600 text-sm mb-6">Standar Kelulusan Mutqin BM</p>
+                                <h2 class="text-3xl font-bold text-emerald-900 mb-8">SERTIFIKAT KELULUSAN</h2>
+                                <p id="certNama" class="text-2xl font-bold text-emerald-800 mb-4">[Nama]</p>
+                                <p class="text-gray-700 mb-4">Dinyatakan telah <strong>MENYELESAIKAN MUTQIN BM</strong></p>
+                                <p class="text-gray-600 mb-6">Program Hafalan Sesuai Standar Kelulusan Pondok Bahrul</p>
+                                <div class="inline-block bg-emerald-800 text-white px-8 py-3 rounded-lg text-xl font-bold mb-6">✅ LULUS</div>
+                                <div class="text-gray-600">
+                                    <p>NIS: <span id="certNIS">-</span></p>
+                                    <p>Kelas: <span id="certKelas">-</span></p>
+                                    <p>Tanggal: <span id="certTanggal"></span></p>
+                                </div>
+                                <div class="flex justify-around mt-16">
+                                    <div class="text-center">
+                                        <p class="mb-16">Mengetahui,</p>
+                                        <p class="font-bold">(_________________)</p>
+                                        <p class="text-sm text-gray-600">Pengasuh</p>
+                                    </div>
+                                    <div class="text-center">
+                                        <p class="mb-16">Kepala Dewan Tahfizh,</p>
+                                        <p class="font-bold">(_________________)</p>
+                                        <p class="text-sm text-gray-600">Kepala Dewan Tahfizh</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex gap-3">
+                            <button onclick="generateCertPDF()" class="flex-1 btn-green py-3 rounded-xl flex items-center justify-center gap-2">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                                Download PDF
+                            </button>
+                            <button onclick="window.print()" class="flex-1 btn-gold py-3 rounded-xl flex items-center justify-center gap-2">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
+                                Cetak
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
         </main>
     </div>
 
+    <!-- ==================== MODAL TAMBAH SANTRI ==================== -->
+    <div id="modalSantri" class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center p-4">
+        <div class="glass-white rounded-2xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto">
+            <div class="p-6 border-b border-gray-200 flex justify-between items-center">
+                <h3 class="text-xl font-bold text-gray-800">Tambah Santri Baru</h3>
+                <button id="closeModal" class="text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
+            </div>
+            <form id="formSantri" class="p-6 space-y-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">Nama Lengkap *</label>
+                        <input type="text" id="inputNama" required class="input-light w-full px-4 py-2 rounded-xl">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">NIS *</label>
+                        <input type="text" id="inputNIS" required class="input-light w-full px-4 py-2 rounded-xl">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">Kelas</label>
+                        <select id="inputKelas" class="input-light w-full px-4 py-2 rounded-xl">
+                            <option value="">Pilih Kelas</option>
+                            <option value="1">Kelas 1</option>
+                            <option value="2">Kelas 2</option>
+                            <option value="3">Kelas 3</option>
+                            <option value="4">Kelas 4</option>
+                            <option value="5">Kelas 5</option>
+                            <option value="6">Kelas 6</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">Tanggal Lahir</label>
+                        <input type="date" id="inputTglLahir" class="input-light w-full px-4 py-2 rounded-xl">
+                    </div>
+                    <div class="md:col-span-2">
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">Alamat</label>
+                        <textarea id="inputAlamat" rows="2" class="input-light w-full px-4 py-2 rounded-xl"></textarea>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">Nama Orang Tua</label>
+                        <input type="text" id="inputOrtu" class="input-light w-full px-4 py-2 rounded-xl">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">No. HP Orang Tua</label>
+                        <input type="tel" id="inputHpOrtu" class="input-light w-full px-4 py-2 rounded-xl">
+                    </div>
+                </div>
+                <div class="flex justify-end gap-3 pt-4 border-t">
+                    <button type="button" id="cancelModal" class="px-6 py-2 border border-gray-300 rounded-xl hover:bg-gray-50">Batal</button>
+                    <button type="submit" class="btn-green px-6 py-2 rounded-xl">💾 Simpan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- TOAST -->
+    <div id="toast" class="toast"></div>
+
     <script>
-        // ============================================
-        // FIREBASE CONFIGURATION
-        // ============================================
+    // ============================================
+    // FIREBASE CONFIG - GANTI DENGAN DATA ANDA
+    // ============================================
+    const firebaseConfig = {
+        apiKey: "GANTI_API_KEY",
+        authDomain: "GANTI_PROJECT.firebaseapp.com",
+        databaseURL: "https://GANTI_PROJECT-default-rtdb.firebaseio.com",
+        projectId: "GANTI_PROJECT",
+        storageBucket: "GANTI_PROJECT.appspot.com",
+        messagingSenderId: "GANTI_SENDER_ID",
+        appId: "GANTI_APP_ID"
+    };
+    
+    firebase.initializeApp(firebaseConfig);
+    const database = firebase.database();
+    const auth = firebase.auth();
+
+    // ============================================
+    // AUTH
+    // ============================================
+    auth.onAuthStateChanged(user => {
+        if (user) {
+            document.getElementById('loginPage').classList.add('hidden');
+            document.getElementById('mainApp').classList.remove('hidden');
+            loadDashboard();
+            loadAllSelects();
+        } else {
+            document.getElementById('loginPage').classList.remove('hidden');
+            document.getElementById('mainApp').classList.add('hidden');
+        }
+    });
+
+    document.getElementById('loginForm').addEventListener('submit', e => {
+        e.preventDefault();
+        const u = document.getElementById('username').value;
+        const p = document.getElementById('password').value;
+        const err = document.getElementById('loginError');
         
-        // TODO: Ganti dengan konfigurasi Firebase Anda
-        const firebaseConfig = {
-            apiKey: "YOUR_API_KEY",
-            authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-            databaseURL: "https://YOUR_PROJECT_ID-default-rtdb.firebaseio.com",
-            projectId: "YOUR_PROJECT_ID",
-            storageBucket: "YOUR_PROJECT_ID.appspot.com",
-            messagingSenderId: "YOUR_SENDER_ID",
-            appId: "YOUR_APP_ID"
+        if (u === 'admin' && p === 'Mutqin2024') {
+            auth.signInAnonymously().catch(er => {
+                err.textContent = 'Error: ' + er.message;
+                err.classList.remove('hidden');
+            });
+        } else {
+            err.textContent = 'Username atau password salah!';
+            err.classList.remove('hidden');
+        }
+    });
+
+    document.getElementById('logoutBtnMobile').addEventListener('click', () => auth.signOut());
+    document.getElementById('logoutBtn').addEventListener('click', () => auth.signOut());
+
+    // Toggle password visibility
+    document.getElementById('togglePassword').addEventListener('click', function() {
+        const inp = document.getElementById('password');
+        inp.type = inp.type === 'password' ? 'text' : 'password';
+    });
+
+    // ============================================
+    // NAVIGATION
+    // ============================================
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('overlay');
+    
+    document.getElementById('menuToggle').addEventListener('click', () => {
+        sidebar.classList.toggle('-translate-x-full');
+        overlay.classList.toggle('hidden');
+    });
+    
+    overlay.addEventListener('click', () => {
+        sidebar.classList.add('-translate-x-full');
+        overlay.classList.add('hidden');
+    });
+
+    document.querySelectorAll('.sidebar-link').forEach(link => {
+        link.addEventListener('click', e => {
+            e.preventDefault();
+            const page = link.dataset.page;
+            document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+            link.classList.add('active');
+            document.querySelectorAll('.page').forEach(p => p.classList.add('hidden'));
+            document.getElementById('page-' + page).classList.remove('hidden');
+            
+            // Refresh data
+            if (page === 'dashboard') loadDashboard();
+            if (page === 'santri') renderSantriTable();
+            
+            sidebar.classList.add('-translate-x-full');
+            overlay.classList.add('hidden');
+        });
+    });
+
+    // ============================================
+    // UTILITY
+    // ============================================
+    function toast(msg, type='success') {
+        const t = document.getElementById('toast');
+        t.textContent = msg;
+        t.className = 'toast toast-' + type + ' show';
+        setTimeout(() => t.classList.remove('show'), 3000);
+    }
+
+    function genId() { return 's_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9); }
+
+    function formatDate(d) {
+        return new Date(d).toLocaleDateString('id-ID', { day:'numeric', month:'long', year:'numeric' });
+    }
+
+    // ============================================
+    // DASHBOARD
+    // ============================================
+    let progressChart, pieChart;
+
+    function loadDashboard() {
+        database.ref('santri').once('value', snap => {
+            const data = snap.val() || {};
+            const santri = Object.values(data);
+            const total = santri.length;
+            
+            const hafalanDone = santri.filter(s => s.hafalan?.yasinSelesai && s.hafalan?.waqiahSelesai && s.hafalan?.alMulkSelesai).length;
+            const auradDone = santri.filter(s => s.aurad?.semuaSelesai).length;
+            
+            database.ref('certificates').once('value', cSnap => {
+                const certs = cSnap.val() || {};
+                const certCount = Object.keys(certs).length;
+                
+                document.getElementById('statTotal').textContent = total;
+                document.getElementById('statHafalan').textContent = hafalanDone;
+                document.getElementById('statAurad').textContent = auradDone;
+                document.getElementById('statSertifikat').textContent = certCount;
+                
+                updateCharts(total, hafalanDone, auradDone, certCount);
+            });
+        });
+    }
+
+    function updateCharts(total, hafalan, aurad, sertifikat) {
+        const ctx1 = document.getElementById('progressChart');
+        const ctx2 = document.getElementById('pieChart');
+        
+        if (progressChart) progressChart.destroy();
+        if (pieChart) pieChart.destroy();
+        
+        progressChart = new Chart(ctx1, {
+            type: 'bar',
+            data: {
+                labels: ['Hafalan', 'Aurad', 'Praktik', 'Juz 30', 'Khotib'],
+                datasets: [{
+                    label: 'Selesai',
+                    data: [hafalan, aurad, 0, 0, 0],
+                    backgroundColor: '#059669',
+                    borderRadius: 8
+                }, {
+                    label: 'Total Santri',
+                    data: [total, total, total, total, total],
+                    backgroundColor: '#e5e7eb',
+                    borderRadius: 8
+                }]
+            },
+            options: { responsive: true, scales: { y: { beginAtZero: true } } }
+        });
+        
+        pieChart = new Chart(ctx2, {
+            type: 'doughnut',
+            data: {
+                labels: ['Lulus', 'Proses'],
+                datasets: [{
+                    data: [sertifikat, total - sertifikat],
+                    backgroundColor: ['#059669', '#f59e0b'],
+                    borderWidth: 0
+                }]
+            },
+            options: { responsive: true, plugins: { legend: { position: 'bottom' } } }
+        });
+    }
+
+    // ============================================
+    // SANTRI CRUD
+    // ============================================
+    function renderSantriTable() {
+        const search = document.getElementById('searchSantri').value.toLowerCase();
+        const kelas = document.getElementById('filterKelas').value;
+        
+        database.ref('santri').once('value', snap => {
+            const data = snap.val() || {};
+            let santri = Object.entries(data).map(([id, s]) => ({ id, ...s }));
+            
+            if (search) santri = santri.filter(s => s.nama.toLowerCase().includes(search) || s.nis.toLowerCase().includes(search));
+            if (kelas) santri = santri.filter(s => s.kelas === kelas);
+            
+            const tbody = document.getElementById('santriTableBody');
+            
+            if (santri.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5" class="px-4 py-8 text-center text-gray-400">Tidak ada data santri</td></tr>';
+                return;
+            }
+            
+            tbody.innerHTML = santri.map(s => {
+                const allDone = s.hafalan?.yasinSelesai && s.hafalan?.waqiahSelesai && s.hafalan?.alMulkSelesai;
+                const status = allDone 
+                    ? '<span class="status-badge status-selesai">✅ Lulus</span>'
+                    : '<span class="status-badge status-proses">⏳ Proses</span>';
+                
+                return `<tr class="hover:bg-gray-50">
+                    <td class="px-4 py-3 text-sm font-medium">${s.nis}</td>
+                    <td class="px-4 py-3 text-sm">${s.nama}</td>
+                    <td class="px-4 py-3 text-sm">${s.kelas || '-'}</td>
+                    <td class="px-4 py-3 text-sm">${status}</td>
+                    <td class="px-4 py-3 text-sm">
+                        <button onclick="editSantri('${s.id}')" class="text-blue-600 hover:text-blue-800 mr-2">✏️</button>
+                        <button onclick="deleteSantri('${s.id}')" class="text-red-600 hover:text-red-800">🗑️</button>
+                    </td>
+                </tr>`;
+            }).join('');
+        });
+    }
+
+    document.getElementById('searchSantri').addEventListener('input', renderSantriTable);
+    document.getElementById('filterKelas').addEventListener('change', renderSantriTable);
+
+    // Modal
+    const modal = document.getElementById('modalSantri');
+    document.getElementById('btnAddSantri').addEventListener('click', () => {
+        document.getElementById('formSantri').reset();
+        modal.classList.remove('hidden');
+    });
+    document.getElementById('closeModal').addEventListener('click', () => modal.classList.add('hidden'));
+    document.getElementById('cancelModal').addEventListener('click', () => modal.classList.add('hidden'));
+
+    document.getElementById('formSantri').addEventListener('submit', e => {
+        e.preventDefault();
+        const santri = {
+            nama: document.getElementById('inputNama').value,
+            nis: document.getElementById('inputNIS').value,
+            kelas: document.getElementById('inputKelas').value,
+            tanggalLahir: document.getElementById('inputTglLahir').value,
+            alamat: document.getElementById('inputAlamat').value,
+            namaOrtu: document.getElementById('inputOrtu').value,
+            noHpOrtu: document.getElementById('inputHpOrtu').value,
+            createdAt: firebase.database.ServerValue.TIMESTAMP
         };
         
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-        const database = firebase.database();
-        const auth = firebase.auth();
-        
-        // ============================================
-        // AUTHENTICATION
-        // ============================================
-        
-        // Check auth state
-        auth.onAuthStateChanged((user) => {
-            if (user) {
-                document.getElementById('loginPage').classList.add('hidden');
-                document.getElementById('mainApp').classList.remove('hidden');
-                loadDashboard();
-            } else {
-                document.getElementById('loginPage').classList.remove('hidden');
-                document.getElementById('mainApp').classList.add('hidden');
-            }
+        const id = genId();
+        database.ref('santri/' + id).set(santri);
+        modal.classList.add('hidden');
+        toast('✅ Santri berhasil ditambahkan!');
+        renderSantriTable();
+        loadAllSelects();
+    });
+
+    function editSantri(id) {
+        database.ref('santri/' + id).once('value', snap => {
+            const s = snap.val();
+            if (!s) return;
+            document.getElementById('inputNama').value = s.nama || '';
+            document.getElementById('inputNIS').value = s.nis || '';
+            document.getElementById('inputKelas').value = s.kelas || '';
+            document.getElementById('inputTglLahir').value = s.tanggalLahir || '';
+            document.getElementById('inputAlamat').value = s.alamat || '';
+            document.getElementById('inputOrtu').value = s.namaOrtu || '';
+            document.getElementById('inputHpOrtu').value = s.noHpOrtu || '';
+            document.getElementById('formSantri').dataset.editId = id;
+            modal.classList.remove('hidden');
         });
-        
-        // Login handler
-        document.getElementById('loginForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
+    }
+
+    function deleteSantri(id) {
+        if (confirm('Hapus data santri ini?')) {
+            database.ref('santri/' + id).remove();
+            toast('🗑️ Santri dihapus', 'error');
+            renderSantriTable();
+            loadAllSelects();
+        }
+    }
+
+    // ============================================
+    // LOAD ALL SELECTS
+    // ============================================
+    function loadAllSelects() {
+        database.ref('santri').once('value', snap => {
+            const data = snap.val() || {};
+            const santri = Object.entries(data).map(([id, s]) => ({ id, ...s }));
             
-            // Simple auth (ganti dengan Firebase Auth yang lebih aman)
-            if (username === 'admin' && password === 'admin123') {
-                auth.signInAnonymously().catch((error) => {
-                    alert('Login gagal: ' + error.message);
-                });
-            } else {
-                alert('Username atau password salah!');
-            }
-        });
-        
-        // Logout handler
-        document.getElementById('logoutBtn').addEventListener('click', () => {
-            auth.signOut();
-        });
-        
-        // ============================================
-        // NAVIGATION
-        // ============================================
-        
-        document.querySelectorAll('.sidebar-item').forEach(item => {
-            item.addEventListener('click', (e) => {
-                e.preventDefault();
-                const page = item.dataset.page;
+            const selects = [
+                'selectHafalanSantri', 'selectAuradSantri', 'selectPraktikSantri',
+                'selectJuz30Santri', 'selectKhotibSantri', 'selectMadinSantri',
+                'selectAdabSantri', 'selectLaporanSantri', 'selectSertifikatSantri'
+            ];
+            
+            selects.forEach(selId => {
+                const sel = document.getElementById(selId);
+                if (!sel) return;
                 
-                // Update active state
-                document.querySelectorAll('.sidebar-item').forEach(i => i.classList.remove('active'));
-                item.classList.add('active');
+                const hasAll = selId === 'selectLaporanSantri';
+                sel.innerHTML = hasAll ? '<option value="all">📊 Semua Santri</option>' : '<option value="">-- Pilih Santri --</option>';
                 
-                // Show page
-                document.querySelectorAll('.page').forEach(p => p.classList.add('hidden'));
-                document.getElementById(page).classList.remove('hidden');
-                
-                // Load page data
-                if (page === 'dashboard') loadDashboard();
-            });
-        });
-        
-        // ============================================
-        // DASHBOARD
-        // ============================================
-        
-        let progressChart, pieChart;
-        
-        function loadDashboard() {
-            database.ref('santri').once('value', (snapshot) => {
-                const data = snapshot.val() || {};
-                const santri = Object.values(data);
-                const total = santri.length;
-                
-                // Calculate stats
-                const hafalanSelesai = santri.filter(s => 
-                    s.hafalan?.yasinSelesai && s.hafalan?.waqiahSelesai && s.hafalan?.alMulkSelesai
-                ).length;
-                
-                const auradSelesai = santri.filter(s => s.aurad?.semuaSelesai).length;
-                
-                database.ref('certificates').once('value', (snap) => {
-                    const certs = snap.val() || {};
-                    const sertifikatCount = Object.keys(certs).length;
-                    
-                    // Update UI
-                    document.getElementById('totalSantri').textContent = total;
-                    document.getElementById('hafalanSelesai').textContent = hafalanSelesai;
-                    document.getElementById('auradSelesai').textContent = auradSelesai;
-                    document.getElementById('totalSertifikat').textContent = sertifikatCount;
-                    
-                    // Update charts
-                    updateCharts(total, hafalanSelesai, auradSelesai, sertifikatCount);
+                santri.forEach(s => {
+                    const opt = document.createElement('option');
+                    opt.value = s.id;
+                    opt.textContent = `${s.nis} - ${s.nama}`;
+                    sel.appendChild(opt);
                 });
             });
-        }
-        
-        function updateCharts(total, hafalan, aurad, sertifikat) {
-            const ctx1 = document.getElementById('progressChart');
-            const ctx2 = document.getElementById('pieChart');
-            
-            if (progressChart) progressChart.destroy();
-            if (pieChart) pieChart.destroy();
-            
-            progressChart = new Chart(ctx1, {
-                type: 'bar',
-                data: {
-                    labels: ['Hafalan', 'Aurad', 'Praktik', 'Juz 30'],
-                    datasets: [{
-                        label: 'Selesai',
-                        data: [hafalan, aurad, 0, 0],
-                        backgroundColor: '#059669',
-                        borderRadius: 8
-                    }, {
-                        label: 'Total',
-                        data: [total, total, total, total],
-                        backgroundColor: '#e5e7eb',
-                        borderRadius: 8
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    scales: {
-                        y: { beginAtZero: true }
-                    }
-                }
-            });
-            
-            pieChart = new Chart(ctx2, {
-                type: 'doughnut',
-                data: {
-                    labels: ['Lulus', 'Proses'],
-                    datasets: [{
-                        data: [sertifikat, total - sertifikat],
-                        backgroundColor: ['#059669', '#f59e0b'],
-                        borderWidth: 0
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    plugins: {
-                        legend: { position: 'bottom' }
-                    }
-                }
-            });
-        }
-        
-        // ============================================
-        // DATA MANAGEMENT
-        // ============================================
-        
-        function saveData(path, data) {
-            return database.ref(path).set(data);
-        }
-        
-        function loadData(path) {
-            return database.ref(path).once('value');
-        }
-        
-        function generateId() {
-            return 's_' + Date.now();
-        }
-        
-        // ============================================
-        // INITIALIZATION
-        // ============================================
-        
-        window.addEventListener('load', () => {
-            console.log('Mutqin BM App Loaded');
         });
+    }
+
+    // ============================================
+    // POPULATE FORMS
+    // ============================================
+    function setupSelectListener(selectId, formId, callback) {
+        document.getElementById(selectId).addEventListener('change', function() {
+            const form = document.getElementById(formId);
+            if (this.value) {
+                form.classList.remove('hidden');
+                callback(this.value);
+            } else {
+                form.classList.add('hidden');
+            }
+        });
+    }
+
+    // Hafalan
+    setupSelectListener('selectHafalanSantri', 'hafalanForm', id => {
+        database.ref('santri/' + id).once('value', snap => {
+            const s = snap.val();
+            if (s?.hafalan) {
+                document.getElementById('yasinNilai').value = s.hafalan.yasin || '';
+                document.getElementById('yasinSelesai').checked = s.hafalan.yasinSelesai || false;
+                document.getElementById('waqiahNilai').value = s.hafalan.waqiah || '';
+                document.getElementById('waqiahSelesai').checked = s.hafalan.waqiahSelesai || false;
+                document.getElementById('alMulkNilai').value = s.hafalan.alMulk || '';
+                document.getElementById('alMulkSelesai').checked = s.hafalan.alMulkSelesai || false;
+            }
+            checkHafalanStatus();
+        });
+    });
+
+    function checkHafalanStatus() {
+        const all = document.getElementById('yasinSelesai').checked && 
+                    document.getElementById('waqiahSelesai').checked && 
+                    document.getElementById('alMulkSelesai').checked;
+        document.getElementById('hafalanStatusMsg').classList.toggle('hidden', !all);
+    }
+
+    ['yasinSelesai','waqiahSelesai','alMulkSelesai'].forEach(id => {
+        document.getElementById(id).addEventListener('change', checkHafalanStatus);
+    });
+
+    function saveHafalan() {
+        const id = document.getElementById('selectHafalanSantri').value;
+        if (!id) return;
+        database.ref('santri/' + id + '/hafalan').set({
+            yasin: document.getElementById('yasinNilai').value,
+            yasinSelesai: document.getElementById('yasinSelesai').checked,
+            waqiah: document.getElementById('waqiahNilai').value,
+            waqiahSelesai: document.getElementById('waqiahSelesai').checked,
+            alMulk: document.getElementById('alMulkNilai').value,
+            alMulkSelesai: document.getElementById('alMulkSelesai').checked
+        });
+        toast('💾 Data hafalan disimpan!');
+    }
+
+    // Aurad
+    setupSelectListener('selectAuradSantri', 'auradForm', id => {
+        database.ref('santri/' + id).once('value', snap => {
+            const s = snap.val();
+            if (s?.aurad) {
+                for (let i = 1; i <= 6; i++) {
+                    const item = s.aurad['item' + i];
+                    if (item) {
+                        document.getElementById('aurad' + i + 'Nilai').value = item.nilai || '';
+                        document.getElementById('aurad' + i + 'Selesai').checked = item.selesai || false;
+                    }
+                }
+            }
+        });
+    });
+
+    function saveAurad() {
+        const id = document.getElementById('selectAuradSantri').value;
+        if (!id) return;
+        const aurad = { semuaSelesai: true };
+        for (let i = 1; i <= 6; i++) {
+            aurad['item' + i] = {
+                nilai: document.getElementById('aurad' + i + 'Nilai').value,
+                selesai: document.getElementById('aurad' + i + 'Selesai').checked
+            };
+            if (!aurad['item' + i].selesai) aurad.semuaSelesai = false;
+        }
+        database.ref('santri/' + id + '/aurad').set(aurad);
+        toast('💾 Data aurad disimpan!');
+    }
+
+    // Praktik
+    setupSelectListener('selectPraktikSantri', 'praktikForm', id => {
+        database.ref('santri/' + id).once('value', snap => {
+            const s = snap.val();
+            if (s?.praktik) {
+                document.getElementById('praktikNilai').value = s.praktik.nilai || '';
+                document.getElementById('praktikSelesai').checked = s.praktik.selesai || false;
+            }
+        });
+    });
+
+    function savePraktik() {
+        const id = document.getElementById('selectPraktikSantri').value;
+        if (!id) return;
+        database.ref('santri/' + id + '/praktik').set({
+            nilai: document.getElementById('praktikNilai').value,
+            selesai: document.getElementById('praktikSelesai').checked
+        });
+        toast('💾 Data praktik disimpan!');
+    }
+
+    // Juz 30
+    const suratJuz30 = [
+        'An-Naba\'','An-Nazi\'at','\'Abasa','At-Takwir','Al-Infitar','Al-Mutaffifin',
+        'Al-Inshiqaq','Al-Buruj','At-Tariq','Al-A\'la','Al-Ghasyiyah','Al-Fajr',
+        'Al-Balad','Asy-Syams','Al-Lail','Ad-Dhuha','Asy-Syarh','At-Tin',
+        'Al-\'Alaq','Al-Qadr','Al-Bayyinah','Az-Zalzalah','Al-\'Adiyat','Al-Qari\'ah',
+        'At-Takasur','Al-\'Asr','Al-Humazah','Al-Fil','Quraisy','Al-Ma\'un',
+        'Al-Kautsar','Al-Kafirun','An-Nasr','Al-Masad','Al-Ikhlas','Al-Falaq','An-Nas'
+    ];
+
+    setupSelectListener('selectJuz30Santri', 'juz30Form', id => {
+        const list = document.getElementById('juz30SuratList');
+        list.innerHTML = suratJuz30.map((s, i) => 
+            `<label class="flex items-center gap-2 p-2 bg-gray-50 rounded-lg cursor-pointer hover:bg-gray-100">
+                <input type="checkbox" id="juz30_${i}" class="w-4 h-4 rounded text-emerald-600">
+                <span class="text-xs">${s}</span>
+            </label>`
+        ).join('');
         
+        database.ref('santri/' + id).once('value', snap => {
+            const s = snap.val();
+            if (s?.juz30) {
+                document.getElementById('juz30Nilai').value = s.juz30.nilai || '';
+                if (s.juz30.selected) {
+                    s.juz30.selected.forEach(idx => {
+                        const cb = document.getElementById('juz30_' + idx);
+                        if (cb) cb.checked = true;
+                    });
+                }
+            }
+        });
+    });
+
+    function saveJuz30() {
+        const id = document.getElementById('selectJuz30Santri').value;
+        if (!id) return;
+        const selected = [];
+        suratJuz30.forEach((_, i) => {
+            if (document.getElementById('juz30_' + i).checked) selected.push(i);
+        });
+        database.ref('santri/' + id + '/juz30').set({
+            selected,
+            nilai: document.getElementById('juz30Nilai').value,
+            semuaSelesai: selected.length > 0
+        });
+        toast('💾 Data Juz 30 disimpan!');
+    }
+
+    // Khotib & Bilal
+    setupSelectListener('selectKhotibSantri', 'khotibForm', id => {
+        database.ref('santri/' + id).once('value', snap => {
+            const s = snap.val();
+            if (s?.khotib) {
+                document.getElementById('khotibNilai').value = s.khotib.khotibNilai || '';
+                document.getElementById('khotibSelesai').checked = s.khotib.khotibSelesai || false;
+                document.getElementById('bilalNilai').value = s.khotib.bilalNilai || '';
+                document.getElementById('bilalSelesai').checked = s.khotib.bilalSelesai || false;
+            }
+        });
+    });
+
+    function saveKhotib() {
+        const id = document.getElementById('selectKhotibSantri').value;
+        if (!id) return;
+        database.ref('santri/' + id + '/khotib').set({
+            khotibNilai: document.getElementById('khotibNilai').value,
+            khotibSelesai: document.getElementById('khotibSelesai').checked,
+            bilalNilai: document.getElementById('bilalNilai').value,
+            bilalSelesai: document.getElementById('bilalSelesai').checked
+        });
+        toast('💾 Data khotib & bilal disimpan!');
+    }
+
+    // Madin
+    setupSelectListener('selectMadinSantri', 'madinForm', id => {
+        database.ref('santri/' + id).once('value', snap => {
+            const s = snap.val();
+            if (s?.madin) {
+                document.getElementById('lulusUla').checked = s.madin.lulusUla || false;
+                document.getElementById('lulusWustho').checked = s.madin.lulusWustho || false;
+            }
+        });
+    });
+
+    function saveMadin() {
+        const id = document.getElementById('selectMadinSantri').value;
+        if (!id) return;
+        database.ref('santri/' + id + '/madin').set({
+            lulusUla: document.getElementById('lulusUla').checked,
+            lulusWustho: document.getElementById('lulusWustho').checked
+        });
+        toast('💾 Data madin disimpan!');
+    }
+
+    // Adab
+    setupSelectListener('selectAdabSantri', 'adabForm', id => {
+        database.ref('santri/' + id).once('value', snap => {
+            const s = snap.val();
+            if (s?.adab) {
+                for (let i = 1; i <= 5; i++) {
+                    document.getElementById('adab' + i).checked = s.adab['item' + i] || false;
+                }
+            }
+        });
+    });
+
+    function saveAdab() {
+        const id = document.getElementById('selectAdabSantri').value;
+        if (!id) return;
+        const adab = {};
+        for (let i = 1; i <= 5; i++) {
+            adab['item' + i] = document.getElementById('adab' + i).checked;
+        }
+        database.ref('santri/' + id + '/adab').set(adab);
+        toast('💾 Data sikap & adab disimpan!');
+    }
+
+    // ============================================
+    // UPLOAD MASSAL
+    // ============================================
+    document.getElementById('downloadTemplate').addEventListener('click', () => {
+        const ws = XLSX.utils.json_to_sheet([
+            { Nama: 'Ahmad Fauzan', NIS: 'BM001', Kelas: '5', Alamat: 'Jl. Contoh', NamaOrtu: 'Bapak Contoh', NoHpOrtu: '08123456789' }
+        ]);
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, 'Santri');
+        XLSX.writeFile(wb, 'template_santri_mutqin_bm.xlsx');
+        toast('📥 Template diunduh!');
+    });
+
+    document.getElementById('fileInput').addEventListener('change', e => {
+        if (e.target.files[0]) document.getElementById('fileName').textContent = e.target.files[0].name;
+    });
+
+    document.getElementById('uploadForm').addEventListener('submit', e => {
+        e.preventDefault();
+        const file = document.getElementById('fileInput').files[0];
+        if (!file) { toast('⚠️ Pilih file!', 'error'); return; }
+        
+        const reader = new FileReader();
+        reader.onload = e => {
+            const data = new Uint8Array(e.target.result);
+            const wb = XLSX.read(data, { type: 'array' });
+            const rows = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]);
+            
+            let count = 0;
+            rows.forEach(row => {
+                const santri = {
+                    nama: row.Nama || row.nama,
+                    nis: String(row.NIS || row.nis),
+                    kelas: row.Kelas || row.kelas || '',
+                    alamat: row.Alamat || row.alamat || '',
+                    namaOrtu: row.NamaOrtu || row.namaOrtu || '',
+                    noHpOrtu: row.NoHpOrtu || row.noHpOrtu || '',
+                    createdAt: firebase.database.ServerValue.TIMESTAMP
+                };
+                database.ref('santri/' + genId()).set(santri);
+                count++;
+            });
+            
+            const res = document.getElementById('uploadResult');
+            res.className = 'mt-4 p-4 rounded-xl bg-emerald-100 text-emerald-800';
+            res.textContent = `✅ Berhasil mengupload ${count} santri!`;
+            res.classList.remove('hidden');
+            
+            toast(`🎉 ${count} santri berhasil diimport!`);
+            loadAllSelects();
+            renderSantriTable();
+        };
+        reader.readAsArrayBuffer(file);
+    });
+
+    // ============================================
+    // LAPORAN PDF
+    // ============================================
+    function generateLaporanPDF() {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+        
+        doc.setFontSize(18);
+        doc.text('LAPORAN MUTQIN BM', 105, 20, { align: 'center' });
+        doc.setFontSize(12);
+        doc.text('Pondok Pesantren Bahrul Maghfiroh', 105, 30, { align: 'center' });
+        doc.text('Dicetak: ' + formatDate(new Date()), 105, 37, { align: 'center' });
+        
+        database.ref('santri').once('value', snap => {
+            const data = snap.val() || {};
+            const santri = Object.entries(data).map(([id, s]) => ({ id, ...s }));
+            
+            doc.autoTable({
+                startY: 45,
+                head: [['NIS', 'Nama', 'Kelas', 'Hafalan', 'Aurad', 'Praktik']],
+                body: santri.map(s => [
+                    s.nis, s.nama, s.kelas || '-',
+                    (s.hafalan?.yasinSelesai && s.hafalan?.waqiahSelesai && s.hafalan?.alMulkSelesai) ? '✅' : '⏳',
+                    s.aurad?.semuaSelesai ? '✅' : '⏳',
+                    s.praktik?.selesai ? '✅' : '⏳'
+                ]),
+                theme: 'grid',
+                headStyles: { fillColor: [6, 78, 59] }
+            });
+            
+            doc.save('Laporan_Mutqin_BM.pdf');
+            toast('📄 Laporan berhasil diunduh!');
+        });
+    }
+
+    // ============================================
+    // SERTIFIKAT
+    // ============================================
+    setupSelectListener('selectSertifikatSantri', 'certPreview', id => {
+        database.ref('santri/' + id).once('value', snap => {
+            const s = snap.val();
+            if (s) {
+                document.getElementById('certNama').textContent = s.nama;
+                document.getElementById('certNIS').textContent = s.nis;
+                document.getElementById('certKelas').textContent = s.kelas || '-';
+                document.getElementById('certTanggal').textContent = formatDate(new Date());
+            }
+        });
+    });
+
+    function generateCertPDF() {
+        const id = document.getElementById('selectSertifikatSantri').value;
+        if (!id) { toast('⚠️ Pilih santri!', 'error'); return; }
+        
+        database.ref('santri/' + id).once('value', snap => {
+            const s = snap.val();
+            if (!s) return;
+            
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF('l', 'mm', 'a4');
+            
+            doc.setFillColor(253, 251, 243);
+            doc.rect(0, 0, 297, 210, 'F');
+            
+            doc.setDrawColor(217, 189, 102);
+            doc.setLineWidth(3);
+            doc.rect(10, 10, 277, 190);
+            doc.setLineWidth(1);
+            doc.rect(15, 15, 267, 180);
+            
+            doc.setFontSize(20);
+            doc.setTextColor(6, 78, 59);
+            doc.text('PONDOK PESANTREN BAHRUL MAGHFIROH', 148.5, 28, { align: 'center' });
+            doc.setFontSize(28);
+            doc.text('SERTIFIKAT KELULUSAN', 148.5, 45, { align: 'center' });
+            doc.setFontSize(12);
+            doc.setTextColor(100, 100, 100);
+            doc.text('Standar Kelulusan Mutqin BM', 148.5, 55, { align: 'center' });
+            
+            doc.setFontSize(24);
+            doc.setTextColor(6, 78, 59);
+            doc.text(s.nama, 148.5, 78, { align: 'center' });
+            
+            doc.setFontSize(11);
+            doc.setTextColor(100, 100, 100);
+            doc.text('Dinyatakan telah MENYELESAIKAN MUTQIN BM', 148.5, 90, { align: 'center' });
+            doc.text('Program Hafalan Sesuai Standar Kelulusan Pondok Bahrul', 148.5, 97, { align: 'center' });
+            
+            doc.setFillColor(6, 78, 59);
+            doc.roundedRect(118.5, 105, 60, 12, 2, 2, 'F');
+            doc.setTextColor(255, 255, 255);
+            doc.setFontSize(14);
+            doc.setFont(undefined, 'bold');
+            doc.text('LULUS', 148.5, 113, { align: 'center' });
+            
+            doc.setFontSize(10);
+            doc.setTextColor(6, 78, 59);
+            doc.setFont(undefined, 'normal');
+            doc.text('NIS: ' + s.nis, 148.5, 130, { align: 'center' });
+            doc.text('Kelas: ' + (s.kelas || '-'), 148.5, 137, { align: 'center' });
+            doc.text('Tanggal: ' + formatDate(new Date()), 148.5, 144, { align: 'center' });
+            
+            doc.text('Mengetahui,', 40, 165, { align: 'center' });
+            doc.text('Kepala Dewan Tahfizh,', 220, 165, { align: 'center' });
+            doc.text('(_________________)', 40, 190, { align: 'center' });
+            doc.text('(_________________)', 220, 190, { align: 'center' });
+            
+            doc.save('Sertifikat_' + s.nis + '_MutqinBM.pdf');
+            
+            // Save certificate record
+            database.ref('certificates/' + s.id).set({
+                santriId: s.id,
+                nama: s.nama,
+                nis: s.nis,
+                tanggal: new Date().toISOString()
+            });
+            
+            toast('📄 Sertifikat berhasil diunduh!');
+            loadDashboard();
+        });
+    }
+
+    // ============================================
+    // INIT
+    // ============================================
+    loadDashboard();
+    loadAllSelects();
     </script>
 </body>
 </html>
