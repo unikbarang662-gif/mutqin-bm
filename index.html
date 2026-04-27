@@ -7,16 +7,15 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-    <script src="https://cdn.sheetjs.com/xlsx-0.20.2/package/dist/xlsx.full.min.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             background: linear-gradient(135deg, #e8f5e9 0%, #c8e6d9 100%);
-            font-family: 'Segoe UI', 'Poppins', system-ui, sans-serif;
+            font-family: 'Segoe UI', system-ui, sans-serif;
             min-height: 100vh;
         }
-        .navbar-brand { font-weight: bold; color: #ffd966 !important; }
         .navbar { background: #1a472a !important; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .navbar-brand { color: #ffd966 !important; font-weight: bold; }
         .btn-mutqin {
             background: #2d6a4f;
             color: white;
@@ -27,13 +26,6 @@
             transition: 0.3s;
         }
         .btn-mutqin:hover { background: #1b4d3a; color: #ffd966; }
-        .btn-outline-mutqin {
-            border: 2px solid #2d6a4f;
-            color: #2d6a4f;
-            border-radius: 40px;
-            font-weight: bold;
-            background: white;
-        }
         .card {
             border-radius: 20px;
             box-shadow: 0 8px 20px rgba(0,0,0,0.08);
@@ -45,22 +37,19 @@
             color: white;
             border-radius: 20px 20px 0 0 !important;
             font-weight: bold;
-            padding: 15px 20px;
         }
         .stat-card {
             text-align: center;
-            padding: 20px 10px;
+            padding: 20px;
             border-radius: 20px;
             background: white;
             box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            transition: 0.3s;
         }
-        .stat-card:hover { transform: translateY(-5px); }
         .stat-card.bg-success { background: #2d6a4f; color: white; }
         .stat-card.bg-warning { background: #ffc107; color: #1a472a; }
         .stat-card.bg-secondary { background: #6c757d; color: white; }
-        .stat-card i { font-size: 2rem; margin-bottom: 10px; }
-        .stat-card h2 { font-size: 2rem; font-weight: bold; margin: 5px 0; }
+        .stat-card i { font-size: 2rem; }
+        .stat-card h2 { font-size: 2rem; font-weight: bold; }
         .login-card {
             background: white;
             border-radius: 30px;
@@ -83,44 +72,20 @@
             text-align: center;
             padding: 15px;
             margin-top: 30px;
-            font-size: 0.8rem;
         }
-        .nav-link-custom {
-            color: white !important;
-            margin: 0 5px;
-            transition: 0.3s;
-        }
-        .nav-link-custom:hover { color: #ffd966 !important; transform: translateY(-2px); }
-        .badge-mumtaz { background: #ffd966; color: #1a472a; padding: 5px 12px; border-radius: 20px; }
-        .sertifikat-preview {
-            background: #fef7e0;
-            border: 10px solid #b8860b;
-            border-radius: 15px;
-            padding: 20px;
-            font-family: 'Times New Roman', serif;
-        }
+        .nav-link-custom { color: white !important; margin: 0 5px; }
+        .nav-link-custom:hover { color: #ffd966 !important; }
         @media (max-width: 768px) {
             .stat-card h2 { font-size: 1.3rem; }
             .stat-card i { font-size: 1.5rem; }
-            .btn-mutqin { padding: 6px 15px; font-size: 0.8rem; }
         }
-        .sidebar-menu {
-            background: white;
-            border-radius: 15px;
-            padding: 10px;
-            margin-bottom: 20px;
-        }
-        .modal-content { border-radius: 25px; }
     </style>
 </head>
 <body>
 
-<!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
     <div class="container">
-        <a class="navbar-brand" href="#" onclick="changePage('dashboard')">
-            <i class="bi bi-mortarboard-fill"></i> <strong>Mutqin BM</strong>
-        </a>
+        <a class="navbar-brand" href="#"><i class="bi bi-mortarboard-fill"></i> Mutqin BM</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -130,500 +95,381 @@
     </div>
 </nav>
 
-<!-- Main Container -->
 <div class="container mt-3 pb-5" id="mainContainer">
     <div id="pageContent"></div>
 </div>
 
 <div class="footer">
-    <i class="bi bi-building"></i> © 2026 Mutqin BM - Ponpes Bahrul Maghfiroh | Sistem Standar Kelulusan
+    <i class="bi bi-building"></i> © 2026 Mutqin BM - Ponpes Bahrul Maghfiroh
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
-    // ======================== DATA STORAGE ========================
-    let currentUser = null;
-    
-    // Data Santri (sesuai contoh gambar)
-    let santriData = [
-        { id: 1, nis: "001", nama: "Ahmad Fauzan", kelas: "Kelas 5", wali: "Bapak Ahmad", gender: "L", foto: "", status_lulus: true, progress: 94 },
-        { id: 2, nis: "002", nama: "Salma Azizah", kelas: "Kelas 4", wali: "Ibu Salma", gender: "P", foto: "", status_lulus: false, progress: 68 },
-        { id: 3, nis: "003", nama: "Mohammad Luqman", kelas: "Kelas 2", wali: "Bapak Luqman", gender: "L", foto: "", status_lulus: false, progress: 45 },
-        { id: 4, nis: "004", nama: "Yusuf Ramadhan", kelas: "Kelas 6", wali: "Bapak Yusuf", gender: "L", foto: "", status_lulus: false, progress: 30 },
-        { id: 5, nis: "005", nama: "M. Faris", kelas: "Kelas 5", wali: "Ibu Faris", gender: "L", foto: "", status_lulus: false, progress: 72 },
-        { id: 6, nis: "006", nama: "Waisin", kelas: "Kelas 3", wali: "-", gender: "L", foto: "", status_lulus: false, progress: 51 },
-        { id: 7, nis: "007", nama: "Magilah", kelas: "Kelas 3", wali: "-", gender: "P", foto: "", status_lulus: false, progress: 51 },
-        { id: 8, nis: "008", nama: "Monalisa", kelas: "Kelas 4", wali: "-", gender: "P", foto: "", status_lulus: false, progress: 51 }
-    ];
-    
-    // Data Hafalan
-    let hafalanSurah = {};
-    let hafalanAurad = {};
-    let praktekIbadah = {};
-    let juz30 = {};
-    let madinAdab = {};
-    let sertifikatList = [];
-    
-    function initData() {
-        if(!localStorage.getItem('mutqin_santri_v2')) {
-            santriData.forEach(s => {
-                hafalanSurah[s.id] = { 
-                    yasin: { nilai: "Mumtaz", selesai: s.id==1 },
-                    waqiah: { nilai: "Jayyid Jiddan", selesai: s.id==1 },
-                    mulk: { nilai: "Jayyid", selesai: s.id==1 }
-                };
-                hafalanAurad[s.id] = {
-                    wirid: s.id==1 ? "Mumtaz" : "Jayyid",
-                    doa: s.id==1 ? "Mumtaz" : "Jayyid",
-                    tahlil: s.id==1 ? "Mumtaz" : "Jayyid"
-                };
-                praktekIbadah[s.id] = {
-                    jenazah: s.id==1 ? "Mumtaz" : "Jayyid",
-                    khotib: s.id==1 ? "Mumtaz" : "Jayyid"
-                };
-                let juz = {};
-                for(let i=1;i<=30;i++) juz["surat_"+i] = s.id==1 ? "Ahsan" : "Jayyid";
-                juz30[s.id] = juz;
-                madinAdab[s.id] = {
-                    ula: s.id==1,
-                    wustho: s.id==1,
-                    sikap: s.id==1
-                };
-                if(s.status_lulus) {
-                    sertifikatList.push({ santri_id: s.id, nomor: "BM/00"+s.id });
-                }
-            });
-            saveAllData();
-        } else {
-            loadAllData();
-        }
-        updateAllProgress();
+// ======================== DATA ========================
+let currentUser = null;
+
+let santriData = [
+    { id: 1, nis: "001", nama: "Ahmad Fauzan", kelas: "Kelas 5", wali: "Bapak Ahmad", gender: "L", progress: 94, status_lulus: true },
+    { id: 2, nis: "002", nama: "Salma Azizah", kelas: "Kelas 4", wali: "Ibu Salma", gender: "P", progress: 68, status_lulus: false },
+    { id: 3, nis: "003", nama: "Mohammad Luqman", kelas: "Kelas 2", wali: "Bapak Luqman", gender: "L", progress: 45, status_lulus: false },
+    { id: 4, nis: "004", nama: "Yusuf Ramadhan", kelas: "Kelas 6", wali: "Bapak Yusuf", gender: "L", progress: 30, status_lulus: false },
+    { id: 5, nis: "005", nama: "M. Faris", kelas: "Kelas 5", wali: "Ibu Faris", gender: "L", progress: 72, status_lulus: false },
+    { id: 6, nis: "006", nama: "Waisin", kelas: "Kelas 3", wali: "-", gender: "L", progress: 51, status_lulus: false },
+    { id: 7, nis: "007", nama: "Magilah", kelas: "Kelas 3", wali: "-", gender: "P", progress: 51, status_lulus: false },
+    { id: 8, nis: "008", nama: "Monalisa", kelas: "Kelas 4", wali: "-", gender: "P", progress: 51, status_lulus: false }
+];
+
+let hafalanSantri = {};
+
+function loadData() {
+    if(localStorage.getItem('mutqinData')) {
+        santriData = JSON.parse(localStorage.getItem('mutqinData'));
     }
-    
-    function saveAllData() {
-        localStorage.setItem('mutqin_santri_v2', JSON.stringify(santriData));
-        localStorage.setItem('mutqin_hafalan_surah_v2', JSON.stringify(hafalanSurah));
-        localStorage.setItem('mutqin_hafalan_aurad_v2', JSON.stringify(hafalanAurad));
-        localStorage.setItem('mutqin_praktek_v2', JSON.stringify(praktekIbadah));
-        localStorage.setItem('mutqin_juz30_v2', JSON.stringify(juz30));
-        localStorage.setItem('mutqin_madin_v2', JSON.stringify(madinAdab));
-        localStorage.setItem('mutqin_sertifikat_v2', JSON.stringify(sertifikatList));
-    }
-    
-    function loadAllData() {
-        santriData = JSON.parse(localStorage.getItem('mutqin_santri_v2'));
-        hafalanSurah = JSON.parse(localStorage.getItem('mutqin_hafalan_surah_v2')) || {};
-        hafalanAurad = JSON.parse(localStorage.getItem('mutqin_hafalan_aurad_v2')) || {};
-        praktekIbadah = JSON.parse(localStorage.getItem('mutqin_praktek_v2')) || {};
-        juz30 = JSON.parse(localStorage.getItem('mutqin_juz30_v2')) || {};
-        madinAdab = JSON.parse(localStorage.getItem('mutqin_madin_v2')) || {};
-        sertifikatList = JSON.parse(localStorage.getItem('mutqin_sertifikat_v2')) || [];
-    }
-    
-    function hitungProgressSantri(id) {
-        let total = 0, max = 0;
-        
-        if(hafalanSurah[id]) {
-            Object.values(hafalanSurah[id]).forEach(v => {
-                if(v.selesai) total += 25;
-                max += 25;
-            });
-        } else max += 75;
-        
-        if(hafalanAurad[id]) {
-            Object.values(hafalanAurad[id]).forEach(() => { total += 20; max += 20; });
-        } else max += 60;
-        
-        if(praktekIbadah[id]) {
-            Object.values(praktekIbadah[id]).forEach(() => { total += 15; max += 15; });
-        } else max += 30;
-        
-        if(juz30[id]) {
-            let totalJuz = 0, count = 0;
-            for(let k in juz30[id]) {
-                let val = juz30[id][k];
-                if(val === 'Mumtaz') totalJuz += 95;
-                else if(val === 'Ahsan') totalJuz += 85;
-                else if(val === 'Jayyid Jiddan') totalJuz += 75;
-                else totalJuz += 65;
-                count++;
-            }
-            total += totalJuz/count;
-            max += 100;
-        } else max += 100;
-        
-        if(madinAdab[id]) {
-            if(madinAdab[id].ula) total += 10;
-            if(madinAdab[id].wustho) total += 10;
-            if(madinAdab[id].sikap) total += 10;
-            max += 30;
-        } else max += 30;
-        
-        return max ? Math.min(100, Math.round((total/max)*100)) : 0;
-    }
-    
-    function updateAllProgress() {
+    if(localStorage.getItem('mutqinHafalan')) {
+        hafalanSantri = JSON.parse(localStorage.getItem('mutqinHafalan'));
+    } else {
         santriData.forEach(s => {
-            s.progress = hitungProgressSantri(s.id);
-            s.status_lulus = s.progress >= 75;
+            hafalanSantri[s.id] = {
+                yasin: { nilai: "Mumtaz", selesai: s.id==1 },
+                waqiah: { nilai: "Jayyid Jiddan", selesai: s.id==1 },
+                mulk: { nilai: "Jayyid", selesai: s.id==1 },
+                aurad: "Mumtaz",
+                juz30: s.id==1 ? "Ahsan" : "Jayyid",
+                madinUla: s.id==1,
+                madinWustho: s.id==1,
+                adab: s.id==1
+            };
         });
-        saveAllData();
+        saveData();
     }
-    
-    // ======================== RENDER ========================
-    let currentPage = 'login';
-    let myChart1 = null, myChart2 = null;
-    
-    function render() {
-        if(!currentUser && currentPage !== 'login') {
-            currentPage = 'login';
-        }
-        if(currentPage === 'login') renderLogin();
-        else if(currentPage === 'dashboard') renderDashboard();
-        else if(currentPage === 'santri') renderSantri();
-        else if(currentPage === 'hafalan') renderHafalan();
-        else if(currentPage === 'sertifikat') renderSertifikat();
-        else if(currentPage === 'upload') renderUpload();
-        renderNavbar();
+}
+
+function saveData() {
+    localStorage.setItem('mutqinData', JSON.stringify(santriData));
+    localStorage.setItem('mutqinHafalan', JSON.stringify(hafalanSantri));
+}
+
+function hitungProgress(id) {
+    let h = hafalanSantri[id];
+    if(!h) return 0;
+    let total = 0;
+    if(h.yasin.selesai) total += 15;
+    if(h.waqiah.selesai) total += 15;
+    if(h.mulk.selesai) total += 15;
+    if(h.aurad === "Mumtaz") total += 15;
+    else if(h.aurad === "Jayyid Jiddan") total += 12;
+    else if(h.aurad === "Jayyid") total += 10;
+    else total += 8;
+    if(h.juz30 === "Mumtaz") total += 15;
+    else if(h.juz30 === "Ahsan") total += 13;
+    else if(h.juz30 === "Jayyid Jiddan") total += 11;
+    else total += 9;
+    if(h.madinUla) total += 8;
+    if(h.madinWustho) total += 8;
+    if(h.adab) total += 9;
+    let progress = Math.min(100, total);
+    return progress;
+}
+
+function updateSemuaProgress() {
+    santriData.forEach(s => {
+        s.progress = hitungProgress(s.id);
+        s.status_lulus = s.progress >= 75;
+    });
+    saveData();
+}
+
+// ======================== RENDER ========================
+let currentPage = 'login';
+let chart1, chart2;
+
+function render() {
+    if(!currentUser && currentPage !== 'login') {
+        currentPage = 'login';
     }
-    
-    function renderNavbar() {
-        let nav = document.getElementById('navMenu');
-        if(!currentUser) {
-            nav.innerHTML = '';
-            return;
-        }
-        nav.innerHTML = `
-            <li class="nav-item"><a class="nav-link nav-link-cursor" href="#" onclick="changePage('dashboard')"><i class="bi bi-speedometer2"></i> Dashboard</a></li>
-            <li class="nav-item"><a class="nav-link nav-link-cursor" href="#" onclick="changePage('santri')"><i class="bi bi-people"></i> Santri</a></li>
-            <li class="nav-item"><a class="nav-link nav-link-cursor" href="#" onclick="changePage('hafalan')"><i class="bi bi-book"></i> Input Hafalan</a></li>
-            <li class="nav-item"><a class="nav-link nav-link-cursor" href="#" onclick="changePage('sertifikat')"><i class="bi bi-award"></i> Sertifikat</a></li>
-            ${currentUser.role === 'admin' ? '<li class="nav-item"><a class="nav-link nav-link-cursor" href="#" onclick="changePage(\'upload\')"><i class="bi bi-upload"></i> Upload Excel</a></li>' : ''}
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown"><i class="bi bi-person-circle"></i> ${currentUser.username}</a>
-                <ul class="dropdown-menu dropdown-menu-end">
-                    <li><a class="dropdown-item text-danger" href="#" onclick="logout()"><i class="bi bi-box-arrow-right"></i> Logout</a></li>
-                </ul>
-            </li>
-        `;
+    if(currentPage === 'login') renderLogin();
+    else if(currentPage === 'dashboard') renderDashboard();
+    else if(currentPage === 'santri') renderSantri();
+    else if(currentPage === 'hafalan') renderHafalan();
+    else if(currentPage === 'sertifikat') renderSertifikat();
+    renderNavbar();
+}
+
+function renderNavbar() {
+    let nav = document.getElementById('navMenu');
+    if(!currentUser) {
+        nav.innerHTML = '';
+        return;
     }
-    
-    function changePage(page) {
-        currentPage = page;
-        render();
-    }
-    
-    function logout() {
-        currentUser = null;
-        changePage('login');
-    }
-    
-    // LOGIN
-    function renderLogin() {
-        document.getElementById('pageContent').innerHTML = `
-            <div class="row justify-content-center align-items-center" style="min-height: 80vh;">
-                <div class="col-md-5 col-11">
-                    <div class="login-card">
-                        <div class="logo-area">
-                            <i class="bi bi-building fs-1"></i>
-                            <h3>PONDOK PESANTREN</h3>
-                            <h2 class="h4 fw-bold">BAHRUL MAGHFIROH</h2>
-                            <hr class="bg-light">
-                            <h1 class="h2">Mutqin BM</h1>
-                            <p>Standar Kelulusan Ponpes Bahrul Maghfiroh</p>
+    nav.innerHTML = `
+        <li class="nav-item"><a class="nav-link nav-link-custom" href="#" onclick="changePage('dashboard')"><i class="bi bi-speedometer2"></i> Dashboard</a></li>
+        <li class="nav-item"><a class="nav-link nav-link-custom" href="#" onclick="changePage('santri')"><i class="bi bi-people"></i> Santri</a></li>
+        <li class="nav-item"><a class="nav-link nav-link-custom" href="#" onclick="changePage('hafalan')"><i class="bi bi-book"></i> Input Hafalan</a></li>
+        <li class="nav-item"><a class="nav-link nav-link-custom" href="#" onclick="changePage('sertifikat')"><i class="bi bi-award"></i> Sertifikat</a></li>
+        <li class="nav-item"><a class="nav-link text-danger" href="#" onclick="logout()"><i class="bi bi-box-arrow-right"></i> Logout</a></li>
+        <li class="nav-item"><span class="nav-link text-warning"><i class="bi bi-person-circle"></i> ${currentUser.username}</span></li>
+    `;
+}
+
+function changePage(page) {
+    currentPage = page;
+    render();
+}
+
+function logout() {
+    currentUser = null;
+    changePage('login');
+}
+
+function renderLogin() {
+    document.getElementById('pageContent').innerHTML = `
+        <div class="row justify-content-center align-items-center" style="min-height: 80vh;">
+            <div class="col-md-5 col-11">
+                <div class="login-card">
+                    <div class="logo-area">
+                        <i class="bi bi-building fs-1"></i>
+                        <h3>PONDOK PESANTREN</h3>
+                        <h2 class="h4 fw-bold">BAHRUL MAGHFIROH</h2>
+                        <hr>
+                        <h1 class="h2">Mutqin BM</h1>
+                        <p>Standar Kelulusan Ponpes Bahrul Maghfiroh</p>
+                    </div>
+                    <div class="p-4">
+                        <h5 class="text-center mb-4">🔐 Login</h5>
+                        <div class="mb-3">
+                            <label>Username</label>
+                            <input type="text" id="loginUser" class="form-control" placeholder="admin / ustadz">
                         </div>
-                        <div class="p-4">
-                            <h5 class="text-center mb-4">🔐 Login</h5>
-                            <div class="mb-3">
-                                <label class="form-label">Username</label>
-                                <input type="text" id="loginUser" class="form-control" placeholder="admin / ustadz">
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Password</label>
-                                <input type="password" id="loginPass" class="form-control" placeholder="password">
-                            </div>
-                            <button class="btn btn-mutqin w-100" onclick="doLogin()">Login</button>
-                            <div class="text-center mt-3 small text-muted">
-                                <i class="bi bi-info-circle"></i> Demo: <strong>admin</strong> / admin | <strong>ustadz</strong> / ustadz
-                            </div>
-                            <div class="text-center mt-2 small">
-                                <a href="#" class="text-muted">Lupa Password?</a>
-                            </div>
+                        <div class="mb-3">
+                            <label>Password</label>
+                            <input type="password" id="loginPass" class="form-control" placeholder="password">
                         </div>
+                        <button class="btn btn-mutqin w-100" onclick="doLogin()">Login</button>
+                        <div class="text-center mt-3 small text-muted">Demo: <strong>admin</strong> / admin | <strong>ustadz</strong> / ustadz</div>
                     </div>
                 </div>
             </div>
-        `;
-    }
+        </div>
+    `;
+}
+
+function doLogin() {
+    let user = document.getElementById('loginUser').value;
+    let pass = document.getElementById('loginPass').value;
+    if(user === 'admin' && pass === 'admin') currentUser = { username: 'admin', role: 'admin' };
+    else if(user === 'ustadz' && pass === 'ustadz') currentUser = { username: 'ustadz', role: 'asatidz' };
+    else { alert("Login gagal! Gunakan admin/admin atau ustadz/ustadz"); return; }
+    changePage('dashboard');
+}
+
+function renderDashboard() {
+    updateSemuaProgress();
+    let total = santriData.length;
+    let lulus = santriData.filter(s => s.status_lulus).length;
+    let proses = santriData.filter(s => !s.status_lulus && s.progress > 40).length;
+    let belum = santriData.filter(s => s.progress <= 40).length;
+    let top5 = [...santriData].sort((a,b)=>b.progress - a.progress).slice(0,5);
     
-    function doLogin() {
-        let user = document.getElementById('loginUser').value;
-        let pass = document.getElementById('loginPass').value;
-        if(user === 'admin' && pass === 'admin') currentUser = { username: 'admin', role: 'admin' };
-        else if(user === 'ustadz' && pass === 'ustadz') currentUser = { username: 'ustadz', role: 'asatidz' };
-        else { alert("Login gagal! Gunakan admin/admin atau ustadz/ustadz"); return; }
-        changePage('dashboard');
-    }
+    document.getElementById('pageContent').innerHTML = `
+        <div class="row g-3 mb-4">
+            <div class="col-md-3 col-6"><div class="stat-card"><i class="bi bi-people"></i><h2>${total}</h2><p>Total Santri</p></div></div>
+            <div class="col-md-3 col-6"><div class="stat-card bg-success"><i class="bi bi-check-circle"></i><h2>${lulus}</h2><p>Sudah Lulus</p></div></div>
+            <div class="col-md-3 col-6"><div class="stat-card bg-warning"><i class="bi bi-hourglass-split"></i><h2>${proses}</h2><p>Sedang Proses</p></div></div>
+            <div class="col-md-3 col-6"><div class="stat-card bg-secondary"><i class="bi bi-clock"></i><h2>${belum}</h2><p>Belum Lulus</p></div></div>
+        </div>
+        <div class="row">
+            <div class="col-md-6"><div class="card"><div class="card-header"><i class="bi bi-bar-chart"></i> Progress Hafalan Santri (Top 5)</div><div class="card-body"><canvas id="progressChart"></canvas></div></div></div>
+            <div class="col-md-6"><div class="card"><div class="card-header"><i class="bi bi-pie-chart"></i> Status Kelulusan</div><div class="card-body"><canvas id="statusChart"></canvas></div></div></div>
+        </div>
+        <div class="card"><div class="card-header"><i class="bi bi-table"></i> Rekap Presentasi Santri</div><div class="card-body table-responsive"><table class="table table-bordered"><thead class="table-success"><tr><th>Nama Santri</th><th>Kelas</th><th>Progress Hafalan</th><th>Status</th><th>Sertifikat</th></tr></thead><tbody>
+            ${santriData.map(s => `<tr><td><i class="bi bi-person-badge"></i> ${s.nama}</td><td>${s.kelas}</td><td><div class="progress"><div class="progress-bar bg-success" style="width:${s.progress}%">${s.progress}%</div></div></td><td>${s.status_lulus ? '<span class="badge bg-success">✅ LULUS</span>' : '<span class="badge bg-warning">🔄 PROSES</span>'}</td><td>${s.status_lulus ? `<button class="btn btn-sm btn-success" onclick="cetakSertifikat(${s.id})"><i class="bi bi-printer"></i> Cetak</button>` : '-'}</td></tr>`).join('')}
+        </tbody></table></div></div>
+    `;
     
-    // DASHBOARD
-    function renderDashboard() {
-        updateAllProgress();
-        let total = santriData.length;
-        let lulus = santriData.filter(s=>s.status_lulus).length;
-        let proses = santriData.filter(s=>!s.status_lulus && s.progress>40).length;
-        let belum = santriData.filter(s=>s.progress<=40).length;
-        
-        let topSantri = [...santriData].sort((a,b)=>b.progress-a.progress).slice(0,5);
-        
-        let distribusi = { Mumtaz:0, "Jayyid Jiddan":0, Jayyid:0, Ahsan:0 };
-        santriData.forEach(s => {
-            if(s.progress>=85) distribusi.Mumtaz++;
-            else if(s.progress>=70) distribusi["Jayyid Jiddan"]++;
-            else if(s.progress>=55) distribusi.Jayyid++;
-            else distribusi.Ahsan++;
-        });
-        
-        document.getElementById('pageContent').innerHTML = `
-            <div class="row g-3 mb-4">
-                <div class="col-md-3 col-6"><div class="stat-card"><i class="bi bi-people"></i><h2>${total}</h2><p>Total Santri</p></div></div>
-                <div class="col-md-3 col-6"><div class="stat-card bg-success"><i class="bi bi-check-circle"></i><h2>${lulus}</h2><p>Sudah Lulus</p></div></div>
-                <div class="col-md-3 col-6"><div class="stat-card bg-warning"><i class="bi bi-hourglass-split"></i><h2>${proses}</h2><p>Sedang Proses</p></div></div>
-                <div class="col-md-3 col-6"><div class="stat-card bg-secondary"><i class="bi bi-clock-history"></i><h2>${belum}</h2><p>Belum Lulus</p></div></div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="card">
-                        <div class="card-header"><i class="bi bi-bar-chart-steps"></i> Progress Hafalan Santri (Top 5)</div>
-                        <div class="card-body"><canvas id="chartProgress"></canvas></div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="card">
-                        <div class="card-header"><i class="bi bi-pie-chart"></i> Distribusi Nilai Kelulusan</div>
-                        <div class="card-body"><canvas id="chartDistribusi"></canvas></div>
-                    </div>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-header"><i class="bi bi-table"></i> Rekap Presentasi Santri</div>
-                <div class="card-body table-responsive">
-                    <table class="table table-bordered table-hover">
-                        <thead class="table-success">
-                            <tr><th>Nama Santri</th><th>Kelas</th><th>Progress Hafalan</th><th>Status Kelulusan</th><th>Aksi</th></tr>
-                        </thead>
-                        <tbody>
-                            ${santriData.map(s => `
-                            <tr>
-                                <td><i class="bi bi-person-badge"></i> ${s.nama}</td>
-                                <td>${s.kelas}</td>
-                                <td><div class="progress"><div class="progress-bar bg-success" style="width:${s.progress}%">${s.progress}%</div></div></td>
-                                <td>${s.status_lulus ? '<span class="badge bg-success">✅ LULUS</span>' : '<span class="badge bg-warning">🔄 PROSES</span>'}</td>
-                                <td>${s.status_lulus ? `<button class="btn btn-sm btn-success" onclick="cetakSertifikatById(${s.id})"><i class="bi bi-printer"></i> Cetak Sertifikat</button>` : '-'}</td>
-                            </tr>
-                            `).join('')}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        `;
-        
-        setTimeout(() => {
-            if(myChart1) myChart1.destroy();
-            if(myChart2) myChart2.destroy();
-            let ctx1 = document.getElementById('chartProgress')?.getContext('2d');
-            let ctx2 = document.getElementById('chartDistribusi')?.getContext('2d');
-            if(ctx1) {
-                myChart1 = new Chart(ctx1, {
-                    type: 'bar',
-                    data: {
-                        labels: topSantri.map(s=>s.nama),
-                        datasets: [{ label: 'Progress (%)', data: topSantri.map(s=>s.progress), backgroundColor: '#2d6a4f', borderRadius: 10 }]
-                    },
-                    options: { responsive: true, plugins: { legend: { position: 'top' } } }
-                });
-            }
-            if(ctx2) {
-                myChart2 = new Chart(ctx2, {
-                    type: 'pie',
-                    data: {
-                        labels: Object.keys(distribusi),
-                        datasets: [{ data: Object.values(distribusi), backgroundColor: ['#ffd966','#82b74e','#3e7b27','#1b4d3a'] }]
-                    }
-                });
-            }
-        }, 100);
-    }
-    
-    // SANTRI
-    function renderSantri() {
-        document.getElementById('pageContent').innerHTML = `
-            <div class="card">
-                <div class="card-header">
-                    <i class="bi bi-database"></i> Data Santri
-                    <button class="btn btn-sm btn-light float-end" onclick="tambahSantri()"><i class="bi bi-plus-circle"></i> Tambah Santri</button>
-                </div>
-                <div class="card-body table-responsive">
-                    <table class="table table-bordered table-hover">
-                        <thead class="table-success">
-                            <tr><th>NIS</th><th>Nama</th><th>Kelas</th><th>Wali</th><th>Progress</th><th>Status</th><th>Aksi</th></tr>
-                        </thead>
-                        <tbody>
-                            ${santriData.map(s => `
-                            <tr>
-                                <td>${s.nis}</td>
-                                <td><strong>${s.nama}</strong></td>
-                                <td>${s.kelas}</td>
-                                <td>${s.wali || '-'}</td>
-                                <td><div class="progress" style="height:20px"><div class="progress-bar bg-success" style="width:${s.progress}%">${s.progress}%</div></div></td>
-                                <td>${s.status_lulus ? '<span class="badge bg-success">Lulus</span>' : '<span class="badge bg-warning">Proses</span>'}</td>
-                                <td>
-                                    <button class="btn btn-sm btn-primary mb-1" onclick="editSantri(${s.id})"><i class="bi bi-pencil"></i> Edit</button>
-                                    <button class="btn btn-sm btn-danger mb-1" onclick="hapusSantri(${s.id})"><i class="bi bi-trash"></i> Hapus</button>
-                                    ${s.status_lulus ? `<button class="btn btn-sm btn-success" onclick="cetakSertifikatById(${s.id})"><i class="bi bi-award"></i> Sertifikat</button>` : ''}
-                                </td>
-                            </tr>
-                            `).join('')}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        `;
-    }
-    
-    function tambahSantri() {
-        let nama = prompt("Masukkan Nama Santri:");
-        if(!nama) return;
-        let kelas = prompt("Masukkan Kelas:");
-        let nis = "BM" + Date.now();
-        let newId = Math.max(...santriData.map(s=>s.id), 0) + 1;
-        santriData.push({
-            id: newId, nis, nama, kelas, wali: "", gender: "L", foto: "", status_lulus: false, progress: 0
-        });
-        hafalanSurah[newId] = { yasin:{nilai:"Mumtaz",selesai:false}, waqiah:{nilai:"Jayyid Jiddan",selesai:false}, mulk:{nilai:"Jayyid",selesai:false} };
-        hafalanAurad[newId] = { wirid:"Jayyid", doa:"Jayyid", tahlil:"Jayyid" };
-        praktekIbadah[newId] = { jenazah:"Jayyid", khotib:"Jayyid" };
-        let juz={}; for(let i=1;i<=30;i++) juz["surat_"+i]="Jayyid";
-        juz30[newId]=juz;
-        madinAdab[newId]={ ula:false, wustho:false, sikap:false };
-        updateAllProgress();
-        saveAllData();
+    setTimeout(() => {
+        if(chart1) chart1.destroy();
+        if(chart2) chart2.destroy();
+        let ctx1 = document.getElementById('progressChart')?.getContext('2d');
+        let ctx2 = document.getElementById('statusChart')?.getContext('2d');
+        if(ctx1) chart1 = new Chart(ctx1, { type: 'bar', data: { labels: top5.map(s=>s.nama), datasets: [{ label: 'Progress (%)', data: top5.map(s=>s.progress), backgroundColor: '#2d6a4f' }] } });
+        if(ctx2) chart2 = new Chart(ctx2, { type: 'pie', data: { labels: ['Lulus', 'Proses'], datasets: [{ data: [lulus, total-lulus], backgroundColor: ['#2d6a4f', '#ffc107'] }] } });
+    }, 100);
+}
+
+function renderSantri() {
+    document.getElementById('pageContent').innerHTML = `
+        <div class="card"><div class="card-header"><i class="bi bi-database"></i> Data Santri <button class="btn btn-sm btn-light float-end" onclick="tambahSantri()"><i class="bi bi-plus-circle"></i> Tambah Santri</button></div>
+        <div class="card-body table-responsive"><table class="table table-bordered table-hover"><thead class="table-success"><tr><th>NIS</th><th>Nama</th><th>Kelas</th><th>Wali</th><th>Progress</th><th>Status</th><th>Aksi</th></tr></thead><tbody>
+            ${santriData.map(s => `<tr><td>${s.nis}</td><td><strong>${s.nama}</strong></td><td>${s.kelas}</td><td>${s.wali}</td><td><div class="progress" style="height:20px"><div class="progress-bar bg-success" style="width:${s.progress}%">${s.progress}%</div></div></td><td>${s.status_lulus ? '<span class="badge bg-success">Lulus</span>' : '<span class="badge bg-warning">Proses</span>'}</td><td><button class="btn btn-sm btn-primary mb-1" onclick="editSantri(${s.id})"><i class="bi bi-pencil"></i> Edit</button> <button class="btn btn-sm btn-danger" onclick="hapusSantri(${s.id})"><i class="bi bi-trash"></i> Hapus</button></td></tr>`).join('')}
+        </tbody></table></div></div>
+    `;
+}
+
+function tambahSantri() {
+    let nama = prompt("Nama Santri:");
+    if(!nama) return;
+    let kelas = prompt("Kelas:");
+    let newId = Math.max(...santriData.map(s=>s.id), 0) + 1;
+    santriData.push({ id: newId, nis: "BM"+newId, nama, kelas, wali: "-", gender: "L", progress: 0, status_lulus: false });
+    hafalanSantri[newId] = { yasin: { nilai: "Mumtaz", selesai: false }, waqiah: { nilai: "Jayyid Jiddan", selesai: false }, mulk: { nilai: "Jayyid", selesai: false }, aurad: "Jayyid", juz30: "Jayyid", madinUla: false, madinWustho: false, adab: false };
+    saveData();
+    renderSantri();
+}
+
+function hapusSantri(id) {
+    if(confirm("Hapus santri?")) {
+        santriData = santriData.filter(s=>s.id!==id);
+        delete hafalanSantri[id];
+        saveData();
         renderSantri();
     }
-    
-    function hapusSantri(id) {
-        if(confirm("Yakin hapus santri ini?")) {
-            santriData = santriData.filter(s=>s.id!==id);
-            delete hafalanSurah[id];
-            delete hafalanAurad[id];
-            delete praktekIbadah[id];
-            delete juz30[id];
-            delete madinAdab[id];
-            saveAllData();
-            renderSantri();
-        }
-    }
-    
-    function editSantri(id) {
-        let s = santriData.find(s=>s.id==id);
-        let surah = hafalanSurah[id] || {};
-        let madin = madinAdab[id] || {};
-        
-        let html = `
+}
+
+function editSantri(id) {
+    let s = santriData.find(s=>s.id==id);
+    let h = hafalanSantri[id];
+    let html = `
         <div class="modal fade" id="modalEdit" tabindex="-1">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <div class="modal-header bg-success text-white">
-                        <h5><i class="bi bi-pencil-square"></i> Edit Hafalan - ${s.nama}</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                    </div>
+                    <div class="modal-header bg-success text-white"><h5>Edit Hafalan - ${s.nama}</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
                     <div class="modal-body">
                         <h6>📖 Hafalan Surat</h6>
-                        <label class="me-3"><input type="checkbox" id="yasinCek" ${surah.yasin?.selesai ? 'checked' : ''}> Yasin Selesai</label>
-                        <label class="me-3"><input type="checkbox" id="waqiahCek" ${surah.waqiah?.selesai ? 'checked' : ''}> Al Waqiah Selesai</label>
-                        <label><input type="checkbox" id="mulkCek" ${surah.mulk?.selesai ? 'checked' : ''}> Al Mulk Selesai</label>
+                        <label><input type="checkbox" id="yasinCek" ${h.yasin.selesai ? 'checked' : ''}> Yasin Selesai</label><br>
+                        <label><input type="checkbox" id="waqiahCek" ${h.waqiah.selesai ? 'checked' : ''}> Al Waqiah Selesai</label><br>
+                        <label><input type="checkbox" id="mulkCek" ${h.mulk.selesai ? 'checked' : ''}> Al Mulk Selesai</label>
+                        <hr>
+                        <h6>🕌 Aurad & Juz 30</h6>
+                        <label>Nilai Aurad: <select id="auradVal" class="form-select"><option ${h.aurad=='Mumtaz'?'selected':''}>Mumtaz</option><option ${h.aurad=='Jayyid Jiddan'?'selected':''}>Jayyid Jiddan</option><option ${h.aurad=='Jayyid'?'selected':''}>Jayyid</option></select></label>
+                        <label>Nilai Juz 30: <select id="juzVal" class="form-select"><option ${h.juz30=='Mumtaz'?'selected':''}>Mumtaz</option><option ${h.juz30=='Ahsan'?'selected':''}>Ahsan</option><option ${h.juz30=='Jayyid Jiddan'?'selected':''}>Jayyid Jiddan</option><option ${h.juz30=='Jayyid'?'selected':''}>Jayyid</option></select></label>
                         <hr>
                         <h6>✅ Madin & Adab</h6>
-                        <label class="me-3"><input type="checkbox" id="ulaCek" ${madin.ula ? 'checked' : ''}> Lulus Madin Ula</label>
-                        <label class="me-3"><input type="checkbox" id="wusthoCek" ${madin.wustho ? 'checked' : ''}> Lulus Madin Wustho</label>
-                        <label><input type="checkbox" id="sikapCek" ${madin.sikap ? 'checked' : ''}> Sikap & Adab</label>
-                        <hr>
-                        <h6>📖 Juz 30 (Rata-rata)</h6>
-                        <select id="juzRata" class="form-select">
-                            <option ${hitungProgressSantri(id)>=85 ? 'selected' : ''}>Mumtaz</option>
-                            <option ${hitungProgressSantri(id)>=70 && hitungProgressSantri(id)<85 ? 'selected' : ''}>Jayyid Jiddan</option>
-                            <option>Jayyid</option>
-                            <option>Ahsan</option>
-                        </select>
+                        <label><input type="checkbox" id="ulaCek" ${h.madinUla ? 'checked' : ''}> Lulus Madin Ula</label><br>
+                        <label><input type="checkbox" id="wusthoCek" ${h.madinWustho ? 'checked' : ''}> Lulus Madin Wustho</label><br>
+                        <label><input type="checkbox" id="adabCek" ${h.adab ? 'checked' : ''}> Sikap & Adab</label>
                     </div>
-                    <div class="modal-footer">
-                        <button class="btn btn-primary" onclick="simpanEditSantri(${id})">Simpan</button>
-                        <button class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                    </div>
+                    <div class="modal-footer"><button class="btn btn-primary" onclick="simpanEdit(${id})">Simpan</button><button class="btn btn-secondary" data-bs-dismiss="modal">Batal</button></div>
                 </div>
             </div>
         </div>`;
-        
-        let div = document.createElement('div');
-        div.innerHTML = html;
-        document.body.appendChild(div);
-        let modal = new bootstrap.Modal(div.querySelector('.modal'));
-        modal.show();
-        div.addEventListener('hidden.bs.modal', () => div.remove());
-        
-        window.simpanEditSantri = function(sid) {
-            hafalanSurah[sid] = {
-                yasin: { nilai: "Mumtaz", selesai: document.getElementById('yasinCek').checked },
-                waqiah: { nilai: "Jayyid Jiddan", selesai: document.getElementById('waqiahCek').checked },
-                mulk: { nilai: "Jayyid", selesai: document.getElementById('mulkCek').checked }
-            };
-            madinAdab[sid] = {
-                ula: document.getElementById('ulaCek').checked,
-                wustho: document.getElementById('wusthoCek').checked,
-                sikap: document.getElementById('sikapCek').checked
-            };
-            let nilaiJuz = document.getElementById('juzRata').value;
-            for(let i=1;i<=30;i++) juz30[sid]["surat_"+i] = nilaiJuz;
-            updateAllProgress();
-            saveAllData();
-            modal.hide();
-            renderSantri();
-        };
-    }
-    
-    // HAFALAN
-    function renderHafalan() {
-        document.getElementById('pageContent').innerHTML = `
-            <div class="card">
-                <div class="card-header"><i class="bi bi-book"></i> Input Hafalan Santri</div>
-                <div class="card-body">
-                    <select id="pilihSantriHafalan" class="form-select mb-3" onchange="loadFormHafalan(this.value)">
-                        <option value="">-- Pilih Santri --</option>
-                        ${santriData.map(s=>`<option value="${s.id}">${s.nama} - ${s.kelas}</option>`).join('')}
-                    </select>
-                    <div id="formHafalanContainer"></div>
-                </div>
+    let div = document.createElement('div');
+    div.innerHTML = html;
+    document.body.appendChild(div);
+    let modal = new bootstrap.Modal(div.querySelector('.modal'));
+    modal.show();
+    div.addEventListener('hidden.bs.modal', () => div.remove());
+    window.simpanEdit = function(sid) {
+        hafalanSantri[sid].yasin.selesai = document.getElementById('yasinCek').checked;
+        hafalanSantri[sid].waqiah.selesai = document.getElementById('waqiahCek').checked;
+        hafalanSantri[sid].mulk.selesai = document.getElementById('mulkCek').checked;
+        hafalanSantri[sid].aurad = document.getElementById('auradVal').value;
+        hafalanSantri[sid].juz30 = document.getElementById('juzVal').value;
+        hafalanSantri[sid].madinUla = document.getElementById('ulaCek').checked;
+        hafalanSantri[sid].madinWustho = document.getElementById('wusthoCek').checked;
+        hafalanSantri[sid].adab = document.getElementById('adabCek').checked;
+        updateSemuaProgress();
+        saveData();
+        modal.hide();
+        renderSantri();
+    };
+}
+
+function renderHafalan() {
+    document.getElementById('pageContent').innerHTML = `
+        <div class="card"><div class="card-header"><i class="bi bi-book"></i> Input Hafalan Santri</div>
+        <div class="card-body"><select id="pilihSantri" class="form-select mb-3" onchange="loadFormHafalan(this.value)"><option value="">-- Pilih Santri --</option>${santriData.map(s=>`<option value="${s.id}">${s.nama}</option>`).join('')}</select><div id="formHafalan"></div></div></div>
+    `;
+}
+
+function loadFormHafalan(id) {
+    if(!id) return;
+    let h = hafalanSantri[id];
+    document.getElementById('formHafalan').innerHTML = `
+        <div class="alert alert-info">
+            <label><input type="checkbox" id="yasinF" ${h.yasin.selesai ? 'checked' : ''}> Yasin Selesai</label><br>
+            <label><input type="checkbox" id="waqiahF" ${h.waqiah.selesai ? 'checked' : ''}> Al Waqiah Selesai</label><br>
+            <label><input type="checkbox" id="mulkF" ${h.mulk.selesai ? 'checked' : ''}> Al Mulk Selesai</label><br>
+            <label>Aurad: <select id="auradF" class="form-select"><option ${h.aurad=='Mumtaz'?'selected':''}>Mumtaz</option><option ${h.aurad=='Jayyid Jiddan'?'selected':''}>Jayyid Jiddan</option><option ${h.aurad=='Jayyid'?'selected':''}>Jayyid</option></select></label>
+            <label>Juz 30: <select id="juzF" class="form-select"><option ${h.juz30=='Mumtaz'?'selected':''}>Mumtaz</option><option ${h.juz30=='Ahsan'?'selected':''}>Ahsan</option><option ${h.juz30=='Jayyid Jiddan'?'selected':''}>Jayyid Jiddan</option></select></label><br>
+            <label><input type="checkbox" id="ulaF" ${h.madinUla ? 'checked' : ''}> Lulus Madin Ula</label><br>
+            <label><input type="checkbox" id="wusthoF" ${h.madinWustho ? 'checked' : ''}> Lulus Madin Wustho</label><br>
+            <label><input type="checkbox" id="adabF" ${h.adab ? 'checked' : ''}> Sikap & Adab</label><br>
+            <button class="btn btn-mutqin mt-3" onclick="simpanHafalan(${id})">Simpan Hafalan</button>
+        </div>
+    `;
+}
+
+function simpanHafalan(id) {
+    hafalanSantri[id].yasin.selesai = document.getElementById('yasinF').checked;
+    hafalanSantri[id].waqiah.selesai = document.getElementById('waqiahF').checked;
+    hafalanSantri[id].mulk.selesai = document.getElementById('mulkF').checked;
+    hafalanSantri[id].aurad = document.getElementById('auradF').value;
+    hafalanSantri[id].juz30 = document.getElementById('juzF').value;
+    hafalanSantri[id].madinUla = document.getElementById('ulaF').checked;
+    hafalanSantri[id].madinWustho = document.getElementById('wusthoF').checked;
+    hafalanSantri[id].adab = document.getElementById('adabF').checked;
+    updateSemuaProgress();
+    saveData();
+    alert("Hafalan tersimpan!");
+    renderHafalan();
+}
+
+function renderSertifikat() {
+    let lulusSantri = santriData.filter(s => s.status_lulus);
+    document.getElementById('pageContent').innerHTML = `
+        <div class="card"><div class="card-header"><i class="bi bi-award"></i> Cetak Sertifikat Kelulusan</div>
+        <div class="card-body"><select id="pilihSertif" class="form-select mb-3"><option value="">-- Pilih Santri Lulus --</option>${lulusSantri.map(s=>`<option value="${s.id}">${s.nama}</option>`).join('')}</select>
+        <button class="btn btn-mutqin w-100" onclick="cetakSertifikatBySelect()"><i class="bi bi-printer"></i> Cetak PDF</button>
+        <div class="sertifikat-preview mt-4 p-3 bg-light rounded" id="preview"></div></div></div>
+    `;
+}
+
+function cetakSertifikat(id) {
+    let s = santriData.find(s=>s.id==id);
+    if(!s || !s.status_lulus) { alert("Santri belum lulus!"); return; }
+    let h = hafalanSantri[id];
+    let preview = document.getElementById('preview');
+    let sertifHtml = `
+        <div style="background:#fef7e0; border:12px solid #b8860b; padding:20px; font-family:'Times New Roman'; text-align:center;">
+            <h2 style="color:#2d6a4f;">PONDOK PESANTREN BAHRUL MAGHFIROH</h2>
+            <h1 style="color:#b8860b;">SERTIFIKAT KELULUSAN</h1>
+            <h3>Program Mutqin BM</h3>
+            <hr>
+            <h1 style="font-size:36px; margin:20px 0;">${s.nama}</h1>
+            <h2 style="color:green;">✅ LULUS</h2>
+            <table style="width:100%; margin:20px 0; border-collapse:collapse;" border="1">
+                <tr><th>Kriteria</th><th>Nilai</th></tr>
+                <tr><td>Hafal Surat Yasin, Waqiah, Al Mulk</td><td>${h.yasin.selesai && h.waqiah.selesai && h.mulk.selesai ? 'Mumtaz' : 'Belum Selesai'}</td></tr>
+                <tr><td>Hafal Tawasul, Tahlil, Istighosah</td><td>${h.aurad}</td></tr>
+                <tr><td>Praktik Sholat & Pengurusan Jenazah</td><td>Jayyid</td></tr>
+                <tr><td>Hafal Juz 30</td><td>${h.juz30}</td></tr>
+                <tr><td>Lulus Madin Ula & Wustho</td><td>${h.madinUla && h.madinWustho ? '✔ Lulus' : '✖ Belum'}</td></tr>
+                <tr><td>Sikap & Adab</td><td>${h.adab ? '✔ Baik' : '✖ Kurang'}</td></tr>
+            </table>
+            <div style="display:flex; justify-content:space-between; margin-top:30px;">
+                <div>Pengasuh,<br><br><br>Ust. Drs. H. Abbul Malik</div>
+                <div>Ketua Tahfizh,<br><br><br>Ust. H. Muhammad Amin</div>
             </div>
-        `;
-    }
-    
-    function loadFormHafalan(id) {
-        if(!id) return;
-        let s = santriData.find(s=>s.id==parseInt(id));
-        let surah = hafalanSurah[id] || {};
-        document.getElementById('formHafalanContainer').innerHTML = `
-            <div class="alert alert-info">
-                <h5>Input Hafalan untuk: <strong>${s.nama}</strong></h5>
-                <div class="row">
-                    <div class="col-md-4">
-                        <label>Yasin:</label>
-                        <select id="haf_yasin" class="form-select">${pilihNilaiSelect(surah.yasin?.nilai||'Mumtaz')}</select>
-                        <label><input type="checkbox" id="haf_yasin_cek" ${surah.yasin?.selesai ? 'checked' : ''}> Selesai</label>
-                    </div>
-                    <div class="col-md-4">
-                        <label>Al Waqiah:</label>
-                        <select id="haf_waqiah" class="form-select">${pilihNilaiSelect(surah.waqiah?.nilai||'Jayyid Jiddan')}</select>
-                        <label><input type="checkbox" id="haf_waqiah_cek" ${surah.waqiah?.selesai ? 'checked' : ''}> Selesai</label>
-                    </div>
-                    <div class="col-md-4">
-                        <label>Al M
+            <div style="text-align:right; margin-top:20px;">No: BM/${s.id}${Date.now()}</div>
+        </div>
+    `;
+    if(preview) preview.innerHTML = sertifHtml;
+    let win = window.open();
+    win.document.write(sertifHtml);
+    win.document.close();
+    win.print();
+}
+
+function cetakSertifikatBySelect() {
+    let id = document.getElementById('pilihSertif')?.value;
+    if(!id) { alert("Pilih santri yang lulus!"); return; }
+    cetakSertifikat(parseInt(id));
+}
+
+loadData();
+updateSemuaProgress();
+render();
+</script>
+</body>
+</html>
