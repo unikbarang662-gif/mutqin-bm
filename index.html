@@ -9,466 +9,97 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Poppins', 'Segoe UI', Arial, sans-serif;
-            background: #f0f2f5;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Arial, sans-serif; background: #f0f2f5; }
 
         /* Login Page */
-        .login-page {
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: linear-gradient(135deg, #1b5e20, #2e7d32);
-            padding: 20px;
-        }
-
-        .login-box {
-            background: white;
-            width: 100%;
-            max-width: 400px;
-            padding: 40px 30px;
-            border-radius: 30px;
-            text-align: center;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.2);
-        }
-
-        .login-logo {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin-bottom: 15px;
-            border: 4px solid #2e7d32;
-        }
-
-        .login-title {
-            font-size: 28px;
-            font-weight: bold;
-            color: #1b5e20;
-        }
-
-        .login-sub {
-            color: #666;
-            margin-bottom: 25px;
-            font-size: 14px;
-        }
-
-        .login-input {
-            width: 100%;
-            padding: 14px 20px;
-            margin: 10px 0;
-            border: 2px solid #e0e0e0;
-            border-radius: 30px;
-            font-size: 14px;
-        }
-
-        .login-input:focus {
-            border-color: #2e7d32;
-            outline: none;
-        }
-
-        .login-btn {
-            width: 100%;
-            padding: 14px;
-            background: #2e7d32;
-            color: white;
-            border: none;
-            border-radius: 30px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 15px;
-        }
-
-        .login-btn:hover {
-            background: #1b5e20;
-        }
+        .login-page { min-height: 100vh; display: flex; justify-content: center; align-items: center; background: linear-gradient(135deg, #1b5e20, #2e7d32); padding: 20px; }
+        .login-box { background: white; width: 100%; max-width: 400px; padding: 40px 30px; border-radius: 30px; text-align: center; box-shadow: 0 25px 50px rgba(0,0,0,0.2); }
+        .login-logo { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; margin-bottom: 15px; border: 4px solid #2e7d32; }
+        .login-title { font-size: 28px; font-weight: bold; color: #1b5e20; }
+        .login-sub { color: #666; margin-bottom: 25px; font-size: 14px; }
+        .login-input { width: 100%; padding: 14px 20px; margin: 10px 0; border: 2px solid #e0e0e0; border-radius: 30px; font-size: 14px; }
+        .login-input:focus { border-color: #2e7d32; outline: none; }
+        .login-btn { width: 100%; padding: 14px; background: #2e7d32; color: white; border: none; border-radius: 30px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 15px; }
+        .login-btn:hover { background: #1b5e20; }
 
         /* Main App */
-        .app-main {
-            display: none;
-            background: #f0f2f5;
-            min-height: 100vh;
-        }
+        .app-main { display: none; background: #f0f2f5; min-height: 100vh; }
+        .header { background: white; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 100; flex-wrap: wrap; gap: 10px; }
+        .header-logo { display: flex; align-items: center; gap: 12px; }
+        .header-logo-img { width: 45px; height: 45px; border-radius: 50%; object-fit: cover; }
+        .header-title { font-weight: bold; font-size: 14px; color: #1b5e20; line-height: 1.3; }
+        .logout-btn { background: #dc3545; color: white; border: none; padding: 8px 18px; border-radius: 25px; cursor: pointer; font-size: 14px; }
+        .sidebar { background: white; padding: 10px 0; overflow-x: auto; white-space: nowrap; display: flex; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .sidebar-item { display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; cursor: pointer; color: #555; font-weight: 500; font-size: 14px; }
+        .sidebar-item.active { background: #e8f5e9; color: #2e7d32; border-bottom: 3px solid #2e7d32; }
+        .content { padding: 20px; max-width: 1200px; margin: 0 auto; }
 
-        .header {
-            background: white;
-            padding: 12px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
+        /* Stats Cards */
+        .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 25px; }
+        .stat-card { padding: 20px 15px; border-radius: 20px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.08); color: white; }
+        .stat-card:nth-child(1) { background: linear-gradient(135deg, #667eea, #764ba2); }
+        .stat-card:nth-child(2) { background: linear-gradient(135deg, #11998e, #38ef7d); }
+        .stat-card:nth-child(3) { background: linear-gradient(135deg, #f093fb, #f5576c); }
+        .stat-card:nth-child(4) { background: linear-gradient(135deg, #ff9800, #f44336); }
+        .stat-number { font-size: 32px; font-weight: bold; }
 
-        .header-logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
+        /* Progress */
+        .progress-card { background: white; padding: 20px; border-radius: 20px; margin-bottom: 25px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.08); }
+        .chart-row { display: flex; justify-content: center; flex-wrap: wrap; gap: 30px; align-items: center; }
+        .progress-chart { width: 200px; height: 200px; }
+        .legend { text-align: left; }
+        .legend-item { display: flex; align-items: center; gap: 10px; margin: 10px 0; }
+        .legend-color { width: 20px; height: 20px; border-radius: 50%; }
 
-        .header-logo-img {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            object-fit: cover;
-        }
+        /* Tables */
+        .table-card { background: white; border-radius: 20px; padding: 15px; overflow-x: auto; box-shadow: 0 4px 15px rgba(0,0,0,0.08); }
+        table { width: 100%; border-collapse: collapse; font-size: 13px; }
+        th, td { padding: 12px 8px; text-align: left; border-bottom: 1px solid #eee; }
+        th { background: #f8f9fa; font-weight: 600; }
+        .btn-small { background: #2e7d32; color: white; border: none; padding: 5px 12px; border-radius: 15px; cursor: pointer; font-size: 11px; }
 
-        .header-title {
-            font-weight: bold;
-            font-size: 14px;
-            color: #1b5e20;
-            line-height: 1.3;
-        }
+        /* Forms */
+        .form-card { background: white; border-radius: 20px; padding: 20px; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); }
+        .form-title { font-size: 18px; font-weight: bold; color: #1b5e20; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 2px solid #e8f5e9; }
+        .criteria-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 15px; }
+        .criteria-box { border: 2px solid #e8f5e9; border-radius: 15px; padding: 15px; background: #fafdfa; }
+        .criteria-box h4 { color: #2e7d32; margin-bottom: 12px; font-size: 16px; }
+        .criteria-row { margin: 10px 0; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+        .criteria-row label { flex: 1; font-size: 13px; }
+        .grade-select { padding: 5px 8px; border-radius: 20px; border: 1px solid #ccc; font-size: 12px; }
+        .btn-save { background: #2e7d32; color: white; border: none; padding: 14px; border-radius: 30px; font-size: 16px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 20px; }
 
-        .logout-btn {
-            background: #dc3545;
-            color: white;
-            border: none;
-            padding: 8px 18px;
-            border-radius: 25px;
-            cursor: pointer;
-            font-size: 14px;
-        }
-
-        .sidebar {
-            background: white;
-            padding: 10px 0;
-            overflow-x: auto;
-            white-space: nowrap;
-            display: flex;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-        }
-
-        .sidebar-item {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 12px 20px;
-            cursor: pointer;
-            color: #555;
-            font-weight: 500;
-            font-size: 14px;
-        }
-
-        .sidebar-item.active {
-            background: #e8f5e9;
-            color: #2e7d32;
-            border-bottom: 3px solid #2e7d32;
-        }
-
-        .content {
-            padding: 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .stats-row {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 15px;
-            margin-bottom: 25px;
-        }
-
-        .stat-card {
-            background: white;
-            padding: 20px 15px;
-            border-radius: 20px;
-            text-align: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-        }
-
-        .stat-card:nth-child(1) { background: linear-gradient(135deg, #667eea, #764ba2); color: white; }
-        .stat-card:nth-child(2) { background: linear-gradient(135deg, #11998e, #38ef7d); color: white; }
-        .stat-card:nth-child(3) { background: linear-gradient(135deg, #f093fb, #f5576c); color: white; }
-        .stat-card:nth-child(4) { background: linear-gradient(135deg, #ff9800, #f44336); color: white; }
-
-        .stat-number {
-            font-size: 32px;
-            font-weight: bold;
-        }
-
-        .progress-card {
-            background: white;
-            padding: 20px;
-            border-radius: 20px;
-            margin-bottom: 25px;
-            text-align: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-        }
-
-        .chart-row {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 30px;
-            align-items: center;
-        }
-
-        .progress-chart {
-            width: 200px;
-            height: 200px;
-        }
-
-        .legend {
-            text-align: left;
-        }
-
-        .legend-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin: 10px 0;
-        }
-
-        .legend-color {
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-        }
-
-        .table-card {
-            background: white;
-            border-radius: 20px;
-            padding: 15px;
-            overflow-x: auto;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 13px;
-        }
-
-        th, td {
-            padding: 12px 8px;
-            text-align: left;
-            border-bottom: 1px solid #eee;
-        }
-
-        th {
-            background: #f8f9fa;
-            font-weight: 600;
-        }
-
-        .btn-small {
-            background: #2e7d32;
-            color: white;
-            border: none;
-            padding: 5px 12px;
-            border-radius: 15px;
-            cursor: pointer;
-            font-size: 11px;
-        }
-
-        .form-card {
-            background: white;
-            border-radius: 20px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-        }
-
-        .form-title {
-            font-size: 18px;
-            font-weight: bold;
-            color: #1b5e20;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #e8f5e9;
-        }
-
-        .criteria-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 15px;
-        }
-
-        .criteria-box {
-            border: 2px solid #e8f5e9;
-            border-radius: 15px;
-            padding: 15px;
-            background: #fafdfa;
-        }
-
-        .criteria-box h4 {
-            color: #2e7d32;
-            margin-bottom: 12px;
-            font-size: 16px;
-        }
-
-        .criteria-row {
-            margin: 10px 0;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-
-        .criteria-row label {
-            flex: 1;
-            font-size: 13px;
-        }
-
-        .grade-select {
-            padding: 5px 8px;
-            border-radius: 20px;
-            border: 1px solid #ccc;
-            font-size: 12px;
-        }
-
-        .btn-save {
-            background: #2e7d32;
-            color: white;
-            border: none;
-            padding: 14px;
-            border-radius: 30px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            width: 100%;
-            margin-top: 20px;
-        }
-
-        /* Sertifikat - Persis Contoh */
-        .certificate-box {
-            background: white;
-            padding: 30px 25px;
-            border-radius: 10px;
-            margin-top: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
-
-        .certificate-content {
-            text-align: center;
-            font-family: 'Times New Roman', serif;
-        }
-
-        .certificate-logo {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            object-fit: cover;
-        }
-
-        .certificate-pesantren {
-            font-size: 18px;
-            font-weight: bold;
-            margin: 5px 0;
-        }
-
-        .certificate-nomor {
-            font-size: 12px;
-            color: #555;
-            margin-bottom: 5px;
-        }
-
-        .certificate-title {
-            font-size: 24px;
-            font-weight: bold;
-            margin: 15px 0;
-            letter-spacing: 2px;
-        }
-
-        .certificate-name {
-            font-size: 28px;
-            font-weight: bold;
-            margin: 20px 0;
-            text-transform: uppercase;
-        }
-
-        .certificate-desc {
-            font-size: 14px;
-            margin: 15px 0;
-            line-height: 1.5;
-        }
-
-        .certificate-lulus {
-            font-size: 32px;
-            font-weight: bold;
-            color: #2e7d32;
-            margin: 15px 0;
-        }
-
-        .certificate-list {
-            text-align: left;
-            max-width: 450px;
-            margin: 20px auto;
-            font-size: 13px;
-        }
-
-        .certificate-list-item {
-            margin: 10px 0;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .certificate-list-item i {
-            width: 20px;
-            color: #2e7d32;
-        }
-
-        .signature-area {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 40px;
-            text-align: center;
-            font-size: 12px;
-        }
-
-        .signature-line {
-            margin-top: 30px;
-            width: 150px;
-            border-top: 1px solid #000;
-        }
-
-        .upload-area {
-            border: 2px dashed #2e7d32;
-            padding: 20px;
-            border-radius: 15px;
-            text-align: center;
-            background: #f9fff9;
-            margin-bottom: 20px;
-        }
-
-        select, input[type="text"], input[type="file"] {
-            padding: 10px 15px;
-            border-radius: 25px;
-            border: 1px solid #ddd;
-            margin: 5px 0;
-        }
-
-        .full-width {
-            width: 100%;
-            margin-bottom: 10px;
-        }
+        /* Certificate - PERSIS SEPERTI CONTOH */
+        .certificate-box { background: #fffef7; padding: 30px; border-radius: 10px; margin-top: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border: 1px solid #ddd; }
+        .certificate-content { text-align: center; font-family: 'Times New Roman', serif; }
+        .certificate-logo { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; margin-bottom: 10px; }
+        .certificate-pesantren { font-size: 18px; font-weight: bold; letter-spacing: 2px; }
+        .certificate-pesantren small { font-size: 12px; font-weight: normal; }
+        .certificate-nomor { font-size: 12px; color: #555; margin: 5px 0; }
+        .certificate-title { font-size: 22px; font-weight: bold; margin: 15px 0; letter-spacing: 3px; }
+        .certificate-name { font-size: 28px; font-weight: bold; margin: 20px 0; text-transform: uppercase; }
+        .certificate-desc { font-size: 14px; margin: 10px 0; line-height: 1.5; }
+        .certificate-lulus { font-size: 28px; font-weight: bold; color: #2e7d32; margin: 15px 0; }
+        .certificate-list { text-align: left; max-width: 450px; margin: 20px auto; font-size: 13px; }
+        .certificate-list-item { margin: 8px 0; display: flex; align-items: center; gap: 8px; }
+        .certificate-list-item i { width: 20px; color: #2e7d32; }
+        .signature-area { display: flex; justify-content: space-between; margin-top: 40px; text-align: center; font-size: 12px; }
+        .signature-line { width: 150px; border-top: 1px solid #000; margin-top: 30px; }
+        .upload-area { border: 2px dashed #2e7d32; padding: 20px; border-radius: 15px; text-align: center; background: #f9fff9; margin-bottom: 20px; }
+        select, input[type="text"], input[type="file"] { padding: 10px 15px; border-radius: 25px; border: 1px solid #ddd; margin: 5px 0; }
+        .full-width { width: 100%; margin-bottom: 10px; }
 
         @media (max-width: 768px) {
-            .content { padding: 15px; }
-            .stat-number { font-size: 24px; }
+            .stats-row { grid-template-columns: repeat(2, 1fr); }
             .certificate-name { font-size: 20px; }
             .certificate-lulus { font-size: 24px; }
-            .sidebar-item { padding: 10px 15px; font-size: 12px; }
         }
     </style>
 </head>
 <body>
 
-<!-- LOGIN PAGE - Tanpa Import Excel -->
+<!-- LOGIN PAGE - TANPA UPLOAD EXCEL -->
 <div id="loginPage" class="login-page">
     <div class="login-box">
         <img id="loginLogo" class="login-logo" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Crect width='100' height='100' fill='%232e7d32'/%3E%3Ctext x='50' y='65' text-anchor='middle' fill='white' font-size='40' font-weight='bold'%3EBM%3C/text%3E%3C/svg%3E">
@@ -477,12 +108,11 @@
         <input type="text" id="loginUsername" class="login-input" placeholder="Username" value="admin">
         <input type="password" id="loginPassword" class="login-input" placeholder="Password" value="admin">
         <button class="login-btn" onclick="doLogin()">Login</button>
-        <div style="margin-top: 15px; font-size: 12px; color: #999;">
-            <i class="fas fa-lock"></i> Lupa Password?
-        </div>
+        <div style="margin-top: 15px; font-size: 12px; color: #999;"><i class="fas fa-lock"></i> Lupa Password?</div>
         <hr style="margin: 15px 0;">
+        <!-- HANYA UPLOAD LOGO DAN PROFIL, BUKAN EXCEL SANTRI -->
         <div style="font-size: 12px; color: #666;">
-            <i class="fas fa-image"></i> Upload Logo Pesantren
+            <i class="fas fa-image"></i> Pengaturan Profil Pesantren
             <input type="file" id="profileLogoInput" accept="image/*" style="margin-top: 8px;">
             <input type="text" id="profilePesantrenInput" class="full-width" placeholder="Nama Pesantren" value="PONDOK PESANTREN BAHRUL MAGHFIROH" style="margin-top: 8px;">
             <input type="text" id="profilePengasuhInput" class="full-width" placeholder="Nama Pengasuh" value="Ust. Drs. H. Abbul Malik, Lc., M.M.Pd.">
@@ -504,9 +134,9 @@
     <div class="sidebar">
         <div class="sidebar-item active" onclick="showPage('dashboard')"><i class="fas fa-tachometer-alt"></i> Dashboard</div>
         <div class="sidebar-item" onclick="showPage('students')"><i class="fas fa-users"></i> Data Santri</div>
-        <div class="sidebar-item" onclick="showPage('hafalan')"><i class="fas fa-book-quran"></i> Input Hafalan</div>
-        <div class="sidebar-item" onclick="showPage('sertifikat')"><i class="fas fa-certificate"></i> Sertifikat</div>
-        <div class="sidebar-item" onclick="showPage('import')"><i class="fas fa-file-excel"></i> Import Excel</div>
+        <div class="sidebar-item" onclick="showPage('hafalan')"><i class="fas fa-book-quran"></i> Input Data Hafalan</div>
+        <div class="sidebar-item" onclick="showPage('sertifikat')"><i class="fas fa-certificate"></i> Sertifikat Kelulusan</div>
+        <div class="sidebar-item" onclick="showPage('import')"><i class="fas fa-file-excel"></i> Template Tambah Santri Masal</div>
     </div>
     <div class="content">
         <!-- DASHBOARD -->
@@ -532,10 +162,7 @@
             </div>
             <div class="table-card">
                 <h3>📋 Santri Terbaru</h3>
-                <table id="tableRecent">
-                    <thead><tr><th>Nama Santri</th><th>Kelas</th><th>Status</th></tr></thead>
-                    <tbody></tbody>
-                </table>
+                <table id="tableRecent"><thead><tr><th>Nama Santri</th><th>Kelas</th><th>Status</th></tr></thead><tbody></tbody></table>
             </div>
         </div>
 
@@ -543,14 +170,11 @@
         <div id="studentsPage" style="display:none">
             <div class="table-card">
                 <h3>📜 Daftar Semua Santri</h3>
-                <table id="tableAllSantri">
-                    <thead><tr><th>Nama Santri</th><th>Kelas</th><th>Status</th><th>Aksi</th></tr></thead>
-                    <tbody></tbody>
-                </table>
+                <table id="tableAllSantri"><thead><tr><th>Nama Santri</th><th>Kelas</th><th>Status</th><th>Aksi</th></tr></thead><tbody></tbody></table>
             </div>
         </div>
 
-        <!-- INPUT HAFALAN -->
+        <!-- INPUT HAFALAN - DENGAN MUMTAZ UNTUK AURAD -->
         <div id="hafalanPage" style="display:none">
             <div class="form-card">
                 <div class="form-title">✏️ Input Data Hafalan Santri</div>
@@ -563,7 +187,7 @@
                         <div class="criteria-row"><label>3. Surat Al Mulk</label><select id="gradeMulk" class="grade-select"><option>Belum</option><option>Mumtaz</option><option>Jayyid Jiddan</option><option>Jayyid</option></select><input type="checkbox" id="doneMulk"> Selesai</div>
                     </div>
                     <div class="criteria-box">
-                        <h4>📿 Hafalan Aurad</h4>
+                        <h4>📿 Hafalan Aurad (dengan nilai Mumtaz)</h4>
                         <div class="criteria-row"><label>1. Wirid setelah shalat</label><select id="gradeWirid" class="grade-select"><option>Belum</option><option>Mumtaz</option><option>Jayyid Jiddan</option><option>Jayyid</option></select><input type="checkbox" id="doneWirid"> Selesai</div>
                         <div class="criteria-row"><label>2. Doa setelah shalat</label><select id="gradeDoa" class="grade-select"><option>Belum</option><option>Mumtaz</option><option>Jayyid Jiddan</option><option>Jayyid</option></select><input type="checkbox" id="doneDoa"> Selesai</div>
                         <div class="criteria-row"><label>3. Tahlil ringkas</label><select id="gradeTahlilR" class="grade-select"><option>Belum</option><option>Mumtaz</option><option>Jayyid Jiddan</option><option>Jayyid</option></select><input type="checkbox" id="doneTahlilR"> Selesai</div>
@@ -585,7 +209,7 @@
             </div>
         </div>
 
-        <!-- SERTIFIKAT -->
+        <!-- SERTIFIKAT - PERSIS SEPERTI CONTOH -->
         <div id="sertifikatPage" style="display:none">
             <div class="form-card">
                 <div class="form-title">📜 Sertifikat Kelulusan</div>
@@ -621,7 +245,7 @@
     };
 
     function loadAllData() {
-        let saved = localStorage.getItem("mutqinbm_final_v2");
+        let saved = localStorage.getItem("mutqinbm_final_v3");
         if(saved) {
             let data = JSON.parse(saved);
             daftarSantri = data.daftarSantri || [];
@@ -640,20 +264,13 @@
         saveAllData();
     }
 
-    function saveAllData() {
-        localStorage.setItem("mutqinbm_final_v2", JSON.stringify({ daftarSantri, profileData, nextId }));
-    }
+    function saveAllData() { localStorage.setItem("mutqinbm_final_v3", JSON.stringify({ daftarSantri, profileData, nextId })); }
 
     function saveProfileData() {
         let logoFile = document.getElementById("profileLogoInput").files[0];
         if(logoFile) {
             let reader = new FileReader();
-            reader.onload = function(e) {
-                profileData.logo = e.target.result;
-                updateProfileUI();
-                saveAllData();
-                alert("Logo tersimpan!");
-            };
+            reader.onload = function(e) { profileData.logo = e.target.result; updateProfileUI(); saveAllData(); alert("Logo tersimpan!"); };
             reader.readAsDataURL(logoFile);
         }
         let newName = document.getElementById("profilePesantrenInput").value;
@@ -662,39 +279,23 @@
         if(newName) profileData.pesantren = newName;
         if(newPengasuh) profileData.pengasuh = newPengasuh;
         if(newKepala) profileData.kepalaMadin = newKepala;
-        updateProfileUI();
-        saveAllData();
-        alert("Profil tersimpan!");
+        updateProfileUI(); saveAllData(); alert("Profil tersimpan!");
     }
 
     function updateProfileUI() {
         document.getElementById("loginLogo").src = profileData.logo;
         document.getElementById("headerLogo").src = profileData.logo;
         document.getElementById("headerPesantren").innerHTML = profileData.pesantren.replace(/\n/g,"<br>");
-        document.getElementById("profilePesantrenInput").value = profileData.pesantren;
-        document.getElementById("profilePengasuhInput").value = profileData.pengasuh;
-        document.getElementById("profileKepalaInput").value = profileData.kepalaMadin;
     }
 
     function doLogin() {
         let user = document.getElementById("loginUsername").value;
         let pass = document.getElementById("loginPassword").value;
-        if(user && pass) {
-            loadAllData();
-            updateProfileUI();
-            document.getElementById("loginPage").style.display = "none";
-            document.getElementById("mainApp").style.display = "block";
-            showPage('dashboard');
-            refreshDashboard();
-        } else {
-            alert("Masukkan username dan password!");
-        }
+        if(user && pass) { loadAllData(); updateProfileUI(); document.getElementById("loginPage").style.display = "none"; document.getElementById("mainApp").style.display = "block"; showPage('dashboard'); refreshDashboard(); }
+        else alert("Masukkan username dan password!");
     }
 
-    function doLogout() {
-        document.getElementById("mainApp").style.display = "none";
-        document.getElementById("loginPage").style.display = "flex";
-    }
+    function doLogout() { document.getElementById("mainApp").style.display = "none"; document.getElementById("loginPage").style.display = "flex"; }
 
     function showPage(page) {
         document.getElementById("dashboardPage").style.display = "none";
@@ -702,18 +303,12 @@
         document.getElementById("hafalanPage").style.display = "none";
         document.getElementById("sertifikatPage").style.display = "none";
         document.getElementById("importPage").style.display = "none";
-        
         if(page === 'dashboard') document.getElementById("dashboardPage").style.display = "block";
         if(page === 'students') { document.getElementById("studentsPage").style.display = "block"; renderAllStudents(); }
         if(page === 'hafalan') { document.getElementById("hafalanPage").style.display = "block"; renderSantriSelect(); }
         if(page === 'sertifikat') { document.getElementById("sertifikatPage").style.display = "block"; renderCertSelect(); }
         if(page === 'import') document.getElementById("importPage").style.display = "block";
-        
-        document.querySelectorAll('.sidebar-item').forEach((item, idx) => {
-            item.classList.remove('active');
-            let pages = ['dashboard','students','hafalan','sertifikat','import'];
-            if(page === pages[idx]) item.classList.add('active');
-        });
+        document.querySelectorAll('.sidebar-item').forEach((item, idx) => { item.classList.remove('active'); let pages = ['dashboard','students','hafalan','sertifikat','import']; if(page === pages[idx]) item.classList.add('active'); });
     }
 
     function refreshDashboard() {
@@ -721,7 +316,6 @@
         let lulus = daftarSantri.filter(s => s.graduated).length;
         let proses = daftarSantri.filter(s => !s.graduated && s.hafalan && Object.keys(s.hafalan).length > 0).length;
         let belumHafal = total - lulus - proses;
-        
         document.getElementById("statTotal").innerText = total;
         document.getElementById("statLulus").innerText = lulus;
         document.getElementById("statProses").innerText = proses;
@@ -729,20 +323,13 @@
         document.getElementById("legendLulus").innerText = lulus;
         document.getElementById("legendProses").innerText = proses;
         document.getElementById("legendBelum").innerText = belumHafal;
-        
         let percent = total ? ((lulus/total)*100).toFixed(1) : 0;
         document.getElementById("progressPercent").innerText = percent + "%";
-        
         let ctx = document.getElementById('chartProgress').getContext('2d');
         if(window.myChart) window.myChart.destroy();
-        window.myChart = new Chart(ctx, {
-            type: 'doughnut',
-            data: { labels: ['Sudah Lulus', 'Sedang Proses', 'Belum Hafalan'], datasets: [{ data: [lulus, proses, belumHafal], backgroundColor: ['#2e7d32', '#ff9800', '#dc3545'] }] },
-            options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { position: 'bottom', display: false } } }
-        });
-        
+        window.myChart = new Chart(ctx, { type: 'doughnut', data: { labels: ['Sudah Lulus', 'Sedang Proses', 'Belum Hafalan'], datasets: [{ data: [lulus, proses, belumHafal], backgroundColor: ['#2e7d32', '#ff9800', '#dc3545'] }] }, options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { display: false } } } });
         let recent = daftarSantri.slice(-5).reverse();
-        let html = recent.map(s => `<tr><td>${s.name}</td><td>${s.kelas || '-'}</td><td>${s.graduated ? '<span style="color:#2e7d32">✅ LULUS</span>' : (s.hafalan && Object.keys(s.hafalan).length > 0 ? '📖 Sedang Proses' : '❌ Belum Hafalan')}</td></tr>`).join('');
+        let html = recent.map(s => `<td><td>${s.name}</td><td>${s.kelas || '-'}</td><td>${s.graduated ? '<span style="color:#2e7d32">✅ LULUS</span>' : (s.hafalan && Object.keys(s.hafalan).length > 0 ? '📖 Sedang Proses' : '❌ Belum Hafalan')}</td></tr>`).join('');
         document.querySelector("#tableRecent tbody").innerHTML = html;
     }
 
@@ -759,33 +346,20 @@
     }
 
     function loadHafalanToForm(id) {
-        let s = daftarSantri.find(st => st.id === id);
-        if(!s) return;
+        let s = daftarSantri.find(st => st.id === id); if(!s) return;
         let h = s.hafalan || {};
-        document.getElementById("gradeYasin").value = h.yasin?.grade || "Belum";
-        document.getElementById("doneYasin").checked = h.yasin?.done || false;
-        document.getElementById("gradeWaqiah").value = h.waqiah?.grade || "Belum";
-        document.getElementById("doneWaqiah").checked = h.waqiah?.done || false;
-        document.getElementById("gradeMulk").value = h.mulk?.grade || "Belum";
-        document.getElementById("doneMulk").checked = h.mulk?.done || false;
-        document.getElementById("gradeWirid").value = h.wirid?.grade || "Belum";
-        document.getElementById("doneWirid").checked = h.wirid?.done || false;
-        document.getElementById("gradeDoa").value = h.doa?.grade || "Belum";
-        document.getElementById("doneDoa").checked = h.doa?.done || false;
-        document.getElementById("gradeTahlilR").value = h.tahlilR?.grade || "Belum";
-        document.getElementById("doneTahlilR").checked = h.tahlilR?.done || false;
-        document.getElementById("gradeTahlilL").value = h.tahlilL?.grade || "Belum";
-        document.getElementById("doneTahlilL").checked = h.tahlilL?.done || false;
-        document.getElementById("gradeDoaTahlil").value = h.doaTahlil?.grade || "Belum";
-        document.getElementById("doneDoaTahlil").checked = h.doaTahlil?.done || false;
-        document.getElementById("gradeTawasul").value = h.tawasul?.grade || "Belum";
-        document.getElementById("doneTawasul").checked = h.tawasul?.done || false;
-        document.getElementById("gradeJenazah").value = h.jenazah?.grade || "Belum";
-        document.getElementById("doneJenazah").checked = h.jenazah?.done || false;
-        document.getElementById("gradeJuz30").value = h.juz30?.grade || "Belum";
-        document.getElementById("doneJuz30").checked = h.juz30?.done || false;
-        document.getElementById("gradeKhotib").value = h.khotib?.grade || "Belum";
-        document.getElementById("doneKhotib").checked = h.khotib?.done || false;
+        document.getElementById("gradeYasin").value = h.yasin?.grade || "Belum"; document.getElementById("doneYasin").checked = h.yasin?.done || false;
+        document.getElementById("gradeWaqiah").value = h.waqiah?.grade || "Belum"; document.getElementById("doneWaqiah").checked = h.waqiah?.done || false;
+        document.getElementById("gradeMulk").value = h.mulk?.grade || "Belum"; document.getElementById("doneMulk").checked = h.mulk?.done || false;
+        document.getElementById("gradeWirid").value = h.wirid?.grade || "Belum"; document.getElementById("doneWirid").checked = h.wirid?.done || false;
+        document.getElementById("gradeDoa").value = h.doa?.grade || "Belum"; document.getElementById("doneDoa").checked = h.doa?.done || false;
+        document.getElementById("gradeTahlilR").value = h.tahlilR?.grade || "Belum"; document.getElementById("doneTahlilR").checked = h.tahlilR?.done || false;
+        document.getElementById("gradeTahlilL").value = h.tahlilL?.grade || "Belum"; document.getElementById("doneTahlilL").checked = h.tahlilL?.done || false;
+        document.getElementById("gradeDoaTahlil").value = h.doaTahlil?.grade || "Belum"; document.getElementById("doneDoaTahlil").checked = h.doaTahlil?.done || false;
+        document.getElementById("gradeTawasul").value = h.tawasul?.grade || "Belum"; document.getElementById("doneTawasul").checked = h.tawasul?.done || false;
+        document.getElementById("gradeJenazah").value = h.jenazah?.grade || "Belum"; document.getElementById("doneJenazah").checked = h.jenazah?.done || false;
+        document.getElementById("gradeJuz30").value = h.juz30?.grade || "Belum"; document.getElementById("doneJuz30").checked = h.juz30?.done || false;
+        document.getElementById("gradeKhotib").value = h.khotib?.grade || "Belum"; document.getElementById("doneKhotib").checked = h.khotib?.done || false;
         document.getElementById("doneMadinUla").checked = h.madinUla || false;
         document.getElementById("doneMadinWustho").checked = h.madinWustho || false;
         document.getElementById("doneSikap").checked = h.sikap || false;
@@ -793,8 +367,7 @@
 
     function simpanHafalan() {
         let id = parseInt(document.getElementById("selectSantri").value);
-        let s = daftarSantri.find(st => st.id === id);
-        if(!s) return;
+        let s = daftarSantri.find(st => st.id === id); if(!s) return;
         s.hafalan = {
             yasin: { done: document.getElementById("doneYasin").checked, grade: document.getElementById("gradeYasin").value },
             waqiah: { done: document.getElementById("doneWaqiah").checked, grade: document.getElementById("gradeWaqiah").value },
@@ -812,23 +385,12 @@
             madinWustho: document.getElementById("doneMadinWustho").checked,
             sikap: document.getElementById("doneSikap").checked
         };
-        
         let h = s.hafalan;
         s.graduated = h.yasin.done && h.waqiah.done && h.mulk.done && h.wirid.done && h.doa.done && h.tahlilR.done && h.tahlilL.done && h.doaTahlil.done && h.tawasul.done && h.jenazah.done && h.juz30.done && h.khotib.done && h.madinUla && h.madinWustho && h.sikap;
-        
-        saveAllData();
-        alert(`✅ Data ${s.name} tersimpan! Status: ${s.graduated ? "LULUS" : "Belum Lulus"}`);
-        refreshDashboard();
-        renderAllStudents();
+        saveAllData(); alert(`✅ Data ${s.name} tersimpan! Status: ${s.graduated ? "LULUS" : "Belum Lulus"}`); refreshDashboard(); renderAllStudents();
     }
 
-    function editSantri(id) {
-        showPage('hafalan');
-        setTimeout(() => {
-            document.getElementById("selectSantri").value = id;
-            loadHafalanToForm(id);
-        }, 100);
-    }
+    function editSantri(id) { showPage('hafalan'); setTimeout(() => { document.getElementById("selectSantri").value = id; loadHafalanToForm(id); }, 100); }
 
     function renderCertSelect() {
         let select = document.getElementById("selectSertifikat");
@@ -839,14 +401,12 @@
 
     function generateSertifikat() {
         let id = parseInt(document.getElementById("selectSertifikat").value);
-        let s = daftarSantri.find(st => st.id === id);
-        if(!s) return;
-        let h = s.hafalan || {};
+        let s = daftarSantri.find(st => st.id === id); if(!s) return;
         let html = `
             <div class="certificate-content">
                 <img src="${profileData.logo}" class="certificate-logo">
                 <div class="certificate-pesantren">${profileData.pesantren}</div>
-                <div class="certificate-nomor">No Sertifikat: BM/${String(s.id).padStart(5,'0')}</div>
+                <div class="certificate-nomor">No Sertifikat: BM/00${s.id}</div>
                 <div class="certificate-title">SERTIFIKAT KELULUSAN</div>
                 <div class="certificate-name">${s.name}</div>
                 <div class="certificate-desc">Dinyatakan telah MENYELESAIKAN MUTQIN BM<br>Program Hafalan sesuai Standar Kelulusan Pondok Bahrul</div>
@@ -862,18 +422,15 @@
                     <div class="certificate-list-item"><i class="fas fa-check-circle"></i> <strong>Sikap dan Adab Sholat Berjamaah & Madin</strong> ✔</div>
                 </div>
                 <div class="signature-area">
-                    <div>Pengasuh,<br><br><div class="signature-line"></div><strong>${profileData.pengasuh}</strong></div>
-                    <div>Kepala Dewan Tahfizh,<br><br><div class="signature-line"></div><strong>${profileData.kepalaMadin}</strong></div>
+                    <div>Pengasuh,<br><br><div class="signature-line"></div>${profileData.pengasuh}</div>
+                    <div>Kepala Dewan Tahfizh,<br><br><div class="signature-line"></div>${profileData.kepalaMadin}</div>
                 </div>
             </div>
         `;
         document.getElementById("previewSertifikat").innerHTML = html;
     }
 
-    function downloadSertifikat() {
-        let element = document.getElementById("previewSertifikat");
-        html2pdf().set({ margin: 0.5, filename: 'sertifikat_lulus.pdf', image: { type: 'jpeg', quality: 0.98 }, html2canvas: { scale: 2 }, jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' } }).from(element).save();
-    }
+    function downloadSertifikat() { let element = document.getElementById("previewSertifikat"); html2pdf().set({ margin: 0.5, filename: 'sertifikat_lulus.pdf', image: { type: 'jpeg', quality: 0.98 }, html2canvas: { scale: 2 }, jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' } }).from(element).save(); }
 
     function importExcelData() {
         let file = document.getElementById("fileExcel").files[0];
@@ -884,16 +441,8 @@
             let workbook = XLSX.read(data, {type: 'array'});
             let sheet = workbook.Sheets[workbook.SheetNames[0]];
             let rows = XLSX.utils.sheet_to_json(sheet);
-            rows.forEach(row => {
-                let name = row["Nama"] || row["nama"] || Object.values(row)[0];
-                if(name) {
-                    daftarSantri.push({ id: nextId++, name: name, kelas: row["Kelas"] || "", hafalan: {}, graduated: false });
-                }
-            });
-            saveAllData();
-            alert(`Berhasil import ${rows.length} santri!`);
-            refreshDashboard();
-            renderAllStudents();
+            rows.forEach(row => { let name = row["Nama"] || row["nama"] || Object.values(row)[0]; if(name) { daftarSantri.push({ id: nextId++, name: name, kelas: row["Kelas"] || "", hafalan: {}, graduated: false }); } });
+            saveAllData(); alert(`Berhasil import ${rows.length} santri!`); refreshDashboard(); renderAllStudents();
         };
         reader.readAsArrayBuffer(file);
     }
