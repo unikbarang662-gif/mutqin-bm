@@ -52,9 +52,10 @@
         .header-title { font-weight: bold; font-size: 14px; color: #1b5e20; }
         .logout-btn { background: #dc3545; color: white; border: none; padding: 8px 18px; border-radius: 25px; cursor: pointer; font-size: 13px; }
 
-        /* Stats Cards */
+        /* Stats Cards - 2x2 di HP */
         .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 20px; }
-        .stat-card { padding: 20px; border-radius: 20px; text-align: center; color: white; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .stat-card { padding: 20px; border-radius: 20px; text-align: center; color: white; box-shadow: 0 4px 15px rgba(0,0,0,0.1); transition: transform 0.3s; }
+        .stat-card:hover { transform: translateY(-5px); }
         .stat-card:nth-child(1) { background: linear-gradient(135deg, #667eea, #764ba2); }
         .stat-card:nth-child(2) { background: linear-gradient(135deg, #11998e, #38ef7d); }
         .stat-card:nth-child(3) { background: linear-gradient(135deg, #f093fb, #f5576c); }
@@ -77,6 +78,8 @@
         th, td { padding: 10px; text-align: left; border-bottom: 1px solid #eee; }
         th { background: #f8f9fa; }
         .btn-small { background: #2e7d32; color: white; border: none; padding: 5px 12px; border-radius: 15px; cursor: pointer; }
+        .btn-download { background: #0277bd; color: white; border: none; padding: 8px 15px; border-radius: 20px; cursor: pointer; font-size: 12px; margin: 5px; }
+        .btn-download:hover { background: #01579b; }
 
         /* Search Box */
         .search-box { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
@@ -85,7 +88,12 @@
         .search-btn { background: #2e7d32; color: white; }
         .clear-btn { background: #6c757d; color: white; }
 
-        /* Form Input Hafalan - Dua Kolom */
+        /* Laporan Download Section */
+        .download-section { background: linear-gradient(135deg, #e8f5e9, #c8e6c9); padding: 15px; border-radius: 15px; margin-bottom: 20px; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between; }
+        .download-buttons { display: flex; flex-wrap: wrap; gap: 8px; }
+        .download-title { font-weight: bold; color: #1b5e20; }
+
+        /* Form Input Hafalan */
         .hafalan-layout { display: flex; gap: 20px; flex-wrap: wrap; }
         .santri-list { flex: 0 0 300px; background: white; border-radius: 20px; padding: 20px; height: fit-content; }
         .form-hafalan { flex: 1; background: white; border-radius: 20px; padding: 20px; }
@@ -101,18 +109,15 @@
         .criteria-row { margin: 12px 0; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
         .criteria-row label { flex: 1; font-size: 13px; font-weight: 500; }
         .grade-select { padding: 6px 10px; border-radius: 20px; border: 1px solid #ccc; font-size: 12px; background: white; }
-        .btn-save-section { background: linear-gradient(135deg, #2e7d32, #1b5e20); color: white; border: none; padding: 10px 20px; border-radius: 30px; font-size: 14px; font-weight: bold; cursor: pointer; margin-top: 15px; width: 100%; transition: 0.3s; }
-        .btn-save-section:hover { transform: scale(1.02); }
-        .btn-save-main { background: linear-gradient(135deg, #2e7d32, #1b5e20); color: white; border: none; padding: 14px; border-radius: 40px; font-size: 16px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 25px; box-shadow: 0 4px 15px rgba(46,125,50,0.3); }
+        .btn-save-section { background: linear-gradient(135deg, #2e7d32, #1b5e20); color: white; border: none; padding: 10px 20px; border-radius: 30px; font-size: 14px; font-weight: bold; cursor: pointer; margin-top: 15px; width: 100%; }
+        .btn-save-main { background: linear-gradient(135deg, #2e7d32, #1b5e20); color: white; border: none; padding: 14px; border-radius: 40px; font-size: 16px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 25px; }
         
         .selected-info { background: linear-gradient(135deg, #e8f5e9, #c8e6c9); padding: 15px; border-radius: 15px; margin-bottom: 20px; text-align: center; }
         .selected-info .name { font-weight: bold; font-size: 18px; color: #1b5e20; margin-top: 5px; }
 
         /* Sertifikat */
         .certificate-box { background: #fffef7; padding: 25px; border-radius: 15px; margin-top: 20px; border: 1px solid #d4af37; text-align: center; }
-        .certificate-logo { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; }
         .signature-area { display: flex; justify-content: space-between; margin-top: 30px; flex-wrap: wrap; gap: 20px; }
-        .signature-line { width: 150px; border-top: 1px solid #000; margin-top: 30px; }
 
         /* Profile Card */
         .profile-card { background: white; border-radius: 20px; padding: 20px; }
@@ -120,24 +125,30 @@
         .profile-input-group input { flex: 1; padding: 10px; border-radius: 25px; border: 1px solid #ddd; }
         .upload-area { border: 2px dashed #2e7d32; padding: 20px; border-radius: 15px; text-align: center; margin-bottom: 15px; background: #f9fff9; }
 
-        /* Responsive HP */
+        /* Responsive HP - Statistik 2x2 */
         @media (max-width: 768px) {
             .menu-toggle { display: block; }
             .sidebar-left { position: fixed; left: -280px; top: 60px; height: calc(100vh - 60px); z-index: 1000; transition: left 0.3s ease; overflow-y: auto; }
             .sidebar-left.open { left: 0; }
             .content-right { width: 100%; padding-top: 60px; }
-            .stats-row { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-            .stat-number { font-size: 22px; }
+            /* Stats Row menjadi 2x2 di HP */
+            .stats-row { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+            .stat-number { font-size: 24px; }
+            .stat-card i { font-size: 24px; }
+            .stat-card { padding: 15px 10px; }
             .hafalan-layout { flex-direction: column; }
             .santri-list { flex: auto; }
             .criteria-grid { grid-template-columns: 1fr; }
             .header-title { font-size: 10px; }
             .logout-btn { padding: 6px 12px; font-size: 11px; }
+            .download-section { flex-direction: column; align-items: stretch; }
+            .download-buttons { justify-content: center; }
         }
         
         @media (max-width: 480px) {
-            .stats-row { grid-template-columns: 1fr; }
-            .content-right { padding: 15px; }
+            .stats-row { gap: 8px; }
+            .stat-number { font-size: 20px; }
+            .content-right { padding: 12px; }
             .criteria-row label { font-size: 11px; }
         }
         
@@ -231,10 +242,22 @@
                 </div>
             </div>
 
-            <!-- DATA SANTRI -->
+            <!-- DATA SANTRI dengan Fitur Download Laporan -->
             <div id="studentsPage" style="display:none">
                 <div class="table-card">
-                    <h3>Cari Santri</h3>
+                    <h3><i class="fas fa-download"></i> Download Laporan Santri</h3>
+                    <div class="download-section">
+                        <span class="download-title"><i class="fas fa-file-alt"></i> Ekspor Data Santri:</span>
+                        <div class="download-buttons">
+                            <button class="btn-download" onclick="downloadReport('all')"><i class="fas fa-file-excel"></i> Semua Santri</button>
+                            <button class="btn-download" onclick="downloadReport('lulus')" style="background:#2e7d32;"><i class="fas fa-check-circle"></i> Sudah Lulus</button>
+                            <button class="btn-download" onclick="downloadReport('proses')" style="background:#ff9800;"><i class="fas fa-spinner"></i> Sedang Proses</button>
+                            <button class="btn-download" onclick="downloadReport('belum')" style="background:#dc3545;"><i class="fas fa-hourglass-half"></i> Belum Hafalan</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-card">
+                    <h3><i class="fas fa-search"></i> Cari Santri</h3>
                     <div class="search-box">
                         <input type="text" id="searchSantriInput" class="search-input" placeholder="Cari nama santri..." onkeyup="searchSantri()">
                         <button class="search-btn" onclick="searchSantri()"><i class="fas fa-search"></i> Cari</button>
@@ -248,7 +271,7 @@
                 </div>
             </div>
 
-            <!-- INPUT HAFALAN - DUA KOLOM dengan TOMBOL SIMPAN DI SETIAP BAGIAN -->
+            <!-- INPUT HAFALAN -->
             <div id="hafalanPage" style="display:none">
                 <div class="hafalan-layout">
                     <div class="santri-list">
@@ -265,7 +288,6 @@
                         </div>
                         <h3><i class="fas fa-pen-alt"></i> Input Nilai Hafalan</h3>
                         
-                        <!-- HAFALAN SURAT PILIHAN dengan Tombol SIMPAN sendiri -->
                         <div class="criteria-box">
                             <h4><i class="fas fa-quran"></i> Hafalan Surat Pilihan</h4>
                             <div class="criteria-row"><label>1. Surat Yasin</label><select id="gradeYasin" class="grade-select"><option>Belum</option><option>Mumtaz</option><option>Jayyid Jiddan</option><option>Jayyid</option></select><input type="checkbox" id="doneYasin"> Selesai</div>
@@ -274,7 +296,6 @@
                             <button class="btn-save-section" onclick="simpanBagian('surat')"><i class="fas fa-save"></i> SIMPAN Hafalan Surat Pilihan</button>
                         </div>
 
-                        <!-- HAFALAN AURAD dengan Tombol SIMPAN sendiri -->
                         <div class="criteria-box">
                             <h4><i class="fas fa-hands-praying"></i> Hafalan Aurad</h4>
                             <div class="criteria-row"><label>1. Wirid setelah shalat</label><select id="gradeWirid" class="grade-select"><option>Belum</option><option>Mumtaz</option><option>Jayyid Jiddan</option><option>Jayyid</option></select><input type="checkbox" id="doneWirid"> Selesai</div>
@@ -286,7 +307,6 @@
                             <button class="btn-save-section" onclick="simpanBagian('aurad')"><i class="fas fa-save"></i> SIMPAN Hafalan Aurad</button>
                         </div>
 
-                        <!-- PRAKTEK & KELULUSAN dengan Tombol SIMPAN sendiri -->
                         <div class="criteria-box">
                             <h4><i class="fas fa-pray"></i> Praktek & Kelulusan</h4>
                             <div class="criteria-row"><label>Praktek shalat & pengurusan jenazah</label><select id="gradeJenazah" class="grade-select"><option>Belum</option><option>Mumtaz</option><option>Jayyid Jiddan</option><option>Jayyid</option></select><input type="checkbox" id="doneJenazah"> Selesai</div>
@@ -298,7 +318,6 @@
                             <button class="btn-save-section" onclick="simpanBagian('praktek')"><i class="fas fa-save"></i> SIMPAN Praktek & Kelulusan</button>
                         </div>
                         
-                        <!-- TOMBOL SIMPAN SEMUA -->
                         <button class="btn-save-main" onclick="simpanSemuaHafalan()"><i class="fas fa-save"></i> SIMPAN SEMUA HAFALAN</button>
                     </div>
                 </div>
@@ -360,7 +379,7 @@
     let currentSearchTerm = "";
 
     function loadAllData() {
-        let saved = localStorage.getItem("mutqinbm_final_v11");
+        let saved = localStorage.getItem("mutqinbm_final_v12");
         if(saved) {
             let data = JSON.parse(saved);
             daftarSantri = data.daftarSantri || [];
@@ -379,7 +398,7 @@
         saveAllData();
     }
 
-    function saveAllData() { localStorage.setItem("mutqinbm_final_v11", JSON.stringify({ daftarSantri, profileData, nextId })); }
+    function saveAllData() { localStorage.setItem("mutqinbm_final_v12", JSON.stringify({ daftarSantri, profileData, nextId })); }
 
     function saveProfileData() {
         let logoFile = document.getElementById("profileLogoInput").files[0];
@@ -455,6 +474,53 @@
         if(activeIndex !== undefined) document.querySelectorAll('.menu-item')[activeIndex].classList.add('active');
         
         closeSidebar();
+    }
+
+    // FITUR DOWNLOAD LAPORAN
+    function downloadReport(type) {
+        let filteredSantri = [];
+        let filename = "";
+        let sheetName = "";
+        
+        if(type === 'all') {
+            filteredSantri = daftarSantri;
+            filename = "laporan_semua_santri.xlsx";
+            sheetName = "Semua Santri";
+        } else if(type === 'lulus') {
+            filteredSantri = daftarSantri.filter(s => s.graduated === true);
+            filename = "laporan_santri_lulus.xlsx";
+            sheetName = "Santri Lulus";
+        } else if(type === 'proses') {
+            filteredSantri = daftarSantri.filter(s => !s.graduated && s.hafalan && Object.keys(s.hafalan).length > 0);
+            filename = "laporan_santri_proses.xlsx";
+            sheetName = "Santri Proses";
+        } else if(type === 'belum') {
+            filteredSantri = daftarSantri.filter(s => !s.graduated && (!s.hafalan || Object.keys(s.hafalan).length === 0));
+            filename = "laporan_santri_belum_hafalan.xlsx";
+            sheetName = "Santri Belum Hafalan";
+        }
+        
+        const data = filteredSantri.map(s => ({
+            'No': s.id,
+            'Nama Santri': s.name,
+            'Kelas': s.kelas || '-',
+            'Status': s.graduated ? 'LULUS' : (s.hafalan && Object.keys(s.hafalan).length > 0 ? 'Sedang Proses' : 'Belum Hafalan'),
+            'Hafalan Surat Yasin': s.hafalan?.yasin?.grade || 'Belum',
+            'Hafalan Surat Waqiah': s.hafalan?.waqiah?.grade || 'Belum',
+            'Hafalan Surat Mulk': s.hafalan?.mulk?.grade || 'Belum',
+            'Hafalan Aurad': s.hafalan?.tawasul?.grade || 'Belum',
+            'Praktek Jenazah': s.hafalan?.jenazah?.grade || 'Belum',
+            'Hafalan Juz 30': s.hafalan?.juz30?.grade || 'Belum',
+            'Praktek Khotib': s.hafalan?.khotib?.grade || 'Belum'
+        }));
+        
+        const ws = XLSX.utils.json_to_sheet(data);
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, sheetName);
+        XLSX.writeFile(wb, filename);
+        
+        let statusText = type === 'all' ? 'Semua Santri' : (type === 'lulus' ? 'Sudah Lulus' : (type === 'proses' ? 'Sedang Proses' : 'Belum Hafalan'));
+        alert(`✅ Berhasil mendownload laporan ${statusText} (${filteredSantri.length} santri)`);
     }
 
     function refreshDashboard() {
@@ -559,7 +625,6 @@
         document.getElementById("doneSikap").checked = h.sikap || false;
     }
 
-    // Fungsi simpan per bagian
     function simpanBagian(bagian) {
         if(!currentSelectedStudentId) { alert("Pilih santri terlebih dahulu!"); return; }
         let s = daftarSantri.find(st => st.id === currentSelectedStudentId);
@@ -589,7 +654,6 @@
             alert(`✅ Praktek & Kelulusan untuk ${s.name} tersimpan!`);
         }
         
-        // Update status kelulusan
         let h = s.hafalan;
         s.graduated = h.yasin?.done && h.waqiah?.done && h.mulk?.done && h.wirid?.done && h.doa?.done && 
                       h.tahlilR?.done && h.tahlilL?.done && h.doaTahlil?.done && h.tawasul?.done && 
