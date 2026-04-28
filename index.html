@@ -13,7 +13,7 @@
         body { font-family: 'Poppins', 'Segoe UI', Arial, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; }
 
         /* Login Page */
-        .login-page { min-height: 100vh; display: flex; justify-content: center; align-items: center; background: linear-gradient(135deg, #1b5e20, #2e7d32); padding: 20px; }
+        .login-page { min-height: 100vh; display: flex; justify-content: center; align-items: center; background: linear-gradient(135deg, #1b5e20, #2e7d32); padding: 20px; position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 1000; }
         .login-box { background: white; width: 100%; max-width: 380px; padding: 35px 25px; border-radius: 35px; text-align: center; box-shadow: 0 25px 50px rgba(0,0,0,0.3); }
         .login-logo { width: 90px; height: 90px; border-radius: 50%; object-fit: cover; margin-bottom: 12px; border: 4px solid #2e7d32; }
         .login-title { font-size: 26px; font-weight: bold; color: #1b5e20; }
@@ -31,7 +31,7 @@
         .header-title { font-weight: bold; font-size: 13px; color: #1b5e20; line-height: 1.3; }
         .logout-btn { background: #dc3545; color: white; border: none; padding: 8px 18px; border-radius: 25px; cursor: pointer; font-size: 13px; font-weight: bold; }
 
-        /* Sidebar Horizontal Scroll untuk HP */
+        /* Sidebar */
         .sidebar { background: white; padding: 8px 0; overflow-x: auto; white-space: nowrap; display: flex; box-shadow: 0 4px 10px rgba(0,0,0,0.05); gap: 5px; }
         .sidebar-item { display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; cursor: pointer; color: #555; font-weight: 600; font-size: 13px; border-radius: 30px; margin: 0 3px; transition: 0.3s; }
         .sidebar-item.active { background: linear-gradient(135deg, #2e7d32, #1b5e20); color: white; }
@@ -40,7 +40,7 @@
         /* Content */
         .content { padding: 18px; max-width: 1200px; margin: 0 auto; }
 
-        /* Stats Cards Warna-warni */
+        /* Stats Cards */
         .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 20px; }
         .stat-card { padding: 15px 10px; border-radius: 20px; text-align: center; box-shadow: 0 6px 20px rgba(0,0,0,0.15); color: white; transition: transform 0.3s; }
         .stat-card:hover { transform: translateY(-5px); }
@@ -78,7 +78,7 @@
         .btn-save { background: linear-gradient(135deg, #2e7d32, #1b5e20); color: white; border: none; padding: 14px; border-radius: 40px; font-size: 16px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 20px; box-shadow: 0 4px 15px rgba(46,125,50,0.3); }
         .btn-save:hover { transform: scale(1.02); }
 
-        /* Sertifikat - PERSIS SEPERTI CONTOH GAMBAR */
+        /* Sertifikat - PERSIS SEPERTI CONTOH */
         .certificate-box { background: #fffef7; padding: 25px 20px; border-radius: 15px; margin-top: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); border: 1px solid #d4af37; }
         .certificate-content { text-align: center; font-family: 'Times New Roman', serif; }
         .certificate-logo { width: 75px; height: 75px; border-radius: 50%; object-fit: cover; margin-bottom: 8px; }
@@ -98,7 +98,7 @@
         .profile-card { background: linear-gradient(135deg, #fff, #f9f9f9); border-radius: 25px; padding: 20px; margin-bottom: 20px; box-shadow: 0 8px 25px rgba(0,0,0,0.1); }
         .profile-title { font-size: 18px; font-weight: bold; color: #2e7d32; margin-bottom: 15px; display: flex; align-items: center; gap: 10px; }
         .profile-input-group { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 15px; }
-        .profile-input-group input, .profile-input-group select { flex: 1; min-width: 180px; padding: 10px 15px; border-radius: 30px; border: 1px solid #ddd; }
+        .profile-input-group input { flex: 1; min-width: 180px; padding: 10px 15px; border-radius: 30px; border: 1px solid #ddd; }
         .upload-area { border: 2px dashed #2e7d32; padding: 15px; border-radius: 20px; text-align: center; background: #f9fff9; margin-bottom: 15px; }
 
         /* Import Area */
@@ -127,10 +127,10 @@
         <img id="loginLogo" class="login-logo" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Crect width='100' height='100' fill='%232e7d32'/%3E%3Ctext x='50' y='65' text-anchor='middle' fill='white' font-size='40' font-weight='bold'%3EBM%3C/text%3E%3C/svg%3E">
         <div class="login-title">Mutqin BM</div>
         <div class="login-sub">Standar Kelulusan Ponpes Bahrul Maghfiroh</div>
-        <input type="text" id="loginUsername" class="login-input" placeholder="Username" value="admin">
-        <input type="password" id="loginPassword" class="login-input" placeholder="Password" value="admin">
+        <input type="text" id="loginUsername" class="login-input" placeholder="Username">
+        <input type="password" id="loginPassword" class="login-input" placeholder="Password">
         <button class="login-btn" onclick="doLogin()"><i class="fas fa-sign-in-alt"></i> Login</button>
-        <div style="margin-top: 12px; font-size: 11px; color: #999;"><i class="fas fa-lock"></i> Lupa Password?</div>
+        <div style="margin-top: 12px; font-size: 11px; color: #999;">Username: admin | Password: admin</div>
     </div>
 </div>
 
@@ -195,24 +195,24 @@
                 <div class="criteria-grid">
                     <div class="criteria-box">
                         <h4><i class="fas fa-quran"></i> Hafalan Surat Pilihan</h4>
-                        <div class="criteria-row"><label>1. Surat Yasin</label><select id="gradeYasin"><option>Belum</option><option>Mumtaz</option><option>Jayyid Jiddan</option><option>Jayyid</option></select><input type="checkbox" id="doneYasin"> Selesai</div>
-                        <div class="criteria-row"><label>2. Surat Al Waqiah</label><select id="gradeWaqiah"><option>Belum</option><option>Mumtaz</option><option>Jayyid Jiddan</option><option>Jayyid</option></select><input type="checkbox" id="doneWaqiah"> Selesai</div>
-                        <div class="criteria-row"><label>3. Surat Al Mulk</label><select id="gradeMulk"><option>Belum</option><option>Mumtaz</option><option>Jayyid Jiddan</option><option>Jayyid</option></select><input type="checkbox" id="doneMulk"> Selesai</div>
+                        <div class="criteria-row"><label>1. Surat Yasin</label><select id="gradeYasin" class="grade-select"><option>Belum</option><option>Mumtaz</option><option>Jayyid Jiddan</option><option>Jayyid</option></select><input type="checkbox" id="doneYasin"> Selesai</div>
+                        <div class="criteria-row"><label>2. Surat Al Waqiah</label><select id="gradeWaqiah" class="grade-select"><option>Belum</option><option>Mumtaz</option><option>Jayyid Jiddan</option><option>Jayyid</option></select><input type="checkbox" id="doneWaqiah"> Selesai</div>
+                        <div class="criteria-row"><label>3. Surat Al Mulk</label><select id="gradeMulk" class="grade-select"><option>Belum</option><option>Mumtaz</option><option>Jayyid Jiddan</option><option>Jayyid</option></select><input type="checkbox" id="doneMulk"> Selesai</div>
                     </div>
                     <div class="criteria-box">
                         <h4><i class="fas fa-hands"></i> Hafalan Aurad (Mumtaz tersedia)</h4>
-                        <div class="criteria-row"><label>1. Wirid setelah shalat</label><select id="gradeWirid"><option>Belum</option><option>Mumtaz</option><option>Jayyid Jiddan</option><option>Jayyid</option></select><input type="checkbox" id="doneWirid"> Selesai</div>
-                        <div class="criteria-row"><label>2. Doa setelah shalat</label><select id="gradeDoa"><option>Belum</option><option>Mumtaz</option><option>Jayyid Jiddan</option><option>Jayyid</option></select><input type="checkbox" id="doneDoa"> Selesai</div>
-                        <div class="criteria-row"><label>3. Tahlil ringkas</label><select id="gradeTahlilR"><option>Belum</option><option>Mumtaz</option><option>Jayyid Jiddan</option><option>Jayyid</option></select><input type="checkbox" id="doneTahlilR"> Selesai</div>
-                        <div class="criteria-row"><label>4. Tahlil lengkap</label><select id="gradeTahlilL"><option>Belum</option><option>Mumtaz</option><option>Jayyid Jiddan</option><option>Jayyid</option></select><input type="checkbox" id="doneTahlilL"> Selesai</div>
-                        <div class="criteria-row"><label>5. Doa tahlil</label><select id="gradeDoaTahlil"><option>Belum</option><option>Mumtaz</option><option>Jayyid Jiddan</option><option>Jayyid</option></select><input type="checkbox" id="doneDoaTahlil"> Selesai</div>
-                        <div class="criteria-row"><label>6. Tawasul</label><select id="gradeTawasul"><option>Belum</option><option>Mumtaz</option><option>Jayyid Jiddan</option><option>Jayyid</option></select><input type="checkbox" id="doneTawasul"> Selesai</div>
+                        <div class="criteria-row"><label>1. Wirid setelah shalat</label><select id="gradeWirid" class="grade-select"><option>Belum</option><option>Mumtaz</option><option>Jayyid Jiddan</option><option>Jayyid</option></select><input type="checkbox" id="doneWirid"> Selesai</div>
+                        <div class="criteria-row"><label>2. Doa setelah shalat</label><select id="gradeDoa" class="grade-select"><option>Belum</option><option>Mumtaz</option><option>Jayyid Jiddan</option><option>Jayyid</option></select><input type="checkbox" id="doneDoa"> Selesai</div>
+                        <div class="criteria-row"><label>3. Tahlil ringkas</label><select id="gradeTahlilR" class="grade-select"><option>Belum</option><option>Mumtaz</option><option>Jayyid Jiddan</option><option>Jayyid</option></select><input type="checkbox" id="doneTahlilR"> Selesai</div>
+                        <div class="criteria-row"><label>4. Tahlil lengkap</label><select id="gradeTahlilL" class="grade-select"><option>Belum</option><option>Mumtaz</option><option>Jayyid Jiddan</option><option>Jayyid</option></select><input type="checkbox" id="doneTahlilL"> Selesai</div>
+                        <div class="criteria-row"><label>5. Doa tahlil</label><select id="gradeDoaTahlil" class="grade-select"><option>Belum</option><option>Mumtaz</option><option>Jayyid Jiddan</option><option>Jayyid</option></select><input type="checkbox" id="doneDoaTahlil"> Selesai</div>
+                        <div class="criteria-row"><label>6. Tawasul</label><select id="gradeTawasul" class="grade-select"><option>Belum</option><option>Mumtaz</option><option>Jayyid Jiddan</option><option>Jayyid</option></select><input type="checkbox" id="doneTawasul"> Selesai</div>
                     </div>
                     <div class="criteria-box">
                         <h4><i class="fas fa-pray"></i> Praktek & Kelulusan</h4>
-                        <div class="criteria-row"><label>Praktek shalat & pengurusan jenazah</label><select id="gradeJenazah"><option>Belum</option><option>Mumtaz</option><option>Jayyid Jiddan</option><option>Jayyid</option></select><input type="checkbox" id="doneJenazah"> Selesai</div>
-                        <div class="criteria-row"><label>Hafalan juz 30 (Amma - Annas)</label><select id="gradeJuz30"><option>Belum</option><option>Ahsan</option><option>Mumtaz</option><option>Jayyid Jiddan</option><option>Jayyid</option></select><input type="checkbox" id="doneJuz30"> Selesai</div>
-                        <div class="criteria-row"><label>Praktek khotib & bilal</label><select id="gradeKhotib"><option>Belum</option><option>Ahsan</option><option>Mumtaz</option><option>Jayyid Jiddan</option></select><input type="checkbox" id="doneKhotib"> Selesai</div>
+                        <div class="criteria-row"><label>Praktek shalat & pengurusan jenazah</label><select id="gradeJenazah" class="grade-select"><option>Belum</option><option>Mumtaz</option><option>Jayyid Jiddan</option><option>Jayyid</option></select><input type="checkbox" id="doneJenazah"> Selesai</div>
+                        <div class="criteria-row"><label>Hafalan juz 30 (Amma - Annas)</label><select id="gradeJuz30" class="grade-select"><option>Belum</option><option>Ahsan</option><option>Mumtaz</option><option>Jayyid Jiddan</option><option>Jayyid</option></select><input type="checkbox" id="doneJuz30"> Selesai</div>
+                        <div class="criteria-row"><label>Praktek khotib & bilal</label><select id="gradeKhotib" class="grade-select"><option>Belum</option><option>Ahsan</option><option>Mumtaz</option><option>Jayyid Jiddan</option></select><input type="checkbox" id="doneKhotib"> Selesai</div>
                         <div class="criteria-row"><label>Lulus Madin Ula</label><input type="checkbox" id="doneMadinUla"> Selesai</div>
                         <div class="criteria-row"><label>Lulus Madin Wustho</label><input type="checkbox" id="doneMadinWustho"> Selesai</div>
                         <div class="criteria-row"><label>Sikap dan Adab (shalat berjamaah, madin formal)</label><input type="checkbox" id="doneSikap"> Selesai</div>
@@ -275,7 +275,7 @@
     };
 
     function loadAllData() {
-        let saved = localStorage.getItem("mutqinbm_final_v4");
+        let saved = localStorage.getItem("mutqinbm_final_v5");
         if(saved) {
             let data = JSON.parse(saved);
             daftarSantri = data.daftarSantri || [];
@@ -294,7 +294,7 @@
         saveAllData();
     }
 
-    function saveAllData() { localStorage.setItem("mutqinbm_final_v4", JSON.stringify({ daftarSantri, profileData, nextId })); }
+    function saveAllData() { localStorage.setItem("mutqinbm_final_v5", JSON.stringify({ daftarSantri, profileData, nextId })); }
 
     function saveProfileData() {
         let logoFile = document.getElementById("profileLogoInput").files[0];
@@ -321,10 +321,10 @@
     function doLogin() {
         let user = document.getElementById("loginUsername").value;
         let pass = document.getElementById("loginPassword").value;
-        if(user && pass) { loadAllData(); updateProfileUI(); document.getElementById("loginPage").style.display = "none"; document.getElementById("mainApp").style.display = "block"; showPage('dashboard'); refreshDashboard(); }
-        else alert("Masukkan username dan password! (admin/admin)");
-    }
-
-    function doLogout() { document.getElementById("mainApp").style.display = "none"; document.getElementById("loginPage").style.display = "flex"; }
-
-    function showPage(page
+        if(user === "admin" && pass === "admin") { 
+            loadAllData(); 
+            updateProfileUI(); 
+            document.getElementById("loginPage").style.display = "none"; 
+            document.getElementById("mainApp").style.display = "block"; 
+            showPage('dashboard'); 
+            refreshDashboard
