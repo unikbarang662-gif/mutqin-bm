@@ -24,227 +24,106 @@
         .login-btn:hover { background: #1b5e20; }
 
         /* Main App */
-        .app-main { display: none; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); min-height: 100vh; }
-        .header { background: white; padding: 10px 16px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 100; flex-wrap: wrap; gap: 10px; }
+        .app-main { display: none; min-height: 100vh; }
+        
+        /* Layout KIRI (Sidebar) dan KANAN (Content) */
+        .main-layout { display: flex; min-height: calc(100vh - 60px); }
+        
+        /* Sidebar Kiri */
+        .sidebar-left { width: 260px; background: white; box-shadow: 2px 0 15px rgba(0,0,0,0.1); padding: 20px 0; }
+        .sidebar-left .logo-sidebar { text-align: center; padding: 0 15px 20px; border-bottom: 1px solid #e0e0e0; margin-bottom: 20px; }
+        .sidebar-left .logo-sidebar img { width: 60px; height: 60px; border-radius: 50%; margin-bottom: 10px; }
+        .sidebar-left .logo-sidebar h3 { font-size: 14px; color: #1b5e20; }
+        .menu-item { display: flex; align-items: center; gap: 12px; padding: 14px 20px; cursor: pointer; color: #555; font-weight: 500; transition: 0.3s; }
+        .menu-item:hover { background: #e8f5e9; color: #2e7d32; }
+        .menu-item.active { background: linear-gradient(135deg, #2e7d32, #1b5e20); color: white; }
+        .menu-item i { width: 24px; font-size: 18px; }
+        
+        /* Content Kanan */
+        .content-right { flex: 1; padding: 20px; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); overflow-y: auto; }
+        
+        /* Header Atas */
+        .header-top { background: white; padding: 10px 20px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
         .header-logo { display: flex; align-items: center; gap: 10px; }
-        .header-logo-img { width: 45px; height: 45px; border-radius: 50%; object-fit: cover; border: 2px solid #2e7d32; }
-        .header-title { font-weight: bold; font-size: 13px; color: #1b5e20; line-height: 1.3; }
-        .logout-btn { background: #dc3545; color: white; border: none; padding: 8px 18px; border-radius: 25px; cursor: pointer; font-size: 13px; font-weight: bold; }
-
-        /* Sidebar */
-        .sidebar { background: white; padding: 8px 0; overflow-x: auto; white-space: nowrap; display: flex; box-shadow: 0 4px 10px rgba(0,0,0,0.05); gap: 5px; }
-        .sidebar-item { display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; cursor: pointer; color: #555; font-weight: 600; font-size: 13px; border-radius: 30px; margin: 0 3px; transition: 0.3s; }
-        .sidebar-item.active { background: linear-gradient(135deg, #2e7d32, #1b5e20); color: white; }
-        .sidebar-item i { font-size: 16px; }
-
-        /* Content */
-        .content { padding: 18px; max-width: 1400px; margin: 0 auto; }
+        .header-logo-img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; }
+        .header-title { font-weight: bold; font-size: 14px; color: #1b5e20; }
+        .logout-btn { background: #dc3545; color: white; border: none; padding: 8px 18px; border-radius: 25px; cursor: pointer; font-size: 13px; }
 
         /* Stats Cards */
-        .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 20px; }
-        .stat-card { padding: 15px 10px; border-radius: 20px; text-align: center; box-shadow: 0 6px 20px rgba(0,0,0,0.15); color: white; transition: transform 0.3s; cursor: pointer; }
-        .stat-card:hover { transform: translateY(-5px); }
+        .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 20px; }
+        .stat-card { padding: 20px; border-radius: 20px; text-align: center; color: white; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
         .stat-card:nth-child(1) { background: linear-gradient(135deg, #667eea, #764ba2); }
         .stat-card:nth-child(2) { background: linear-gradient(135deg, #11998e, #38ef7d); }
         .stat-card:nth-child(3) { background: linear-gradient(135deg, #f093fb, #f5576c); }
         .stat-card:nth-child(4) { background: linear-gradient(135deg, #ff9800, #f44336); }
         .stat-number { font-size: 32px; font-weight: bold; }
-        .stat-card i { font-size: 32px; margin-bottom: 8px; display: block; }
+        .stat-card i { font-size: 30px; margin-bottom: 10px; display: block; }
 
         /* Progress Card */
-        .progress-card { background: linear-gradient(135deg, #ffffff, #f8f9fa); padding: 20px; border-radius: 25px; margin-bottom: 20px; text-align: center; box-shadow: 0 8px 25px rgba(0,0,0,0.1); border: 1px solid rgba(46,125,50,0.2); }
-        .progress-card h3 { font-size: 18px; margin-bottom: 15px; color: #1b5e20; }
+        .progress-card { background: white; padding: 20px; border-radius: 20px; margin-bottom: 20px; text-align: center; }
         .chart-row { display: flex; justify-content: center; flex-wrap: wrap; gap: 30px; align-items: center; }
-        .progress-chart { width: 220px; height: 220px; }
-        .legend { text-align: left; background: linear-gradient(135deg, #f0f2f5, #e8f5e9); padding: 15px 20px; border-radius: 20px; }
-        .legend-item { display: flex; align-items: center; gap: 12px; margin: 12px 0; font-size: 14px; font-weight: 500; }
-        .legend-color { width: 22px; height: 22px; border-radius: 50%; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        .progress-percent { font-size: 32px; font-weight: bold; margin-top: 15px; background: linear-gradient(135deg, #2e7d32, #11998e); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        
-        /* Detail Progress */
-        .detail-progress { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 20px; }
-        .detail-card { background: white; padding: 15px; border-radius: 20px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.08); }
-        .detail-card h4 { font-size: 13px; color: #666; margin-bottom: 8px; }
-        .detail-card .number { font-size: 28px; font-weight: bold; }
-        .detail-card .sub { font-size: 11px; color: #999; margin-top: 5px; }
-        .detail-card:nth-child(1) .number { color: #2e7d32; }
-        .detail-card:nth-child(2) .number { color: #ff9800; }
-        .detail-card:nth-child(3) .number { color: #dc3545; }
+        .progress-chart { width: 200px; height: 200px; }
+        .legend { text-align: left; }
+        .legend-item { display: flex; align-items: center; gap: 10px; margin: 10px 0; }
+        .legend-color { width: 20px; height: 20px; border-radius: 50%; }
+        .progress-percent { font-size: 28px; font-weight: bold; margin-top: 15px; color: #2e7d32; }
 
         /* Table Card */
-        .table-card { background: white; border-radius: 25px; padding: 15px; overflow-x: auto; box-shadow: 0 8px 25px rgba(0,0,0,0.1); margin-bottom: 20px; }
-        .table-card h3 { margin-bottom: 12px; color: #1b5e20; font-size: 16px; }
-        table { width: 100%; border-collapse: collapse; font-size: 12px; }
-        th, td { padding: 10px 6px; text-align: left; border-bottom: 1px solid #eee; }
-        th { background: linear-gradient(135deg, #e8f5e9, #c8e6c9); font-weight: 600; }
-        .btn-small { background: linear-gradient(135deg, #2e7d32, #1b5e20); color: white; border: none; padding: 5px 12px; border-radius: 20px; cursor: pointer; font-size: 11px; }
+        .table-card { background: white; border-radius: 20px; padding: 20px; overflow-x: auto; margin-bottom: 20px; }
+        table { width: 100%; border-collapse: collapse; font-size: 13px; }
+        th, td { padding: 10px; text-align: left; border-bottom: 1px solid #eee; }
+        th { background: #f8f9fa; }
+        .btn-small { background: #2e7d32; color: white; border: none; padding: 5px 12px; border-radius: 15px; cursor: pointer; }
 
         /* Search Box */
-        .search-box { display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: wrap; }
-        .search-input { flex: 1; padding: 12px 18px; border: 2px solid #e0e0e0; border-radius: 30px; font-size: 14px; background: white; }
-        .search-input:focus { border-color: #2e7d32; outline: none; }
-        .search-btn { background: linear-gradient(135deg, #2e7d32, #1b5e20); color: white; border: none; padding: 12px 24px; border-radius: 30px; cursor: pointer; font-size: 14px; font-weight: bold; }
-        .clear-btn { background: #6c757d; color: white; border: none; padding: 12px 24px; border-radius: 30px; cursor: pointer; font-size: 14px; font-weight: bold; }
-        .result-count { margin: 8px 0 15px 0; font-size: 13px; color: #666; padding: 8px 12px; background: #f0f2f5; border-radius: 20px; display: inline-block; }
+        .search-box { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+        .search-input { flex: 1; padding: 10px 15px; border: 1px solid #ddd; border-radius: 25px; }
+        .search-btn, .clear-btn { padding: 10px 20px; border: none; border-radius: 25px; cursor: pointer; }
+        .search-btn { background: #2e7d32; color: white; }
+        .clear-btn { background: #6c757d; color: white; }
 
-        /* INPUT HAFALAN - LAYOUT SEPERTI CONTOH (KIRI: DAFTAR SANTRI, KANAN: FORM) */
-        .hafalan-container {
-            display: flex;
-            gap: 25px;
-            flex-wrap: wrap;
-        }
-        .santri-list-section {
-            flex: 0 0 320px;
-            background: white;
-            border-radius: 25px;
-            padding: 20px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-            height: fit-content;
-            position: sticky;
-            top: 80px;
-        }
-        .form-section {
-            flex: 1;
-            min-width: 300px;
-        }
-        .santri-list-section h4 {
-            color: #1b5e20;
-            margin-bottom: 15px;
-            font-size: 16px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #e8f5e9;
-        }
-        .search-santri-input {
-            width: 100%;
-            padding: 10px 15px;
-            border: 2px solid #e0e0e0;
-            border-radius: 30px;
-            font-size: 13px;
-            margin-bottom: 15px;
-        }
-        .search-santri-input:focus {
-            border-color: #2e7d32;
-            outline: none;
-        }
-        .santri-list-scroll {
-            max-height: 450px;
-            overflow-y: auto;
-            border: 1px solid #e8f5e9;
-            border-radius: 15px;
-        }
-        .santri-item-card {
-            padding: 12px 15px;
-            cursor: pointer;
-            border-bottom: 1px solid #eee;
-            transition: 0.2s;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .santri-item-card:hover {
-            background: #e8f5e9;
-        }
-        .santri-item-card.active {
-            background: linear-gradient(135deg, #2e7d32, #1b5e20);
-            color: white;
-        }
-        .santri-item-card .santri-name {
-            font-weight: 600;
-            font-size: 14px;
-        }
-        .santri-item-card .santri-class {
-            font-size: 11px;
-            color: #888;
-        }
-        .santri-item-card.active .santri-class {
-            color: #ddd;
-        }
-        .santri-status-badge {
-            font-size: 11px;
-            padding: 3px 10px;
-            border-radius: 20px;
-            background: #f0f2f5;
-        }
-        .selected-info-card {
-            background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
-            padding: 15px;
-            border-radius: 20px;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-        .selected-info-card .label {
-            font-size: 11px;
-            color: #666;
-        }
-        .selected-info-card .name {
-            font-weight: bold;
-            color: #1b5e20;
-            font-size: 18px;
-            margin-top: 5px;
-        }
-        .selected-info-card .status {
-            font-size: 12px;
-            margin-top: 5px;
-        }
-
-        /* Form Card */
-        .form-card { background: white; border-radius: 25px; padding: 20px; box-shadow: 0 8px 25px rgba(0,0,0,0.1); }
-        .form-title { font-size: 18px; font-weight: bold; background: linear-gradient(135deg, #2e7d32, #1b5e20); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 2px solid #e8f5e9; }
-        .criteria-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 15px; }
-        .criteria-box { border: 2px solid #e8f5e9; border-radius: 20px; padding: 15px; background: #fafdfa; }
-        .criteria-box h4 { color: #2e7d32; margin-bottom: 12px; font-size: 15px; display: flex; align-items: center; gap: 8px; }
-        .criteria-row { margin: 10px 0; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-        .criteria-row label { flex: 1; font-size: 12px; font-weight: 500; }
-        .grade-select { padding: 5px 8px; border-radius: 20px; border: 1px solid #ccc; font-size: 11px; background: white; }
-        .btn-save { background: linear-gradient(135deg, #2e7d32, #1b5e20); color: white; border: none; padding: 14px; border-radius: 40px; font-size: 16px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 20px; box-shadow: 0 4px 15px rgba(46,125,50,0.3); }
-        .btn-save:hover { transform: scale(1.02); }
-        .reset-search-btn { background: #6c757d; color: white; border: none; padding: 8px 15px; border-radius: 30px; cursor: pointer; font-size: 12px; width: 100%; margin-top: 10px; }
+        /* Form Input Hafalan - Dua Kolom */
+        .hafalan-layout { display: flex; gap: 20px; flex-wrap: wrap; }
+        .santri-list { flex: 0 0 300px; background: white; border-radius: 20px; padding: 20px; height: fit-content; }
+        .form-hafalan { flex: 1; background: white; border-radius: 20px; padding: 20px; }
+        .santri-item { padding: 12px; cursor: pointer; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; }
+        .santri-item:hover { background: #e8f5e9; }
+        .santri-item.active { background: #2e7d32; color: white; }
+        .search-santri { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 25px; margin-bottom: 15px; }
+        .santri-list-scroll { max-height: 400px; overflow-y: auto; }
+        
+        .criteria-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 15px; margin-top: 15px; }
+        .criteria-box { border: 1px solid #e8f5e9; border-radius: 15px; padding: 15px; background: #fafdfa; }
+        .criteria-box h4 { color: #2e7d32; margin-bottom: 10px; }
+        .criteria-row { margin: 8px 0; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+        .criteria-row label { flex: 1; font-size: 12px; }
+        .grade-select { padding: 5px 8px; border-radius: 15px; border: 1px solid #ccc; }
+        .btn-save { background: #2e7d32; color: white; border: none; padding: 12px; border-radius: 30px; font-size: 16px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 20px; }
+        
+        .selected-info { background: #e8f5e9; padding: 12px; border-radius: 15px; margin-bottom: 20px; text-align: center; }
+        .selected-info .name { font-weight: bold; font-size: 18px; color: #1b5e20; }
 
         /* Sertifikat */
-        .certificate-box { background: #fffef7; padding: 25px 20px; border-radius: 15px; margin-top: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); border: 1px solid #d4af37; }
-        .certificate-content { text-align: center; font-family: 'Times New Roman', serif; }
-        .certificate-logo { width: 75px; height: 75px; border-radius: 50%; object-fit: cover; margin-bottom: 8px; }
-        .certificate-pesantren { font-size: 18px; font-weight: bold; letter-spacing: 1px; }
-        .certificate-nomor { font-size: 11px; color: #555; margin: 5px 0; }
-        .certificate-title { font-size: 22px; font-weight: bold; margin: 12px 0; letter-spacing: 3px; border-top: 2px solid #2e7d32; border-bottom: 2px solid #2e7d32; display: inline-block; padding: 5px 20px; }
-        .certificate-name { font-size: 26px; font-weight: bold; margin: 15px 0; text-transform: uppercase; color: #1b5e20; }
-        .certificate-desc { font-size: 13px; margin: 10px 0; line-height: 1.4; }
-        .certificate-lulus { font-size: 32px; font-weight: bold; color: #2e7d32; margin: 10px 0; }
-        .certificate-list { text-align: left; max-width: 450px; margin: 15px auto; font-size: 12px; background: #f9f9f0; padding: 10px 20px; border-radius: 10px; }
-        .certificate-list-item { margin: 6px 0; display: flex; align-items: center; gap: 8px; }
-        .certificate-list-item i { width: 18px; color: #2e7d32; font-size: 14px; }
-        .signature-area { display: flex; justify-content: space-between; margin-top: 30px; text-align: center; font-size: 11px; }
-        .signature-line { width: 140px; border-top: 1px solid #000; margin-top: 25px; }
+        .certificate-box { background: #fffef7; padding: 25px; border-radius: 15px; margin-top: 20px; border: 1px solid #d4af37; text-align: center; }
+        .certificate-logo { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; }
+        .signature-area { display: flex; justify-content: space-between; margin-top: 30px; }
+        .signature-line { width: 150px; border-top: 1px solid #000; margin-top: 30px; }
 
-        /* Profile Settings */
-        .profile-card { background: linear-gradient(135deg, #fff, #f9f9f9); border-radius: 25px; padding: 20px; margin-bottom: 20px; box-shadow: 0 8px 25px rgba(0,0,0,0.1); }
-        .profile-title { font-size: 18px; font-weight: bold; color: #2e7d32; margin-bottom: 15px; display: flex; align-items: center; gap: 10px; }
-        .profile-input-group { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 15px; }
-        .profile-input-group input { flex: 1; min-width: 180px; padding: 10px 15px; border-radius: 30px; border: 1px solid #ddd; }
-        .upload-area { border: 2px dashed #2e7d32; padding: 15px; border-radius: 20px; text-align: center; background: #f9fff9; margin-bottom: 15px; }
+        /* Profile Card */
+        .profile-card { background: white; border-radius: 20px; padding: 20px; }
+        .profile-input-group { display: flex; flex-wrap: wrap; gap: 10px; margin: 15px 0; }
+        .profile-input-group input { flex: 1; padding: 10px; border-radius: 25px; border: 1px solid #ddd; }
+        .upload-area { border: 2px dashed #2e7d32; padding: 20px; border-radius: 15px; text-align: center; margin-bottom: 15px; }
 
-        /* Import Area */
-        .import-area { border: 2px dashed #2e7d32; padding: 20px; border-radius: 20px; text-align: center; background: #f9fff9; }
-
-        /* Responsive */
-        @media (max-width: 850px) {
-            .stats-row { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-            .stat-number { font-size: 22px; }
-            .stat-card i { font-size: 24px; }
-            .detail-progress { grid-template-columns: 1fr; gap: 10px; }
-            .progress-chart { width: 160px; height: 160px; }
-            .certificate-name { font-size: 20px; }
-            .certificate-lulus { font-size: 26px; }
-            .sidebar-item { padding: 8px 14px; font-size: 11px; }
-            .content { padding: 12px; }
-            .santri-list-section { flex: 0 0 100%; position: relative; top: 0; }
-            .hafalan-container { flex-direction: column; }
+        @media (max-width: 768px) {
+            .main-layout { flex-direction: column; }
+            .sidebar-left { width: 100%; display: flex; overflow-x: auto; padding: 10px; }
+            .sidebar-left .logo-sidebar { display: none; }
+            .menu-item { padding: 10px 15px; white-space: nowrap; }
+            .stats-row { grid-template-columns: repeat(2, 1fr); }
+            .hafalan-layout { flex-direction: column; }
+            .santri-list { flex: auto; }
         }
-        select, input[type="text"], input[type="file"] { padding: 8px 12px; border-radius: 25px; border: 1px solid #ddd; }
-        .full-width { width: 100%; margin-bottom: 8px; }
     </style>
 </head>
 <body>
@@ -264,123 +143,244 @@
 
 <!-- MAIN APP -->
 <div id="mainApp" class="app-main">
-    <div class="header">
+    <!-- Header Atas -->
+    <div class="header-top">
         <div class="header-logo">
-            <img id="headerLogo" class="header-logo-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='50' height='50'%3E%3Crect width='50' height='50' fill='%232e7d32'/%3E%3Ctext x='25' y='35' text-anchor='middle' fill='white' font-size='24' font-weight='bold'%3EBM%3C/text%3E%3C/svg%3E">
-            <div class="header-title" id="headerPesantren">PONDOK PESANTREN<br>BAHRUL MAGHFIROH</div>
+            <img id="headerLogo" class="header-logo-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Crect width='40' height='40' fill='%232e7d32'/%3E%3Ctext x='20' y='28' text-anchor='middle' fill='white' font-size='20' font-weight='bold'%3EBM%3C/text%3E%3C/svg%3E">
+            <div class="header-title" id="headerPesantren">PONDOK PESANTREN BAHRUL MAGHFIROH</div>
         </div>
         <button class="logout-btn" onclick="doLogout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
     </div>
-    <div class="sidebar">
-        <div class="sidebar-item active" onclick="showPage('dashboard')"><i class="fas fa-tachometer-alt"></i> Dashboard</div>
-        <div class="sidebar-item" onclick="showPage('students')"><i class="fas fa-users"></i> Data Santri</div>
-        <div class="sidebar-item" onclick="showPage('hafalan')"><i class="fas fa-book-quran"></i> Input Hafalan</div>
-        <div class="sidebar-item" onclick="showPage('sertifikat')"><i class="fas fa-certificate"></i> Sertifikat</div>
-        <div class="sidebar-item" onclick="showPage('import')"><i class="fas fa-file-excel"></i> Import Excel</div>
-        <div class="sidebar-item" onclick="showPage('pengaturan')"><i class="fas fa-cog"></i> Pengaturan</div>
-    </div>
-    <div class="content">
-        <!-- DASHBOARD -->
-        <div id="dashboardPage">
-            <div class="stats-row">
-                <div class="stat-card"><i class="fas fa-user-graduate"></i><div class="stat-number" id="statTotal">0</div><div>Total Santri</div></div>
-                <div class="stat-card"><i class="fas fa-check-circle"></i><div class="stat-number" id="statLulus">0</div><div>Sudah Lulus</div></div>
-                <div class="stat-card"><i class="fas fa-spinner"></i><div class="stat-number" id="statProses">0</div><div>Sedang Proses</div></div>
-                <div class="stat-card"><i class="fas fa-hourglass-half"></i><div class="stat-number" id="statBelumHafal">0</div><div>Belum Hafalan</div></div>
+    
+    <!-- Layout KIRI dan KANAN -->
+    <div class="main-layout">
+        <!-- SIDEBAR KIRI -->
+        <div class="sidebar-left">
+            <div class="logo-sidebar">
+                <img id="sidebarLogo" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Crect width='60' height='60' fill='%232e7d32'/%3E%3Ctext x='30' y='42' text-anchor='middle' fill='white' font-size='30' font-weight='bold'%3EBM%3C/text%3E%3C/svg%3E">
+                <h3>Mutqin BM</h3>
             </div>
-            
-            <div class="progress-card">
-                <h3><i class="fas fa-chart-pie"></i> Progress Hafalan Santri</h3>
-                <div class="chart-row">
-                    <div class="progress-chart"><canvas id="chartProgress"></canvas></div>
-                    <div class="legend">
-                        <div class="legend-item"><div class="legend-color" style="background: #2e7d32;"></div><span>✅ Sudah Lulus (<span id="legendLulus">0</span> Santri)</span></div>
-                        <div class="legend-item"><div class="legend-color" style="background: #ff9800;"></div><span>📖 Sedang Proses (<span id="legendProses">0</span> Santri)</span></div>
-                        <div class="legend-item"><div class="legend-color" style="background: #dc3545;"></div><span>❌ Belum Hafalan (<span id="legendBelum">0</span> Santri)</span></div>
-                    </div>
-                </div>
-                <div class="progress-percent" id="progressPercent">0%</div>
-                <p style="color: #666; font-size: 13px;">Tingkat Kelulusan Keseluruhan</p>
+            <div class="menu-item active" onclick="showPage('dashboard')">
+                <i class="fas fa-tachometer-alt"></i> Dashboard
             </div>
-
-            <div class="detail-progress">
-                <div class="detail-card"><h4><i class="fas fa-trophy"></i> Target Kelulusan</h4><div class="number" id="targetPersen">0%</div><div class="sub">dari total santri</div></div>
-                <div class="detail-card"><h4><i class="fas fa-chart-line"></i> Perlu Bimbingan</h4><div class="number" id="needGuidance">0</div><div class="sub">santri</div></div>
-                <div class="detail-card"><h4><i class="fas fa-star"></i> Rata-rata Nilai</h4><div class="number" id="avgGrade">0</div><div class="sub">dari skala 100</div></div>
+            <div class="menu-item" onclick="showPage('students')">
+                <i class="fas fa-users"></i> Data Santri
             </div>
-
-            <div class="table-card">
-                <h3><i class="fas fa-clipboard-list"></i> Rekap Capaian Hafalan</h3>
-                <table id="rekapTable">
-                    <thead><tr><th>Kriteria</th><th>Jumlah Tuntas</th><th>Presentase</th></tr></thead>
-                    <tbody id="rekapBody"></tbody>
-                </table>
+            <div class="menu-item" onclick="showPage('hafalan')">
+                <i class="fas fa-book-quran"></i> Input Hafalan
             </div>
-
-            <div class="table-card">
-                <h3><i class="fas fa-clock"></i> Santri Terbaru</h3>
-                <table id="tableRecent"><thead><tr><th>Nama Santri</th><th>Kelas</th><th>Status</th></tr></thead><tbody></tbody>
-                <table>
+            <div class="menu-item" onclick="showPage('sertifikat')">
+                <i class="fas fa-certificate"></i> Sertifikat
+            </div>
+            <div class="menu-item" onclick="showPage('import')">
+                <i class="fas fa-file-excel"></i> Import Excel
+            </div>
+            <div class="menu-item" onclick="showPage('pengaturan')">
+                <i class="fas fa-cog"></i> Pengaturan
             </div>
         </div>
-
-        <!-- DATA SANTRI -->
-        <div id="studentsPage" style="display:none">
-            <div class="table-card">
-                <h3><i class="fas fa-search"></i> Cari Santri</h3>
-                <div class="search-box">
-                    <input type="text" id="searchSantriInput" class="search-input" placeholder="Cari nama santri..." onkeyup="searchSantri()">
-                    <button class="search-btn" onclick="searchSantri()"><i class="fas fa-search"></i> Cari</button>
-                    <button class="clear-btn" onclick="clearSearch()"><i class="fas fa-times"></i> Reset</button>
+        
+        <!-- CONTENT KANAN -->
+        <div class="content-right">
+            <!-- DASHBOARD -->
+            <div id="dashboardPage">
+                <div class="stats-row">
+                    <div class="stat-card"><i class="fas fa-user-graduate"></i><div class="stat-number" id="statTotal">0</div><div>Total Santri</div></div>
+                    <div class="stat-card"><i class="fas fa-check-circle"></i><div class="stat-number" id="statLulus">0</div><div>Sudah Lulus</div></div>
+                    <div class="stat-card"><i class="fas fa-spinner"></i><div class="stat-number" id="statProses">0</div><div>Sedang Proses</div></div>
+                    <div class="stat-card"><i class="fas fa-hourglass-half"></i><div class="stat-number" id="statBelumHafal">0</div><div>Belum Hafalan</div></div>
                 </div>
-                <div id="searchResultCount" class="result-count"></div>
-                <h3><i class="fas fa-users"></i> Daftar Semua Santri</h3>
-                <div style="overflow-x: auto;">
+                <div class="progress-card">
+                    <h3>Progress Hafalan Santri</h3>
+                    <div class="chart-row">
+                        <div class="progress-chart"><canvas id="chartProgress"></canvas></div>
+                        <div class="legend">
+                            <div class="legend-item"><div class="legend-color" style="background:#2e7d32;"></div><span>Sudah Lulus (<span id="legendLulus">0</span>)</span></div>
+                            <div class="legend-item"><div class="legend-color" style="background:#ff9800;"></div><span>Sedang Proses (<span id="legendProses">0</span>)</span></div>
+                            <div class="legend-item"><div class="legend-color" style="background:#dc3545;"></div><span>Belum Hafalan (<span id="legendBelum">0</span>)</span></div>
+                        </div>
+                    </div>
+                    <div class="progress-percent" id="progressPercent">0%</div>
+                </div>
+                <div class="table-card">
+                    <h3>Santri Terbaru</h3>
+                    <table id="tableRecent"><thead><tr><th>Nama Santri</th><th>Kelas</th><th>Status</th></tr></thead><tbody></tbody></table>
+                </div>
+            </div>
+
+            <!-- DATA SANTRI -->
+            <div id="studentsPage" style="display:none">
+                <div class="table-card">
+                    <h3>Cari Santri</h3>
+                    <div class="search-box">
+                        <input type="text" id="searchSantriInput" class="search-input" placeholder="Cari nama santri..." onkeyup="searchSantri()">
+                        <button class="search-btn" onclick="searchSantri()"><i class="fas fa-search"></i> Cari</button>
+                        <button class="clear-btn" onclick="clearSearch()"><i class="fas fa-times"></i> Reset</button>
+                    </div>
+                    <div id="searchResultCount" style="margin-bottom: 10px; font-size: 12px; color: #666;"></div>
                     <table id="tableAllSantri">
                         <thead><tr><th>Nama Santri</th><th>Kelas</th><th>Status</th><th>Aksi</th></tr></thead>
                         <tbody></tbody>
                     </table>
                 </div>
             </div>
-        </div>
 
-        <!-- INPUT HAFALAN - LAYOUT SEPERTI CONTOH (KIRI: DAFTAR SANTRI, KANAN: FORM) -->
-        <div id="hafalanPage" style="display:none">
-            <div class="hafalan-container">
-                <!-- SISI KIRI: DAFTAR SANTRI -->
-                <div class="santri-list-section">
-                    <h4><i class="fas fa-users"></i> Daftar Santri</h4>
-                    <input type="text" id="hafalanSearchInput" class="search-santri-input" placeholder="🔍 Cari nama santri..." onkeyup="filterSantriList()">
-                    <div id="santriListContainer" class="santri-list-scroll"></div>
-                    <button class="reset-search-btn" onclick="resetSantriSearch()"><i class="fas fa-sync-alt"></i> Reset Pencarian</button>
-                </div>
-
-                <!-- SISI KANAN: FORM INPUT HAFALAN -->
-                <div class="form-section">
-                    <div class="form-card">
-                        <!-- Info Santri Terpilih -->
-                        <div class="selected-info-card">
-                            <div class="label"><i class="fas fa-user-graduate"></i> Santri Dipilih</div>
+            <!-- INPUT HAFALAN - DUA KOLOM -->
+            <div id="hafalanPage" style="display:none">
+                <div class="hafalan-layout">
+                    <div class="santri-list">
+                        <h4><i class="fas fa-users"></i> Daftar Santri</h4>
+                        <input type="text" id="hafalanSearchInput" class="search-santri" placeholder="🔍 Cari santri..." onkeyup="filterSantriList()">
+                        <div id="santriListContainer" class="santri-list-scroll"></div>
+                        <button class="clear-btn" style="margin-top: 10px; width: 100%;" onclick="resetSantriSearch()">Reset Pencarian</button>
+                    </div>
+                    <div class="form-hafalan">
+                        <div class="selected-info">
+                            <div class="label">Santri Dipilih</div>
                             <div class="name" id="selectedSantriName">-</div>
-                            <div class="status" id="selectedSantriStatus"></div>
+                            <div id="selectedSantriStatus" style="font-size: 12px;"></div>
                         </div>
-
-                        <div class="form-title"><i class="fas fa-pen-alt"></i> Input Nilai Hafalan</div>
-                        
+                        <h3><i class="fas fa-pen-alt"></i> Input Nilai Hafalan</h3>
                         <div class="criteria-grid">
-                            <!-- Hafalan Surat Pilihan -->
                             <div class="criteria-box">
                                 <h4><i class="fas fa-quran"></i> Hafalan Surat Pilihan</h4>
-                                <div class="criteria-row"><label>1. Surat Yasin</label><select id="gradeYasin" class="grade-select"><option>Belum</option><option>Mumtaz</option><option>Jayyid Jiddan</option><option>Jayyid</option></select><input type="checkbox" id="doneYasin"> Selesai</div>
-                                <div class="criteria-row"><label>2. Surat Al Waqiah</label><select id="gradeWaqiah" class="grade-select"><option>Belum</option><option>Mumtaz</option><option>Jayyid Jiddan</option><option>Jayyid</option></select><input type="checkbox" id="doneWaqiah"> Selesai</div>
-                                <div class="criteria-row"><label>3. Surat Al Mulk</label><select id="gradeMulk" class="grade-select"><option>Belum</option><option>Mumtaz</option><option>Jayyid Jiddan</option><option>Jayyid</option></select><input type="checkbox" id="doneMulk"> Selesai</div>
+                                <div class="criteria-row"><label>1. Surat Yasin</label><select id="gradeYasin"><option>Belum</option><option>Mumtaz</option><option>Jayyid Jiddan</option><option>Jayyid</option></select><input type="checkbox" id="doneYasin"> Selesai</div>
+                                <div class="criteria-row"><label>2. Surat Al Waqiah</label><select id="gradeWaqiah"><option>Belum</option><option>Mumtaz</option><option>Jayyid Jiddan</option><option>Jayyid</option></select><input type="checkbox" id="doneWaqiah"> Selesai</div>
+                                <div class="criteria-row"><label>3. Surat Al Mulk</label><select id="gradeMulk"><option>Belum</option><option>Mumtaz</option><option>Jayyid Jiddan</option><option>Jayyid</option></select><input type="checkbox" id="doneMulk"> Selesai</div>
                             </div>
-
-                            <!-- Hafalan Aurad -->
                             <div class="criteria-box">
                                 <h4><i class="fas fa-hands-praying"></i> Hafalan Aurad</h4>
-                                <div class="criteria-row"><label>1. Wirid setelah shalat</label><select id="gradeWirid" class="grade-select"><option>Belum</option><option>Mumtaz</option><option>Jayyid Jiddan</option><option>Jayyid</option></select><input type="checkbox" id="doneWirid"> Selesai</div>
-                                <div class="criteria-row"><label>2. Doa setelah shalat</label><select id="gradeDoa" class="grade-select"><option>Belum</option><option>Mumtaz</option><option>Jayyid Jiddan</option><option>Jayyid</option></select><input type="checkbox" id="doneDoa"> Selesai</div>
-                                <div class="criteria-row"><label>3. Tahlil ringkas</label><select id="gradeTahlilR" class="grade-select"><option>Belum</option><option>Mumtaz</option><option>Jayyid Jiddan</option><option>Jayyid</option></select><input type="checkbox" id="doneTahlilR"> Selesai</div>
-                                <div class="criteria-row"><label>4. Tahlil lengkap</label><select id="gradeTahlilL" class="grade-select"><option>Belum</option><option>Mumtaz</option><option>Jayyid Jiddan</option><option>Jayyid</option></select><input type="checkbox" id="doneTahlilL"> Selesai</div>
-                                <div class="criteria-row"><label>
+                                <div class="criteria-row"><label>1. Wirid setelah shalat</label><select id="gradeWirid"><option>Belum</option><option>Mumtaz</option><option>Jayyid Jiddan</option><option>Jayyid</option></select><input type="checkbox" id="doneWirid"> Selesai</div>
+                                <div class="criteria-row"><label>2. Doa setelah shalat</label><select id="gradeDoa"><option>Belum</option><option>Mumtaz</option><option>Jayyid Jiddan</option><option>Jayyid</option></select><input type="checkbox" id="doneDoa"> Selesai</div>
+                                <div class="criteria-row"><label>3. Tahlil ringkas</label><select id="gradeTahlilR"><option>Belum</option><option>Mumtaz</option><option>Jayyid Jiddan</option><option>Jayyid</option></select><input type="checkbox" id="doneTahlilR"> Selesai</div>
+                                <div class="criteria-row"><label>4. Tahlil lengkap</label><select id="gradeTahlilL"><option>Belum</option><option>Mumtaz</option><option>Jayyid Jiddan</option><option>Jayyid</option></select><input type="checkbox" id="doneTahlilL"> Selesai</div>
+                                <div class="criteria-row"><label>5. Doa tahlil</label><select id="gradeDoaTahlil"><option>Belum</option><option>Mumtaz</option><option>Jayyid Jiddan</option><option>Jayyid</option></select><input type="checkbox" id="doneDoaTahlil"> Selesai</div>
+                                <div class="criteria-row"><label>6. Tawasul</label><select id="gradeTawasul"><option>Belum</option><option>Mumtaz</option><option>Jayyid Jiddan</option><option>Jayyid</option></select><input type="checkbox" id="doneTawasul"> Selesai</div>
+                            </div>
+                            <div class="criteria-box">
+                                <h4><i class="fas fa-pray"></i> Praktek & Kelulusan</h4>
+                                <div class="criteria-row"><label>Praktek shalat & pengurusan jenazah</label><select id="gradeJenazah"><option>Belum</option><option>Mumtaz</option><option>Jayyid Jiddan</option><option>Jayyid</option></select><input type="checkbox" id="doneJenazah"> Selesai</div>
+                                <div class="criteria-row"><label>Hafalan juz 30 (Amma - Annas)</label><select id="gradeJuz30"><option>Belum</option><option>Ahsan</option><option>Mumtaz</option><option>Jayyid Jiddan</option><option>Jayyid</option></select><input type="checkbox" id="doneJuz30"> Selesai</div>
+                                <div class="criteria-row"><label>Praktek khotib & bilal</label><select id="gradeKhotib"><option>Belum</option><option>Ahsan</option><option>Mumtaz</option><option>Jayyid Jiddan</option></select><input type="checkbox" id="doneKhotib"> Selesai</div>
+                                <div class="criteria-row"><label>Lulus Madin Ula</label><input type="checkbox" id="doneMadinUla"> Selesai</div>
+                                <div class="criteria-row"><label>Lulus Madin Wustho</label><input type="checkbox" id="doneMadinWustho"> Selesai</div>
+                                <div class="criteria-row"><label>Sikap dan Adab</label><input type="checkbox" id="doneSikap"> Selesai</div>
+                            </div>
+                        </div>
+                        <button class="btn-save" onclick="simpanHafalan()"><i class="fas fa-save"></i> SIMPAN</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SERTIFIKAT -->
+            <div id="sertifikatPage" style="display:none">
+                <div class="table-card">
+                    <h3>Sertifikat Kelulusan</h3>
+                    <select id="selectSertifikat" style="width: 100%; padding: 10px; border-radius: 25px; margin-bottom: 20px;" onchange="generateSertifikat()"></select>
+                    <div id="previewSertifikat" class="certificate-box"></div>
+                    <button class="btn-save" onclick="downloadSertifikat()" style="margin-top: 20px;"><i class="fas fa-download"></i> Download Sertifikat PDF</button>
+                </div>
+            </div>
+
+            <!-- IMPORT EXCEL -->
+            <div id="importPage" style="display:none">
+                <div class="table-card">
+                    <h3>Tambah Santri Masal via Excel</h3>
+                    <div class="upload-area">
+                        <i class="fas fa-file-excel" style="font-size: 50px; color: #2e7d32;"></i>
+                        <p>Upload file Excel (.xlsx, .xls) dengan kolom: Nama, Kelas</p>
+                        <input type="file" id="fileExcel" accept=".xlsx, .xls">
+                        <button class="btn-save" style="margin-top: 15px;" onclick="importExcelData()">Import Data</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PENGATURAN -->
+            <div id="pengaturanPage" style="display:none">
+                <div class="profile-card">
+                    <h3><i class="fas fa-image"></i> Pengaturan Profil & Logo</h3>
+                    <div class="upload-area">
+                        <i class="fas fa-upload"></i> Upload Logo Pesantren
+                        <input type="file" id="profileLogoInput" accept="image/*" style="margin-top: 10px;">
+                    </div>
+                    <div class="profile-input-group">
+                        <input type="text" id="profilePesantrenInput" placeholder="Nama Pesantren" value="PONDOK PESANTREN BAHRUL MAGHFIROH">
+                        <input type="text" id="profilePengasuhInput" placeholder="Nama Pengasuh" value="Ust. Drs. H. Abbul Malik, Lc., M.M.Pd.">
+                        <input type="text" id="profileKepalaInput" placeholder="Kepala Dewan Tahfizh" value="Ust. H. Muhammad Amin">
+                    </div>
+                    <button class="btn-save" onclick="saveProfileData()"><i class="fas fa-save"></i> Simpan Profil</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let daftarSantri = [];
+    let nextId = 1;
+    let currentSelectedStudentId = null;
+    let profileData = {
+        logo: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Crect width='100' height='100' fill='%232e7d32'/%3E%3Ctext x='50' y='65' text-anchor='middle' fill='white' font-size='40' font-weight='bold'%3EBM%3C/text%3E%3C/svg%3E",
+        pesantren: "PONDOK PESANTREN BAHRUL MAGHFIROH",
+        pengasuh: "Ust. Drs. H. Abbul Malik, Lc., M.M.Pd.",
+        kepalaMadin: "Ust. H. Muhammad Amin"
+    };
+    let currentSearchTerm = "";
+
+    function loadAllData() {
+        let saved = localStorage.getItem("mutqinbm_final_v10");
+        if(saved) {
+            let data = JSON.parse(saved);
+            daftarSantri = data.daftarSantri || [];
+            profileData = data.profileData || profileData;
+            nextId = data.nextId || (daftarSantri.length + 1);
+        } else {
+            daftarSantri = [
+                { id: 1, name: "Ahmad Fauzan", kelas: "3 TMI", graduated: true, hafalan: { yasin: {done:true,grade:"Mumtaz"}, waqiah:{done:true,grade:"Mumtaz"}, mulk:{done:true,grade:"Mumtaz"}, wirid:{done:true,grade:"Mumtaz"}, doa:{done:true,grade:"Mumtaz"}, tahlilR:{done:true,grade:"Mumtaz"}, tahlilL:{done:true,grade:"Mumtaz"}, doaTahlil:{done:true,grade:"Mumtaz"}, tawasul:{done:true,grade:"Mumtaz"}, jenazah:{done:true,grade:"Jayyid"}, juz30:{done:true,grade:"Ahsan"}, khotib:{done:true,grade:"Ahsan"}, madinUla:true, madinWustho:true, sikap:true } },
+                { id: 2, name: "Salma Azizah", kelas: "2 TMI", graduated: false, hafalan: {} },
+                { id: 3, name: "Mohammad Luqman", kelas: "3 TMI", graduated: false, hafalan: {} },
+                { id: 4, name: "Yusuf Ramadhan", kelas: "2 TMI", graduated: false, hafalan: {} },
+                { id: 5, name: "M. Faris", kelas: "1 TMI", graduated: false, hafalan: {} }
+            ];
+            nextId = 6;
+        }
+        saveAllData();
+    }
+
+    function saveAllData() { localStorage.setItem("mutqinbm_final_v10", JSON.stringify({ daftarSantri, profileData, nextId })); }
+
+    function saveProfileData() {
+        let logoFile = document.getElementById("profileLogoInput").files[0];
+        if(logoFile) {
+            let reader = new FileReader();
+            reader.onload = function(e) { profileData.logo = e.target.result; updateProfileUI(); saveAllData(); alert("Logo tersimpan!"); };
+            reader.readAsDataURL(logoFile);
+        }
+        let newName = document.getElementById("profilePesantrenInput").value;
+        let newPengasuh = document.getElementById("profilePengasuhInput").value;
+        let newKepala = document.getElementById("profileKepalaInput").value;
+        if(newName) profileData.pesantren = newName;
+        if(newPengasuh) profileData.pengasuh = newPengasuh;
+        if(newKepala) profileData.kepalaMadin = newKepala;
+        updateProfileUI(); saveAllData(); alert("Profil tersimpan!");
+    }
+
+    function updateProfileUI() {
+        document.getElementById("loginLogo").src = profileData.logo;
+        document.getElementById("headerLogo").src = profileData.logo;
+        document.getElementById("sidebarLogo").src = profileData.logo;
+        document.getElementById("headerPesantren").innerHTML = profileData.pesantren;
+    }
+
+    function doLogin() {
+        let user = document.getElementById("loginUsername").value;
+        let pass = document.getElementById("loginPassword").value;
+        if(user === "admin" && pass === "admin") { 
+            loadAllData(); 
+            updateProfileUI(); 
+            document.getElementById("loginPage").style.display = "none"; 
+            document.getElementById("mainApp").style.display = "block"; 
+            showPage('dashboard'); 
+            refreshDashboard(); 
+        } else { 
+            alert("Username atau
