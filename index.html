@@ -40,7 +40,7 @@
         /* Content */
         .content { padding: 18px; max-width: 1200px; margin: 0 auto; }
 
-        /* Stats Cards Warna-warni */
+        /* Stats Cards */
         .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 20px; }
         .stat-card { padding: 15px 10px; border-radius: 20px; text-align: center; box-shadow: 0 6px 20px rgba(0,0,0,0.15); color: white; transition: transform 0.3s; cursor: pointer; }
         .stat-card:hover { transform: translateY(-5px); }
@@ -51,7 +51,7 @@
         .stat-number { font-size: 32px; font-weight: bold; }
         .stat-card i { font-size: 32px; margin-bottom: 8px; display: block; }
 
-        /* Progress Card Warna-warni */
+        /* Progress Card */
         .progress-card { background: linear-gradient(135deg, #ffffff, #f8f9fa); padding: 20px; border-radius: 25px; margin-bottom: 20px; text-align: center; box-shadow: 0 8px 25px rgba(0,0,0,0.1); border: 1px solid rgba(46,125,50,0.2); }
         .progress-card h3 { font-size: 18px; margin-bottom: 15px; color: #1b5e20; }
         .chart-row { display: flex; justify-content: center; flex-wrap: wrap; gap: 30px; align-items: center; }
@@ -59,12 +59,9 @@
         .legend { text-align: left; background: linear-gradient(135deg, #f0f2f5, #e8f5e9); padding: 15px 20px; border-radius: 20px; }
         .legend-item { display: flex; align-items: center; gap: 12px; margin: 12px 0; font-size: 14px; font-weight: 500; }
         .legend-color { width: 22px; height: 22px; border-radius: 50%; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        .legend-color:nth-child(1) { background: #2e7d32; }
-        .legend-color:nth-child(2) { background: #ff9800; }
-        .legend-color:nth-child(3) { background: #dc3545; }
         .progress-percent { font-size: 32px; font-weight: bold; margin-top: 15px; background: linear-gradient(135deg, #2e7d32, #11998e); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         
-        /* Detail Progress Cards */
+        /* Detail Progress */
         .detail-progress { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 20px; }
         .detail-card { background: white; padding: 15px; border-radius: 20px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.08); }
         .detail-card h4 { font-size: 13px; color: #666; margin-bottom: 8px; }
@@ -81,6 +78,15 @@
         th, td { padding: 10px 6px; text-align: left; border-bottom: 1px solid #eee; }
         th { background: linear-gradient(135deg, #e8f5e9, #c8e6c9); font-weight: 600; }
         .btn-small { background: linear-gradient(135deg, #2e7d32, #1b5e20); color: white; border: none; padding: 5px 12px; border-radius: 20px; cursor: pointer; font-size: 11px; }
+
+        /* Search Box */
+        .search-box { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+        .search-input { flex: 1; padding: 12px 18px; border: 2px solid #e0e0e0; border-radius: 30px; font-size: 14px; background: white; }
+        .search-input:focus { border-color: #2e7d32; outline: none; }
+        .search-btn { background: linear-gradient(135deg, #2e7d32, #1b5e20); color: white; border: none; padding: 12px 24px; border-radius: 30px; cursor: pointer; font-size: 14px; font-weight: bold; }
+        .search-btn:hover { transform: scale(1.02); }
+        .clear-btn { background: #6c757d; color: white; border: none; padding: 12px 24px; border-radius: 30px; cursor: pointer; font-size: 14px; font-weight: bold; }
+        .result-count { margin: 10px 0; font-size: 13px; color: #666; }
 
         /* Form Card */
         .form-card { background: white; border-radius: 25px; padding: 20px; margin-bottom: 20px; box-shadow: 0 8px 25px rgba(0,0,0,0.1); }
@@ -110,7 +116,7 @@
         .signature-area { display: flex; justify-content: space-between; margin-top: 30px; text-align: center; font-size: 11px; }
         .signature-line { width: 140px; border-top: 1px solid #000; margin-top: 25px; }
 
-        /* Profile Settings Card */
+        /* Profile Settings */
         .profile-card { background: linear-gradient(135deg, #fff, #f9f9f9); border-radius: 25px; padding: 20px; margin-bottom: 20px; box-shadow: 0 8px 25px rgba(0,0,0,0.1); }
         .profile-title { font-size: 18px; font-weight: bold; color: #2e7d32; margin-bottom: 15px; display: flex; align-items: center; gap: 10px; }
         .profile-input-group { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 15px; }
@@ -131,6 +137,8 @@
             .certificate-lulus { font-size: 26px; }
             .sidebar-item { padding: 8px 14px; font-size: 11px; }
             .content { padding: 12px; }
+            .search-box { flex-direction: column; }
+            .search-btn, .clear-btn { padding: 10px; }
         }
         select, input[type="text"], input[type="file"] { padding: 8px 12px; border-radius: 25px; border: 1px solid #ddd; }
         .full-width { width: 100%; margin-bottom: 8px; }
@@ -169,7 +177,7 @@
         <div class="sidebar-item" onclick="showPage('pengaturan')"><i class="fas fa-cog"></i> Pengaturan</div>
     </div>
     <div class="content">
-        <!-- DASHBOARD dengan semua fitur lengkap -->
+        <!-- DASHBOARD -->
         <div id="dashboardPage">
             <div class="stats-row">
                 <div class="stat-card"><i class="fas fa-user-graduate"></i><div class="stat-number" id="statTotal">0</div><div>Total Santri</div></div>
@@ -178,13 +186,10 @@
                 <div class="stat-card"><i class="fas fa-hourglass-half"></i><div class="stat-number" id="statBelumHafal">0</div><div>Belum Hafalan</div></div>
             </div>
             
-            <!-- Progress Hafalan dengan Grafik Warna-warni -->
             <div class="progress-card">
                 <h3><i class="fas fa-chart-pie"></i> Progress Hafalan Santri</h3>
                 <div class="chart-row">
-                    <div class="progress-chart">
-                        <canvas id="chartProgress"></canvas>
-                    </div>
+                    <div class="progress-chart"><canvas id="chartProgress"></canvas></div>
                     <div class="legend">
                         <div class="legend-item"><div class="legend-color" style="background: #2e7d32;"></div><span>✅ Sudah Lulus (<span id="legendLulus">0</span> Santri)</span></div>
                         <div class="legend-item"><div class="legend-color" style="background: #ff9800;"></div><span>📖 Sedang Proses (<span id="legendProses">0</span> Santri)</span></div>
@@ -195,14 +200,12 @@
                 <p style="color: #666; font-size: 13px;">Tingkat Kelulusan Keseluruhan</p>
             </div>
 
-            <!-- Detail Progress Card -->
             <div class="detail-progress">
                 <div class="detail-card"><h4><i class="fas fa-trophy"></i> Target Kelulusan</h4><div class="number" id="targetPersen">0%</div><div class="sub">dari total santri</div></div>
                 <div class="detail-card"><h4><i class="fas fa-chart-line"></i> Perlu Bimbingan</h4><div class="number" id="needGuidance">0</div><div class="sub">santri</div></div>
                 <div class="detail-card"><h4><i class="fas fa-star"></i> Rata-rata Nilai</h4><div class="number" id="avgGrade">0</div><div class="sub">dari skala 100</div></div>
             </div>
 
-            <!-- Rekap Capaian Hafalan -->
             <div class="table-card">
                 <h3><i class="fas fa-clipboard-list"></i> Rekap Capaian Hafalan</h3>
                 <table id="rekapTable">
@@ -211,21 +214,37 @@
                 </table>
             </div>
 
-            <!-- Santri Terbaru -->
             <div class="table-card">
                 <h3><i class="fas fa-clock"></i> Santri Terbaru</h3>
-                <table id="tableRecent">
-                    <thead><tr><th>Nama Santri</th><th>Kelas</th><th>Status</th></tr></thead>
-                    <tbody></tbody>
+                <table id="tableRecent"><thead><tr><th>Nama Santri</th><th>Kelas</th><th>Status</th></tr></thead><tbody></tbody>
                 </table>
             </div>
         </div>
 
-        <!-- DATA SANTRI -->
+        <!-- DATA SANTRI dengan FITUR PENCARIAN -->
         <div id="studentsPage" style="display:none">
             <div class="table-card">
-                <h3>📜 Daftar Semua Santri</h3>
-                <table id="tableAllSantri"><thead><tr><th>Nama Santri</th><th>Kelas</th><th>Status</th><th>Aksi</th></tr></thead><tbody></tbody></table>
+                <h3><i class="fas fa-search"></i> Cari Santri</h3>
+                <div class="search-box">
+                    <input type="text" id="searchSantriInput" class="search-input" placeholder="Cari nama santri..." onkeyup="searchSantri()">
+                    <button class="search-btn" onclick="searchSantri()"><i class="fas fa-search"></i> Cari</button>
+                    <button class="clear-btn" onclick="clearSearch()"><i class="fas fa-times"></i> Reset</button>
+                </div>
+                <div id="searchResultCount" class="result-count"></div>
+                <h3><i class="fas fa-users"></i> Daftar Semua Santri</h3>
+                <div style="overflow-x: auto;">
+                    <table id="tableAllSantri">
+                        <thead>
+                            <tr>
+                                <th>Nama Santri</th>
+                                <th>Kelas</th>
+                                <th>Status</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
             </div>
         </div>
 
@@ -316,8 +335,11 @@
         kepalaMadin: "Ust. H. Muhammad Amin"
     };
 
+    // Variabel untuk menyimpan hasil pencarian
+    let currentSearchTerm = "";
+
     function loadAllData() {
-        let saved = localStorage.getItem("mutqinbm_final_v6");
+        let saved = localStorage.getItem("mutqinbm_final_v7");
         if(saved) {
             let data = JSON.parse(saved);
             daftarSantri = data.daftarSantri || [];
@@ -329,14 +351,16 @@
                 { id: 2, name: "Salma Azizah", kelas: "2 TMI", graduated: false, hafalan: {} },
                 { id: 3, name: "Mohammad Luqman", kelas: "3 TMI", graduated: false, hafalan: {} },
                 { id: 4, name: "Yusuf Ramadhan", kelas: "2 TMI", graduated: false, hafalan: {} },
-                { id: 5, name: "M. Faris", kelas: "1 TMI", graduated: false, hafalan: {} }
+                { id: 5, name: "M. Faris", kelas: "1 TMI", graduated: false, hafalan: {} },
+                { id: 6, name: "Abdullah Azzam", kelas: "3 TMI", graduated: false, hafalan: {} },
+                { id: 7, name: "Fatimah Zahra", kelas: "2 TMI", graduated: false, hafalan: {} }
             ];
-            nextId = 6;
+            nextId = 8;
         }
         saveAllData();
     }
 
-    function saveAllData() { localStorage.setItem("mutqinbm_final_v6", JSON.stringify({ daftarSantri, profileData, nextId })); }
+    function saveAllData() { localStorage.setItem("mutqinbm_final_v7", JSON.stringify({ daftarSantri, profileData, nextId })); }
 
     function saveProfileData() {
         let logoFile = document.getElementById("profileLogoInput").files[0];
@@ -390,7 +414,12 @@
         document.getElementById("importPage").style.display = "none";
         document.getElementById("pengaturanPage").style.display = "none";
         if(page === 'dashboard') document.getElementById("dashboardPage").style.display = "block";
-        if(page === 'students') { document.getElementById("studentsPage").style.display = "block"; renderAllStudents(); }
+        if(page === 'students') { 
+            document.getElementById("studentsPage").style.display = "block"; 
+            currentSearchTerm = "";
+            document.getElementById("searchSantriInput").value = "";
+            renderAllStudents(); 
+        }
         if(page === 'hafalan') { document.getElementById("hafalanPage").style.display = "block"; renderSantriSelect(); }
         if(page === 'sertifikat') { document.getElementById("sertifikatPage").style.display = "block"; renderCertSelect(); }
         if(page === 'import') document.getElementById("importPage").style.display = "block";
@@ -401,6 +430,45 @@
             document.querySelectorAll('.sidebar-item').forEach(item => item.classList.remove('active'));
             activeItem.classList.add('active');
         }
+    }
+
+    // FITUR PENCARIAN SANTRI
+    function searchSantri() {
+        let searchTerm = document.getElementById("searchSantriInput").value.toLowerCase().trim();
+        currentSearchTerm = searchTerm;
+        renderAllStudents(searchTerm);
+    }
+
+    function clearSearch() {
+        document.getElementById("searchSantriInput").value = "";
+        currentSearchTerm = "";
+        renderAllStudents();
+    }
+
+    function renderAllStudents(searchTerm = "") {
+        let filteredSantri = daftarSantri;
+        if(searchTerm) {
+            filteredSantri = daftarSantri.filter(s => s.name.toLowerCase().includes(searchTerm));
+        }
+        
+        let resultCount = filteredSantri.length;
+        let resultText = resultCount === daftarSantri.length ? 
+            `Menampilkan ${resultCount} dari ${daftarSantri.length} santri` : 
+            `Menampilkan ${resultCount} hasil pencarian dari "${searchTerm}" (total ${daftarSantri.length} santri)`;
+        document.getElementById("searchResultCount").innerHTML = `<i class="fas fa-info-circle"></i> ${resultText}`;
+        
+        let html = filteredSantri.map(s => `<tr>
+            <td><i class="fas fa-user-graduate"></i> ${s.name}</td>
+            <td>${s.kelas || '-'}</td>
+            <td>${s.graduated ? '<span style="color:#2e7d32;font-weight:bold">✅ LULUS</span>' : (s.hafalan && Object.keys(s.hafalan).length > 0 ? '<span style="color:#ff9800">📖 Sedang Proses</span>' : '<span style="color:#dc3545">❌ Belum Hafalan</span>')}</td>
+            <td><button class="btn-small" onclick="editSantri(${s.id})"><i class="fas fa-edit"></i> Edit Hafalan</button></td>
+        </tr>`).join('');
+        
+        if(filteredSantri.length === 0) {
+            html = `<tr><td colspan="4" style="text-align: center; padding: 30px;"><i class="fas fa-search"></i> Tidak ada santri dengan nama "${searchTerm}"</td></tr>`;
+        }
+        
+        document.querySelector("#tableAllSantri tbody").innerHTML = html;
     }
 
     function refreshDashboard() {
@@ -422,11 +490,9 @@
         document.getElementById("targetPersen").innerHTML = percent + "%";
         document.getElementById("needGuidance").innerHTML = proses + belumHafal;
         
-        // Hitung rata-rata nilai (simulasi)
         let avgGrade = total ? Math.round((lulus * 85 + proses * 60 + belumHafal * 30) / total) : 0;
         document.getElementById("avgGrade").innerHTML = avgGrade;
         
-        // Chart
         let ctx = document.getElementById('chartProgress').getContext('2d');
         if(window.myChart) window.myChart.destroy();
         window.myChart = new Chart(ctx, { 
@@ -451,7 +517,6 @@
             } 
         });
         
-        // Rekap capaian hafalan
         let criteriaList = ['Hafal Surat Yasin', 'Hafal Surat Al Waqiah', 'Hafal Surat Al Mulk', 'Hafal Wirid & Doa', 'Hafal Tahlil & Tawasul', 'Praktek Shalat & Jenazah'];
         let rekapHtml = '';
         criteriaList.forEach(criteria => {
@@ -461,15 +526,9 @@
         });
         document.getElementById("rekapBody").innerHTML = rekapHtml;
         
-        // Santri terbaru
         let recent = daftarSantri.slice(-5).reverse();
-        let html = recent.map(s => `<tr><td>${s.name}</td><td>${s.kelas || '-'}</td><td>${s.graduated ? '<span style="color:#2e7d32;font-weight:bold">✅ LULUS</span>' : (s.hafalan && Object.keys(s.hafalan).length > 0 ? '<span style="color:#ff9800">📖 Sedang Proses</span>' : '<span style="color:#dc3545">❌ Belum Hafalan</span>')}</tr>`).join('');
+        let html = recent.map(s => `<tr><td>${s.name}</td><td>${s.kelas || '-'}</td><td>${s.graduated ? '<span style="color:#2e7d32;font-weight:bold">✅ LULUS</span>' : (s.hafalan && Object.keys(s.hafalan).length > 0 ? '<span style="color:#ff9800">📖 Sedang Proses</span>' : '<span style="color:#dc3545">❌ Belum Hafalan</span>')}</td></tr>`).join('');
         document.querySelector("#tableRecent tbody").innerHTML = html;
-    }
-
-    function renderAllStudents() {
-        let html = daftarSantri.map(s => `<tr><td><i class="fas fa-user-graduate"></i> ${s.name}</td><td>${s.kelas || '-'}</td><td>${s.graduated ? '<span style="color:#2e7d32;font-weight:bold">LULUS</span>' : (s.hafalan && Object.keys(s.hafalan).length > 0 ? 'Sedang Proses' : 'Belum Hafalan')}</td><td><button class="btn-small" onclick="editSantri(${s.id})">Edit Hafalan</button></td>`).join('');
-        document.querySelector("#tableAllSantri tbody").innerHTML = html;
     }
 
     function renderSantriSelect() {
@@ -524,10 +583,20 @@
         saveAllData(); 
         alert(`✅ Data ${s.name} tersimpan! Status: ${s.graduated ? "LULUS" : "Belum Lulus"}`); 
         refreshDashboard(); 
-        renderAllStudents();
+        if(document.getElementById("studentsPage").style.display === "block") {
+            renderAllStudents(currentSearchTerm);
+        } else {
+            renderAllStudents();
+        }
     }
 
-    function editSantri(id) { showPage('hafalan'); setTimeout(() => { document.getElementById("selectSantri").value = id; loadHafalanToForm(id); }, 100); }
+    function editSantri(id) { 
+        showPage('hafalan'); 
+        setTimeout(() => { 
+            document.getElementById("selectSantri").value = id; 
+            loadHafalanToForm(id); 
+        }, 100); 
+    }
 
     function renderCertSelect() {
         let select = document.getElementById("selectSertifikat");
@@ -580,7 +649,7 @@
             let sheet = workbook.Sheets[workbook.SheetNames[0]];
             let rows = XLSX.utils.sheet_to_json(sheet);
             rows.forEach(row => { let name = row["Nama"] || row["nama"] || Object.values(row)[0]; if(name) { daftarSantri.push({ id: nextId++, name: name, kelas: row["Kelas"] || "", hafalan: {}, graduated: false }); } });
-            saveAllData(); alert(`Berhasil import ${rows.length} santri!`); refreshDashboard(); renderAllStudents();
+            saveAllData(); alert(`Berhasil import ${rows.length} santri!`); refreshDashboard(); renderAllStudents(currentSearchTerm);
         };
         reader.readAsArrayBuffer(file);
     }
