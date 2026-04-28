@@ -38,7 +38,7 @@
         .sidebar-item i { font-size: 16px; }
 
         /* Content */
-        .content { padding: 18px; max-width: 1200px; margin: 0 auto; }
+        .content { padding: 18px; max-width: 1400px; margin: 0 auto; }
 
         /* Stats Cards */
         .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 20px; }
@@ -84,14 +84,35 @@
         .search-input { flex: 1; padding: 12px 18px; border: 2px solid #e0e0e0; border-radius: 30px; font-size: 14px; background: white; }
         .search-input:focus { border-color: #2e7d32; outline: none; }
         .search-btn { background: linear-gradient(135deg, #2e7d32, #1b5e20); color: white; border: none; padding: 12px 24px; border-radius: 30px; cursor: pointer; font-size: 14px; font-weight: bold; }
-        .search-btn:hover { transform: scale(1.02); }
         .clear-btn { background: #6c757d; color: white; border: none; padding: 12px 24px; border-radius: 30px; cursor: pointer; font-size: 14px; font-weight: bold; }
         .result-count { margin: 8px 0 15px 0; font-size: 13px; color: #666; padding: 8px 12px; background: #f0f2f5; border-radius: 20px; display: inline-block; }
+
+        /* Input Hafalan Layout - DUA KOLOM (KIRI: PENCARIAN, KANAN: FORM) */
+        .hafalan-two-column { display: flex; gap: 20px; flex-wrap: wrap; }
+        .hafalan-left { flex: 0 0 280px; }
+        .hafalan-right { flex: 1; min-width: 300px; }
+
+        /* Student Select Sidebar Kiri */
+        .student-sidebar { background: white; border-radius: 25px; padding: 20px; box-shadow: 0 8px 25px rgba(0,0,0,0.1); position: sticky; top: 80px; }
+        .student-sidebar h4 { color: #1b5e20; margin-bottom: 15px; font-size: 16px; display: flex; align-items: center; gap: 8px; }
+        .student-search-input { width: 100%; padding: 10px 15px; border: 2px solid #e0e0e0; border-radius: 30px; font-size: 13px; margin-bottom: 12px; }
+        .student-search-input:focus { border-color: #2e7d32; outline: none; }
+        .student-list-container { max-height: 400px; overflow-y: auto; border: 1px solid #e8f5e9; border-radius: 15px; background: white; }
+        .student-item { padding: 12px 15px; cursor: pointer; border-bottom: 1px solid #eee; transition: 0.2s; display: flex; justify-content: space-between; align-items: center; }
+        .student-item:hover { background: #e8f5e9; }
+        .student-item.active { background: linear-gradient(135deg, #2e7d32, #1b5e20); color: white; }
+        .student-item .student-name { font-weight: 500; font-size: 13px; }
+        .student-item .student-class { font-size: 11px; color: #888; }
+        .student-item.active .student-class { color: #ddd; }
+        .selected-student-badge { background: linear-gradient(135deg, #e8f5e9, #c8e6c9); padding: 12px 15px; border-radius: 15px; margin-bottom: 15px; text-align: center; }
+        .selected-student-badge .label { font-size: 11px; color: #666; }
+        .selected-student-badge .name { font-weight: bold; color: #1b5e20; font-size: 16px; }
+        .selected-student-badge .status { font-size: 12px; margin-top: 5px; }
 
         /* Form Card */
         .form-card { background: white; border-radius: 25px; padding: 20px; margin-bottom: 20px; box-shadow: 0 8px 25px rgba(0,0,0,0.1); }
         .form-title { font-size: 18px; font-weight: bold; background: linear-gradient(135deg, #2e7d32, #1b5e20); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 2px solid #e8f5e9; }
-        .criteria-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; }
+        .criteria-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 15px; }
         .criteria-box { border: 2px solid #e8f5e9; border-radius: 20px; padding: 15px; background: #fafdfa; }
         .criteria-box h4 { color: #2e7d32; margin-bottom: 12px; font-size: 15px; display: flex; align-items: center; gap: 8px; }
         .criteria-row { margin: 10px 0; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
@@ -99,20 +120,7 @@
         .grade-select { padding: 5px 8px; border-radius: 20px; border: 1px solid #ccc; font-size: 11px; background: white; }
         .btn-save { background: linear-gradient(135deg, #2e7d32, #1b5e20); color: white; border: none; padding: 14px; border-radius: 40px; font-size: 16px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 20px; box-shadow: 0 4px 15px rgba(46,125,50,0.3); }
         .btn-save:hover { transform: scale(1.02); }
-
-        /* Student Select with Search */
-        .student-select-container { margin-bottom: 20px; }
-        .student-search-box { display: flex; gap: 10px; margin-bottom: 12px; flex-wrap: wrap; }
-        .student-search-input { flex: 1; padding: 10px 15px; border: 2px solid #e0e0e0; border-radius: 30px; font-size: 13px; }
-        .student-search-input:focus { border-color: #2e7d32; outline: none; }
-        .student-list { max-height: 200px; overflow-y: auto; border: 1px solid #e0e0e0; border-radius: 15px; background: white; }
-        .student-item { padding: 10px 15px; cursor: pointer; border-bottom: 1px solid #eee; transition: 0.2s; display: flex; justify-content: space-between; align-items: center; }
-        .student-item:hover { background: #e8f5e9; }
-        .student-item.active { background: linear-gradient(135deg, #2e7d32, #1b5e20); color: white; }
-        .student-item .status-badge { font-size: 10px; padding: 2px 8px; border-radius: 20px; background: #eee; }
-        .selected-student-info { background: linear-gradient(135deg, #e8f5e9, #c8e6c9); padding: 12px 15px; border-radius: 15px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
-        .selected-student-name { font-weight: bold; color: #1b5e20; font-size: 16px; }
-        .selected-student-status { font-size: 12px; padding: 4px 12px; border-radius: 20px; background: white; }
+        .btn-reset-sidebar { background: #6c757d; color: white; border: none; padding: 8px 15px; border-radius: 30px; cursor: pointer; font-size: 12px; width: 100%; margin-top: 10px; }
 
         /* Sertifikat */
         .certificate-box { background: #fffef7; padding: 25px 20px; border-radius: 15px; margin-top: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); border: 1px solid #d4af37; }
@@ -141,7 +149,7 @@
         .import-area { border: 2px dashed #2e7d32; padding: 20px; border-radius: 20px; text-align: center; background: #f9fff9; }
 
         /* Responsive */
-        @media (max-width: 600px) {
+        @media (max-width: 768px) {
             .stats-row { grid-template-columns: repeat(2, 1fr); gap: 10px; }
             .stat-number { font-size: 22px; }
             .stat-card i { font-size: 24px; }
@@ -151,9 +159,9 @@
             .certificate-lulus { font-size: 26px; }
             .sidebar-item { padding: 8px 14px; font-size: 11px; }
             .content { padding: 12px; }
-            .search-box { flex-direction: column; }
-            .student-search-box { flex-direction: column; }
-            .search-btn, .clear-btn { padding: 10px; }
+            .hafalan-left { flex: 0 0 100%; }
+            .hafalan-right { flex: 1; }
+            .student-sidebar { position: relative; top: 0; }
         }
         select, input[type="text"], input[type="file"] { padding: 8px 12px; border-radius: 25px; border: 1px solid #ddd; }
         .full-width { width: 100%; margin-bottom: 8px; }
@@ -178,7 +186,7 @@
 <div id="mainApp" class="app-main">
     <div class="header">
         <div class="header-logo">
-            <img id="headerLogo" class="header-logo-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='50' height='50'%3E%3Crect width='50' height='50' fill='%232e7d32'/%3E%3Ctext x='25' y='35' text-anchor='middle' fill='white' font-size='24' font-weight='bold'%3EBM%3C/text%3E%3C/svg%3E">
+            <img id="headerLogo" class="header-logo-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='50' height='50'%3E%3Crect width='50' height='50' fill='%232e7d32'/%3E%3Ctext x='25' y='35' text-anchor='middle' fill='white' fontSize='24' font-weight='bold'%3EBM%3C/text%3E%3C/svg%3E">
             <div class="header-title" id="headerPesantren">PONDOK PESANTREN<br>BAHRUL MAGHFIROH</div>
         </div>
         <button class="logout-btn" onclick="doLogout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
@@ -256,53 +264,67 @@
             </div>
         </div>
 
-        <!-- INPUT HAFALAN dengan FITUR PENCARIAN SANTRI -->
+        <!-- INPUT HAFALAN - LAYOUT DUA KOLOM (KIRI: PENCARIAN, KANAN: FORM) -->
         <div id="hafalanPage" style="display:none">
-            <div class="form-card">
-                <div class="form-title"><i class="fas fa-pen"></i> Input Data Hafalan Santri</div>
-                
-                <!-- Pencarian Santri untuk Input Hafalan -->
-                <div class="student-select-container">
-                    <div class="student-search-box">
-                        <input type="text" id="hafalanSearchInput" class="student-search-input" placeholder="🔍 Cari nama santri..." onkeyup="filterStudentList()">
-                        <button class="clear-btn" onclick="clearHafalanSearch()" style="padding: 10px 20px;">Reset</button>
+            <div class="hafalan-two-column">
+                <!-- SISI KIRI: PENCARIAN SANTRI -->
+                <div class="hafalan-left">
+                    <div class="student-sidebar">
+                        <h4><i class="fas fa-search"></i> Cari Santri</h4>
+                        <input type="text" id="hafalanSearchInput" class="student-search-input" placeholder="🔍 Ketik nama santri..." onkeyup="filterStudentList()">
+                        <div id="studentListContainer" class="student-list-container"></div>
+                        <button class="btn-reset-sidebar" onclick="clearHafalanSearch()"><i class="fas fa-sync-alt"></i> Reset Pencarian</button>
                     </div>
-                    <div id="studentListContainer" class="student-list"></div>
                 </div>
 
-                <!-- Info Santri Terpilih -->
-                <div id="selectedStudentInfo" class="selected-student-info">
-                    <span class="selected-student-name"><i class="fas fa-user-graduate"></i> <span id="selectedStudentName">Pilih santri terlebih dahulu</span></span>
-                    <span class="selected-student-status" id="selectedStudentStatus"></span>
-                </div>
+                <!-- SISI KANAN: FORM INPUT HAFALAN -->
+                <div class="hafalan-right">
+                    <div class="form-card">
+                        <!-- Info Santri Terpilih -->
+                        <div id="selectedStudentInfo" class="selected-student-badge">
+                            <div class="label"><i class="fas fa-user-graduate"></i> Santri Terpilih</div>
+                            <div class="name" id="selectedStudentName">Pilih santri dari daftar kiri</div>
+                            <div class="status" id="selectedStudentStatus"></div>
+                        </div>
 
-                <div class="criteria-grid">
-                    <div class="criteria-box">
-                        <h4><i class="fas fa-quran"></i> Hafalan Surat Pilihan</h4>
-                        <div class="criteria-row"><label>1. Surat Yasin</label><select id="gradeYasin" class="grade-select"><option>Belum</option><option>Mumtaz</option><option>Jayyid Jiddan</option><option>Jayyid</option></select><input type="checkbox" id="doneYasin"> Selesai</div>
-                        <div class="criteria-row"><label>2. Surat Al Waqiah</label><select id="gradeWaqiah" class="grade-select"><option>Belum</option><option>Mumtaz</option><option>Jayyid Jiddan</option><option>Jayyid</option></select><input type="checkbox" id="doneWaqiah"> Selesai</div>
-                        <div class="criteria-row"><label>3. Surat Al Mulk</label><select id="gradeMulk" class="grade-select"><option>Belum</option><option>Mumtaz</option><option>Jayyid Jiddan</option><option>Jayyid</option></select><input type="checkbox" id="doneMulk"> Selesai</div>
-                    </div>
-                    <div class="criteria-box">
-                        <h4><i class="fas fa-hands"></i> Hafalan Aurad (Mumtaz tersedia)</h4>
-                        <div class="criteria-row"><label>1. Wirid setelah shalat</label><select id="gradeWirid" class="grade-select"><option>Belum</option><option>Mumtaz</option><option>Jayyid Jiddan</option><option>Jayyid</option></select><input type="checkbox" id="doneWirid"> Selesai</div>
-                        <div class="criteria-row"><label>2. Doa setelah shalat</label><select id="gradeDoa" class="grade-select"><option>Belum</option><option>Mumtaz</option><option>Jayyid Jiddan</option><option>Jayyid</option></select><input type="checkbox" id="doneDoa"> Selesai</div>
-                        <div class="criteria-row"><label>3. Tahlil ringkas</label><select id="gradeTahlilR" class="grade-select"><option>Belum</option><option>Mumtaz</option><option>Jayyid Jiddan</option><option>Jayyid</option></select><input type="checkbox" id="doneTahlilR"> Selesai</div>
-                        <div class="criteria-row"><label>4. Tahlil lengkap</label><select id="gradeTahlilL" class="grade-select"><option>Belum</option><option>Mumtaz</option><option>Jayyid Jiddan</option><option>Jayyid</option></select><input type="checkbox" id="doneTahlilL"> Selesai</div>
-                        <div class="criteria-row"><label>5. Doa tahlil</label><select id="gradeDoaTahlil" class="grade-select"><option>Belum</option><option>Mumtaz</option><option>Jayyid Jiddan</option><option>Jayyid</option></select><input type="checkbox" id="doneDoaTahlil"> Selesai</div>
-                        <div class="criteria-row"><label>6. Tawasul</label><select id="gradeTawasul" class="grade-select"><option>Belum</option><option>Mumtaz</option><option>Jayyid Jiddan</option><option>Jayyid</option></select><input type="checkbox" id="doneTawasul"> Selesai</div>
-                    </div>
-                    <div class="criteria-box">
-                        <h4><i class="fas fa-pray"></i> Praktek & Kelulusan</h4>
-                        <div class="criteria-row"><label>Praktek shalat & pengurusan jenazah</label><select id="gradeJenazah" class="grade-select"><option>Belum</option><option>Mumtaz</option><option>Jayyid Jiddan</option><option>Jayyid</option></select><input type="checkbox" id="doneJenazah"> Selesai</div>
-                        <div class="criteria-row"><label>Hafalan juz 30 (Amma - Annas)</label><select id="gradeJuz30" class="grade-select"><option>Belum</option><option>Ahsan</option><option>Mumtaz</option><option>Jayyid Jiddan</option><option>Jayyid</option></select><input type="checkbox" id="doneJuz30"> Selesai</div>
-                        <div class="criteria-row"><label>Praktek khotib & bilal</label><select id="gradeKhotib" class="grade-select"><option>Belum</option><option>Ahsan</option><option>Mumtaz</option><option>Jayyid Jiddan</option></select><input type="checkbox" id="doneKhotib"> Selesai</div>
-                        <div class="criteria-row"><label>Lulus Madin Ula</label><input type="checkbox" id="doneMadinUla"> Selesai</div>
-                        <div class="criteria-row"><label>Lulus Madin Wustho</label><input type="checkbox" id="doneMadinWustho"> Selesai</div>
-                        <div class="criteria-row"><label>Sikap dan Adab (shalat berjamaah, madin formal)</label><input type="checkbox" id="doneSikap"> Selesai</div>
+                        <div class="form-title"><i class="fas fa-pen"></i> Input Data Hafalan Santri</div>
+                        
+                        <div class="criteria-grid">
+                            <!-- Hafalan Surat Pilihan -->
+                            <div class="criteria-box">
+                                <h4><i class="fas fa-quran"></i> Hafalan Surat Pilihan</h4>
+                                <div class="criteria-row"><label>1. Surat Yasin</label><select id="gradeYasin" class="grade-select"><option>Belum</option><option>Mumtaz</option><option>Jayyid Jiddan</option><option>Jayyid</option></select><input type="checkbox" id="doneYasin"> Selesai</div>
+                                <div class="criteria-row"><label>2. Surat Al Waqiah</label><select id="gradeWaqiah" class="grade-select"><option>Belum</option><option>Mumtaz</option><option>Jayyid Jiddan</option><option>Jayyid</option></select><input type="checkbox" id="doneWaqiah"> Selesai</div>
+                                <div class="criteria-row"><label>3. Surat Al Mulk</label><select id="gradeMulk" class="grade-select"><option>Belum</option><option>Mumtaz</option><option>Jayyid Jiddan</option><option>Jayyid</option></select><input type="checkbox" id="doneMulk"> Selesai</div>
+                            </div>
+
+                            <!-- Hafalan Aurad -->
+                            <div class="criteria-box">
+                                <h4><i class="fas fa-hands"></i> Hafalan Aurad (Mumtaz tersedia)</h4>
+                                <div class="criteria-row"><label>1. Wirid setelah shalat</label><select id="gradeWirid" class="grade-select"><option>Belum</option><option>Mumtaz</option><option>Jayyid Jiddan</option><option>Jayyid</option></select><input type="checkbox" id="doneWirid"> Selesai</div>
+                                <div class="criteria-row"><label>2. Doa setelah shalat</label><select id="gradeDoa" class="grade-select"><option>Belum</option><option>Mumtaz</option><option>Jayyid Jiddan</option><option>Jayyid</option></select><input type="checkbox" id="doneDoa"> Selesai</div>
+                                <div class="criteria-row"><label>3. Tahlil ringkas</label><select id="gradeTahlilR" class="grade-select"><option>Belum</option><option>Mumtaz</option><option>Jayyid Jiddan</option><option>Jayyid</option></select><input type="checkbox" id="doneTahlilR"> Selesai</div>
+                                <div class="criteria-row"><label>4. Tahlil lengkap</label><select id="gradeTahlilL" class="grade-select"><option>Belum</option><option>Mumtaz</option><option>Jayyid Jiddan</option><option>Jayyid</option></select><input type="checkbox" id="doneTahlilL"> Selesai</div>
+                                <div class="criteria-row"><label>5. Doa tahlil</label><select id="gradeDoaTahlil" class="grade-select"><option>Belum</option><option>Mumtaz</option><option>Jayyid Jiddan</option><option>Jayyid</option></select><input type="checkbox" id="doneDoaTahlil"> Selesai</div>
+                                <div class="criteria-row"><label>6. Tawasul</label><select id="gradeTawasul" class="grade-select"><option>Belum</option><option>Mumtaz</option><option>Jayyid Jiddan</option><option>Jayyid</option></select><input type="checkbox" id="doneTawasul"> Selesai</div>
+                            </div>
+
+                            <!-- Praktek & Kelulusan -->
+                            <div class="criteria-box">
+                                <h4><i class="fas fa-pray"></i> Praktek & Kelulusan</h4>
+                                <div class="criteria-row"><label>Praktek shalat & pengurusan jenazah</label><select id="gradeJenazah" class="grade-select"><option>Belum</option><option>Mumtaz</option><option>Jayyid Jiddan</option><option>Jayyid</option></select><input type="checkbox" id="doneJenazah"> Selesai</div>
+                                <div class="criteria-row"><label>Hafalan juz 30 (Amma - Annas)</label><select id="gradeJuz30" class="grade-select"><option>Belum</option><option>Ahsan</option><option>Mumtaz</option><option>Jayyid Jiddan</option><option>Jayyid</option></select><input type="checkbox" id="doneJuz30"> Selesai</div>
+                                <div class="criteria-row"><label>Praktek khotib & bilal</label><select id="gradeKhotib" class="grade-select"><option>Belum</option><option>Ahsan</option><option>Mumtaz</option><option>Jayyid Jiddan</option></select><input type="checkbox" id="doneKhotib"> Selesai</div>
+                                <div class="criteria-row"><label>Lulus Madin Ula</label><input type="checkbox" id="doneMadinUla"> Selesai</div>
+                                <div class="criteria-row"><label>Lulus Madin Wustho</label><input type="checkbox" id="doneMadinWustho"> Selesai</div>
+                                <div class="criteria-row"><label>Sikap dan Adab (shalat berjamaah, madin formal)</label><input type="checkbox" id="doneSikap"> Selesai</div>
+                            </div>
+                        </div>
+                        
+                        <!-- TOMBOL SIMPAN DI AKHIR -->
+                        <button class="btn-save" onclick="simpanHafalan()"><i class="fas fa-save"></i> SIMPAN</button>
                     </div>
                 </div>
-                <button class="btn-save" onclick="simpanHafalan()"><i class="fas fa-save"></i> SIMPAN</button>
             </div>
         </div>
 
@@ -363,7 +385,7 @@
     let currentHafalanSearchTerm = "";
 
     function loadAllData() {
-        let saved = localStorage.getItem("mutqinbm_final_v8");
+        let saved = localStorage.getItem("mutqinbm_final_v9");
         if(saved) {
             let data = JSON.parse(saved);
             daftarSantri = data.daftarSantri || [];
@@ -384,7 +406,7 @@
         saveAllData();
     }
 
-    function saveAllData() { localStorage.setItem("mutqinbm_final_v8", JSON.stringify({ daftarSantri, profileData, nextId })); }
+    function saveAllData() { localStorage.setItem("mutqinbm_final_v9", JSON.stringify({ daftarSantri, profileData, nextId })); }
 
     function saveProfileData() {
         let logoFile = document.getElementById("profileLogoInput").files[0];
@@ -503,7 +525,7 @@
         document.querySelector("#tableAllSantri tbody").innerHTML = html;
     }
 
-    // FITUR PENCARIAN SANTRI di Input Hafalan
+    // FITUR PENCARIAN SANTRI di Input Hafalan (SISI KIRI)
     function filterStudentList() {
         let searchTerm = document.getElementById("hafalanSearchInput").value.toLowerCase().trim();
         currentHafalanSearchTerm = searchTerm;
@@ -515,14 +537,17 @@
         
         let container = document.getElementById("studentListContainer");
         if(filteredSantri.length === 0) {
-            container.innerHTML = `<div style="padding: 15px; text-align: center; color: #999;"><i class="fas fa-search"></i> Tidak ditemukan santri dengan nama "${searchTerm}"</div>`;
+            container.innerHTML = `<div style="padding: 20px; text-align: center; color: #999;"><i class="fas fa-search"></i> Tidak ditemukan santri<br>dengan nama "${searchTerm}"</div>`;
             return;
         }
         
         let html = filteredSantri.map(s => `
             <div class="student-item ${currentSelectedStudentId === s.id ? 'active' : ''}" onclick="selectStudent(${s.id})">
-                <span><i class="fas fa-user"></i> ${s.name} (${s.kelas || 'Tanpa Kelas'})</span>
-                <span class="status-badge">${s.graduated ? '✅ Lulus' : (s.hafalan && Object.keys(s.hafalan).length > 0 ? '📖 Proses' : '❌ Belum')}</span>
+                <div>
+                    <div class="student-name"><i class="fas fa-user"></i> ${s.name}</div>
+                    <div class="student-class">${s.kelas || 'Tanpa Kelas'}</div>
+                </div>
+                <div class="student-status">${s.graduated ? '✅' : (s.hafalan && Object.keys(s.hafalan).length > 0 ? '📖' : '❌')}</div>
             </div>
         `).join('');
         
@@ -633,7 +658,7 @@
 
     function simpanHafalan() {
         if(!currentSelectedStudentId) {
-            alert("Silakan pilih santri terlebih dahulu!");
+            alert("Silakan pilih santri terlebih dahulu dari daftar di sebelah kiri!");
             return;
         }
         let s = daftarSantri.find(st => st.id === currentSelectedStudentId); 
