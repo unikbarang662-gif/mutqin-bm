@@ -327,4 +327,175 @@
             document.getElementById("loginPage").style.display = "none"; 
             document.getElementById("mainApp").style.display = "block"; 
             showPage('dashboard'); 
-            refreshDashboard
+            refreshDashboard(); 
+        } else { 
+            alert("Username atau password salah! Gunakan admin / admin"); 
+        }
+    }
+
+    function doLogout() { 
+        document.getElementById("mainApp").style.display = "none"; 
+        document.getElementById("loginPage").style.display = "flex"; 
+        document.getElementById("loginUsername").value = "";
+        document.getElementById("loginPassword").value = "";
+    }
+
+    function showPage(page) {
+        document.getElementById("dashboardPage").style.display = "none";
+        document.getElementById("studentsPage").style.display = "none";
+        document.getElementById("hafalanPage").style.display = "none";
+        document.getElementById("sertifikatPage").style.display = "none";
+        document.getElementById("importPage").style.display = "none";
+        document.getElementById("pengaturanPage").style.display = "none";
+        if(page === 'dashboard') document.getElementById("dashboardPage").style.display = "block";
+        if(page === 'students') { document.getElementById("studentsPage").style.display = "block"; renderAllStudents(); }
+        if(page === 'hafalan') { document.getElementById("hafalanPage").style.display = "block"; renderSantriSelect(); }
+        if(page === 'sertifikat') { document.getElementById("sertifikatPage").style.display = "block"; renderCertSelect(); }
+        if(page === 'import') document.getElementById("importPage").style.display = "block";
+        if(page === 'pengaturan') document.getElementById("pengaturanPage").style.display = "block";
+        document.querySelectorAll('.sidebar-item').forEach((item, idx) => { item.classList.remove('active'); });
+        event.target.closest('.sidebar-item').classList.add('active');
+    }
+
+    function refreshDashboard() {
+        let total = daftarSantri.length;
+        let lulus = daftarSantri.filter(s => s.graduated).length;
+        let proses = daftarSantri.filter(s => !s.graduated && s.hafalan && Object.keys(s.hafalan).length > 0).length;
+        let belumHafal = total - lulus - proses;
+        document.getElementById("statTotal").innerText = total;
+        document.getElementById("statLulus").innerText = lulus;
+        document.getElementById("statProses").innerText = proses;
+        document.getElementById("statBelumHafal").innerText = belumHafal;
+        document.getElementById("legendLulus").innerText = lulus;
+        document.getElementById("legendProses").innerText = proses;
+        document.getElementById("legendBelum").innerText = belumHafal;
+        let percent = total ? ((lulus/total)*100).toFixed(1) : 0;
+        document.getElementById("progressPercent").innerText = percent + "%";
+        let ctx = document.getElementById('chartProgress').getContext('2d');
+        if(window.myChart) window.myChart.destroy();
+        window.myChart = new Chart(ctx, { type: 'doughnut', data: { labels: ['Sudah Lulus', 'Sedang Proses', 'Belum Hafalan'], datasets: [{ data: [lulus, proses, belumHafal], backgroundColor: ['#2e7d32', '#ff9800', '#dc3545'] }] }, options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { display: false } } } });
+        let recent = daftarSantri.slice(-5).reverse();
+        let html = recent.map(s => `<tr><td>${s.name}</td><td>${s.kelas || '-'}</td><td>${s.graduated ? '<span style="color:#2e7d32">✅ LULUS</span>' : (s.hafalan && Object.keys(s.hafalan).length > 0 ? '📖 Sedang Proses' : '❌ Belum Hafalan')}</td></tr>`).join('');
+        document.querySelector("#tableRecent tbody").innerHTML = html;
+    }
+
+    function renderAllStudents() {
+        let html = daftarSantri.map(s => `<tr><td><i class="fas fa-user-graduate"></i> ${s.name}</td><td>${s.kelas || '-'}</td><td>${s.graduated ? '<span style="color:#2e7d32;font-weight:bold">LULUS</span>' : (s.hafalan && Object.keys(s.hafalan).length > 0 ? 'Sedang Proses' : 'Belum Hafalan')}</td><td><button class="btn-small" onclick="editSantri(${s.id})">Edit Hafalan</button></td>`).join('');
+        document.querySelector("#tableAllSantri tbody").innerHTML = html;
+    }
+
+    function renderSantriSelect() {
+        let select = document.getElementById("selectSantri");
+        select.innerHTML = daftarSantri.map(s => `<option value="${s.id}">${s.name}</option>`).join('');
+        if(daftarSantri.length) loadHafalanToForm(daftarSantri[0].id);
+        select.onchange = () => loadHafalanToForm(parseInt(select.value));
+    }
+
+    function loadHafalanToForm(id) {
+        let s = daftarSantri.find(st => st.id === id); if(!s) return;
+        let h = s.hafalan || {};
+        document.getElementById("gradeYasin").value = h.yasin?.grade || "Belum"; document.getElementById("doneYasin").checked = h.yasin?.done || false;
+        document.getElementById("gradeWaqiah").value = h.waqiah?.grade || "Belum"; document.getElementById("doneWaqiah").checked = h.waqiah?.done || false;
+        document.getElementById("gradeMulk").value = h.mulk?.grade || "Belum"; document.getElementById("doneMulk").checked = h.mulk?.done || false;
+        document.getElementById("gradeWirid").value = h.wirid?.grade || "Belum"; document.getElementById("doneWirid").checked = h.wirid?.done || false;
+        document.getElementById("gradeDoa").value = h.doa?.grade || "Belum"; document.getElementById("doneDoa").checked = h.doa?.done || false;
+        document.getElementById("gradeTahlilR").value = h.tahlilR?.grade || "Belum"; document.getElementById("doneTahlilR").checked = h.tahlilR?.done || false;
+        document.getElementById("gradeTahlilL").value = h.tahlilL?.grade || "Belum"; document.getElementById("doneTahlilL").checked = h.tahlilL?.done || false;
+        document.getElementById("gradeDoaTahlil").value = h.doaTahlil?.grade || "Belum"; document.getElementById("doneDoaTahlil").checked = h.doaTahlil?.done || false;
+        document.getElementById("gradeTawasul").value = h.tawasul?.grade || "Belum"; document.getElementById("doneTawasul").checked = h.tawasul?.done || false;
+        document.getElementById("gradeJenazah").value = h.jenazah?.grade || "Belum"; document.getElementById("doneJenazah").checked = h.jenazah?.done || false;
+        document.getElementById("gradeJuz30").value = h.juz30?.grade || "Belum"; document.getElementById("doneJuz30").checked = h.juz30?.done || false;
+        document.getElementById("gradeKhotib").value = h.khotib?.grade || "Belum"; document.getElementById("doneKhotib").checked = h.khotib?.done || false;
+        document.getElementById("doneMadinUla").checked = h.madinUla || false;
+        document.getElementById("doneMadinWustho").checked = h.madinWustho || false;
+        document.getElementById("doneSikap").checked = h.sikap || false;
+    }
+
+    function simpanHafalan() {
+        let id = parseInt(document.getElementById("selectSantri").value);
+        let s = daftarSantri.find(st => st.id === id); if(!s) return;
+        s.hafalan = {
+            yasin: { done: document.getElementById("doneYasin").checked, grade: document.getElementById("gradeYasin").value },
+            waqiah: { done: document.getElementById("doneWaqiah").checked, grade: document.getElementById("gradeWaqiah").value },
+            mulk: { done: document.getElementById("doneMulk").checked, grade: document.getElementById("gradeMulk").value },
+            wirid: { done: document.getElementById("doneWirid").checked, grade: document.getElementById("gradeWirid").value },
+            doa: { done: document.getElementById("doneDoa").checked, grade: document.getElementById("gradeDoa").value },
+            tahlilR: { done: document.getElementById("doneTahlilR").checked, grade: document.getElementById("gradeTahlilR").value },
+            tahlilL: { done: document.getElementById("doneTahlilL").checked, grade: document.getElementById("gradeTahlilL").value },
+            doaTahlil: { done: document.getElementById("doneDoaTahlil").checked, grade: document.getElementById("gradeDoaTahlil").value },
+            tawasul: { done: document.getElementById("doneTawasul").checked, grade: document.getElementById("gradeTawasul").value },
+            jenazah: { done: document.getElementById("doneJenazah").checked, grade: document.getElementById("gradeJenazah").value },
+            juz30: { done: document.getElementById("doneJuz30").checked, grade: document.getElementById("gradeJuz30").value },
+            khotib: { done: document.getElementById("doneKhotib").checked, grade: document.getElementById("gradeKhotib").value },
+            madinUla: document.getElementById("doneMadinUla").checked,
+            madinWustho: document.getElementById("doneMadinWustho").checked,
+            sikap: document.getElementById("doneSikap").checked
+        };
+        let h = s.hafalan;
+        s.graduated = h.yasin.done && h.waqiah.done && h.mulk.done && h.wirid.done && h.doa.done && h.tahlilR.done && h.tahlilL.done && h.doaTahlil.done && h.tawasul.done && h.jenazah.done && h.juz30.done && h.khotib.done && h.madinUla && h.madinWustho && h.sikap;
+        saveAllData(); alert(`✅ Data ${s.name} tersimpan! Status: ${s.graduated ? "LULUS" : "Belum Lulus"}`); refreshDashboard(); renderAllStudents();
+    }
+
+    function editSantri(id) { showPage('hafalan'); setTimeout(() => { document.getElementById("selectSantri").value = id; loadHafalanToForm(id); }, 100); }
+
+    function renderCertSelect() {
+        let select = document.getElementById("selectSertifikat");
+        let lulusSantri = daftarSantri.filter(s => s.graduated);
+        select.innerHTML = lulusSantri.map(s => `<option value="${s.id}">${s.name}</option>`).join('');
+        if(lulusSantri.length) generateSertifikat();
+        select.onchange = () => generateSertifikat();
+    }
+
+    function generateSertifikat() {
+        let id = parseInt(document.getElementById("selectSertifikat").value);
+        let s = daftarSantri.find(st => st.id === id); if(!s) return;
+        let html = `
+            <div class="certificate-content">
+                <img src="${profileData.logo}" class="certificate-logo">
+                <div class="certificate-pesantren">${profileData.pesantren}</div>
+                <div class="certificate-nomor">No Sertifikat: BM/00${s.id}</div>
+                <div class="certificate-title">SERTIFIKAT KELULUSAN</div>
+                <div class="certificate-name">${s.name}</div>
+                <div class="certificate-desc">Dinyatakan telah MENYELESAIKAN MUTQIN BM<br>Program Hafalan sesuai Standar Kelulusan Pondok Bahrul</div>
+                <div class="certificate-lulus">LULUS</div>
+                <div class="certificate-list">
+                    <div class="certificate-list-item"><i class="fas fa-check-circle"></i> <strong>Hafal Surat Yasin, Waqiah, Al Mulk</strong> (Mumtaz)</div>
+                    <div class="certificate-list-item"><i class="fas fa-check-circle"></i> <strong>Hafal Tawasul, Tahlil, Istighosah, Doa</strong> (Jayyid Jiddan)</div>
+                    <div class="certificate-list-item"><i class="fas fa-check-circle"></i> <strong>Praktik Sholat & Pengurusan Jenazah</strong> (Jayyid)</div>
+                    <div class="certificate-list-item"><i class="fas fa-check-circle"></i> <strong>Hafal Juz 30</strong> (Ahsan)</div>
+                    <div class="certificate-list-item"><i class="fas fa-check-circle"></i> <strong>Praktik Khotib & Bilal</strong> (Ahsan)</div>
+                    <div class="certificate-list-item"><i class="fas fa-check-circle"></i> <strong>Lulus Madin Ula</strong> ✔</div>
+                    <div class="certificate-list-item"><i class="fas fa-check-circle"></i> <strong>Lulus Madin Wusto</strong> ✔</div>
+                    <div class="certificate-list-item"><i class="fas fa-check-circle"></i> <strong>Sikap dan Adab Sholat Berjamaah & Madin</strong> ✔</div>
+                </div>
+                <div class="signature-area">
+                    <div>Pengasuh,<br><br><div class="signature-line"></div>${profileData.pengasuh}</div>
+                    <div>Kepala Dewan Tahfizh,<br><br><div class="signature-line"></div>${profileData.kepalaMadin}</div>
+                </div>
+            </div>
+        `;
+        document.getElementById("previewSertifikat").innerHTML = html;
+    }
+
+    function downloadSertifikat() { let element = document.getElementById("previewSertifikat"); html2pdf().set({ margin: 0.5, filename: 'sertifikat_lulus.pdf', image: { type: 'jpeg', quality: 0.98 }, html2canvas: { scale: 2 }, jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' } }).from(element).save(); }
+
+    function importExcelData() {
+        let file = document.getElementById("fileExcel").files[0];
+        if(!file) { alert("Pilih file Excel!"); return; }
+        let reader = new FileReader();
+        reader.onload = function(e) {
+            let data = new Uint8Array(e.target.result);
+            let workbook = XLSX.read(data, {type: 'array'});
+            let sheet = workbook.Sheets[workbook.SheetNames[0]];
+            let rows = XLSX.utils.sheet_to_json(sheet);
+            rows.forEach(row => { let name = row["Nama"] || row["nama"] || Object.values(row)[0]; if(name) { daftarSantri.push({ id: nextId++, name: name, kelas: row["Kelas"] || "", hafalan: {}, graduated: false }); } });
+            saveAllData(); alert(`Berhasil import ${rows.length} santri!`); refreshDashboard(); renderAllStudents();
+        };
+        reader.readAsArrayBuffer(file);
+    }
+
+    // Initialize data
+    loadAllData();
+</script>
+</body>
+</html>
