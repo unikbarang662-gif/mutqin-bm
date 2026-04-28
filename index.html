@@ -73,34 +73,44 @@
         .download-section { background: #e8f5e9; padding: 15px; border-radius: 15px; margin-bottom: 20px; display: flex; flex-wrap: wrap; gap: 10px; justify-content: space-between; align-items: center; }
         .download-buttons { display: flex; flex-wrap: wrap; gap: 8px; }
 
-        /* Sertifikat - PERSIS SEPERTI CONTOH */
-        .certificate-container { background: #fff; padding: 20px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); }
-        .certificate-card { background: white; max-width: 800px; margin: 0 auto; padding: 30px; border: 1px solid #ddd; box-shadow: 0 10px 30px rgba(0,0,0,0.1); font-family: 'Times New Roman', Times, serif; }
-        .certificate-header { text-align: center; margin-bottom: 20px; }
-        .certificate-logo { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; margin-bottom: 10px; }
-        .certificate-pesantren { font-size: 14px; font-weight: bold; letter-spacing: 2px; }
-        .certificate-pesantren small { font-size: 11px; font-weight: normal; }
-        .certificate-nomor { font-size: 12px; color: #666; margin-top: 5px; }
-        .certificate-title { font-size: 24px; font-weight: bold; text-align: center; margin: 15px 0; letter-spacing: 3px; }
-        .certificate-name { font-size: 28px; font-weight: bold; text-align: center; margin: 20px 0; text-transform: uppercase; }
-        .certificate-desc { text-align: center; font-size: 13px; margin: 15px 0; line-height: 1.5; font-style: italic; }
-        .certificate-lulus { text-align: center; font-size: 28px; font-weight: bold; color: #2e7d32; margin: 15px 0; letter-spacing: 2px; }
+        /* SERTIFIKAT - PERSIS SEPERTI CONTOH GAMBAR */
+        .certificate-wrapper { background: #e0e0e0; padding: 30px; border-radius: 15px; }
+        .certificate-paper { background: white; max-width: 800px; margin: 0 auto; padding: 40px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); font-family: 'Times New Roman', Times, serif; }
         
-        /* List Capaian */
-        .certificate-list { margin: 20px 0; }
-        .certificate-item { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px dashed #eee; }
-        .certificate-item-left { display: flex; align-items: center; gap: 10px; }
-        .certificate-check { color: #2e7d32; font-size: 16px; width: 24px; }
-        .certificate-text { font-size: 13px; }
-        .certificate-grade { font-size: 13px; font-weight: bold; color: #333; min-width: 100px; text-align: right; }
-        .certificate-check-icon { width: 20px; text-align: center; }
+        /* Header Sertifikat */
+        .cert-header { text-align: center; margin-bottom: 20px; }
+        .cert-logo { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; margin-bottom: 10px; }
+        .cert-pesantren-line1 { font-size: 14px; font-weight: bold; letter-spacing: 2px; }
+        .cert-pesantren-line2 { font-size: 18px; font-weight: bold; margin-top: 5px; }
+        .cert-nomor { font-size: 12px; color: #666; margin-top: 5px; }
+        
+        /* Judul Sertifikat */
+        .cert-judul { font-size: 24px; font-weight: bold; text-align: center; margin: 15px 0; position: relative; }
+        .cert-judul:before, .cert-judul:after { content: "#"; color: #2e7d32; font-size: 20px; margin: 0 10px; }
+        
+        /* Nama Santri */
+        .cert-nama { font-size: 32px; font-weight: bold; text-align: center; margin: 20px 0; text-transform: uppercase; }
+        
+        /* Teks Keterangan */
+        .cert-keterangan { text-align: center; font-size: 14px; margin: 15px 0; line-height: 1.5; }
+        
+        /* LULUS */
+        .cert-lulus { text-align: center; font-size: 32px; font-weight: bold; color: #2e7d32; margin: 15px 0; letter-spacing: 3px; }
+        
+        /* Daftar Capaian */
+        .cert-capaian { margin: 20px 0; }
+        .capaian-item { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px dotted #ddd; }
+        .capaian-kiri { display: flex; align-items: center; gap: 10px; }
+        .capaian-cek { color: #2e7d32; font-size: 16px; font-weight: bold; }
+        .capaian-teks { font-size: 13px; font-weight: bold; }
+        .capaian-nilai { font-size: 13px; font-weight: normal; min-width: 100px; text-align: right; }
         
         /* Tanda Tangan */
-        .certificate-signature { display: flex; justify-content: space-between; margin-top: 40px; text-align: center; }
-        .signature-box { width: 45%; }
-        .signature-line { width: 80%; border-top: 1px solid #000; margin: 30px auto 5px; }
-        .signature-name { font-size: 12px; font-weight: bold; }
-        .signature-title { font-size: 11px; color: #666; }
+        .cert-ttd { display: flex; justify-content: space-between; margin-top: 40px; text-align: center; }
+        .ttd-box { width: 45%; }
+        .ttd-garis { width: 80%; border-top: 1px solid #000; margin: 30px auto 5px; }
+        .ttd-nama { font-size: 12px; font-weight: bold; }
+        .ttd-jabatan { font-size: 11px; color: #666; }
 
         /* Form Input Hafalan */
         .hafalan-layout { display: flex; gap: 20px; flex-wrap: wrap; }
@@ -130,14 +140,12 @@
             .content-right { padding-top: 60px; }
             .stats-row { grid-template-columns: repeat(2, 1fr); gap: 12px; }
             .stat-number { font-size: 24px; }
-            .certificate-card { padding: 20px; margin: 10px; }
-            .certificate-name { font-size: 22px; }
-            .certificate-title { font-size: 20px; }
-            .certificate-lulus { font-size: 24px; }
-            .certificate-item { flex-direction: column; align-items: flex-start; gap: 5px; }
-            .certificate-grade { text-align: left; margin-left: 30px; }
-            .certificate-signature { flex-direction: column; gap: 20px; }
-            .signature-box { width: 100%; }
+            .certificate-paper { padding: 20px; margin: 10px; }
+            .cert-nama { font-size: 24px; }
+            .capaian-item { flex-direction: column; align-items: flex-start; gap: 5px; }
+            .capaian-nilai { text-align: left; margin-left: 25px; }
+            .cert-ttd { flex-direction: column; gap: 20px; }
+            .ttd-box { width: 100%; }
             .download-section { flex-direction: column; align-items: stretch; }
         }
     </style>
@@ -206,7 +214,7 @@
                 </div>
                 <div class="table-card">
                     <h3>Santri Terbaru</h3>
-                    <table id="tableRecent"><thead><tr><th>Nama Santri</th><th>Kelas</th><th>Status</th></tr></thead><tbody></tbody></table>
+                    <table id="tableRecent"><thead><tr><th>Nama Santri</th><th>Kelas</th><th>Status</th></td></thead><tbody></tbody></table>
                 </div>
             </div>
 
@@ -279,12 +287,12 @@
                 </div>
             </div>
 
-            <!-- SERTIFIKAT - DESAIN PERSIS SEPERTI CONTOH -->
+            <!-- SERTIFIKAT - PERSIS SEPERTI CONTOH GAMBAR -->
             <div id="sertifikatPage" style="display:none">
                 <div class="table-card">
                     <h3>Sertifikat Kelulusan</h3>
-                    <select id="selectSertifikat" style="width:100%; padding:10px; border-radius:25px; margin-bottom:20px;" onchange="generateSertifikat()"></select>
-                    <div id="previewSertifikat" class="certificate-container"></div>
+                    <select id="selectSertifikat" style="width:100%; padding:10px; border-radius:25px; margin-bottom:20px;" onchange="generateCertificate()"></select>
+                    <div id="previewSertifikat" class="certificate-wrapper"></div>
                     <button class="btn-save-main" onclick="downloadSertifikat()" style="margin-top:20px;">Download Sertifikat PDF</button>
                 </div>
             </div>
@@ -331,7 +339,7 @@
     };
 
     function loadAllData() {
-        let saved = localStorage.getItem("mutqinbm_final_v13");
+        let saved = localStorage.getItem("mutqinbm_cert_final");
         if(saved) {
             let data = JSON.parse(saved);
             daftarSantri = data.daftarSantri || [];
@@ -350,7 +358,7 @@
         saveAllData();
     }
 
-    function saveAllData() { localStorage.setItem("mutqinbm_final_v13", JSON.stringify({ daftarSantri, profileData, nextId })); }
+    function saveAllData() { localStorage.setItem("mutqinbm_cert_final", JSON.stringify({ daftarSantri, profileData, nextId })); }
 
     function saveProfileData() {
         let logoFile = document.getElementById("profileLogoInput").files[0];
@@ -447,13 +455,13 @@
         if(window.myChart) window.myChart.destroy();
         window.myChart = new Chart(ctx, { type: 'doughnut', data: { labels: ['Lulus','Proses','Belum'], datasets: [{ data: [lulus, proses, belum], backgroundColor: ['#2e7d32','#ff9800','#dc3545'] }] }, options: { plugins: { legend: { display: false } } } });
         let recent = daftarSantri.slice(-5).reverse();
-        document.querySelector("#tableRecent tbody").innerHTML = recent.map(s => `<tr><td>${s.name}</td><td>${s.kelas||'-'}</td><td>${s.graduated ? 'LULUS' : (s.hafalan&&Object.keys(s.hafalan).length>0 ? 'Proses' : 'Belum')}</td></tr>`).join('');
+        document.querySelector("#tableRecent tbody").innerHTML = recent.map(s => `<tr><td>${s.name}</td><td>${s.kelas||'-'}</td><td>${s.graduated ? 'LULUS' : (s.hafalan&&Object.keys(s.hafalan).length>0 ? 'Proses' : 'Belum')}</td>`).join('');
     }
 
     function renderAllStudents() {
         let term = document.getElementById("searchSantriInput")?.value.toLowerCase() || "";
         let filtered = term ? daftarSantri.filter(s=>s.name.toLowerCase().includes(term)) : daftarSantri;
-        document.querySelector("#tableAllSantri tbody").innerHTML = filtered.map(s => `<tr><td><i class="fas fa-user"></i> ${s.name}</td><td>${s.kelas||'-'}</td><td>${s.graduated ? 'LULUS' : (s.hafalan&&Object.keys(s.hafalan).length>0 ? 'Proses' : 'Belum')}</td><td><button class="btn-small" onclick="editSantri(${s.id})">Edit</button></td></tr>`).join('');
+        document.querySelector("#tableAllSantri tbody").innerHTML = filtered.map(s => `<tr><td><i class="fas fa-user"></i> ${s.name}</td><td>${s.kelas||'-'}</td><td>${s.graduated ? 'LULUS' : (s.hafalan&&Object.keys(s.hafalan).length>0 ? 'Proses' : 'Belum')}</td><td><button class="btn-small" onclick="editSantri(${s.id})">Edit</button></td>`).join('');
     }
 
     function searchSantri() { renderAllStudents(); }
@@ -554,111 +562,109 @@
 
     function editSantri(id) { showPage('hafalan'); setTimeout(()=>selectStudent(id),100); }
 
-    // SERTIFIKAT - DESAIN PERSIS SEPERTI CONTOH
+    // SERTIFIKAT - PERSIS SEPERTI CONTOH GAMBAR
     function renderCertSelect() {
         let select = document.getElementById("selectSertifikat");
         let lulusSantri = daftarSantri.filter(s => s.graduated);
         select.innerHTML = lulusSantri.map(s => `<option value="${s.id}">${s.name}</option>`).join('');
-        if(lulusSantri.length) generateSertifikat();
-        select.onchange = () => generateSertifikat();
+        if(lulusSantri.length) generateCertificate();
+        select.onchange = () => generateCertificate();
     }
 
-    function generateSertifikat() {
+    function generateCertificate() {
         let id = parseInt(document.getElementById("selectSertifikat").value);
         let s = daftarSantri.find(st => st.id === id);
         if(!s) return;
         
         let html = `
-            <div class="certificate-card">
-                <div class="certificate-header">
-                    <img src="${profileData.logo}" class="certificate-logo">
-                    <div class="certificate-pesantren">
-                        ${profileData.pesantren}<br>
-                        <small>PONPES BAHRUL MAGHFIROH</small>
-                    </div>
-                    <div class="certificate-nomor">No Sertifikat: BM/00${s.id}</div>
+            <div class="certificate-paper">
+                <div class="cert-header">
+                    <img src="${profileData.logo}" class="cert-logo">
+                    <div class="cert-pesantren-line1">PONDOK PESANTREN</div>
+                    <div class="cert-pesantren-line2">BAHRUL MAGHFIROH</div>
+                    <div class="cert-nomor">No Sertifikat: BM/00${s.id}</div>
                 </div>
                 
-                <div class="certificate-title">SERTIFIKAT KELULUSAN</div>
+                <div class="cert-judul">SERTIFIKAT KELULUSAN</div>
                 
-                <div class="certificate-name">${s.name.toUpperCase()}</div>
+                <div class="cert-nama">${s.name.toUpperCase()}</div>
                 
-                <div class="certificate-desc">
+                <div class="cert-keterangan">
                     Dinyatakan telah MENYELESAIKAN MUTQIN BM<br>
                     Program Hafalan sesuai Standar Kelulusan Pondok Bahrul
                 </div>
                 
-                <div class="certificate-lulus">LULUS</div>
+                <div class="cert-lulus">LULUS</div>
                 
-                <div class="certificate-list">
-                    <div class="certificate-item">
-                        <div class="certificate-item-left">
-                            <span class="certificate-check">✅</span>
-                            <span class="certificate-text"><strong>Hafal Surat Yasin, Waqiah, Al Mulk</strong></span>
+                <div class="cert-capaian">
+                    <div class="capaian-item">
+                        <div class="capaian-kiri">
+                            <span class="capaian-cek">✅</span>
+                            <span class="capaian-teks">Hafal Surat Yasin, Waqiah, Al Mulk</span>
                         </div>
-                        <div class="certificate-grade">Mumtaz</div>
+                        <div class="capaian-nilai">Mumtaz</div>
                     </div>
-                    <div class="certificate-item">
-                        <div class="certificate-item-left">
-                            <span class="certificate-check">✅</span>
-                            <span class="certificate-text"><strong>Hafal Tawasul, Tahlil, Istighosah, Doa</strong></span>
+                    <div class="capaian-item">
+                        <div class="capaian-kiri">
+                            <span class="capaian-cek">✅</span>
+                            <span class="capaian-teks">Hafal Tawasul, Tahlil, Istighosah, Doa</span>
                         </div>
-                        <div class="certificate-grade">Jayyid Jiddan</div>
+                        <div class="capaian-nilai">Jayyid Jiddan</div>
                     </div>
-                    <div class="certificate-item">
-                        <div class="certificate-item-left">
-                            <span class="certificate-check">✅</span>
-                            <span class="certificate-text"><strong>Praktik Sholat & Pengurusan Jenazah</strong></span>
+                    <div class="capaian-item">
+                        <div class="capaian-kiri">
+                            <span class="capaian-cek">✅</span>
+                            <span class="capaian-teks">Praktik Sholat & Pengurusan Jenazah</span>
                         </div>
-                        <div class="certificate-grade">Jayyid</div>
+                        <div class="capaian-nilai">Jayyid</div>
                     </div>
-                    <div class="certificate-item">
-                        <div class="certificate-item-left">
-                            <span class="certificate-check">✅</span>
-                            <span class="certificate-text"><strong>Hafal Juz 30</strong></span>
+                    <div class="capaian-item">
+                        <div class="capaian-kiri">
+                            <span class="capaian-cek">✅</span>
+                            <span class="capaian-teks">Hafal Juz 30</span>
                         </div>
-                        <div class="certificate-grade">Ahsan</div>
+                        <div class="capaian-nilai">Ahsan</div>
                     </div>
-                    <div class="certificate-item">
-                        <div class="certificate-item-left">
-                            <span class="certificate-check">✅</span>
-                            <span class="certificate-text"><strong>Praktik Khotib & Bilal</strong></span>
+                    <div class="capaian-item">
+                        <div class="capaian-kiri">
+                            <span class="capaian-cek">✅</span>
+                            <span class="capaian-teks">Praktik Khotib & Bilal</span>
                         </div>
-                        <div class="certificate-grade">Ahsan</div>
+                        <div class="capaian-nilai">Ahsan</div>
                     </div>
-                    <div class="certificate-item">
-                        <div class="certificate-item-left">
-                            <span class="certificate-check">✅</span>
-                            <span class="certificate-text"><strong>Lulus Madin Ula</strong></span>
+                    <div class="capaian-item">
+                        <div class="capaian-kiri">
+                            <span class="capaian-cek">✅</span>
+                            <span class="capaian-teks">Lulus Madin Ula</span>
                         </div>
-                        <div class="certificate-grade">✔</div>
+                        <div class="capaian-nilai">✔</div>
                     </div>
-                    <div class="certificate-item">
-                        <div class="certificate-item-left">
-                            <span class="certificate-check">✅</span>
-                            <span class="certificate-text"><strong>Lulus Madin Wusto</strong></span>
+                    <div class="capaian-item">
+                        <div class="capaian-kiri">
+                            <span class="capaian-cek">✅</span>
+                            <span class="capaian-teks">Lulus Madin Wusto</span>
                         </div>
-                        <div class="certificate-grade">✔</div>
+                        <div class="capaian-nilai">✔</div>
                     </div>
-                    <div class="certificate-item">
-                        <div class="certificate-item-left">
-                            <span class="certificate-check">✅</span>
-                            <span class="certificate-text"><strong>Sikap dan Adab Sholat Berjamaah & Madin</strong></span>
+                    <div class="capaian-item">
+                        <div class="capaian-kiri">
+                            <span class="capaian-cek">✅</span>
+                            <span class="capaian-teks">Sikap dan Adab Sholat Berjamaah & Madin</span>
                         </div>
-                        <div class="certificate-grade">✔</div>
+                        <div class="capaian-nilai">✔</div>
                     </div>
                 </div>
                 
-                <div class="certificate-signature">
-                    <div class="signature-box">
-                        <div class="signature-line"></div>
-                        <div class="signature-name">${profileData.pengasuh}</div>
-                        <div class="signature-title">Pengasuh</div>
+                <div class="cert-ttd">
+                    <div class="ttd-box">
+                        <div class="ttd-garis"></div>
+                        <div class="ttd-nama">${profileData.pengasuh}</div>
+                        <div class="ttd-jabatan">Pengasuh</div>
                     </div>
-                    <div class="signature-box">
-                        <div class="signature-line"></div>
-                        <div class="signature-name">${profileData.kepalaMadin}</div>
-                        <div class="signature-title">Kepala Dewan Tahfizh</div>
+                    <div class="ttd-box">
+                        <div class="ttd-garis"></div>
+                        <div class="ttd-nama">${profileData.kepalaMadin}</div>
+                        <div class="ttd-jabatan">Kepala Dewan Tahfizh</div>
                     </div>
                 </div>
             </div>
@@ -667,7 +673,7 @@
     }
 
     function downloadSertifikat() { 
-        let element = document.querySelector("#previewSertifikat .certificate-card");
+        let element = document.querySelector("#previewSertifikat .certificate-paper");
         if(element) {
             html2pdf().set({ margin: 0.5, filename: 'sertifikat_lulus.pdf', html2canvas: { scale: 2 }, jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' } }).from(element).save();
         } else {
