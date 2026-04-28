@@ -4,13 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
     <title>Mutqin BM - Standar Kelulusan Ponpes Bahrul Maghfiroh</title>
-    <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-    <!-- SheetJS -->
     <script src="https://cdn.sheetjs.com/xlsx-0.20.2/package/dist/xlsx.full.min.js"></script>
-    <!-- html2pdf -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         * {
@@ -30,7 +26,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #1b5e20, #2e7d32);
             padding: 20px;
         }
 
@@ -50,15 +46,13 @@
             border-radius: 50%;
             object-fit: cover;
             margin-bottom: 15px;
-            border: 4px solid #667eea;
+            border: 4px solid #2e7d32;
         }
 
         .login-title {
             font-size: 28px;
             font-weight: bold;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: #1b5e20;
         }
 
         .login-sub {
@@ -74,18 +68,17 @@
             border: 2px solid #e0e0e0;
             border-radius: 30px;
             font-size: 14px;
-            transition: 0.3s;
         }
 
         .login-input:focus {
-            border-color: #667eea;
+            border-color: #2e7d32;
             outline: none;
         }
 
         .login-btn {
             width: 100%;
             padding: 14px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            background: #2e7d32;
             color: white;
             border: none;
             border-radius: 30px;
@@ -93,12 +86,10 @@
             font-weight: bold;
             cursor: pointer;
             margin-top: 15px;
-            transition: 0.3s;
         }
 
         .login-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(102,126,234,0.4);
+            background: #1b5e20;
         }
 
         /* Main App */
@@ -108,7 +99,6 @@
             min-height: 100vh;
         }
 
-        /* Header */
         .header {
             background: white;
             padding: 12px 20px;
@@ -153,7 +143,6 @@
             font-size: 14px;
         }
 
-        /* Sidebar Mobile Friendly */
         .sidebar {
             background: white;
             padding: 10px 0;
@@ -172,7 +161,6 @@
             color: #555;
             font-weight: 500;
             font-size: 14px;
-            transition: 0.3s;
         }
 
         .sidebar-item.active {
@@ -181,14 +169,12 @@
             border-bottom: 3px solid #2e7d32;
         }
 
-        /* Content */
         .content {
             padding: 20px;
             max-width: 1200px;
             margin: 0 auto;
         }
 
-        /* Stats Cards Warna-warni */
         .stats-row {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -202,19 +188,18 @@
             border-radius: 20px;
             text-align: center;
             box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-            transition: 0.3s;
         }
 
         .stat-card:nth-child(1) { background: linear-gradient(135deg, #667eea, #764ba2); color: white; }
         .stat-card:nth-child(2) { background: linear-gradient(135deg, #11998e, #38ef7d); color: white; }
         .stat-card:nth-child(3) { background: linear-gradient(135deg, #f093fb, #f5576c); color: white; }
+        .stat-card:nth-child(4) { background: linear-gradient(135deg, #ff9800, #f44336); color: white; }
 
         .stat-number {
             font-size: 32px;
             font-weight: bold;
         }
 
-        /* Progress Section */
         .progress-card {
             background: white;
             padding: 20px;
@@ -224,7 +209,7 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.08);
         }
 
-        .chart-container {
+        .chart-row {
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
@@ -254,7 +239,6 @@
             border-radius: 50%;
         }
 
-        /* Tables */
         .table-card {
             background: white;
             border-radius: 20px;
@@ -290,7 +274,6 @@
             font-size: 11px;
         }
 
-        /* Forms */
         .form-card {
             background: white;
             border-radius: 20px;
@@ -348,7 +331,7 @@
         }
 
         .btn-save {
-            background: linear-gradient(135deg, #2e7d32, #1b5e20);
+            background: #2e7d32;
             color: white;
             border: none;
             padding: 14px;
@@ -360,12 +343,11 @@
             margin-top: 20px;
         }
 
-        /* Certificate - Persis Contoh */
+        /* Sertifikat - Persis Contoh */
         .certificate-box {
-            background: #fffef7;
-            padding: 25px 20px;
-            border-radius: 15px;
-            border: 2px solid #d4af37;
+            background: white;
+            padding: 30px 25px;
+            border-radius: 10px;
             margin-top: 20px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
@@ -382,50 +364,78 @@
             object-fit: cover;
         }
 
-        .certificate-title {
-            font-size: 22px;
+        .certificate-pesantren {
+            font-size: 18px;
             font-weight: bold;
-            margin: 10px 0;
+            margin: 5px 0;
         }
 
-        .certificate-subtitle {
-            font-size: 16px;
+        .certificate-nomor {
+            font-size: 12px;
             color: #555;
+            margin-bottom: 5px;
         }
 
-        .certificate-stamp {
-            border-top: 2px solid #2e7d32;
-            width: 80px;
-            margin: 10px auto;
+        .certificate-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 15px 0;
+            letter-spacing: 2px;
         }
 
         .certificate-name {
             font-size: 28px;
             font-weight: bold;
             margin: 20px 0;
-            color: #1b5e20;
+            text-transform: uppercase;
+        }
+
+        .certificate-desc {
+            font-size: 14px;
+            margin: 15px 0;
+            line-height: 1.5;
+        }
+
+        .certificate-lulus {
+            font-size: 32px;
+            font-weight: bold;
+            color: #2e7d32;
+            margin: 15px 0;
         }
 
         .certificate-list {
             text-align: left;
-            max-width: 400px;
-            margin: 15px auto;
+            max-width: 450px;
+            margin: 20px auto;
             font-size: 13px;
         }
 
         .certificate-list-item {
-            margin: 8px 0;
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .certificate-list-item i {
+            width: 20px;
+            color: #2e7d32;
         }
 
         .signature-area {
             display: flex;
             justify-content: space-between;
-            margin-top: 30px;
+            margin-top: 40px;
             text-align: center;
             font-size: 12px;
         }
 
-        /* Upload Area */
+        .signature-line {
+            margin-top: 30px;
+            width: 150px;
+            border-top: 1px solid #000;
+        }
+
         .upload-area {
             border: 2px dashed #2e7d32;
             padding: 20px;
@@ -447,20 +457,18 @@
             margin-bottom: 10px;
         }
 
-        /* Responsive */
         @media (max-width: 768px) {
             .content { padding: 15px; }
             .stat-number { font-size: 24px; }
             .certificate-name { font-size: 20px; }
-            .criteria-row label { font-size: 12px; }
+            .certificate-lulus { font-size: 24px; }
             .sidebar-item { padding: 10px 15px; font-size: 12px; }
-            .header-title { font-size: 11px; }
         }
     </style>
 </head>
 <body>
 
-<!-- LOGIN PAGE -->
+<!-- LOGIN PAGE - Tanpa Import Excel -->
 <div id="loginPage" class="login-page">
     <div class="login-box">
         <img id="loginLogo" class="login-logo" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Crect width='100' height='100' fill='%232e7d32'/%3E%3Ctext x='50' y='65' text-anchor='middle' fill='white' font-size='40' font-weight='bold'%3EBM%3C/text%3E%3C/svg%3E">
@@ -474,9 +482,11 @@
         </div>
         <hr style="margin: 15px 0;">
         <div style="font-size: 12px; color: #666;">
-            <i class="fas fa-upload"></i> Upload Logo Pesantren
+            <i class="fas fa-image"></i> Upload Logo Pesantren
             <input type="file" id="profileLogoInput" accept="image/*" style="margin-top: 8px;">
             <input type="text" id="profilePesantrenInput" class="full-width" placeholder="Nama Pesantren" value="PONDOK PESANTREN BAHRUL MAGHFIROH" style="margin-top: 8px;">
+            <input type="text" id="profilePengasuhInput" class="full-width" placeholder="Nama Pengasuh" value="Ust. Drs. H. Abbul Malik, Lc., M.M.Pd.">
+            <input type="text" id="profileKepalaInput" class="full-width" placeholder="Kepala Dewan Tahfizh" value="Ust. H. Muhammad Amin">
             <button class="login-btn" style="background:#1565C0; margin-top:8px;" onclick="saveProfileData()">Simpan Profil</button>
         </div>
     </div>
@@ -505,15 +515,16 @@
                 <div class="stat-card"><i class="fas fa-user-graduate" style="font-size: 35px;"></i><div class="stat-number" id="statTotal">0</div><div>Total Santri</div></div>
                 <div class="stat-card"><i class="fas fa-check-circle" style="font-size: 35px;"></i><div class="stat-number" id="statLulus">0</div><div>Sudah Lulus</div></div>
                 <div class="stat-card"><i class="fas fa-spinner" style="font-size: 35px;"></i><div class="stat-number" id="statProses">0</div><div>Sedang Proses</div></div>
+                <div class="stat-card"><i class="fas fa-hourglass-half" style="font-size: 35px;"></i><div class="stat-number" id="statBelumHafal">0</div><div>Belum Hafalan</div></div>
             </div>
             <div class="progress-card">
                 <h3>📊 Progress Hafalan Santri</h3>
-                <div class="chart-container">
+                <div class="chart-row">
                     <div class="progress-chart"><canvas id="chartProgress"></canvas></div>
                     <div class="legend">
                         <div class="legend-item"><div class="legend-color" style="background:#2e7d32;"></div><span>Sudah Lulus (<span id="legendLulus">0</span>)</span></div>
                         <div class="legend-item"><div class="legend-color" style="background:#ff9800;"></div><span>Sedang Proses (<span id="legendProses">0</span>)</span></div>
-                        <div class="legend-item"><div class="legend-color" style="background:#dc3545;"></div><span>Belum Mulai (<span id="legendBelum">0</span>)</span></div>
+                        <div class="legend-item"><div class="legend-color" style="background:#dc3545;"></div><span>Belum Hafalan (<span id="legendBelum">0</span>)</span></div>
                     </div>
                 </div>
                 <p style="font-size: 28px; font-weight: bold; margin-top: 15px;" id="progressPercent">0%</p>
@@ -550,22 +561,21 @@
                         <div class="criteria-row"><label>1. Surat Yasin</label><select id="gradeYasin" class="grade-select"><option>Belum</option><option>Mumtaz</option><option>Jayyid Jiddan</option><option>Jayyid</option></select><input type="checkbox" id="doneYasin"> Selesai</div>
                         <div class="criteria-row"><label>2. Surat Al Waqiah</label><select id="gradeWaqiah" class="grade-select"><option>Belum</option><option>Mumtaz</option><option>Jayyid Jiddan</option><option>Jayyid</option></select><input type="checkbox" id="doneWaqiah"> Selesai</div>
                         <div class="criteria-row"><label>3. Surat Al Mulk</label><select id="gradeMulk" class="grade-select"><option>Belum</option><option>Mumtaz</option><option>Jayyid Jiddan</option><option>Jayyid</option></select><input type="checkbox" id="doneMulk"> Selesai</div>
-                        <button class="btn-small" onclick="autoCheckSurat()" style="margin-top:8px;">✓ Centang semua jika Mumtaz</button>
                     </div>
                     <div class="criteria-box">
                         <h4>📿 Hafalan Aurad</h4>
-                        <div class="criteria-row"><label>1. Wirid setelah shalat</label><select id="gradeWirid" class="grade-select"><option>Belum</option><option>Jayyid Jiddan</option><option>Jayyid</option></select><input type="checkbox" id="doneWirid"> Selesai</div>
-                        <div class="criteria-row"><label>2. Doa setelah shalat</label><select id="gradeDoa" class="grade-select"><option>Belum</option><option>Jayyid Jiddan</option><option>Jayyid</option></select><input type="checkbox" id="doneDoa"> Selesai</div>
-                        <div class="criteria-row"><label>3. Tahlil ringkas</label><select id="gradeTahlilR" class="grade-select"><option>Belum</option><option>Jayyid Jiddan</option><option>Jayyid</option></select><input type="checkbox" id="doneTahlilR"> Selesai</div>
-                        <div class="criteria-row"><label>4. Tahlil lengkap</label><select id="gradeTahlilL" class="grade-select"><option>Belum</option><option>Jayyid Jiddan</option><option>Jayyid</option></select><input type="checkbox" id="doneTahlilL"> Selesai</div>
-                        <div class="criteria-row"><label>5. Doa tahlil</label><select id="gradeDoaTahlil" class="grade-select"><option>Belum</option><option>Jayyid Jiddan</option><option>Jayyid</option></select><input type="checkbox" id="doneDoaTahlil"> Selesai</div>
-                        <div class="criteria-row"><label>6. Tawasul</label><select id="gradeTawasul" class="grade-select"><option>Belum</option><option>Jayyid Jiddan</option><option>Jayyid</option></select><input type="checkbox" id="doneTawasul"> Selesai</div>
+                        <div class="criteria-row"><label>1. Wirid setelah shalat</label><select id="gradeWirid" class="grade-select"><option>Belum</option><option>Mumtaz</option><option>Jayyid Jiddan</option><option>Jayyid</option></select><input type="checkbox" id="doneWirid"> Selesai</div>
+                        <div class="criteria-row"><label>2. Doa setelah shalat</label><select id="gradeDoa" class="grade-select"><option>Belum</option><option>Mumtaz</option><option>Jayyid Jiddan</option><option>Jayyid</option></select><input type="checkbox" id="doneDoa"> Selesai</div>
+                        <div class="criteria-row"><label>3. Tahlil ringkas</label><select id="gradeTahlilR" class="grade-select"><option>Belum</option><option>Mumtaz</option><option>Jayyid Jiddan</option><option>Jayyid</option></select><input type="checkbox" id="doneTahlilR"> Selesai</div>
+                        <div class="criteria-row"><label>4. Tahlil lengkap</label><select id="gradeTahlilL" class="grade-select"><option>Belum</option><option>Mumtaz</option><option>Jayyid Jiddan</option><option>Jayyid</option></select><input type="checkbox" id="doneTahlilL"> Selesai</div>
+                        <div class="criteria-row"><label>5. Doa tahlil</label><select id="gradeDoaTahlil" class="grade-select"><option>Belum</option><option>Mumtaz</option><option>Jayyid Jiddan</option><option>Jayyid</option></select><input type="checkbox" id="doneDoaTahlil"> Selesai</div>
+                        <div class="criteria-row"><label>6. Tawasul</label><select id="gradeTawasul" class="grade-select"><option>Belum</option><option>Mumtaz</option><option>Jayyid Jiddan</option><option>Jayyid</option></select><input type="checkbox" id="doneTawasul"> Selesai</div>
                     </div>
                     <div class="criteria-box">
                         <h4>🧎 Praktek & Kelulusan</h4>
-                        <div class="criteria-row"><label>Praktek shalat & pengurusan jenazah</label><select id="gradeJenazah" class="grade-select"><option>Belum</option><option>Jayyid</option><option>Jayyid Jiddan</option><option>Mumtaz</option></select><input type="checkbox" id="doneJenazah"> Selesai</div>
-                        <div class="criteria-row"><label>Hafalan juz 30 (Amma - Annas)</label><select id="gradeJuz30" class="grade-select"><option>Belum</option><option>Ahsan</option><option>Jayyid Jiddan</option><option>Jayyid</option></select><input type="checkbox" id="doneJuz30"> Selesai</div>
-                        <div class="criteria-row"><label>Praktek khotib & bilal</label><select id="gradeKhotib" class="grade-select"><option>Belum</option><option>Ahsan</option><option>Jayyid Jiddan</option></select><input type="checkbox" id="doneKhotib"> Selesai</div>
+                        <div class="criteria-row"><label>Praktek shalat & pengurusan jenazah</label><select id="gradeJenazah" class="grade-select"><option>Belum</option><option>Mumtaz</option><option>Jayyid Jiddan</option><option>Jayyid</option></select><input type="checkbox" id="doneJenazah"> Selesai</div>
+                        <div class="criteria-row"><label>Hafalan juz 30 (Amma - Annas)</label><select id="gradeJuz30" class="grade-select"><option>Belum</option><option>Ahsan</option><option>Mumtaz</option><option>Jayyid Jiddan</option><option>Jayyid</option></select><input type="checkbox" id="doneJuz30"> Selesai</div>
+                        <div class="criteria-row"><label>Praktek khotib & bilal</label><select id="gradeKhotib" class="grade-select"><option>Belum</option><option>Ahsan</option><option>Mumtaz</option><option>Jayyid Jiddan</option></select><input type="checkbox" id="doneKhotib"> Selesai</div>
                         <div class="criteria-row"><label>Lulus Madin Ula</label><input type="checkbox" id="doneMadinUla"> Selesai</div>
                         <div class="criteria-row"><label>Lulus Madin Wustho</label><input type="checkbox" id="doneMadinWustho"> Selesai</div>
                         <div class="criteria-row"><label>Sikap dan Adab (shalat berjamaah, madin formal)</label><input type="checkbox" id="doneSikap"> Selesai</div>
@@ -592,7 +602,6 @@
                 <div class="upload-area">
                     <i class="fas fa-file-excel" style="font-size: 50px; color:#2e7d32;"></i>
                     <p>Upload file Excel (.xlsx, .xls) dengan kolom: <strong>Nama, Kelas</strong></p>
-                    <p style="font-size: 12px; color:#666;">Contoh: Nama | Kelas</p>
                     <input type="file" id="fileExcel" accept=".xlsx, .xls">
                     <button class="btn-save" style="margin-top:15px;" onclick="importExcelData()">Import Data</button>
                 </div>
@@ -612,7 +621,7 @@
     };
 
     function loadAllData() {
-        let saved = localStorage.getItem("mutqinbm_final");
+        let saved = localStorage.getItem("mutqinbm_final_v2");
         if(saved) {
             let data = JSON.parse(saved);
             daftarSantri = data.daftarSantri || [];
@@ -620,7 +629,7 @@
             nextId = data.nextId || (daftarSantri.length + 1);
         } else {
             daftarSantri = [
-                { id: 1, name: "Ahmad Fauzan", kelas: "3 TMI", graduated: true, hafalan: { yasin: {done:true,grade:"Mumtaz"}, waqiah:{done:true,grade:"Mumtaz"}, mulk:{done:true,grade:"Mumtaz"}, wirid:{done:true,grade:"Jayyid Jiddan"}, doa:{done:true,grade:"Jayyid Jiddan"}, tahlilR:{done:true,grade:"Jayyid Jiddan"}, tahlilL:{done:true,grade:"Jayyid Jiddan"}, doaTahlil:{done:true,grade:"Jayyid Jiddan"}, tawasul:{done:true,grade:"Jayyid Jiddan"}, jenazah:{done:true,grade:"Jayyid"}, juz30:{done:true,grade:"Ahsan"}, khotib:{done:true,grade:"Ahsan"}, madinUla:true, madinWustho:true, sikap:true } },
+                { id: 1, name: "Ahmad Fauzan", kelas: "3 TMI", graduated: true, hafalan: { yasin: {done:true,grade:"Mumtaz"}, waqiah:{done:true,grade:"Mumtaz"}, mulk:{done:true,grade:"Mumtaz"}, wirid:{done:true,grade:"Mumtaz"}, doa:{done:true,grade:"Mumtaz"}, tahlilR:{done:true,grade:"Mumtaz"}, tahlilL:{done:true,grade:"Mumtaz"}, doaTahlil:{done:true,grade:"Mumtaz"}, tawasul:{done:true,grade:"Mumtaz"}, jenazah:{done:true,grade:"Jayyid"}, juz30:{done:true,grade:"Ahsan"}, khotib:{done:true,grade:"Ahsan"}, madinUla:true, madinWustho:true, sikap:true } },
                 { id: 2, name: "Salma Azizah", kelas: "2 TMI", graduated: false, hafalan: {} },
                 { id: 3, name: "Mohammad Luqman", kelas: "3 TMI", graduated: false, hafalan: {} },
                 { id: 4, name: "Yusuf Ramadhan", kelas: "2 TMI", graduated: false, hafalan: {} },
@@ -632,7 +641,7 @@
     }
 
     function saveAllData() {
-        localStorage.setItem("mutqinbm_final", JSON.stringify({ daftarSantri, profileData, nextId }));
+        localStorage.setItem("mutqinbm_final_v2", JSON.stringify({ daftarSantri, profileData, nextId }));
     }
 
     function saveProfileData() {
@@ -648,7 +657,11 @@
             reader.readAsDataURL(logoFile);
         }
         let newName = document.getElementById("profilePesantrenInput").value;
+        let newPengasuh = document.getElementById("profilePengasuhInput").value;
+        let newKepala = document.getElementById("profileKepalaInput").value;
         if(newName) profileData.pesantren = newName;
+        if(newPengasuh) profileData.pengasuh = newPengasuh;
+        if(newKepala) profileData.kepalaMadin = newKepala;
         updateProfileUI();
         saveAllData();
         alert("Profil tersimpan!");
@@ -659,6 +672,8 @@
         document.getElementById("headerLogo").src = profileData.logo;
         document.getElementById("headerPesantren").innerHTML = profileData.pesantren.replace(/\n/g,"<br>");
         document.getElementById("profilePesantrenInput").value = profileData.pesantren;
+        document.getElementById("profilePengasuhInput").value = profileData.pengasuh;
+        document.getElementById("profileKepalaInput").value = profileData.kepalaMadin;
     }
 
     function doLogin() {
@@ -705,14 +720,15 @@
         let total = daftarSantri.length;
         let lulus = daftarSantri.filter(s => s.graduated).length;
         let proses = daftarSantri.filter(s => !s.graduated && s.hafalan && Object.keys(s.hafalan).length > 0).length;
-        let belum = total - lulus - proses;
+        let belumHafal = total - lulus - proses;
         
         document.getElementById("statTotal").innerText = total;
         document.getElementById("statLulus").innerText = lulus;
         document.getElementById("statProses").innerText = proses;
+        document.getElementById("statBelumHafal").innerText = belumHafal;
         document.getElementById("legendLulus").innerText = lulus;
         document.getElementById("legendProses").innerText = proses;
-        document.getElementById("legendBelum").innerText = belum;
+        document.getElementById("legendBelum").innerText = belumHafal;
         
         let percent = total ? ((lulus/total)*100).toFixed(1) : 0;
         document.getElementById("progressPercent").innerText = percent + "%";
@@ -721,17 +737,17 @@
         if(window.myChart) window.myChart.destroy();
         window.myChart = new Chart(ctx, {
             type: 'doughnut',
-            data: { labels: ['Sudah Lulus', 'Sedang Proses', 'Belum Mulai'], datasets: [{ data: [lulus, proses, belum], backgroundColor: ['#2e7d32', '#ff9800', '#dc3545'] }] },
+            data: { labels: ['Sudah Lulus', 'Sedang Proses', 'Belum Hafalan'], datasets: [{ data: [lulus, proses, belumHafal], backgroundColor: ['#2e7d32', '#ff9800', '#dc3545'] }] },
             options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { position: 'bottom', display: false } } }
         });
         
         let recent = daftarSantri.slice(-5).reverse();
-        let html = recent.map(s => `<tr><td>${s.name}</td><td>${s.kelas || '-'}</td><td>${s.graduated ? '<span style="color:#2e7d32">✅ LULUS</span>' : '📖 Sedang Proses'}</td></tr>`).join('');
+        let html = recent.map(s => `<tr><td>${s.name}</td><td>${s.kelas || '-'}</td><td>${s.graduated ? '<span style="color:#2e7d32">✅ LULUS</span>' : (s.hafalan && Object.keys(s.hafalan).length > 0 ? '📖 Sedang Proses' : '❌ Belum Hafalan')}</td></tr>`).join('');
         document.querySelector("#tableRecent tbody").innerHTML = html;
     }
 
     function renderAllStudents() {
-        let html = daftarSantri.map(s => `<tr><td><i class="fas fa-user-graduate"></i> ${s.name}</td><td>${s.kelas || '-'}</td><td>${s.graduated ? '<span style="color:#2e7d32;font-weight:bold">LULUS</span>' : 'Belum Lulus'}</td><td><button class="btn-small" onclick="editSantri(${s.id})">Edit Hafalan</button></td>`).join('');
+        let html = daftarSantri.map(s => `<tr><td><i class="fas fa-user-graduate"></i> ${s.name}</td><td>${s.kelas || '-'}</td><td>${s.graduated ? '<span style="color:#2e7d32;font-weight:bold">LULUS</span>' : (s.hafalan && Object.keys(s.hafalan).length > 0 ? 'Sedang Proses' : 'Belum Hafalan')}</td><td><button class="btn-small" onclick="editSantri(${s.id})">Edit Hafalan</button></td>`).join('');
         document.querySelector("#tableAllSantri tbody").innerHTML = html;
     }
 
@@ -773,12 +789,6 @@
         document.getElementById("doneMadinUla").checked = h.madinUla || false;
         document.getElementById("doneMadinWustho").checked = h.madinWustho || false;
         document.getElementById("doneSikap").checked = h.sikap || false;
-    }
-
-    function autoCheckSurat() {
-        if(document.getElementById("gradeYasin").value === "Mumtaz") document.getElementById("doneYasin").checked = true;
-        if(document.getElementById("gradeWaqiah").value === "Mumtaz") document.getElementById("doneWaqiah").checked = true;
-        if(document.getElementById("gradeMulk").value === "Mumtaz") document.getElementById("doneMulk").checked = true;
     }
 
     function simpanHafalan() {
@@ -835,25 +845,25 @@
         let html = `
             <div class="certificate-content">
                 <img src="${profileData.logo}" class="certificate-logo">
-                <div class="certificate-title">${profileData.pesantren}</div>
-                <div class="certificate-subtitle">No Sertifikat: BM/${String(s.id).padStart(5,'0')}</div>
-                <div class="certificate-stamp"></div>
+                <div class="certificate-pesantren">${profileData.pesantren}</div>
+                <div class="certificate-nomor">No Sertifikat: BM/${String(s.id).padStart(5,'0')}</div>
+                <div class="certificate-title">SERTIFIKAT KELULUSAN</div>
                 <div class="certificate-name">${s.name}</div>
-                <p><strong>Dinyatakan telah MENYELESAIKAN MUTQIN BM</strong><br>Program Hafalan sesuai Standar Kelulusan Pondok Bahrul</p>
-                <h2 style="color: #2e7d32; margin: 15px 0;">LULUS</h2>
+                <div class="certificate-desc">Dinyatakan telah MENYELESAIKAN MUTQIN BM<br>Program Hafalan sesuai Standar Kelulusan Pondok Bahrul</div>
+                <div class="certificate-lulus">LULUS</div>
                 <div class="certificate-list">
-                    ${h.yasin?.done ? `<div class="certificate-list-item">✅ <strong>Hafal Surat Yasin, Waqiah, Al Mulk</strong> (Mumtaz)</div>` : ''}
-                    ${h.tawasul?.done ? `<div class="certificate-list-item">✅ <strong>Hafal Tawasul, Tahlil, Istighosah, Doa</strong> (Jayyid Jiddan)</div>` : ''}
-                    ${h.jenazah?.done ? `<div class="certificate-list-item">✅ <strong>Praktik Sholat & Pengurusan Jenazah</strong> (Jayyid)</div>` : ''}
-                    ${h.juz30?.done ? `<div class="certificate-list-item">✅ <strong>Hafal Juz 30</strong> (Ahsan)</div>` : ''}
-                    ${h.khotib?.done ? `<div class="certificate-list-item">✅ <strong>Praktik Khotib & Bilal</strong> (Ahsan)</div>` : ''}
-                    ${h.madinUla ? `<div class="certificate-list-item">✅ <strong>Lulus Madin Ula</strong> ✔</div>` : ''}
-                    ${h.madinWustho ? `<div class="certificate-list-item">✅ <strong>Lulus Madin Wusto</strong> ✔</div>` : ''}
-                    ${h.sikap ? `<div class="certificate-list-item">✅ <strong>Sikap dan Adab Sholat Berjamaah & Madin</strong> ✔</div>` : ''}
+                    <div class="certificate-list-item"><i class="fas fa-check-circle"></i> <strong>Hafal Surat Yasin, Waqiah, Al Mulk</strong> (Mumtaz)</div>
+                    <div class="certificate-list-item"><i class="fas fa-check-circle"></i> <strong>Hafal Tawasul, Tahlil, Istighosah, Doa</strong> (Jayyid Jiddan)</div>
+                    <div class="certificate-list-item"><i class="fas fa-check-circle"></i> <strong>Praktik Sholat & Pengurusan Jenazah</strong> (Jayyid)</div>
+                    <div class="certificate-list-item"><i class="fas fa-check-circle"></i> <strong>Hafal Juz 30</strong> (Ahsan)</div>
+                    <div class="certificate-list-item"><i class="fas fa-check-circle"></i> <strong>Praktik Khotib & Bilal</strong> (Ahsan)</div>
+                    <div class="certificate-list-item"><i class="fas fa-check-circle"></i> <strong>Lulus Madin Ula</strong> ✔</div>
+                    <div class="certificate-list-item"><i class="fas fa-check-circle"></i> <strong>Lulus Madin Wusto</strong> ✔</div>
+                    <div class="certificate-list-item"><i class="fas fa-check-circle"></i> <strong>Sikap dan Adab Sholat Berjamaah & Madin</strong> ✔</div>
                 </div>
                 <div class="signature-area">
-                    <div>Pengasuh,<br><br><br><strong>${profileData.pengasuh}</strong></div>
-                    <div>Kepala Dewan Tahfizh,<br><br><br><strong>${profileData.kepalaMadin}</strong></div>
+                    <div>Pengasuh,<br><br><div class="signature-line"></div><strong>${profileData.pengasuh}</strong></div>
+                    <div>Kepala Dewan Tahfizh,<br><br><div class="signature-line"></div><strong>${profileData.kepalaMadin}</strong></div>
                 </div>
             </div>
         `;
