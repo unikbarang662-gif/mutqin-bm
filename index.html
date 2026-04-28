@@ -7,7 +7,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <script src="https://cdn.sheetjs.com/xlsx-0.20.2/package/dist/xlsx.full.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700;800;900&family=Cormorant+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700;800;900&family=Cormorant+Garamond:wght@400;500;600;700&family=Tangerine:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -86,7 +86,7 @@
         .btn-save-main { background: #2e7d32; color: white; border: none; padding: 14px; border-radius: 40px; cursor: pointer; width: 100%; margin-top: 25px; }
         .selected-info { background: #e8f5e9; padding: 15px; border-radius: 15px; margin-bottom: 20px; text-align: center; }
 
-        /* SERTIFIKAT - PROFESIONAL DENGAN FONT ELEGAN */
+        /* SERTIFIKAT - NAMA DI TENGAH, TANGGAL DI TENGAH */
         .cert-container { background: #1a1a2e; padding: 30px; border-radius: 20px; }
         .certificate-card {
             max-width: 850px;
@@ -148,19 +148,29 @@
         /* Presented to - BAHASA INDONESIA */
         .cert-presented { text-align: center; font-size: 13px; color: #9b9b9b; text-transform: uppercase; letter-spacing: 3px; margin-top: 25px; font-family: 'Montserrat', sans-serif; font-weight: 500; }
         
-        /* NAMA SANTRI - DI TENGAH, PRESISI */
-        .cert-name-container { text-align: center; margin: 20px 0; }
+        /* NAMA SANTRI - DI TENGAH, FONT ELEGAN BESAR */
+        .cert-name-container { text-align: center; margin: 25px 0; }
         .cert-name {
-            font-size: 44px;
+            font-size: 48px;
             font-weight: 900;
             color: #1b5e20;
             text-transform: uppercase;
-            letter-spacing: 4px;
-            font-family: 'Cinzel', 'Playfair Display', serif;
+            letter-spacing: 6px;
+            font-family: 'Cinzel', 'Playfair Display', 'Times New Roman', serif;
             display: inline-block;
             border-bottom: 3px double #c9a84c;
-            padding-bottom: 12px;
-            text-shadow: 2px 2px 0 rgba(0,0,0,0.03);
+            padding-bottom: 15px;
+            text-shadow: 3px 3px 0 rgba(0,0,0,0.03);
+            background: linear-gradient(135deg, #1b5e20, #2e7d32);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .bg-dark-card .cert-name {
+            background: linear-gradient(135deg, #f1c40f, #ffd700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
         
         /* Description - BAHASA INDONESIA */
@@ -206,12 +216,13 @@
         .achievement-text { font-size: 13px; font-weight: 600; font-family: 'Cormorant Garamond', serif; }
         .achievement-grade { font-size: 13px; font-weight: 700; color: #c0392b; background: #f0e6d2; padding: 4px 16px; border-radius: 30px; font-family: 'Montserrat', sans-serif; }
         
-        /* Footer Tanda Tangan - BAHASA INDONESIA */
+        /* Footer Tanda Tangan - TIGA KOLOM DENGAN TANGGAL DI TENGAH */
         .cert-footer { display: flex; justify-content: space-between; margin-top: 40px; text-align: center; }
-        .footer-box { width: 30%; }
+        .footer-box { width: 32%; }
         .footer-line { width: 80%; border-top: 1.5px solid #c9a84c; margin: 25px auto 8px; }
         .footer-label { font-size: 10px; color: #9b9b9b; text-transform: uppercase; letter-spacing: 2px; font-family: 'Montserrat', sans-serif; font-weight: 600; }
-        .footer-name { font-size: 13px; font-weight: 700; color: #2e7d32; margin-top: 6px; font-family: 'Cinzel', serif; }
+        .footer-name { font-size: 12px; font-weight: 700; color: #2e7d32; margin-top: 6px; font-family: 'Cinzel', serif; }
+        .footer-date { font-size: 12px; font-weight: 600; color: #000000; margin-top: 6px; font-family: 'Montserrat', sans-serif; }
         
         /* Background Variants */
         .bg-panel { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 20px; padding: 15px; background: #f0f2f5; border-radius: 15px; align-items: center; }
@@ -228,11 +239,12 @@
         .bg-blue-card { background: linear-gradient(135deg, #e8f0fe, #d4e4fc); border: 1px solid #1565c0; }
         .bg-dark-card { background: linear-gradient(135deg, #1a1a2e, #1e2a3a); border: 1px solid #d4af37; }
         .bg-dark-card .certificate-card *:not(.bg-opt):not(.bg-upload-btn) { color: #e0e0e0; }
-        .bg-dark-card .certificate-card .cert-name { color: #f1c40f; }
+        .bg-dark-card .certificate-card .cert-name { color: #f1c40f; background: none; -webkit-text-fill-color: #f1c40f; }
         .bg-dark-card .certificate-card .cert-achievements-box { background: rgba(255,255,255,0.08); }
         .bg-dark-card .certificate-card .achievement-check { color: #f1c40f; }
         .bg-dark-card .certificate-card .achievement-grade { background: rgba(241,196,15,0.2); color: #f1c40f; }
         .bg-dark-card .certificate-card .footer-name { color: #f1c40f; }
+        .bg-dark-card .certificate-card .footer-date { color: #ffffff; }
         .bg-dark-card .certificate-card .cert-pesantren-line2 { color: #f1c40f; }
         .bg-pattern-card { background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="%23d4af37" opacity="0.05"><path d="M10,10 L90,10 L90,90 L10,90 Z"/><circle cx="50" cy="50" r="30"/></svg>'); background-repeat: repeat; background-size: 50px; background-color: #fffdf9; }
 
@@ -249,7 +261,7 @@
             .stat-number { font-size: 24px; }
             .certificate-card { padding: 30px 20px; margin: 10px; }
             .cert-award { font-size: 34px; letter-spacing: 5px; }
-            .cert-name { font-size: 28px; letter-spacing: 2px; }
+            .cert-name { font-size: 28px; letter-spacing: 3px; }
             .achievement-item { flex-direction: column; align-items: flex-start; gap: 5px; }
             .achievement-grade { margin-left: 30px; }
             .cert-footer { flex-direction: column; gap: 15px; }
@@ -393,7 +405,7 @@
                 </div>
             </div>
 
-            <!-- SERTIFIKAT ELEGAN BAHASA INDONESIA -->
+            <!-- SERTIFIKAT ELEGAN - NAMA DI TENGAH -->
             <div id="sertifikatPage" style="display:none">
                 <div class="table-card">
                     <h3><i class="fas fa-certificate"></i> Sertifikat Kelulusan</h3>
@@ -467,7 +479,7 @@
 
     // Load/Save
     function loadData() {
-        let saved = localStorage.getItem("mutqinbm_data_final");
+        let saved = localStorage.getItem("mutqinbm_data_final_v2");
         if(saved) {
             let data = JSON.parse(saved);
             santri = data.santri || [];
@@ -487,7 +499,7 @@
         saveData();
     }
 
-    function saveData() { localStorage.setItem("mutqinbm_data_final", JSON.stringify({ santri, profil, nextId, currentBg })); }
+    function saveData() { localStorage.setItem("mutqinbm_data_final_v2", JSON.stringify({ santri, profil, nextId, currentBg })); }
 
     function saveProfile() {
         let logoFile = document.getElementById("profileLogoInput").files[0];
@@ -588,7 +600,7 @@
         });
         
         let recent = santri.slice(-5).reverse();
-        document.querySelector("#tableRecent tbody").innerHTML = recent.map(s => `<tr><td><i class="fas fa-user"></i> ${s.name}</td><td>${s.kelas||'-'}</td><td>${s.lulus ? '✅ LULUS' : (s.hafalan&&Object.keys(s.hafalan).length>0 ? '📖 Proses' : '❌ Belum')}</td></tr>`).join('');
+        document.querySelector("#tableRecent tbody").innerHTML = recent.map(s => `<tr><td><i class="fas fa-user"></i> ${s.name}</td><td>${s.kelas||'-'}</td><td>${s.lulus ? '✅ LULUS' : (s.hafalan&&Object.keys(s.hafalan).length>0 ? '📖 Proses' : '❌ Belum')}</td>`).join('');
     }
 
     // Data Santri
@@ -807,8 +819,9 @@
                 
                 <div class="cert-presented">Diberikan Kepada</div>
                 
+                <!-- NAMA SANTRI DI TENGAH dengan FONT ELEGAN -->
                 <div class="cert-name-container">
-                    <div class="cert-name" ${isDark ? 'style="color:#f1c40f;"' : ''}>${s.name.toUpperCase()}</div>
+                    <div class="cert-name">${s.name.toUpperCase()}</div>
                 </div>
                 
                 <div class="cert-desc" ${isDark ? 'style="color:#ccc;"' : ''}>
@@ -827,10 +840,23 @@
                     <div class="achievement-item"><div class="achievement-left"><span class="achievement-check">✔</span><span class="achievement-text">Sikap & Adab Sholat Berjamaah & Madin</span></div><div class="achievement-grade">✔</div></div>
                 </div>
                 
+                <!-- FOOTER: TANGGAL DI TENGAH (warna hitam jelas), PENGASUH KIRI, KEPALA TAHFIZH KANAN -->
                 <div class="cert-footer">
-                    <div class="footer-box"><div class="footer-line"></div><div class="footer-label">Tanggal</div><div class="footer-name" ${isDark ? 'style="color:#f1c40f;"' : ''}>${today}</div></div>
-                    <div class="footer-box"><div class="footer-line"></div><div class="footer-label">Pengasuh</div><div class="footer-name" ${isDark ? 'style="color:#f1c40f;"' : ''}>${profil.pengasuh}</div></div>
-                    <div class="footer-box"><div class="footer-line"></div><div class="footer-label">Kepala Dewan Tahfizh</div><div class="footer-name" ${isDark ? 'style="color:#f1c40f;"' : ''}>${profil.kepalaMadin}</div></div>
+                    <div class="footer-box">
+                        <div class="footer-line"></div>
+                        <div class="footer-label">Pengasuh</div>
+                        <div class="footer-name">${profil.pengasuh}</div>
+                    </div>
+                    <div class="footer-box">
+                        <div class="footer-line"></div>
+                        <div class="footer-label">Tanggal</div>
+                        <div class="footer-date" style="color:#000000; font-weight:600;">${today}</div>
+                    </div>
+                    <div class="footer-box">
+                        <div class="footer-line"></div>
+                        <div class="footer-label">Kepala Dewan Tahfizh</div>
+                        <div class="footer-name">${profil.kepalaMadin}</div>
+                    </div>
                 </div>
             </div>
         `;
