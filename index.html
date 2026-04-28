@@ -80,13 +80,13 @@
         .btn-small { background: linear-gradient(135deg, #2e7d32, #1b5e20); color: white; border: none; padding: 5px 12px; border-radius: 20px; cursor: pointer; font-size: 11px; }
 
         /* Search Box */
-        .search-box { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+        .search-box { display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: wrap; }
         .search-input { flex: 1; padding: 12px 18px; border: 2px solid #e0e0e0; border-radius: 30px; font-size: 14px; background: white; }
         .search-input:focus { border-color: #2e7d32; outline: none; }
         .search-btn { background: linear-gradient(135deg, #2e7d32, #1b5e20); color: white; border: none; padding: 12px 24px; border-radius: 30px; cursor: pointer; font-size: 14px; font-weight: bold; }
         .search-btn:hover { transform: scale(1.02); }
         .clear-btn { background: #6c757d; color: white; border: none; padding: 12px 24px; border-radius: 30px; cursor: pointer; font-size: 14px; font-weight: bold; }
-        .result-count { margin: 10px 0; font-size: 13px; color: #666; }
+        .result-count { margin: 8px 0 15px 0; font-size: 13px; color: #666; padding: 8px 12px; background: #f0f2f5; border-radius: 20px; display: inline-block; }
 
         /* Form Card */
         .form-card { background: white; border-radius: 25px; padding: 20px; margin-bottom: 20px; box-shadow: 0 8px 25px rgba(0,0,0,0.1); }
@@ -99,6 +99,20 @@
         .grade-select { padding: 5px 8px; border-radius: 20px; border: 1px solid #ccc; font-size: 11px; background: white; }
         .btn-save { background: linear-gradient(135deg, #2e7d32, #1b5e20); color: white; border: none; padding: 14px; border-radius: 40px; font-size: 16px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 20px; box-shadow: 0 4px 15px rgba(46,125,50,0.3); }
         .btn-save:hover { transform: scale(1.02); }
+
+        /* Student Select with Search */
+        .student-select-container { margin-bottom: 20px; }
+        .student-search-box { display: flex; gap: 10px; margin-bottom: 12px; flex-wrap: wrap; }
+        .student-search-input { flex: 1; padding: 10px 15px; border: 2px solid #e0e0e0; border-radius: 30px; font-size: 13px; }
+        .student-search-input:focus { border-color: #2e7d32; outline: none; }
+        .student-list { max-height: 200px; overflow-y: auto; border: 1px solid #e0e0e0; border-radius: 15px; background: white; }
+        .student-item { padding: 10px 15px; cursor: pointer; border-bottom: 1px solid #eee; transition: 0.2s; display: flex; justify-content: space-between; align-items: center; }
+        .student-item:hover { background: #e8f5e9; }
+        .student-item.active { background: linear-gradient(135deg, #2e7d32, #1b5e20); color: white; }
+        .student-item .status-badge { font-size: 10px; padding: 2px 8px; border-radius: 20px; background: #eee; }
+        .selected-student-info { background: linear-gradient(135deg, #e8f5e9, #c8e6c9); padding: 12px 15px; border-radius: 15px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+        .selected-student-name { font-weight: bold; color: #1b5e20; font-size: 16px; }
+        .selected-student-status { font-size: 12px; padding: 4px 12px; border-radius: 20px; background: white; }
 
         /* Sertifikat */
         .certificate-box { background: #fffef7; padding: 25px 20px; border-radius: 15px; margin-top: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); border: 1px solid #d4af37; }
@@ -138,6 +152,7 @@
             .sidebar-item { padding: 8px 14px; font-size: 11px; }
             .content { padding: 12px; }
             .search-box { flex-direction: column; }
+            .student-search-box { flex-direction: column; }
             .search-btn, .clear-btn { padding: 10px; }
         }
         select, input[type="text"], input[type="file"] { padding: 8px 12px; border-radius: 25px; border: 1px solid #ddd; }
@@ -234,25 +249,33 @@
                 <h3><i class="fas fa-users"></i> Daftar Semua Santri</h3>
                 <div style="overflow-x: auto;">
                     <table id="tableAllSantri">
-                        <thead>
-                            <tr>
-                                <th>Nama Santri</th>
-                                <th>Kelas</th>
-                                <th>Status</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
+                        <thead><tr><th>Nama Santri</th><th>Kelas</th><th>Status</th><th>Aksi</th></tr></thead>
                         <tbody></tbody>
                     </table>
                 </div>
             </div>
         </div>
 
-        <!-- INPUT HAFALAN -->
+        <!-- INPUT HAFALAN dengan FITUR PENCARIAN SANTRI -->
         <div id="hafalanPage" style="display:none">
             <div class="form-card">
                 <div class="form-title"><i class="fas fa-pen"></i> Input Data Hafalan Santri</div>
-                <select id="selectSantri" class="full-width" style="margin-bottom:15px; padding: 12px;"></select>
+                
+                <!-- Pencarian Santri untuk Input Hafalan -->
+                <div class="student-select-container">
+                    <div class="student-search-box">
+                        <input type="text" id="hafalanSearchInput" class="student-search-input" placeholder="🔍 Cari nama santri..." onkeyup="filterStudentList()">
+                        <button class="clear-btn" onclick="clearHafalanSearch()" style="padding: 10px 20px;">Reset</button>
+                    </div>
+                    <div id="studentListContainer" class="student-list"></div>
+                </div>
+
+                <!-- Info Santri Terpilih -->
+                <div id="selectedStudentInfo" class="selected-student-info">
+                    <span class="selected-student-name"><i class="fas fa-user-graduate"></i> <span id="selectedStudentName">Pilih santri terlebih dahulu</span></span>
+                    <span class="selected-student-status" id="selectedStudentStatus"></span>
+                </div>
+
                 <div class="criteria-grid">
                     <div class="criteria-box">
                         <h4><i class="fas fa-quran"></i> Hafalan Surat Pilihan</h4>
@@ -328,6 +351,7 @@
 <script>
     let daftarSantri = [];
     let nextId = 1;
+    let currentSelectedStudentId = null;
     let profileData = {
         logo: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Crect width='100' height='100' fill='%232e7d32'/%3E%3Ctext x='50' y='65' text-anchor='middle' fill='white' font-size='40' font-weight='bold'%3EBM%3C/text%3E%3C/svg%3E",
         pesantren: "PONDOK PESANTREN BAHRUL MAGHFIROH",
@@ -335,11 +359,11 @@
         kepalaMadin: "Ust. H. Muhammad Amin"
     };
 
-    // Variabel untuk menyimpan hasil pencarian
     let currentSearchTerm = "";
+    let currentHafalanSearchTerm = "";
 
     function loadAllData() {
-        let saved = localStorage.getItem("mutqinbm_final_v7");
+        let saved = localStorage.getItem("mutqinbm_final_v8");
         if(saved) {
             let data = JSON.parse(saved);
             daftarSantri = data.daftarSantri || [];
@@ -360,7 +384,7 @@
         saveAllData();
     }
 
-    function saveAllData() { localStorage.setItem("mutqinbm_final_v7", JSON.stringify({ daftarSantri, profileData, nextId })); }
+    function saveAllData() { localStorage.setItem("mutqinbm_final_v8", JSON.stringify({ daftarSantri, profileData, nextId })); }
 
     function saveProfileData() {
         let logoFile = document.getElementById("profileLogoInput").files[0];
@@ -420,7 +444,15 @@
             document.getElementById("searchSantriInput").value = "";
             renderAllStudents(); 
         }
-        if(page === 'hafalan') { document.getElementById("hafalanPage").style.display = "block"; renderSantriSelect(); }
+        if(page === 'hafalan') { 
+            document.getElementById("hafalanPage").style.display = "block"; 
+            currentHafalanSearchTerm = "";
+            document.getElementById("hafalanSearchInput").value = "";
+            filterStudentList();
+            if(daftarSantri.length > 0 && !currentSelectedStudentId) {
+                selectStudent(daftarSantri[0].id);
+            }
+        }
         if(page === 'sertifikat') { document.getElementById("sertifikatPage").style.display = "block"; renderCertSelect(); }
         if(page === 'import') document.getElementById("importPage").style.display = "block";
         if(page === 'pengaturan') document.getElementById("pengaturanPage").style.display = "block";
@@ -432,7 +464,7 @@
         }
     }
 
-    // FITUR PENCARIAN SANTRI
+    // FITUR PENCARIAN SANTRI di Data Santri
     function searchSantri() {
         let searchTerm = document.getElementById("searchSantriInput").value.toLowerCase().trim();
         currentSearchTerm = searchTerm;
@@ -469,6 +501,54 @@
         }
         
         document.querySelector("#tableAllSantri tbody").innerHTML = html;
+    }
+
+    // FITUR PENCARIAN SANTRI di Input Hafalan
+    function filterStudentList() {
+        let searchTerm = document.getElementById("hafalanSearchInput").value.toLowerCase().trim();
+        currentHafalanSearchTerm = searchTerm;
+        
+        let filteredSantri = daftarSantri;
+        if(searchTerm) {
+            filteredSantri = daftarSantri.filter(s => s.name.toLowerCase().includes(searchTerm));
+        }
+        
+        let container = document.getElementById("studentListContainer");
+        if(filteredSantri.length === 0) {
+            container.innerHTML = `<div style="padding: 15px; text-align: center; color: #999;"><i class="fas fa-search"></i> Tidak ditemukan santri dengan nama "${searchTerm}"</div>`;
+            return;
+        }
+        
+        let html = filteredSantri.map(s => `
+            <div class="student-item ${currentSelectedStudentId === s.id ? 'active' : ''}" onclick="selectStudent(${s.id})">
+                <span><i class="fas fa-user"></i> ${s.name} (${s.kelas || 'Tanpa Kelas'})</span>
+                <span class="status-badge">${s.graduated ? '✅ Lulus' : (s.hafalan && Object.keys(s.hafalan).length > 0 ? '📖 Proses' : '❌ Belum')}</span>
+            </div>
+        `).join('');
+        
+        container.innerHTML = html;
+        
+        if(filteredSantri.length === 1 && !currentSelectedStudentId) {
+            selectStudent(filteredSantri[0].id);
+        }
+    }
+
+    function clearHafalanSearch() {
+        document.getElementById("hafalanSearchInput").value = "";
+        currentHafalanSearchTerm = "";
+        filterStudentList();
+    }
+
+    function selectStudent(id) {
+        currentSelectedStudentId = id;
+        let student = daftarSantri.find(s => s.id === id);
+        if(student) {
+            document.getElementById("selectedStudentName").innerHTML = `<i class="fas fa-user-graduate"></i> ${student.name} (${student.kelas || 'Tanpa Kelas'})`;
+            let statusText = student.graduated ? '✅ LULUS' : (student.hafalan && Object.keys(student.hafalan).length > 0 ? '📖 Sedang Proses' : '❌ Belum Hafalan');
+            document.getElementById("selectedStudentStatus").innerHTML = statusText;
+            loadHafalanToForm(id);
+        }
+        filterStudentList();
     }
 
     function refreshDashboard() {
@@ -531,13 +611,6 @@
         document.querySelector("#tableRecent tbody").innerHTML = html;
     }
 
-    function renderSantriSelect() {
-        let select = document.getElementById("selectSantri");
-        select.innerHTML = daftarSantri.map(s => `<option value="${s.id}">${s.name}</option>`).join('');
-        if(daftarSantri.length) loadHafalanToForm(daftarSantri[0].id);
-        select.onchange = () => loadHafalanToForm(parseInt(select.value));
-    }
-
     function loadHafalanToForm(id) {
         let s = daftarSantri.find(st => st.id === id); if(!s) return;
         let h = s.hafalan || {};
@@ -559,8 +632,12 @@
     }
 
     function simpanHafalan() {
-        let id = parseInt(document.getElementById("selectSantri").value);
-        let s = daftarSantri.find(st => st.id === id); if(!s) return;
+        if(!currentSelectedStudentId) {
+            alert("Silakan pilih santri terlebih dahulu!");
+            return;
+        }
+        let s = daftarSantri.find(st => st.id === currentSelectedStudentId); 
+        if(!s) return;
         s.hafalan = {
             yasin: { done: document.getElementById("doneYasin").checked, grade: document.getElementById("gradeYasin").value },
             waqiah: { done: document.getElementById("doneWaqiah").checked, grade: document.getElementById("gradeWaqiah").value },
@@ -585,16 +662,14 @@
         refreshDashboard(); 
         if(document.getElementById("studentsPage").style.display === "block") {
             renderAllStudents(currentSearchTerm);
-        } else {
-            renderAllStudents();
         }
+        selectStudent(currentSelectedStudentId);
     }
 
     function editSantri(id) { 
         showPage('hafalan'); 
         setTimeout(() => { 
-            document.getElementById("selectSantri").value = id; 
-            loadHafalanToForm(id); 
+            selectStudent(id);
         }, 100); 
     }
 
@@ -650,6 +725,9 @@
             let rows = XLSX.utils.sheet_to_json(sheet);
             rows.forEach(row => { let name = row["Nama"] || row["nama"] || Object.values(row)[0]; if(name) { daftarSantri.push({ id: nextId++, name: name, kelas: row["Kelas"] || "", hafalan: {}, graduated: false }); } });
             saveAllData(); alert(`Berhasil import ${rows.length} santri!`); refreshDashboard(); renderAllStudents(currentSearchTerm);
+            if(document.getElementById("hafalanPage").style.display === "block") {
+                filterStudentList();
+            }
         };
         reader.readAsArrayBuffer(file);
     }
