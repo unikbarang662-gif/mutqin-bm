@@ -7,36 +7,15 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <script src="https://cdn.sheetjs.com/xlsx-0.20.2/package/dist/xlsx.full.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700;800;900&family=Cormorant+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Poppins', sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; }
+        body { font-family: 'Montserrat', 'Poppins', sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; }
 
         /* Login Page */
-        .login-page {
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: linear-gradient(135deg, #1b5e20, #2e7d32);
-            padding: 20px;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            z-index: 1000;
-        }
-        .login-box {
-            background: white;
-            width: 100%;
-            max-width: 380px;
-            padding: 35px 25px;
-            border-radius: 35px;
-            text-align: center;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
-        }
+        .login-page { min-height: 100vh; display: flex; justify-content: center; align-items: center; background: linear-gradient(135deg, #1b5e20, #2e7d32); padding: 20px; position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 1000; }
+        .login-box { background: white; width: 100%; max-width: 380px; padding: 35px 25px; border-radius: 35px; text-align: center; box-shadow: 0 25px 50px rgba(0,0,0,0.3); }
         .login-logo { width: 90px; height: 90px; border-radius: 50%; object-fit: cover; margin-bottom: 12px; border: 4px solid #2e7d32; }
         .login-title { font-size: 26px; font-weight: bold; color: #1b5e20; }
         .login-sub { color: #666; margin-bottom: 20px; font-size: 13px; }
@@ -72,7 +51,6 @@
         .stat-number { font-size: 32px; font-weight: bold; }
         .stat-card i { font-size: 30px; margin-bottom: 10px; display: block; }
 
-        /* Progress Card */
         .progress-card { background: white; padding: 20px; border-radius: 20px; margin-bottom: 20px; text-align: center; }
         .chart-row { display: flex; justify-content: center; flex-wrap: wrap; gap: 30px; align-items: center; }
         .progress-chart { width: 200px; height: 200px; }
@@ -81,7 +59,6 @@
         .legend-color { width: 20px; height: 20px; border-radius: 50%; }
         .progress-percent { font-size: 28px; font-weight: bold; margin-top: 15px; color: #2e7d32; }
 
-        /* Table Card */
         .table-card { background: white; border-radius: 20px; padding: 20px; overflow-x: auto; margin-bottom: 20px; }
         table { width: 100%; border-collapse: collapse; font-size: 13px; }
         th, td { padding: 10px; text-align: left; border-bottom: 1px solid #eee; }
@@ -109,82 +86,159 @@
         .btn-save-main { background: #2e7d32; color: white; border: none; padding: 14px; border-radius: 40px; cursor: pointer; width: 100%; margin-top: 25px; }
         .selected-info { background: #e8f5e9; padding: 15px; border-radius: 15px; margin-bottom: 20px; text-align: center; }
 
-        /* Sertifikat Profesional */
+        /* SERTIFIKAT - PROFESIONAL DENGAN FONT ELEGAN */
         .cert-container { background: #1a1a2e; padding: 30px; border-radius: 20px; }
-        .cert-card {
+        .certificate-card {
             max-width: 850px;
             margin: 0 auto;
             background: white;
-            padding: 45px 40px;
+            padding: 50px 45px;
             border-radius: 16px;
-            box-shadow: 0 25px 45px rgba(0,0,0,0.3);
+            box-shadow: 0 30px 50px rgba(0,0,0,0.3);
             position: relative;
-            font-family: 'Times New Roman', 'Georgia', serif;
+            font-family: 'Cinzel', 'Playfair Display', 'Times New Roman', serif;
         }
-        .cert-card::before {
+        .certificate-card::before {
             content: "";
             position: absolute;
-            top: 15px;
-            left: 15px;
-            right: 15px;
-            bottom: 15px;
+            top: 18px;
+            left: 18px;
+            right: 18px;
+            bottom: 18px;
             border: 1.5px solid #c9a84c;
             border-radius: 10px;
             pointer-events: none;
         }
-        .cert-header { text-align: center; margin-bottom: 20px; }
-        .cert-logo { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; margin-bottom: 8px; border: 2px solid #c9a84c; }
-        .cert-pesantren1 { font-size: 12px; letter-spacing: 3px; color: #8B7355; }
-        .cert-pesantren2 { font-size: 20px; font-weight: bold; color: #2e7d32; margin-top: 4px; }
-        .cert-nomor { font-size: 11px; color: #8B7355; margin-top: 6px; background: #f5f0e6; display: inline-block; padding: 2px 12px; border-radius: 20px; }
-        .cert-best { text-align: center; font-size: 16px; letter-spacing: 5px; color: #c9a84c; margin: 15px 0 5px; }
-        .cert-best span { border-top: 1px solid #c9a84c; border-bottom: 1px solid #c9a84c; padding: 4px 18px; display: inline-block; }
-        .cert-award { text-align: center; font-size: 44px; font-weight: 800; letter-spacing: 6px; color: #8B4513; margin: 5px 0 8px; }
-        .cert-certificate { text-align: center; font-size: 15px; letter-spacing: 4px; color: #2e7d32; margin-bottom: 12px; }
-        .cert-certificate span { border-bottom: 1px solid #c9a84c; padding-bottom: 4px; }
-        .cert-achievement { text-align: center; font-size: 13px; font-style: italic; color: #8B7355; margin-bottom: 20px; }
-        .cert-presented { text-align: center; font-size: 11px; color: #999; text-transform: uppercase; letter-spacing: 2px; margin-top: 15px; }
-        .cert-name { text-align: center; font-size: 36px; font-weight: bold; color: #1b5e20; margin: 10px 0; text-transform: uppercase; letter-spacing: 2px; border-bottom: 2px dotted #c9a84c; display: inline-block; width: auto; margin-left: auto; margin-right: auto; padding-bottom: 8px; }
-        .cert-desc { text-align: center; font-size: 12px; color: #555; line-height: 1.5; margin: 18px auto; max-width: 85%; }
-        .cert-achievements-box { background: #faf8f2; margin: 20px 0; padding: 15px 25px; border-radius: 12px; border-left: 4px solid #c9a84c; }
-        .achievements-title { text-align: center; font-weight: 600; color: #2e7d32; margin-bottom: 12px; font-size: 13px; }
-        .achievement-item { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; border-bottom: 1px dashed #e0d5c0; }
-        .achievement-item:last-child { border-bottom: none; }
-        .achievement-left { display: flex; align-items: center; gap: 10px; }
-        .achievement-check { color: #2e7d32; font-size: 14px; }
-        .achievement-text { font-size: 12px; }
-        .achievement-grade { font-size: 12px; font-weight: bold; color: #8B4513; background: #f0e6d2; padding: 2px 12px; border-radius: 20px; }
-        .cert-footer { display: flex; justify-content: space-between; margin-top: 30px; text-align: center; }
-        .footer-box { width: 30%; }
-        .footer-line { width: 80%; border-top: 1px solid #c9a84c; margin: 15px auto 5px; }
-        .footer-label { font-size: 9px; color: #999; text-transform: uppercase; letter-spacing: 1px; }
-        .footer-name { font-size: 11px; font-weight: bold; color: #2e7d32; margin-top: 4px; }
+        .certificate-card::after {
+            content: "✤";
+            position: absolute;
+            bottom: 20px;
+            right: 30px;
+            font-size: 28px;
+            color: rgba(201,168,76,0.3);
+            font-family: serif;
+        }
+        .corner-ornament {
+            position: absolute;
+            font-size: 22px;
+            color: #c9a84c;
+            opacity: 0.6;
+            font-family: 'Times New Roman', serif;
+        }
+        .corner-tl { top: 12px; left: 18px; }
+        .corner-tr { top: 12px; right: 18px; }
+        .corner-bl { bottom: 12px; left: 18px; }
+        .corner-br { bottom: 12px; right: 18px; }
 
-        /* Background Selector */
-        .bg-panel { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; padding: 12px; background: #f0f2f5; border-radius: 15px; align-items: center; }
-        .bg-opt { width: 50px; height: 50px; border-radius: 10px; cursor: pointer; border: 2px solid transparent; transition: 0.2s; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        /* Header */
+        .cert-header { text-align: center; margin-bottom: 25px; }
+        .cert-logo { width: 85px; height: 85px; border-radius: 50%; object-fit: cover; margin-bottom: 10px; border: 2px solid #c9a84c; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .cert-pesantren-line1 { font-size: 12px; letter-spacing: 4px; color: #8B7355; font-family: 'Montserrat', sans-serif; font-weight: 500; }
+        .cert-pesantren-line2 { font-size: 22px; font-weight: 800; color: #2e7d32; margin-top: 5px; letter-spacing: 2px; font-family: 'Cinzel', serif; }
+        .cert-nomor { font-size: 11px; color: #8B7355; margin-top: 8px; background: #f5f0e6; display: inline-block; padding: 4px 18px; border-radius: 30px; font-family: 'Montserrat', sans-serif; }
+
+        /* BEST AWARD */
+        .cert-best { text-align: center; font-size: 18px; letter-spacing: 8px; color: #c9a84c; font-weight: 700; margin: 20px 0 8px; font-family: 'Montserrat', sans-serif; }
+        .cert-best span { border-top: 1.5px solid #c9a84c; border-bottom: 1.5px solid #c9a84c; padding: 6px 25px; display: inline-block; }
+        .cert-award { text-align: center; font-size: 52px; font-weight: 900; letter-spacing: 8px; color: #8B4513; margin: 5px 0 12px; font-family: 'Cinzel', serif; text-shadow: 2px 2px 0 rgba(0,0,0,0.03); }
+        .cert-certificate { text-align: center; font-size: 16px; letter-spacing: 6px; color: #2e7d32; margin-bottom: 15px; font-family: 'Montserrat', sans-serif; font-weight: 600; }
+        .cert-certificate span { border-bottom: 1.5px solid #c9a84c; padding-bottom: 6px; }
+        .cert-achievement { text-align: center; font-size: 15px; font-style: italic; color: #8B7355; margin-bottom: 25px; font-family: 'Cormorant Garamond', serif; }
+
+        /* Presented to - BAHASA INDONESIA */
+        .cert-presented { text-align: center; font-size: 13px; color: #9b9b9b; text-transform: uppercase; letter-spacing: 3px; margin-top: 25px; font-family: 'Montserrat', sans-serif; font-weight: 500; }
+        
+        /* NAMA SANTRI - DI TENGAH, PRESISI */
+        .cert-name-container { text-align: center; margin: 20px 0; }
+        .cert-name {
+            font-size: 44px;
+            font-weight: 900;
+            color: #1b5e20;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            font-family: 'Cinzel', 'Playfair Display', serif;
+            display: inline-block;
+            border-bottom: 3px double #c9a84c;
+            padding-bottom: 12px;
+            text-shadow: 2px 2px 0 rgba(0,0,0,0.03);
+        }
+        
+        /* Description - BAHASA INDONESIA */
+        .cert-desc {
+            text-align: center;
+            font-size: 13px;
+            color: #555;
+            line-height: 1.8;
+            margin: 25px auto;
+            max-width: 85%;
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 500;
+        }
+        
+        /* Capaian - BAHASA INDONESIA */
+        .cert-achievements-box {
+            background: linear-gradient(135deg, #faf8f2, #fefcf7);
+            margin: 25px 0;
+            padding: 20px 30px;
+            border-radius: 16px;
+            border-left: 5px solid #c9a84c;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.03);
+        }
+        .achievements-title {
+            text-align: center;
+            font-weight: 700;
+            color: #2e7d32;
+            margin-bottom: 18px;
+            font-size: 15px;
+            letter-spacing: 2px;
+            font-family: 'Montserrat', sans-serif;
+        }
+        .achievement-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px dashed #e0d5c0;
+        }
+        .achievement-item:last-child { border-bottom: none; }
+        .achievement-left { display: flex; align-items: center; gap: 12px; }
+        .achievement-check { color: #2e7d32; font-size: 18px; font-weight: bold; }
+        .achievement-text { font-size: 13px; font-weight: 600; font-family: 'Cormorant Garamond', serif; }
+        .achievement-grade { font-size: 13px; font-weight: 700; color: #c0392b; background: #f0e6d2; padding: 4px 16px; border-radius: 30px; font-family: 'Montserrat', sans-serif; }
+        
+        /* Footer Tanda Tangan - BAHASA INDONESIA */
+        .cert-footer { display: flex; justify-content: space-between; margin-top: 40px; text-align: center; }
+        .footer-box { width: 30%; }
+        .footer-line { width: 80%; border-top: 1.5px solid #c9a84c; margin: 25px auto 8px; }
+        .footer-label { font-size: 10px; color: #9b9b9b; text-transform: uppercase; letter-spacing: 2px; font-family: 'Montserrat', sans-serif; font-weight: 600; }
+        .footer-name { font-size: 13px; font-weight: 700; color: #2e7d32; margin-top: 6px; font-family: 'Cinzel', serif; }
+        
+        /* Background Variants */
+        .bg-panel { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 20px; padding: 15px; background: #f0f2f5; border-radius: 15px; align-items: center; }
+        .bg-opt { width: 55px; height: 55px; border-radius: 12px; cursor: pointer; border: 2px solid transparent; transition: 0.2s; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
         .bg-opt:hover { transform: scale(1.05); }
         .bg-opt.active { border-color: #2e7d32; box-shadow: 0 0 0 2px white, 0 0 0 4px #2e7d32; }
-        .bg-upload { background: white; display: flex; align-items: center; justify-content: center; font-size: 20px; color: #2e7d32; cursor: pointer; border: 2px dashed #aaa; }
+        .bg-upload-btn { background: white; display: flex; align-items: center; justify-content: center; font-size: 24px; color: #2e7d32; cursor: pointer; border: 2px dashed #aaa; border-radius: 12px; width: 55px; height: 55px; }
         
-        /* Background variants */
+        /* Background Classes */
         .bg-white-card { background: #ffffff; }
         .bg-cream-card { background: linear-gradient(135deg, #fffdf9, #fff8ed); }
         .bg-gold-card { background: linear-gradient(135deg, #fef8e7, #fdf2df); border: 1px solid #d4af37; }
         .bg-green-card { background: linear-gradient(135deg, #eaf7ea, #d4edda); border: 1px solid #2e7d32; }
         .bg-blue-card { background: linear-gradient(135deg, #e8f0fe, #d4e4fc); border: 1px solid #1565c0; }
         .bg-dark-card { background: linear-gradient(135deg, #1a1a2e, #1e2a3a); border: 1px solid #d4af37; }
-        .bg-dark-card .cert-card *:not(.bg-opt) { color: #e0e0e0; }
-        .bg-dark-card .cert-card .cert-name { color: #f1c40f; }
-        .bg-dark-card .cert-card .cert-achievements-box { background: rgba(255,255,255,0.1); }
-        .bg-dark-card .cert-card .achievement-check { color: #f1c40f; }
-        .bg-dark-card .cert-card .achievement-grade { background: rgba(241,196,15,0.2); color: #f1c40f; }
-        .bg-dark-card .cert-card .footer-name { color: #f1c40f; }
-        .bg-pattern-card { background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="%23d4af37" opacity="0.06"><path d="M10,10 L90,10 L90,90 L10,90 Z"/><circle cx="50" cy="50" r="30"/></svg>'); background-repeat: repeat; background-size: 40px; background-color: #fffdf9; }
+        .bg-dark-card .certificate-card *:not(.bg-opt):not(.bg-upload-btn) { color: #e0e0e0; }
+        .bg-dark-card .certificate-card .cert-name { color: #f1c40f; }
+        .bg-dark-card .certificate-card .cert-achievements-box { background: rgba(255,255,255,0.08); }
+        .bg-dark-card .certificate-card .achievement-check { color: #f1c40f; }
+        .bg-dark-card .certificate-card .achievement-grade { background: rgba(241,196,15,0.2); color: #f1c40f; }
+        .bg-dark-card .certificate-card .footer-name { color: #f1c40f; }
+        .bg-dark-card .certificate-card .cert-pesantren-line2 { color: #f1c40f; }
+        .bg-pattern-card { background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="%23d4af37" opacity="0.05"><path d="M10,10 L90,10 L90,90 L10,90 Z"/><circle cx="50" cy="50" r="30"/></svg>'); background-repeat: repeat; background-size: 50px; background-color: #fffdf9; }
 
-        .upload-area { border: 2px dashed #2e7d32; padding: 20px; border-radius: 15px; text-align: center; background: #f9fff9; margin-bottom: 15px; }
         .profile-input-group { display: flex; flex-wrap: wrap; gap: 10px; margin: 15px 0; }
         .profile-input-group input { flex: 1; padding: 10px; border-radius: 25px; border: 1px solid #ddd; }
+        .upload-area { border: 2px dashed #2e7d32; padding: 20px; border-radius: 15px; text-align: center; background: #f9fff9; margin-bottom: 15px; }
 
         @media (max-width: 768px) {
             .menu-toggle { display: block; }
@@ -193,13 +247,14 @@
             .content-right { padding-top: 60px; }
             .stats-row { grid-template-columns: repeat(2, 1fr); gap: 12px; }
             .stat-number { font-size: 24px; }
-            .cert-card { padding: 30px 20px; margin: 10px; }
-            .cert-award { font-size: 30px; letter-spacing: 4px; }
-            .cert-name { font-size: 24px; }
+            .certificate-card { padding: 30px 20px; margin: 10px; }
+            .cert-award { font-size: 34px; letter-spacing: 5px; }
+            .cert-name { font-size: 28px; letter-spacing: 2px; }
             .achievement-item { flex-direction: column; align-items: flex-start; gap: 5px; }
-            .achievement-grade { margin-left: 24px; }
+            .achievement-grade { margin-left: 30px; }
             .cert-footer { flex-direction: column; gap: 15px; }
             .footer-box { width: 100%; }
+            .bg-panel { justify-content: center; }
         }
     </style>
 </head>
@@ -296,7 +351,7 @@
                 <div class="hafalan-layout">
                     <div class="santri-list">
                         <h4><i class="fas fa-users"></i> Daftar Santri</h4>
-                        <input type="text" id="hafalanSearchInput" class="search-santri" placeholder="🔍 Cari santri..." onkeyup="filterSantriList()">
+                        <input type="text" id="hafalanSearchInput" class="search-santri" placeholder="🔍 Cari santri..." onkeyup="renderSantriList()">
                         <div id="santriListContainer" class="santri-list-scroll"></div>
                     </div>
                     <div class="form-hafalan">
@@ -338,21 +393,22 @@
                 </div>
             </div>
 
-            <!-- SERTIFIKAT -->
+            <!-- SERTIFIKAT ELEGAN BAHASA INDONESIA -->
             <div id="sertifikatPage" style="display:none">
                 <div class="table-card">
                     <h3><i class="fas fa-certificate"></i> Sertifikat Kelulusan</h3>
                     
                     <!-- Background Selector -->
                     <div class="bg-panel">
-                        <span style="font-size:12px;"><i class="fas fa-palette"></i> Background:</span>
+                        <span style="font-size:13px;"><i class="fas fa-palette"></i> Pilih Background:</span>
                         <div class="bg-opt" style="background:#ffffff;" onclick="setBg('white')" title="Putih"></div>
                         <div class="bg-opt" style="background:linear-gradient(135deg, #fffdf9, #fff8ed);" onclick="setBg('cream')" title="Krem"></div>
                         <div class="bg-opt" style="background:linear-gradient(135deg, #fef8e7, #fdf2df);" onclick="setBg('gold')" title="Emas"></div>
                         <div class="bg-opt" style="background:linear-gradient(135deg, #eaf7ea, #d4edda);" onclick="setBg('green')" title="Hijau"></div>
                         <div class="bg-opt" style="background:linear-gradient(135deg, #e8f0fe, #d4e4fc);" onclick="setBg('blue')" title="Biru"></div>
                         <div class="bg-opt" style="background:linear-gradient(135deg, #1a1a2e, #1e2a3a);" onclick="setBg('dark')" title="Dark"></div>
-                        <div class="bg-opt bg-upload" onclick="document.getElementById('customBgInput').click()"><i class="fas fa-image"></i></div>
+                        <div class="bg-opt" style="background-image: url('data:image/svg+xml,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\" fill=\"%23d4af37\" opacity=\"0.08\"><path d=\"M10,10 L90,10 L90,90 L10,90 Z\"/><circle cx=\"50\" cy=\"50\" r=\"30\"/></svg>'); background-repeat:repeat; background-size:40px; background-color:#fffdf9;" onclick="setBg('pattern')" title="Motif"></div>
+                        <div class="bg-upload-btn" onclick="document.getElementById('customBgInput').click()"><i class="fas fa-upload"></i></div>
                         <input type="file" id="customBgInput" accept="image/*" style="display:none" onchange="uploadBg(event)">
                     </div>
                     
@@ -411,7 +467,7 @@
 
     // Load/Save
     function loadData() {
-        let saved = localStorage.getItem("mutqinbm_data");
+        let saved = localStorage.getItem("mutqinbm_data_final");
         if(saved) {
             let data = JSON.parse(saved);
             santri = data.santri || [];
@@ -431,9 +487,7 @@
         saveData();
     }
 
-    function saveData() {
-        localStorage.setItem("mutqinbm_data", JSON.stringify({ santri, profil, nextId, currentBg }));
-    }
+    function saveData() { localStorage.setItem("mutqinbm_data_final", JSON.stringify({ santri, profil, nextId, currentBg })); }
 
     function saveProfile() {
         let logoFile = document.getElementById("profileLogoInput").files[0];
@@ -542,12 +596,7 @@
         let term = document.getElementById("searchSantriInput")?.value.toLowerCase() || "";
         let filtered = term ? santri.filter(s=>s.name.toLowerCase().includes(term)) : santri;
         document.querySelector("#tableAllSantri tbody").innerHTML = filtered.map(s => `
-            <tr>
-                <td><i class="fas fa-user-graduate"></i> ${s.name}</td>
-                <td>${s.kelas||'-'}</td>
-                <td>${s.lulus ? '<span style="color:#2e7d32">LULUS</span>' : (s.hafalan&&Object.keys(s.hafalan).length>0 ? 'Proses' : 'Belum')}</td>
-                <td><button class="btn-small" onclick="editSantri(${s.id})">Edit</button></td>
-            </tr>
+            <tr><td><i class="fas fa-user-graduate"></i> ${s.name}</td><td>${s.kelas||'-'}</td><td>${s.lulus ? '<span style="color:#2e7d32">LULUS</span>' : (s.hafalan&&Object.keys(s.hafalan).length>0 ? 'Proses' : 'Belum')}</td><td><button class="btn-small" onclick="editSantri(${s.id})">Edit</button></td></tr>
         `).join('');
     }
 
@@ -723,6 +772,7 @@
             case 'green': return 'background: linear-gradient(135deg, #eaf7ea, #d4edda); border: 1px solid #2e7d32;';
             case 'blue': return 'background: linear-gradient(135deg, #e8f0fe, #d4e4fc); border: 1px solid #1565c0;';
             case 'dark': return 'background: linear-gradient(135deg, #1a1a2e, #1e2a3a); border: 1px solid #d4af37;';
+            case 'pattern': return 'background-image: url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\' fill=\'%23d4af37\' opacity=\'0.06\'%3E%3Cpath d=\'M10,10 L90,10 L90,90 L10,90 Z\'/%3E%3Ccircle cx=\'50\' cy=\'50\' r=\'30\'/%3E%3C/svg%3E"); background-repeat: repeat; background-size: 45px; background-color: #fffdf9;';
             default: return 'background: linear-gradient(135deg, #fffdf9, #fff8ed);';
         }
     }
@@ -737,23 +787,35 @@
         let isDark = currentBg === 'dark';
         
         let html = `
-            <div class="cert-card" style="${bgStyle}">
+            <div class="certificate-card" style="${bgStyle}">
+                <div class="corner-ornament corner-tl">❦</div>
+                <div class="corner-ornament corner-tr">❦</div>
+                <div class="corner-ornament corner-bl">❦</div>
+                <div class="corner-ornament corner-br">❦</div>
+                
                 <div class="cert-header">
                     <img src="${profil.logo}" class="cert-logo">
-                    <div class="cert-pesantren1">PONDOK PESANTREN</div>
-                    <div class="cert-pesantren2">${profil.pesantren}</div>
+                    <div class="cert-pesantren-line1">PONDOK PESANTREN</div>
+                    <div class="cert-pesantren-line2">${profil.pesantren}</div>
                     <div class="cert-nomor">No. Sertifikat: BM/${String(s.id).padStart(5,'0')}</div>
                 </div>
+                
                 <div class="cert-best"><span>BEST</span></div>
                 <div class="cert-award">AWARD</div>
                 <div class="cert-certificate"><span>CERTIFICATE</span></div>
                 <div class="cert-achievement">Of Achievement</div>
-                <div class="cert-presented">This Certificate Is Proudly Presented to</div>
-                <div class="cert-name" ${isDark ? 'style="color:#f1c40f;"' : ''}>${s.name.toUpperCase()}</div>
+                
+                <div class="cert-presented">Diberikan Kepada</div>
+                
+                <div class="cert-name-container">
+                    <div class="cert-name" ${isDark ? 'style="color:#f1c40f;"' : ''}>${s.name.toUpperCase()}</div>
+                </div>
+                
                 <div class="cert-desc" ${isDark ? 'style="color:#ccc;"' : ''}>
                     Telah menyelesaikan program <strong>MUTQIN BM</strong> dengan predikat <strong>LULUS</strong><br>
                     Berdasarkan Standar Kelulusan Pondok Pesantren Bahrul Maghfiroh
                 </div>
+                
                 <div class="cert-achievements-box">
                     <div class="achievements-title">✓ CAPAIAN HAFALAN ✓</div>
                     <div class="achievement-item"><div class="achievement-left"><span class="achievement-check">✔</span><span class="achievement-text">Hafal Surat Yasin, Waqiah, Al Mulk</span></div><div class="achievement-grade">Mumtaz</div></div>
@@ -764,10 +826,11 @@
                     <div class="achievement-item"><div class="achievement-left"><span class="achievement-check">✔</span><span class="achievement-text">Lulus Madin Ula & Wustho</span></div><div class="achievement-grade">✔</div></div>
                     <div class="achievement-item"><div class="achievement-left"><span class="achievement-check">✔</span><span class="achievement-text">Sikap & Adab Sholat Berjamaah & Madin</span></div><div class="achievement-grade">✔</div></div>
                 </div>
+                
                 <div class="cert-footer">
                     <div class="footer-box"><div class="footer-line"></div><div class="footer-label">Tanggal</div><div class="footer-name" ${isDark ? 'style="color:#f1c40f;"' : ''}>${today}</div></div>
                     <div class="footer-box"><div class="footer-line"></div><div class="footer-label">Pengasuh</div><div class="footer-name" ${isDark ? 'style="color:#f1c40f;"' : ''}>${profil.pengasuh}</div></div>
-                    <div class="footer-box"><div class="footer-line"></div><div class="footer-label">Kepala Tahfizh</div><div class="footer-name" ${isDark ? 'style="color:#f1c40f;"' : ''}>${profil.kepalaMadin}</div></div>
+                    <div class="footer-box"><div class="footer-line"></div><div class="footer-label">Kepala Dewan Tahfizh</div><div class="footer-name" ${isDark ? 'style="color:#f1c40f;"' : ''}>${profil.kepalaMadin}</div></div>
                 </div>
             </div>
         `;
@@ -775,8 +838,8 @@
     }
 
     function downloadCertificate() {
-        let el = document.querySelector("#certificatePreview .cert-card");
-        if(el) html2pdf().set({ margin: 0.5, filename: 'Sertifikat_Kelulusan.pdf', html2canvas: { scale: 2 } }).from(el).save();
+        let el = document.querySelector("#certificatePreview .certificate-card");
+        if(el) html2pdf().set({ margin: 0.5, filename: 'Sertifikat_Kelulusan.pdf', html2canvas: { scale: 2, letterRendering: true } }).from(el).save();
         else alert("Pilih santri yang sudah lulus!");
     }
 
