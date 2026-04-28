@@ -736,4 +736,94 @@
         };
         
         let h = s.hafalan;
-        let graduated = h.yasin.done && h.waqiah.done && h.mulk.done && h.wirid.done && h.doa.done && h.tahlilR.done && h.tahlilL.done && h.doaTahlil.done && h.tawasul.done && h.jenazah.done && h.juz30.done && h.khotib.done && h.madinUla
+        let graduated = h.yasin.done && h.waqiah.done && h.mulk.done && h.wirid.done && h.doa.done && h.tahlilR.done && h.tahlilL.done && h.doaTahlil.done && h.tawasul.done && h.jenazah.done && h.juz30.done && h.khotib.done && h.madinUla && h.madinWustho && h.sikap;
+        s.graduated = graduated;
+        
+        saveToLocal();
+        alert(`Data hafalan ${s.name} tersimpan! Status: ${graduated ? "LULUS" : "Belum Lulus"}`);
+        updateDashboard();
+        renderStudentTable();
+    }
+
+    function editStudent(id) {
+        showPage('hafalanPage');
+        setTimeout(() => {
+            document.getElementById("studentSelect").value = id;
+            loadHafalanData(id);
+        }, 100);
+    }
+
+    function renderCertSelect() {
+        let select = document.getElementById("certStudentSelect");
+        select.innerHTML = students.map(s => `<option value="${s.id}">${s.name}</option>`).join('');
+        if(students.length) generateCertificate();
+        select.onchange = () => generateCertificate();
+    }
+
+    function generateCertificate() {
+        let id = document.getElementById("certStudentSelect").value;
+        let s = students.find(st => st.id == id);
+        if(!s) return;
+        let h = s.hafalan || {};
+        let html = `
+            <div style="text-align: center; font-family: 'Times New Roman', serif;">
+                <img src="${profile.logo}" style="width: 80px; height: 80px; border-radius: 50%;">
+                <h2 style="margin: 10px 0;">${profile.pesantrenName}</h2>
+                <div style="border-top: 3px solid #2e7d32; width: 100px; margin: 10px auto;"></div>
+                <h3>SERTIFIKAT KELULUSAN</h3>
+                <p>No Sertifikat: BM/${String(s.id).padStart(5,'0')}</p>
+                <h1 style="font-size: 32px; margin: 20px 0;">${s.name}</h1>
+                <p>Telah menyelesaikan MUTQIN BM sesuai Standar Kelulusan Pondok Bahrul Maghfiroh</p>
+                <h2 style="color: #2e7d32; margin: 15px 0;">LULUS</h2>
+                <div style="text-align: left; max-width: 500px; margin: 20px auto;">
+                    ${h.yasin?.done ? "✅ Hafal Surat Yasin, Waqiah, Al Mulk (Mumtaz)<br>" : ""}
+                    ${h.tawasul?.done ? "✅ Hafal Tawasul, Tahlil, Istighosah, Doa (Jayyid Jiddan)<br>" : ""}
+                    ${h.jenazah?.done ? "✅ Praktik Sholat & Pengurusan Jenazah (Jayyid)<br>" : ""}
+                    ${h.juz30?.done ? "✅ Hafal Juz 30 (Ahsan)<br>" : ""}
+                    ${h.khotib?.done ? "✅ Praktik Khotib & Bilal (Ahsan)<br>" : ""}
+                    ${h.madinUla ? "✅ Lulus Madin Ula<br>" : ""}
+                    ${h.madinWustho ? "✅ Lulus Madin Wusto<br>" : ""}
+                    ${h.sikap ? "✅ Sikap dan Adab Sholat Berjamaah & Madin<br>" : ""}
+                </div>
+                <div style="margin-top: 30px; display: flex; justify-content: space-between;">
+                    <div>Pengasuh,<br><br><br>${profile.kyai}</div>
+                    <div>Kepala Dewan Tahfizh,<br><br><br>${profile.kepalaMadin}</div>
+                </div>
+            </div>
+        `;
+        document.getElementById("certificatePreview").innerHTML = html;
+    }
+
+    function downloadCertificate() {
+        let element = document.getElementById("certificatePreview");
+        html2pdf().from(element).save("sertifikat_lulus.pdf");
+    }
+
+    function importExcel() {
+        let file = document.getElementById("excelFile").files[0];
+        if(!file) { alert("Pilih file Excel terlebih dahulu!"); return; }
+        let reader = new FileReader();
+        reader.onload = function(e) {
+            let data = new Uint8Array(e.target.result);
+            let workbook = XLSX.read(data, {type: 'array'});
+            let sheet = workbook.Sheets[workbook.SheetNames[0]];
+            let rows = XLSX.utils.sheet_to_json(sheet);
+            rows.forEach(row => {
+                let name = row["Nama"] || row["nama"] || Object.values(row)[0];
+                if(name) {
+                    students.push({ id: nextId++, name: name, kelas: row["Kelas"] || "", hafalan: {}, graduated: false });
+                }
+            });
+            saveToLocal();
+            alert(`Berhasil import ${rows.length} santri!`);
+            updateDashboard();
+            renderStudentTable();
+        };
+        reader.readAsArrayBuffer(file);
+    }
+
+    // Initialize
+    loadData();
+</script>
+</body>
+</html>
