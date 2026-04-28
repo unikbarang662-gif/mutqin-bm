@@ -82,19 +82,27 @@
         .overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 99; }
         .overlay.active { display: block; }
 
-        /* SERTIFIKAT - DESAIN SEPERTI CONTOH BEST AWARD */
-        .certificate-wrapper { background: #2c3e50; padding: 30px; border-radius: 20px; }
+        /* SERTIFIKAT - ELEGAN DENGAN BACKGROUND YANG BISA DIGANTI */
+        .certificate-wrapper { padding: 30px; border-radius: 20px; transition: all 0.3s ease; }
         .certificate-paper { 
-            background: linear-gradient(135deg, #fff9f0, #fffef5);
             max-width: 850px; 
             margin: 0 auto; 
             padding: 50px 45px;
             border-radius: 20px;
-            box-shadow: 0 30px 50px rgba(0,0,0,0.3);
+            box-shadow: 0 30px 50px rgba(0,0,0,0.25);
             position: relative;
-            border: 1px solid #d4af37;
+            transition: all 0.3s ease;
         }
-        /* Border dekoratif seperti contoh */
+        /* Background Options */
+        .bg-classic { background: linear-gradient(135deg, #fff9f0, #fffef5); }
+        .bg-gold { background: linear-gradient(135deg, #fef9e7, #fdf2d0); border: 1px solid #d4af37; }
+        .bg-green { background: linear-gradient(135deg, #e8f5e9, #c8e6c9); border: 1px solid #2e7d32; }
+        .bg-blue { background: linear-gradient(135deg, #e3f2fd, #bbdef5); border: 1px solid #1565c0; }
+        .bg-purple { background: linear-gradient(135deg, #f3e5f5, #e1bee7); border: 1px solid #7b1fa2; }
+        .bg-dark { background: linear-gradient(135deg, #1a1a2e, #16213e); color: white; border: 1px solid gold; }
+        .bg-dark .cert-paper * { color: white; }
+        .bg-pattern { background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="%23d4af37" opacity="0.05"><path d="M10,10 L90,10 L90,90 L10,90 Z"/><circle cx="50" cy="50" r="30"/></svg>'); background-repeat: repeat; background-size: 40px; }
+        
         .certificate-paper::before {
             content: "";
             position: absolute;
@@ -102,7 +110,7 @@
             left: 15px;
             right: 15px;
             bottom: 15px;
-            border: 1px solid #d4af37;
+            border: 1px solid rgba(212,175,55,0.5);
             border-radius: 10px;
             pointer-events: none;
         }
@@ -115,150 +123,45 @@
             color: rgba(212,175,55,0.3);
             font-family: serif;
         }
-        /* BEST AWARD Style */
-        .cert-best { 
-            text-align: center; 
-            font-size: 22px; 
-            letter-spacing: 8px;
-            color: #8B7355;
-            font-weight: 500;
-            margin-bottom: 10px;
-        }
-        .cert-best span { 
-            display: inline-block;
-            border-top: 2px solid #d4af37;
-            border-bottom: 2px solid #d4af37;
-            padding: 5px 20px;
-        }
-        .cert-award {
-            text-align: center;
-            font-size: 48px;
-            font-weight: bold;
-            letter-spacing: 10px;
-            color: #c0392b;
-            margin-bottom: 15px;
-            text-shadow: 2px 2px 0 rgba(0,0,0,0.05);
-        }
-        .cert-certificate {
-            text-align: center;
-            font-size: 18px;
-            letter-spacing: 4px;
-            color: #2e7d32;
-            margin-bottom: 30px;
-        }
-        .cert-certificate span {
-            display: inline-block;
-            border-bottom: 2px solid #d4af37;
-            padding-bottom: 5px;
-        }
-        /* Of Achievement */
-        .cert-achievement {
-            text-align: center;
-            font-size: 16px;
-            font-style: italic;
-            color: #666;
-            margin-bottom: 20px;
-        }
-        /* This Certificate Is Proudly Presented to */
-        .cert-presented {
-            text-align: center;
-            font-size: 14px;
-            color: #888;
-            margin-top: 30px;
-            margin-bottom: 5px;
-        }
-        /* Nama Santri */
-        .cert-name {
-            text-align: center;
-            font-size: 42px;
-            font-weight: bold;
-            color: #1b5e20;
-            margin: 15px 0;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            border-bottom: 2px dotted #d4af37;
-            display: inline-block;
-            width: auto;
-            margin-left: auto;
-            margin-right: auto;
-            padding-bottom: 10px;
-        }
-        /* Deskripsi */
-        .cert-desc {
-            text-align: center;
-            font-size: 13px;
-            color: #555;
-            line-height: 1.8;
-            margin: 25px 0;
-            max-width: 90%;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        /* Daftar Capaian */
-        .cert-capaian {
-            background: #f9f6f0;
-            margin: 25px 0;
-            padding: 20px 30px;
-            border-radius: 15px;
-            border-left: 5px solid #d4af37;
-        }
-        .capaian-title {
-            text-align: center;
-            font-weight: bold;
-            color: #2e7d32;
-            margin-bottom: 15px;
-            font-size: 16px;
-        }
-        .capaian-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 8px 0;
-            border-bottom: 1px dashed #e0d5c0;
-        }
+        
+        /* Background Selector Panel */
+        .bg-selector { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; padding: 15px; background: #f0f2f5; border-radius: 15px; align-items: center; }
+        .bg-option { width: 50px; height: 50px; border-radius: 10px; cursor: pointer; border: 2px solid transparent; transition: 0.2s; }
+        .bg-option:hover { transform: scale(1.05); }
+        .bg-option.active { border-color: #2e7d32; box-shadow: 0 0 0 2px white, 0 0 0 4px #2e7d32; }
+        .bg-upload { background: white; display: flex; align-items: center; justify-content: center; font-size: 20px; color: #2e7d32; }
+        
+        .cert-best { text-align: center; font-size: 22px; letter-spacing: 8px; color: #d4af37; font-weight: 500; margin-bottom: 10px; }
+        .cert-best span { display: inline-block; border-top: 2px solid #d4af37; border-bottom: 2px solid #d4af37; padding: 5px 20px; }
+        .cert-award { text-align: center; font-size: 48px; font-weight: bold; letter-spacing: 10px; color: #c0392b; margin-bottom: 15px; text-shadow: 2px 2px 0 rgba(0,0,0,0.05); }
+        .bg-dark .cert-award { color: #e74c3c; }
+        .cert-certificate { text-align: center; font-size: 18px; letter-spacing: 4px; color: #2e7d32; margin-bottom: 30px; }
+        .cert-certificate span { display: inline-block; border-bottom: 2px solid #d4af37; padding-bottom: 5px; }
+        .cert-achievement { text-align: center; font-size: 16px; font-style: italic; color: #888; margin-bottom: 20px; }
+        .cert-presented { text-align: center; font-size: 14px; color: #999; margin-top: 30px; margin-bottom: 5px; }
+        .cert-name { text-align: center; font-size: 42px; font-weight: bold; color: #1b5e20; margin: 15px 0; text-transform: uppercase; letter-spacing: 3px; border-bottom: 2px dotted #d4af37; display: inline-block; width: auto; margin-left: auto; margin-right: auto; padding-bottom: 10px; }
+        .bg-dark .cert-name { color: #f1c40f; }
+        .cert-desc { text-align: center; font-size: 13px; color: #555; line-height: 1.8; margin: 25px 0; max-width: 90%; margin-left: auto; margin-right: auto; }
+        .bg-dark .cert-desc { color: #ddd; }
+        
+        .cert-capaian { background: rgba(255,255,255,0.7); margin: 25px 0; padding: 20px 30px; border-radius: 15px; border-left: 5px solid #d4af37; }
+        .bg-dark .cert-capaian { background: rgba(0,0,0,0.3); }
+        .capaian-title { text-align: center; font-weight: bold; color: #2e7d32; margin-bottom: 15px; font-size: 16px; }
+        .capaian-item { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px dashed #e0d5c0; }
         .capaian-item:last-child { border-bottom: none; }
         .capaian-kiri { display: flex; align-items: center; gap: 10px; }
         .capaian-cek { color: #2e7d32; font-size: 16px; }
         .capaian-teks { font-size: 13px; font-weight: 500; }
         .capaian-nilai { font-size: 13px; font-weight: bold; color: #c0392b; background: #f0e6d2; padding: 3px 12px; border-radius: 20px; }
+        .bg-dark .capaian-cek { color: #f1c40f; }
+        .bg-dark .capaian-nilai { background: #2c3e50; color: #f1c40f; }
         
-        /* Footer Date dan Signature */
-        .cert-footer {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 40px;
-            text-align: center;
-        }
-        .footer-box {
-            width: 45%;
-        }
-        .footer-line {
-            width: 80%;
-            border-top: 1.5px solid #d4af37;
-            margin: 20px auto 5px;
-        }
-        .footer-label {
-            font-size: 11px;
-            color: #888;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-        .footer-name {
-            font-size: 12px;
-            font-weight: bold;
-            color: #2e7d32;
-            margin-top: 5px;
-        }
-
-        /* Laporan PDF Style */
-        .report-container { padding: 20px; font-family: 'Times New Roman', serif; }
-        .report-header { text-align: center; margin-bottom: 30px; }
-        .report-title { font-size: 24px; font-weight: bold; color: #2e7d32; }
-        .report-section { margin-bottom: 30px; }
-        .report-section-title { font-size: 18px; font-weight: bold; background: #2e7d32; color: white; padding: 8px 15px; border-radius: 10px; margin-bottom: 15px; }
-        .report-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-        .report-table th, .report-table td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-        .report-table th { background: #f0f2f5; }
+        .cert-footer { display: flex; justify-content: space-between; margin-top: 40px; text-align: center; }
+        .footer-box { width: 45%; }
+        .footer-line { width: 80%; border-top: 1.5px solid #d4af37; margin: 20px auto 5px; }
+        .footer-label { font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: 2px; }
+        .footer-name { font-size: 12px; font-weight: bold; color: #2e7d32; margin-top: 5px; }
+        .bg-dark .footer-name { color: #f1c40f; }
 
         @media (max-width: 768px) {
             .menu-toggle { display: block; }
@@ -274,7 +177,7 @@
             .capaian-nilai { margin-left: 25px; }
             .cert-footer { flex-direction: column; gap: 20px; }
             .footer-box { width: 100%; }
-            .download-section { flex-direction: column; align-items: stretch; }
+            .bg-selector { justify-content: center; }
         }
     </style>
 </head>
@@ -349,10 +252,8 @@
             <div id="studentsPage" style="display:none">
                 <div class="table-card">
                     <div class="download-section">
-                        <span><i class="fas fa-file-pdf"></i> <strong>Download Laporan PDF (Semua Kategori)</strong></span>
-                        <div class="download-buttons">
-                            <button class="btn-download" onclick="downloadCompleteReport()" style="background:#2e7d32;"><i class="fas fa-file-pdf"></i> Download Laporan Lengkap PDF</button>
-                        </div>
+                        <span><i class="fas fa-file-pdf"></i> <strong>Download Laporan PDF</strong></span>
+                        <button class="btn-download" onclick="downloadCompleteReport()" style="background:#2e7d32;"><i class="fas fa-file-pdf"></i> Laporan Lengkap</button>
                     </div>
                     <div class="search-box">
                         <input type="text" id="searchSantriInput" class="search-input" placeholder="Cari santri..." onkeyup="searchSantri()">
@@ -412,10 +313,25 @@
                 </div>
             </div>
 
-            <!-- SERTIFIKAT - DESAIN SEPERTI CONTOH BEST AWARD -->
+            <!-- SERTIFIKAT dengan Background Changer -->
             <div id="sertifikatPage" style="display:none">
                 <div class="table-card">
-                    <h3>Sertifikat Kelulusan</h3>
+                    <h3><i class="fas fa-palette"></i> Sertifikat Kelulusan</h3>
+                    
+                    <!-- Background Selector -->
+                    <div class="bg-selector">
+                        <span style="font-size:13px; margin-right:10px;"><i class="fas fa-fill-drip"></i> Ganti Background:</span>
+                        <div class="bg-option bg-classic" style="background: linear-gradient(135deg, #fff9f0, #fffef5);" onclick="changeBackground('classic')"></div>
+                        <div class="bg-option bg-gold" style="background: linear-gradient(135deg, #fef9e7, #fdf2d0);" onclick="changeBackground('gold')"></div>
+                        <div class="bg-option bg-green" style="background: linear-gradient(135deg, #e8f5e9, #c8e6c9);" onclick="changeBackground('green')"></div>
+                        <div class="bg-option bg-blue" style="background: linear-gradient(135deg, #e3f2fd, #bbdef5);" onclick="changeBackground('blue')"></div>
+                        <div class="bg-option bg-purple" style="background: linear-gradient(135deg, #f3e5f5, #e1bee7);" onclick="changeBackground('purple')"></div>
+                        <div class="bg-option bg-dark" style="background: linear-gradient(135deg, #1a1a2e, #16213e);" onclick="changeBackground('dark')"></div>
+                        <div class="bg-option bg-pattern" style="background-image: url('data:image/svg+xml,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\" fill=\"%23d4af37\" opacity=\"0.1\"><path d=\"M10,10 L90,10 L90,90 L10,90 Z\"/><circle cx=\"50\" cy=\"50\" r=\"30\"/></svg>'); background-repeat:repeat; background-size:30px;" onclick="changeBackground('pattern')"></div>
+                        <div class="bg-option bg-upload" onclick="document.getElementById('bgImageUpload').click()"><i class="fas fa-image"></i></div>
+                        <input type="file" id="bgImageUpload" accept="image/*" style="display:none" onchange="uploadBackgroundImage(event)">
+                    </div>
+                    
                     <select id="selectSertifikat" style="width:100%; padding:10px; border-radius:25px; margin-bottom:20px;" onchange="generateCertificate()"></select>
                     <div id="previewSertifikat" class="certificate-wrapper"></div>
                     <button class="btn-save-main" onclick="downloadSertifikat()" style="margin-top:20px;"><i class="fas fa-download"></i> Download Sertifikat PDF</button>
@@ -456,6 +372,9 @@
     let daftarSantri = [];
     let nextId = 1;
     let currentSelectedStudentId = null;
+    let currentBgClass = "classic";
+    let customBgImage = null;
+    
     let profileData = {
         logo: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Crect width='100' height='100' fill='%232e7d32'/%3E%3Ctext x='50' y='65' text-anchor='middle' fill='white' font-size='40' font-weight='bold'%3EBM%3C/text%3E%3C/svg%3E",
         pesantren: "PONDOK PESANTREN BAHRUL MAGHFIROH",
@@ -464,12 +383,13 @@
     };
 
     function loadAllData() {
-        let saved = localStorage.getItem("mutqinbm_final_v15");
+        let saved = localStorage.getItem("mutqinbm_final_v16");
         if(saved) {
             let data = JSON.parse(saved);
             daftarSantri = data.daftarSantri || [];
             profileData = data.profileData || profileData;
             nextId = data.nextId || (daftarSantri.length + 1);
+            currentBgClass = data.currentBgClass || "classic";
         } else {
             daftarSantri = [
                 { id: 1, name: "Ahmad Fauzan", kelas: "3 TMI", graduated: true, hafalan: { yasin: {done:true,grade:"Mumtaz"}, waqiah:{done:true,grade:"Mumtaz"}, mulk:{done:true,grade:"Mumtaz"}, wirid:{done:true,grade:"Mumtaz"}, doa:{done:true,grade:"Mumtaz"}, tahlilR:{done:true,grade:"Mumtaz"}, tahlilL:{done:true,grade:"Mumtaz"}, doaTahlil:{done:true,grade:"Mumtaz"}, tawasul:{done:true,grade:"Mumtaz"}, jenazah:{done:true,grade:"Jayyid"}, juz30:{done:true,grade:"Ahsan"}, khotib:{done:true,grade:"Ahsan"}, madinUla:true, madinWustho:true, sikap:true } },
@@ -483,7 +403,9 @@
         saveAllData();
     }
 
-    function saveAllData() { localStorage.setItem("mutqinbm_final_v15", JSON.stringify({ daftarSantri, profileData, nextId })); }
+    function saveAllData() { 
+        localStorage.setItem("mutqinbm_final_v16", JSON.stringify({ daftarSantri, profileData, nextId, currentBgClass, customBgImage })); 
+    }
 
     function saveProfileData() {
         let logoFile = document.getElementById("profileLogoInput").files[0];
@@ -549,56 +471,62 @@
         closeSidebar();
     }
 
+    // Background Changer Functions
+    function changeBackground(type) {
+        currentBgClass = type;
+        customBgImage = null;
+        saveAllData();
+        generateCertificate();
+        // Update active style on bg options
+        document.querySelectorAll('.bg-option').forEach(opt => opt.classList.remove('active'));
+        event.target.classList.add('active');
+    }
+    
+    function uploadBackgroundImage(event) {
+        let file = event.target.files[0];
+        if(file) {
+            let reader = new FileReader();
+            reader.onload = function(e) {
+                customBgImage = e.target.result;
+                currentBgClass = 'custom';
+                saveAllData();
+                generateCertificate();
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+    
+    function getBackgroundStyle() {
+        if(currentBgClass === 'custom' && customBgImage) {
+            return `background-image: url(${customBgImage}); background-size: cover; background-position: center;`;
+        }
+        switch(currentBgClass) {
+            case 'classic': return 'background: linear-gradient(135deg, #fff9f0, #fffef5);';
+            case 'gold': return 'background: linear-gradient(135deg, #fef9e7, #fdf2d0); border: 1px solid #d4af37;';
+            case 'green': return 'background: linear-gradient(135deg, #e8f5e9, #c8e6c9); border: 1px solid #2e7d32;';
+            case 'blue': return 'background: linear-gradient(135deg, #e3f2fd, #bbdef5); border: 1px solid #1565c0;';
+            case 'purple': return 'background: linear-gradient(135deg, #f3e5f5, #e1bee7); border: 1px solid #7b1fa2;';
+            case 'dark': return 'background: linear-gradient(135deg, #1a1a2e, #16213e); border: 1px solid gold; color: white;';
+            case 'pattern': return 'background-image: url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\' fill=\'%23d4af37\' opacity=\'0.1\'%3E%3Cpath d=\'M10,10 L90,10 L90,90 L10,90 Z\'/%3E%3Ccircle cx=\'50\' cy=\'50\' r=\'30\'/%3E%3C/svg%3E"); background-repeat: repeat; background-size: 40px; background-color: #fff9f0;';
+            default: return 'background: linear-gradient(135deg, #fff9f0, #fffef5);';
+        }
+    }
+
     function downloadCompleteReport() {
         let lulus = daftarSantri.filter(s => s.graduated);
         let proses = daftarSantri.filter(s => !s.graduated && s.hafalan && Object.keys(s.hafalan).length > 0);
         let belum = daftarSantri.filter(s => !s.graduated && (!s.hafalan || Object.keys(s.hafalan).length === 0));
         
-        let html = `
-        <div class="report-container">
-            <div class="report-header">
-                <img src="${profileData.logo}" style="width:80px; border-radius:50%;">
-                <div class="report-title">LAPORAN DATA SANTRI</div>
-                <div class="report-subtitle">${profileData.pesantren}</div>
-                <div class="report-subtitle">Tanggal: ${new Date().toLocaleDateString('id-ID')}</div>
-                <hr style="margin:15px 0;">
-            </div>
-            
-            <div class="report-section">
-                <div class="report-section-title">📊 RINGKASAN DATA</div>
-                <table class="report-table"><tr><th>Total Santri</th><td>${daftarSantri.length}</td></tr><tr><th>Sudah Lulus</th><td>${lulus.length}</td></tr><tr><th>Sedang Proses</th><td>${proses.length}</td></tr><tr><th>Belum Hafalan</th><td>${belum.length}</td></tr><tr><th>Tingkat Kelulusan</th><td>${daftarSantri.length ? ((lulus.length/daftarSantri.length)*100).toFixed(1) : 0}%</td></tr></table>
-            </div>
-            
-            <div class="report-section">
-                <div class="report-section-title">✅ SANTRI SUDAH LULUS (${lulus.length})</div>
-                ${lulus.length > 0 ? `<table class="report-table"><thead><tr><th>No</th><th>Nama Santri</th><th>Kelas</th></tr></thead><tbody>${lulus.map((s,i)=>`<tr><td>${i+1}</td><td>${s.name}</td><td>${s.kelas||'-'}</td></tr>`).join('')}</tbody></table>` : '<p>Tidak ada data</p>'}
-            </div>
-            
-            <div class="report-section">
-                <div class="report-section-title" style="background:#ff9800;">📖 SANTRI SEDANG PROSES (${proses.length})</div>
-                ${proses.length > 0 ? `<table class="report-table"><thead><tr><th>No</th><th>Nama Santri</th><th>Kelas</th></tr></thead><tbody>${proses.map((s,i)=>`<tr><td>${i+1}</td><td>${s.name}</td><td>${s.kelas||'-'}</td></tr>`).join('')}</tbody></table>` : '<p>Tidak ada data</p>'}
-            </div>
-            
-            <div class="report-section">
-                <div class="report-section-title" style="background:#dc3545;">❌ SANTRI BELUM HAFALAN (${belum.length})</div>
-                ${belum.length > 0 ? `<table class="report-table"><thead><tr><th>No</th><th>Nama Santri</th><th>Kelas</th></tr></thead><tbody>${belum.map((s,i)=>`<tr><td>${i+1}</td><td>${s.name}</td><td>${s.kelas||'-'}</td></tr>`).join('')}</tbody></table>` : '<p>Tidak ada data</p>'}
-            </div>
-            
-            <div class="report-section">
-                <div class="report-section-title">📋 SEMUA DATA SANTRI (${daftarSantri.length})</div>
-                <table class="report-table"><thead><tr><th>No</th><th>Nama Santri</th><th>Kelas</th><th>Status</th></tr></thead><tbody>${daftarSantri.map((s,i)=>`<tr><td>${i+1}</td><td>${s.name}</td><td>${s.kelas||'-'}</td><td>${s.graduated ? 'LULUS' : (s.hafalan && Object.keys(s.hafalan).length > 0 ? 'Sedang Proses' : 'Belum Hafalan')}</td></tr>`).join('')}</tbody></table>
-            </div>
-            
-            <div style="text-align:center; margin-top:30px; font-size:11px; color:#999;">Diterbitkan oleh Sistem Mutqin BM<br>&copy; ${new Date().getFullYear()} - Pondok Pesantren Bahrul Maghfiroh</div>
-        </div>
-        `;
-        
+        let html = `<div style="padding:20px; font-family:'Times New Roman',serif;"><div style="text-align:center; margin-bottom:30px;"><h1 style="color:#2e7d32;">LAPORAN DATA SANTRI</h1><p>${profileData.pesantren}</p><p>${new Date().toLocaleDateString('id-ID')}</p></div>
+        <h3>RINGKASAN</h3><table border="1" cellpadding="8"><tr><th>Total Santri</th><td>${daftarSantri.length}</td></tr><tr><th>Sudah Lulus</th><td>${lulus.length}</td></tr><tr><th>Sedang Proses</th><td>${proses.length}</td></tr><tr><th>Belum Hafalan</th><td>${belum.length}</td></tr></table>
+        <h3>SANTRI SUDAH LULUS</h3><table border="1" cellpadding="5"><tr><th>No</th><th>Nama</th><th>Kelas</th></tr>${lulus.map((s,i)=>`<tr><td>${i+1}</td><td>${s.name}</td><td>${s.kelas||'-'}</td></tr>`).join('')}</table>
+        <h3>SANTRI SEDANG PROSES</h3><table border="1" cellpadding="5"><tr><th>No</th><th>Nama</th><th>Kelas</th></tr>${proses.map((s,i)=>`<tr><td>${i+1}</td><td>${s.name}</td><td>${s.kelas||'-'}</td></tr>`).join('')}</table>
+        <h3>SANTRI BELUM HAFALAN</h3><table border="1" cellpadding="5"><tr><th>No</th><th>Nama</th><th>Kelas</th></tr>${belum.map((s,i)=>`<tr><td>${i+1}</td><td>${s.name}</td><td>${s.kelas||'-'}</td></tr>`).join('')}</table>
+        <h3>SEMUA DATA SANTRI</h3><table border="1" cellpadding="5"><tr><th>No</th><th>Nama</th><th>Kelas</th><th>Status</th></tr>${daftarSantri.map((s,i)=>`<tr><td>${i+1}</td><td>${s.name}</td><td>${s.kelas||'-'}</td><td>${s.graduated ? 'LULUS' : (s.hafalan && Object.keys(s.hafalan).length > 0 ? 'Proses' : 'Belum')}</td></tr>`).join('')}</table></div>`;
         let element = document.createElement('div');
         element.innerHTML = html;
         document.body.appendChild(element);
-        html2pdf().set({ margin: 0.5, filename: 'Laporan_Data_Santri_Lengkap.pdf', html2canvas: { scale: 2 }, jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' } }).from(element).save().then(() => {
-            document.body.removeChild(element);
-        });
+        html2pdf().set({ margin: 0.5, filename: 'Laporan_Data_Santri_Lengkap.pdf', html2canvas: { scale: 2 } }).from(element).save().then(() => document.body.removeChild(element));
         alert("Download laporan PDF lengkap dimulai!");
     }
 
@@ -740,16 +668,18 @@
         if(!s) return;
         
         let today = new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+        let bgStyle = getBackgroundStyle();
+        let textColorClass = currentBgClass === 'dark' ? 'style="color:white;"' : '';
         
         let html = `
-            <div class="certificate-paper">
+            <div class="certificate-paper" style="${bgStyle}">
                 <div class="cert-best"><span>BEST</span></div>
                 <div class="cert-award">AWARD</div>
                 <div class="cert-certificate"><span>CERTIFICATE</span></div>
                 <div class="cert-achievement">Of Achievement</div>
                 <div class="cert-presented">This Certificate Is Proudly Presented to</div>
-                <div class="cert-name">${s.name.toUpperCase()}</div>
-                <div class="cert-desc">
+                <div class="cert-name" ${currentBgClass === 'dark' ? 'style="color:#f1c40f;"' : ''}>${s.name.toUpperCase()}</div>
+                <div class="cert-desc" ${currentBgClass === 'dark' ? 'style="color:#ddd;"' : ''}>
                     Telah menyelesaikan program MUTQIN BM dengan predikat LULUS.<br>
                     Berdasarkan Standar Kelulusan Pondok Pesantren Bahrul Maghfiroh.
                 </div>
@@ -769,12 +699,12 @@
                     <div class="footer-box">
                         <div class="footer-line"></div>
                         <div class="footer-label">DATE</div>
-                        <div class="footer-name">${today}</div>
+                        <div class="footer-name" ${currentBgClass === 'dark' ? 'style="color:#f1c40f;"' : ''}>${today}</div>
                     </div>
                     <div class="footer-box">
                         <div class="footer-line"></div>
                         <div class="footer-label">SIGNATURE</div>
-                        <div class="footer-name">${profileData.pengasuh}</div>
+                        <div class="footer-name" ${currentBgClass === 'dark' ? 'style="color:#f1c40f;"' : ''}>${profileData.pengasuh}</div>
                     </div>
                 </div>
             </div>
