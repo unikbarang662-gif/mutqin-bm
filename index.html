@@ -7,6 +7,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <script src="https://cdn.sheetjs.com/xlsx-0.20.2/package/dist/xlsx.full.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -82,86 +83,99 @@
         .overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 99; }
         .overlay.active { display: block; }
 
-        /* SERTIFIKAT - ELEGAN DENGAN BACKGROUND YANG BISA DIGANTI */
+        /* SERTIFIKAT - ELEGAN PROFESIONAL */
         .certificate-wrapper { padding: 30px; border-radius: 20px; transition: all 0.3s ease; }
         .certificate-paper { 
             max-width: 850px; 
             margin: 0 auto; 
-            padding: 50px 45px;
+            padding: 55px 50px;
             border-radius: 20px;
             box-shadow: 0 30px 50px rgba(0,0,0,0.25);
             position: relative;
             transition: all 0.3s ease;
+            font-family: 'Cormorant Garamond', 'Playfair Display', serif;
         }
-        /* Background Options */
-        .bg-classic { background: linear-gradient(135deg, #fff9f0, #fffef5); }
-        .bg-gold { background: linear-gradient(135deg, #fef9e7, #fdf2d0); border: 1px solid #d4af37; }
-        .bg-green { background: linear-gradient(135deg, #e8f5e9, #c8e6c9); border: 1px solid #2e7d32; }
-        .bg-blue { background: linear-gradient(135deg, #e3f2fd, #bbdef5); border: 1px solid #1565c0; }
-        .bg-purple { background: linear-gradient(135deg, #f3e5f5, #e1bee7); border: 1px solid #7b1fa2; }
-        .bg-dark { background: linear-gradient(135deg, #1a1a2e, #16213e); color: white; border: 1px solid gold; }
-        .bg-dark .cert-paper * { color: white; }
-        .bg-pattern { background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="%23d4af37" opacity="0.05"><path d="M10,10 L90,10 L90,90 L10,90 Z"/><circle cx="50" cy="50" r="30"/></svg>'); background-repeat: repeat; background-size: 40px; }
-        
+        /* Dekorasi Border */
         .certificate-paper::before {
             content: "";
             position: absolute;
-            top: 15px;
-            left: 15px;
-            right: 15px;
-            bottom: 15px;
-            border: 1px solid rgba(212,175,55,0.5);
-            border-radius: 10px;
+            top: 20px;
+            left: 20px;
+            right: 20px;
+            bottom: 20px;
+            border: 1.5px solid rgba(212,175,55,0.6);
+            border-radius: 12px;
             pointer-events: none;
         }
         .certificate-paper::after {
-            content: "✿";
+            content: "❦";
             position: absolute;
-            bottom: 20px;
-            right: 30px;
-            font-size: 28px;
-            color: rgba(212,175,55,0.3);
+            bottom: 25px;
+            right: 35px;
+            font-size: 32px;
+            color: rgba(212,175,55,0.4);
             font-family: serif;
         }
         
-        /* Background Selector Panel */
-        .bg-selector { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; padding: 15px; background: #f0f2f5; border-radius: 15px; align-items: center; }
-        .bg-option { width: 50px; height: 50px; border-radius: 10px; cursor: pointer; border: 2px solid transparent; transition: 0.2s; }
-        .bg-option:hover { transform: scale(1.05); }
-        .bg-option.active { border-color: #2e7d32; box-shadow: 0 0 0 2px white, 0 0 0 4px #2e7d32; }
-        .bg-upload { background: white; display: flex; align-items: center; justify-content: center; font-size: 20px; color: #2e7d32; }
+        /* Background Options */
+        .bg-classic { background: linear-gradient(135deg, #fffdf9, #fff8ed); }
+        .bg-gold { background: linear-gradient(135deg, #fef8e7, #fdf2df); border: 1px solid #d4af37; }
+        .bg-green { background: linear-gradient(135deg, #eaf7ea, #d4edda); border: 1px solid #2e7d32; }
+        .bg-blue { background: linear-gradient(135deg, #e8f0fe, #d4e4fc); border: 1px solid #1565c0; }
+        .bg-purple { background: linear-gradient(135deg, #f5eaf8, #ecd9f1); border: 1px solid #7b1fa2; }
+        .bg-dark { background: linear-gradient(135deg, #1a1a2e, #1e2a3a); border: 1px solid #d4af37; color: #f0f0f0; }
+        .bg-pattern { background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="%23d4af37" opacity="0.08"><path d="M10,10 L90,10 L90,90 L10,90 Z"/><circle cx="50" cy="50" r="35"/><path d="M20,20 L80,20 L80,80 L20,80 Z" fill="none" stroke="%23d4af37" stroke-width="0.5"/></svg>'); background-repeat: repeat; background-size: 50px; background-color: #fffdf9; }
         
-        .cert-best { text-align: center; font-size: 22px; letter-spacing: 8px; color: #d4af37; font-weight: 500; margin-bottom: 10px; }
-        .cert-best span { display: inline-block; border-top: 2px solid #d4af37; border-bottom: 2px solid #d4af37; padding: 5px 20px; }
-        .cert-award { text-align: center; font-size: 48px; font-weight: bold; letter-spacing: 10px; color: #c0392b; margin-bottom: 15px; text-shadow: 2px 2px 0 rgba(0,0,0,0.05); }
-        .bg-dark .cert-award { color: #e74c3c; }
-        .cert-certificate { text-align: center; font-size: 18px; letter-spacing: 4px; color: #2e7d32; margin-bottom: 30px; }
-        .cert-certificate span { display: inline-block; border-bottom: 2px solid #d4af37; padding-bottom: 5px; }
-        .cert-achievement { text-align: center; font-size: 16px; font-style: italic; color: #888; margin-bottom: 20px; }
-        .cert-presented { text-align: center; font-size: 14px; color: #999; margin-top: 30px; margin-bottom: 5px; }
-        .cert-name { text-align: center; font-size: 42px; font-weight: bold; color: #1b5e20; margin: 15px 0; text-transform: uppercase; letter-spacing: 3px; border-bottom: 2px dotted #d4af37; display: inline-block; width: auto; margin-left: auto; margin-right: auto; padding-bottom: 10px; }
-        .bg-dark .cert-name { color: #f1c40f; }
-        .cert-desc { text-align: center; font-size: 13px; color: #555; line-height: 1.8; margin: 25px 0; max-width: 90%; margin-left: auto; margin-right: auto; }
-        .bg-dark .cert-desc { color: #ddd; }
+        /* Header Sertifikat */
+        .cert-header { text-align: center; margin-bottom: 25px; }
+        .cert-logo { width: 85px; height: 85px; border-radius: 50%; object-fit: cover; margin-bottom: 12px; border: 2px solid #d4af37; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .cert-pesantren { font-size: 13px; letter-spacing: 3px; color: #8B7355; font-family: 'Poppins', sans-serif; font-weight: 500; }
+        .cert-pesantren-main { font-size: 22px; font-weight: 700; color: #2e7d32; margin-top: 5px; letter-spacing: 2px; font-family: 'Playfair Display', serif; }
+        .cert-nomor { font-size: 11px; color: #8B7355; margin-top: 8px; background: rgba(212,175,55,0.15); display: inline-block; padding: 4px 15px; border-radius: 30px; font-family: 'Poppins', sans-serif; }
         
-        .cert-capaian { background: rgba(255,255,255,0.7); margin: 25px 0; padding: 20px 30px; border-radius: 15px; border-left: 5px solid #d4af37; }
-        .bg-dark .cert-capaian { background: rgba(0,0,0,0.3); }
-        .capaian-title { text-align: center; font-weight: bold; color: #2e7d32; margin-bottom: 15px; font-size: 16px; }
-        .capaian-item { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px dashed #e0d5c0; }
+        /* BEST AWARD Style */
+        .cert-best { text-align: center; font-size: 18px; letter-spacing: 6px; color: #d4af37; font-weight: 600; margin: 15px 0 5px; font-family: 'Poppins', sans-serif; }
+        .cert-best span { display: inline-block; border-top: 1.5px solid #d4af37; border-bottom: 1.5px solid #d4af37; padding: 6px 25px; }
+        .cert-award { text-align: center; font-size: 52px; font-weight: 800; letter-spacing: 8px; color: #8B4513; margin: 5px 0 10px; font-family: 'Playfair Display', serif; text-shadow: 2px 2px 0 rgba(0,0,0,0.03); }
+        .cert-certificate { text-align: center; font-size: 16px; letter-spacing: 5px; color: #2e7d32; margin-bottom: 15px; font-family: 'Poppins', sans-serif; font-weight: 500; }
+        .cert-certificate span { display: inline-block; border-bottom: 1.5px solid #d4af37; padding-bottom: 5px; }
+        .cert-achievement { text-align: center; font-size: 14px; font-style: italic; color: #8B7355; margin-bottom: 25px; font-family: 'Cormorant Garamond', serif; letter-spacing: 1px; }
+        
+        /* Presented to */
+        .cert-presented { text-align: center; font-size: 12px; color: #999; text-transform: uppercase; letter-spacing: 2px; margin-top: 20px; font-family: 'Poppins', sans-serif; }
+        .cert-name { text-align: center; font-size: 44px; font-weight: 700; color: #1b5e20; margin: 15px 0 10px; text-transform: uppercase; letter-spacing: 4px; font-family: 'Playfair Display', serif; border-bottom: 2px dotted #d4af37; display: inline-block; width: auto; margin-left: auto; margin-right: auto; padding-bottom: 12px; }
+        
+        /* Description */
+        .cert-desc { text-align: center; font-size: 13px; color: #555; line-height: 1.7; margin: 25px auto; max-width: 85%; font-family: 'Cormorant Garamond', serif; font-weight: 500; }
+        .bg-dark .cert-desc { color: #ccc; }
+        
+        /* Capaian Hafalan */
+        .cert-capaian { background: rgba(212,175,55,0.08); margin: 25px 0; padding: 20px 30px; border-radius: 15px; border-left: 4px solid #d4af37; }
+        .capaian-title { text-align: center; font-weight: 600; color: #2e7d32; margin-bottom: 18px; font-size: 15px; letter-spacing: 2px; font-family: 'Poppins', sans-serif; }
+        .capaian-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px dashed rgba(212,175,55,0.3); }
         .capaian-item:last-child { border-bottom: none; }
-        .capaian-kiri { display: flex; align-items: center; gap: 10px; }
-        .capaian-cek { color: #2e7d32; font-size: 16px; }
-        .capaian-teks { font-size: 13px; font-weight: 500; }
-        .capaian-nilai { font-size: 13px; font-weight: bold; color: #c0392b; background: #f0e6d2; padding: 3px 12px; border-radius: 20px; }
+        .capaian-kiri { display: flex; align-items: center; gap: 12px; }
+        .capaian-cek { color: #2e7d32; font-size: 18px; font-weight: bold; }
+        .capaian-teks { font-size: 14px; font-weight: 500; font-family: 'Cormorant Garamond', serif; }
+        .capaian-nilai { font-size: 13px; font-weight: 600; color: #8B4513; background: rgba(212,175,55,0.2); padding: 4px 14px; border-radius: 30px; font-family: 'Poppins', sans-serif; }
         .bg-dark .capaian-cek { color: #f1c40f; }
-        .bg-dark .capaian-nilai { background: #2c3e50; color: #f1c40f; }
+        .bg-dark .capaian-nilai { background: rgba(241,196,15,0.2); color: #f1c40f; }
+        .bg-dark .capaian-title { color: #f1c40f; }
         
+        /* Footer Tanda Tangan */
         .cert-footer { display: flex; justify-content: space-between; margin-top: 40px; text-align: center; }
         .footer-box { width: 45%; }
-        .footer-line { width: 80%; border-top: 1.5px solid #d4af37; margin: 20px auto 5px; }
-        .footer-label { font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: 2px; }
-        .footer-name { font-size: 12px; font-weight: bold; color: #2e7d32; margin-top: 5px; }
+        .footer-line { width: 80%; border-top: 1.5px solid #d4af37; margin: 25px auto 8px; }
+        .footer-label { font-size: 10px; color: #999; text-transform: uppercase; letter-spacing: 2px; font-family: 'Poppins', sans-serif; }
+        .footer-name { font-size: 13px; font-weight: 600; color: #2e7d32; margin-top: 5px; font-family: 'Cormorant Garamond', serif; }
         .bg-dark .footer-name { color: #f1c40f; }
+        
+        /* Background Selector */
+        .bg-selector { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 20px; padding: 15px; background: #f0f2f5; border-radius: 15px; align-items: center; }
+        .bg-option { width: 55px; height: 55px; border-radius: 12px; cursor: pointer; border: 2px solid transparent; transition: 0.2s; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .bg-option:hover { transform: scale(1.05); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+        .bg-option.active { border-color: #2e7d32; box-shadow: 0 0 0 2px white, 0 0 0 4px #2e7d32; }
+        .bg-upload { background: white; display: flex; align-items: center; justify-content: center; font-size: 24px; color: #2e7d32; }
 
         @media (max-width: 768px) {
             .menu-toggle { display: block; }
@@ -170,11 +184,11 @@
             .content-right { padding-top: 60px; }
             .stats-row { grid-template-columns: repeat(2, 1fr); gap: 12px; }
             .stat-number { font-size: 24px; }
-            .certificate-paper { padding: 25px 20px; margin: 10px; }
-            .cert-award { font-size: 32px; letter-spacing: 5px; }
+            .certificate-paper { padding: 30px 20px; margin: 10px; }
+            .cert-award { font-size: 34px; letter-spacing: 5px; }
             .cert-name { font-size: 28px; }
-            .capaian-item { flex-direction: column; align-items: flex-start; gap: 5px; }
-            .capaian-nilai { margin-left: 25px; }
+            .capaian-item { flex-direction: column; align-items: flex-start; gap: 6px; }
+            .capaian-nilai { margin-left: 30px; }
             .cert-footer { flex-direction: column; gap: 20px; }
             .footer-box { width: 100%; }
             .bg-selector { justify-content: center; }
@@ -313,26 +327,26 @@
                 </div>
             </div>
 
-            <!-- SERTIFIKAT dengan Background Changer -->
+            <!-- SERTIFIKAT ELEGAN -->
             <div id="sertifikatPage" style="display:none">
                 <div class="table-card">
-                    <h3><i class="fas fa-palette"></i> Sertifikat Kelulusan</h3>
+                    <h3><i class="fas fa-certificate"></i> Sertifikat Kelulusan</h3>
                     
                     <!-- Background Selector -->
                     <div class="bg-selector">
-                        <span style="font-size:13px; margin-right:10px;"><i class="fas fa-fill-drip"></i> Ganti Background:</span>
-                        <div class="bg-option bg-classic" style="background: linear-gradient(135deg, #fff9f0, #fffef5);" onclick="changeBackground('classic')"></div>
-                        <div class="bg-option bg-gold" style="background: linear-gradient(135deg, #fef9e7, #fdf2d0);" onclick="changeBackground('gold')"></div>
-                        <div class="bg-option bg-green" style="background: linear-gradient(135deg, #e8f5e9, #c8e6c9);" onclick="changeBackground('green')"></div>
-                        <div class="bg-option bg-blue" style="background: linear-gradient(135deg, #e3f2fd, #bbdef5);" onclick="changeBackground('blue')"></div>
-                        <div class="bg-option bg-purple" style="background: linear-gradient(135deg, #f3e5f5, #e1bee7);" onclick="changeBackground('purple')"></div>
-                        <div class="bg-option bg-dark" style="background: linear-gradient(135deg, #1a1a2e, #16213e);" onclick="changeBackground('dark')"></div>
-                        <div class="bg-option bg-pattern" style="background-image: url('data:image/svg+xml,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\" fill=\"%23d4af37\" opacity=\"0.1\"><path d=\"M10,10 L90,10 L90,90 L10,90 Z\"/><circle cx=\"50\" cy=\"50\" r=\"30\"/></svg>'); background-repeat:repeat; background-size:30px;" onclick="changeBackground('pattern')"></div>
+                        <span style="font-size:13px; margin-right:8px;"><i class="fas fa-palette"></i> Background:</span>
+                        <div class="bg-option bg-classic" style="background: linear-gradient(135deg, #fffdf9, #fff8ed);" onclick="changeBackground('classic')" title="Classic Cream"></div>
+                        <div class="bg-option bg-gold" style="background: linear-gradient(135deg, #fef8e7, #fdf2df);" onclick="changeBackground('gold')" title="Gold Elegant"></div>
+                        <div class="bg-option bg-green" style="background: linear-gradient(135deg, #eaf7ea, #d4edda);" onclick="changeBackground('green')" title="Green Fresh"></div>
+                        <div class="bg-option bg-blue" style="background: linear-gradient(135deg, #e8f0fe, #d4e4fc);" onclick="changeBackground('blue')" title="Blue Professional"></div>
+                        <div class="bg-option bg-purple" style="background: linear-gradient(135deg, #f5eaf8, #ecd9f1);" onclick="changeBackground('purple')" title="Purple Royal"></div>
+                        <div class="bg-option bg-dark" style="background: linear-gradient(135deg, #1a1a2e, #1e2a3a);" onclick="changeBackground('dark')" title="Dark Premium"></div>
+                        <div class="bg-option bg-pattern" style="background-image: url('data:image/svg+xml,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\" fill=\"%23d4af37\" opacity=\"0.08\"><path d=\"M10,10 L90,10 L90,90 L10,90 Z\"/><circle cx=\"50\" cy=\"50\" r=\"35\"/></svg>'); background-repeat:repeat; background-size:40px; background-color:#fffdf9;" onclick="changeBackground('pattern')" title="Pattern Decorative"></div>
                         <div class="bg-option bg-upload" onclick="document.getElementById('bgImageUpload').click()"><i class="fas fa-image"></i></div>
                         <input type="file" id="bgImageUpload" accept="image/*" style="display:none" onchange="uploadBackgroundImage(event)">
                     </div>
                     
-                    <select id="selectSertifikat" style="width:100%; padding:10px; border-radius:25px; margin-bottom:20px;" onchange="generateCertificate()"></select>
+                    <select id="selectSertifikat" style="width:100%; padding:12px; border-radius:30px; margin-bottom:20px; font-family:'Poppins'; border:1px solid #ddd;" onchange="generateCertificate()"></select>
                     <div id="previewSertifikat" class="certificate-wrapper"></div>
                     <button class="btn-save-main" onclick="downloadSertifikat()" style="margin-top:20px;"><i class="fas fa-download"></i> Download Sertifikat PDF</button>
                 </div>
@@ -383,13 +397,14 @@
     };
 
     function loadAllData() {
-        let saved = localStorage.getItem("mutqinbm_final_v16");
+        let saved = localStorage.getItem("mutqinbm_final_v17");
         if(saved) {
             let data = JSON.parse(saved);
             daftarSantri = data.daftarSantri || [];
             profileData = data.profileData || profileData;
             nextId = data.nextId || (daftarSantri.length + 1);
             currentBgClass = data.currentBgClass || "classic";
+            customBgImage = data.customBgImage || null;
         } else {
             daftarSantri = [
                 { id: 1, name: "Ahmad Fauzan", kelas: "3 TMI", graduated: true, hafalan: { yasin: {done:true,grade:"Mumtaz"}, waqiah:{done:true,grade:"Mumtaz"}, mulk:{done:true,grade:"Mumtaz"}, wirid:{done:true,grade:"Mumtaz"}, doa:{done:true,grade:"Mumtaz"}, tahlilR:{done:true,grade:"Mumtaz"}, tahlilL:{done:true,grade:"Mumtaz"}, doaTahlil:{done:true,grade:"Mumtaz"}, tawasul:{done:true,grade:"Mumtaz"}, jenazah:{done:true,grade:"Jayyid"}, juz30:{done:true,grade:"Ahsan"}, khotib:{done:true,grade:"Ahsan"}, madinUla:true, madinWustho:true, sikap:true } },
@@ -404,7 +419,7 @@
     }
 
     function saveAllData() { 
-        localStorage.setItem("mutqinbm_final_v16", JSON.stringify({ daftarSantri, profileData, nextId, currentBgClass, customBgImage })); 
+        localStorage.setItem("mutqinbm_final_v17", JSON.stringify({ daftarSantri, profileData, nextId, currentBgClass, customBgImage })); 
     }
 
     function saveProfileData() {
@@ -471,15 +486,13 @@
         closeSidebar();
     }
 
-    // Background Changer Functions
     function changeBackground(type) {
         currentBgClass = type;
         customBgImage = null;
         saveAllData();
         generateCertificate();
-        // Update active style on bg options
         document.querySelectorAll('.bg-option').forEach(opt => opt.classList.remove('active'));
-        event.target.classList.add('active');
+        if(event && event.target) event.target.classList.add('active');
     }
     
     function uploadBackgroundImage(event) {
@@ -491,6 +504,7 @@
                 currentBgClass = 'custom';
                 saveAllData();
                 generateCertificate();
+                document.querySelectorAll('.bg-option').forEach(opt => opt.classList.remove('active'));
             };
             reader.readAsDataURL(file);
         }
@@ -501,14 +515,14 @@
             return `background-image: url(${customBgImage}); background-size: cover; background-position: center;`;
         }
         switch(currentBgClass) {
-            case 'classic': return 'background: linear-gradient(135deg, #fff9f0, #fffef5);';
-            case 'gold': return 'background: linear-gradient(135deg, #fef9e7, #fdf2d0); border: 1px solid #d4af37;';
-            case 'green': return 'background: linear-gradient(135deg, #e8f5e9, #c8e6c9); border: 1px solid #2e7d32;';
-            case 'blue': return 'background: linear-gradient(135deg, #e3f2fd, #bbdef5); border: 1px solid #1565c0;';
-            case 'purple': return 'background: linear-gradient(135deg, #f3e5f5, #e1bee7); border: 1px solid #7b1fa2;';
-            case 'dark': return 'background: linear-gradient(135deg, #1a1a2e, #16213e); border: 1px solid gold; color: white;';
-            case 'pattern': return 'background-image: url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\' fill=\'%23d4af37\' opacity=\'0.1\'%3E%3Cpath d=\'M10,10 L90,10 L90,90 L10,90 Z\'/%3E%3Ccircle cx=\'50\' cy=\'50\' r=\'30\'/%3E%3C/svg%3E"); background-repeat: repeat; background-size: 40px; background-color: #fff9f0;';
-            default: return 'background: linear-gradient(135deg, #fff9f0, #fffef5);';
+            case 'classic': return 'background: linear-gradient(135deg, #fffdf9, #fff8ed);';
+            case 'gold': return 'background: linear-gradient(135deg, #fef8e7, #fdf2df); border: 1px solid #d4af37;';
+            case 'green': return 'background: linear-gradient(135deg, #eaf7ea, #d4edda); border: 1px solid #2e7d32;';
+            case 'blue': return 'background: linear-gradient(135deg, #e8f0fe, #d4e4fc); border: 1px solid #1565c0;';
+            case 'purple': return 'background: linear-gradient(135deg, #f5eaf8, #ecd9f1); border: 1px solid #7b1fa2;';
+            case 'dark': return 'background: linear-gradient(135deg, #1a1a2e, #1e2a3a); border: 1px solid #d4af37;';
+            case 'pattern': return 'background-image: url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\' fill=\'%23d4af37\' opacity=\'0.08\'%3E%3Cpath d=\'M10,10 L90,10 L90,90 L10,90 Z\'/%3E%3Ccircle cx=\'50\' cy=\'50\' r=\'35\'/%3E%3C/svg%3E"); background-repeat: repeat; background-size: 50px; background-color: #fffdf9;';
+            default: return 'background: linear-gradient(135deg, #fffdf9, #fff8ed);';
         }
     }
 
@@ -516,18 +530,16 @@
         let lulus = daftarSantri.filter(s => s.graduated);
         let proses = daftarSantri.filter(s => !s.graduated && s.hafalan && Object.keys(s.hafalan).length > 0);
         let belum = daftarSantri.filter(s => !s.graduated && (!s.hafalan || Object.keys(s.hafalan).length === 0));
-        
-        let html = `<div style="padding:20px; font-family:'Times New Roman',serif;"><div style="text-align:center; margin-bottom:30px;"><h1 style="color:#2e7d32;">LAPORAN DATA SANTRI</h1><p>${profileData.pesantren}</p><p>${new Date().toLocaleDateString('id-ID')}</p></div>
-        <h3>RINGKASAN</h3><table border="1" cellpadding="8"><tr><th>Total Santri</th><td>${daftarSantri.length}</td></tr><tr><th>Sudah Lulus</th><td>${lulus.length}</td></tr><tr><th>Sedang Proses</th><td>${proses.length}</td></tr><tr><th>Belum Hafalan</th><td>${belum.length}</td></tr></table>
-        <h3>SANTRI SUDAH LULUS</h3><table border="1" cellpadding="5"><tr><th>No</th><th>Nama</th><th>Kelas</th></tr>${lulus.map((s,i)=>`<tr><td>${i+1}</td><td>${s.name}</td><td>${s.kelas||'-'}</td></tr>`).join('')}</table>
-        <h3>SANTRI SEDANG PROSES</h3><table border="1" cellpadding="5"><tr><th>No</th><th>Nama</th><th>Kelas</th></tr>${proses.map((s,i)=>`<tr><td>${i+1}</td><td>${s.name}</td><td>${s.kelas||'-'}</td></tr>`).join('')}</table>
-        <h3>SANTRI BELUM HAFALAN</h3><table border="1" cellpadding="5"><tr><th>No</th><th>Nama</th><th>Kelas</th></tr>${belum.map((s,i)=>`<tr><td>${i+1}</td><td>${s.name}</td><td>${s.kelas||'-'}</td></tr>`).join('')}</table>
-        <h3>SEMUA DATA SANTRI</h3><table border="1" cellpadding="5"><tr><th>No</th><th>Nama</th><th>Kelas</th><th>Status</th></tr>${daftarSantri.map((s,i)=>`<tr><td>${i+1}</td><td>${s.name}</td><td>${s.kelas||'-'}</td><td>${s.graduated ? 'LULUS' : (s.hafalan && Object.keys(s.hafalan).length > 0 ? 'Proses' : 'Belum')}</td></tr>`).join('')}</table></div>`;
+        let html = `<div style="padding:20px"><div style="text-align:center"><h1>LAPORAN DATA SANTRI</h1><p>${profileData.pesantren}<br>${new Date().toLocaleDateString('id-ID')}</p></div>
+        <h3>RINGKASAN</h3><table border="1" cellpadding="8"><tr><th>Total</th><th>Lulus</th><th>Proses</th><th>Belum</th></tr><tr><td>${daftarSantri.length}</td><td>${lulus.length}</td><td>${proses.length}</td><td>${belum.length}</td></tr></table>
+        <h3>SANTRI LULUS</h3><table border="1"><tr><th>No</th><th>Nama</th><th>Kelas</th></tr>${lulus.map((s,i)=>`<tr><td>${i+1}</td><td>${s.name}</td><td>${s.kelas||'-'}</td></tr>`).join('')}</table>
+        <h3>SANTRI PROSES</h3><table border="1"><tr><th>No</th><th>Nama</th><th>Kelas</th></tr>${proses.map((s,i)=>`<tr><td>${i+1}</td><td>${s.name}</td><td>${s.kelas||'-'}</td></tr>`).join('')}</table>
+        <h3>SANTRI BELUM HAFALAN</h3><table border="1"><tr><th>No</th><th>Nama</th><th>Kelas</th></tr>${belum.map((s,i)=>`<tr><td>${i+1}</td><td>${s.name}</td><td>${s.kelas||'-'}</td></tr>`).join('')}</table>
+        <h3>SEMUA SANTRI</h3><table border="1"><tr><th>No</th><th>Nama</th><th>Kelas</th><th>Status</th></tr>${daftarSantri.map((s,i)=>`<tr><td>${i+1}</td><td>${s.name}</td><td>${s.kelas||'-'}</td><td>${s.graduated ? 'LULUS' : (s.hafalan && Object.keys(s.hafalan).length > 0 ? 'Proses' : 'Belum')}</td></tr>`).join('')}</table></div>`;
         let element = document.createElement('div');
         element.innerHTML = html;
         document.body.appendChild(element);
-        html2pdf().set({ margin: 0.5, filename: 'Laporan_Data_Santri_Lengkap.pdf', html2canvas: { scale: 2 } }).from(element).save().then(() => document.body.removeChild(element));
-        alert("Download laporan PDF lengkap dimulai!");
+        html2pdf().set({ margin: 0.5, filename: 'Laporan_Data_Santri.pdf', html2canvas: { scale: 2 } }).from(element).save().then(() => document.body.removeChild(element));
     }
 
     function refreshDashboard() {
@@ -660,6 +672,12 @@
         select.innerHTML = lulusSantri.map(s => `<option value="${s.id}">${s.name}</option>`).join('');
         if(lulusSantri.length) generateCertificate();
         select.onchange = () => generateCertificate();
+        // Set active background option
+        setTimeout(() => {
+            document.querySelectorAll('.bg-option').forEach(opt => opt.classList.remove('active'));
+            let activeBg = document.querySelector(`.bg-${currentBgClass}`);
+            if(activeBg) activeBg.classList.add('active');
+        }, 100);
     }
 
     function generateCertificate() {
@@ -669,42 +687,56 @@
         
         let today = new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
         let bgStyle = getBackgroundStyle();
-        let textColorClass = currentBgClass === 'dark' ? 'style="color:white;"' : '';
+        let isDark = currentBgClass === 'dark';
         
         let html = `
             <div class="certificate-paper" style="${bgStyle}">
+                <div class="cert-header">
+                    <img src="${profileData.logo}" class="cert-logo">
+                    <div class="cert-pesantren">PONDOK PESANTREN</div>
+                    <div class="cert-pesantren-main">${profileData.pesantren}</div>
+                    <div class="cert-nomor">No. Sertifikat: BM/${String(s.id).padStart(5,'0')}</div>
+                </div>
+                
                 <div class="cert-best"><span>BEST</span></div>
                 <div class="cert-award">AWARD</div>
                 <div class="cert-certificate"><span>CERTIFICATE</span></div>
                 <div class="cert-achievement">Of Achievement</div>
+                
                 <div class="cert-presented">This Certificate Is Proudly Presented to</div>
-                <div class="cert-name" ${currentBgClass === 'dark' ? 'style="color:#f1c40f;"' : ''}>${s.name.toUpperCase()}</div>
-                <div class="cert-desc" ${currentBgClass === 'dark' ? 'style="color:#ddd;"' : ''}>
-                    Telah menyelesaikan program MUTQIN BM dengan predikat LULUS.<br>
-                    Berdasarkan Standar Kelulusan Pondok Pesantren Bahrul Maghfiroh.
+                <div class="cert-name" ${isDark ? 'style="color:#f1c40f;"' : ''}>${s.name.toUpperCase()}</div>
+                
+                <div class="cert-desc" ${isDark ? 'style="color:#ccc;"' : ''}>
+                    Telah menyelesaikan program <strong>MUTQIN BM</strong> dengan predikat <strong>LULUS</strong><br>
+                    Berdasarkan Standar Kelulusan Pondok Pesantren Bahrul Maghfiroh
                 </div>
                 
                 <div class="cert-capaian">
                     <div class="capaian-title">✓ CAPAIAN HAFALAN ✓</div>
-                    <div class="capaian-item"><div class="capaian-kiri"><span class="capaian-cek">✅</span><span class="capaian-teks">Hafal Surat Yasin, Waqiah, Al Mulk</span></div><div class="capaian-nilai">Mumtaz</div></div>
-                    <div class="capaian-item"><div class="capaian-kiri"><span class="capaian-cek">✅</span><span class="capaian-teks">Hafal Tawasul, Tahlil, Istighosah, Doa</span></div><div class="capaian-nilai">Jayyid Jiddan</div></div>
-                    <div class="capaian-item"><div class="capaian-kiri"><span class="capaian-cek">✅</span><span class="capaian-teks">Praktik Sholat & Pengurusan Jenazah</span></div><div class="capaian-nilai">Jayyid</div></div>
-                    <div class="capaian-item"><div class="capaian-kiri"><span class="capaian-cek">✅</span><span class="capaian-teks">Hafal Juz 30</span></div><div class="capaian-nilai">Ahsan</div></div>
-                    <div class="capaian-item"><div class="capaian-kiri"><span class="capaian-cek">✅</span><span class="capaian-teks">Praktik Khotib & Bilal</span></div><div class="capaian-nilai">Ahsan</div></div>
-                    <div class="capaian-item"><div class="capaian-kiri"><span class="capaian-cek">✅</span><span class="capaian-teks">Lulus Madin Ula & Wustho</span></div><div class="capaian-nilai">Selesai</div></div>
-                    <div class="capaian-item"><div class="capaian-kiri"><span class="capaian-cek">✅</span><span class="capaian-teks">Sikap & Adab Sholat Berjamaah</span></div><div class="capaian-nilai">Baik</div></div>
+                    <div class="capaian-item"><div class="capaian-kiri"><span class="capaian-cek">✔</span><span class="capaian-teks">Hafal Surat Yasin, Waqiah, Al Mulk</span></div><div class="capaian-nilai">Mumtaz</div></div>
+                    <div class="capaian-item"><div class="capaian-kiri"><span class="capaian-cek">✔</span><span class="capaian-teks">Hafal Tawasul, Tahlil, Istighosah, Doa</span></div><div class="capaian-nilai">Jayyid Jiddan</div></div>
+                    <div class="capaian-item"><div class="capaian-kiri"><span class="capaian-cek">✔</span><span class="capaian-teks">Praktik Sholat & Pengurusan Jenazah</span></div><div class="capaian-nilai">Jayyid</div></div>
+                    <div class="capaian-item"><div class="capaian-kiri"><span class="capaian-cek">✔</span><span class="capaian-teks">Hafal Juz 30 (Amma - Annas)</span></div><div class="capaian-nilai">Ahsan</div></div>
+                    <div class="capaian-item"><div class="capaian-kiri"><span class="capaian-cek">✔</span><span class="capaian-teks">Praktik Khotib & Bilal</span></div><div class="capaian-nilai">Ahsan</div></div>
+                    <div class="capaian-item"><div class="capaian-kiri"><span class="capaian-cek">✔</span><span class="capaian-teks">Lulus Madin Ula & Wustho</span></div><div class="capaian-nilai">✔</div></div>
+                    <div class="capaian-item"><div class="capaian-kiri"><span class="capaian-cek">✔</span><span class="capaian-teks">Sikap & Adab Sholat Berjamaah & Madin</span></div><div class="capaian-nilai">✔</div></div>
                 </div>
                 
                 <div class="cert-footer">
                     <div class="footer-box">
                         <div class="footer-line"></div>
-                        <div class="footer-label">DATE</div>
-                        <div class="footer-name" ${currentBgClass === 'dark' ? 'style="color:#f1c40f;"' : ''}>${today}</div>
+                        <div class="footer-label">Tanggal</div>
+                        <div class="footer-name" ${isDark ? 'style="color:#f1c40f;"' : ''}>${today}</div>
                     </div>
                     <div class="footer-box">
                         <div class="footer-line"></div>
-                        <div class="footer-label">SIGNATURE</div>
-                        <div class="footer-name" ${currentBgClass === 'dark' ? 'style="color:#f1c40f;"' : ''}>${profileData.pengasuh}</div>
+                        <div class="footer-label">Pengasuh</div>
+                        <div class="footer-name" ${isDark ? 'style="color:#f1c40f;"' : ''}>${profileData.pengasuh}</div>
+                    </div>
+                    <div class="footer-box">
+                        <div class="footer-line"></div>
+                        <div class="footer-label">Kepala Dewan Tahfizh</div>
+                        <div class="footer-name" ${isDark ? 'style="color:#f1c40f;"' : ''}>${profileData.kepalaMadin}</div>
                     </div>
                 </div>
             </div>
@@ -715,7 +747,7 @@
     function downloadSertifikat() { 
         let element = document.querySelector("#previewSertifikat .certificate-paper");
         if(element) {
-            html2pdf().set({ margin: 0.5, filename: 'sertifikat_kelulusan.pdf', html2canvas: { scale: 2 }, jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' } }).from(element).save();
+            html2pdf().set({ margin: 0.5, filename: 'Sertifikat_Kelulusan.pdf', html2canvas: { scale: 2, letterRendering: true }, jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' } }).from(element).save();
         } else {
             alert("Pilih santri yang sudah lulus terlebih dahulu!");
         }
