@@ -2,326 +2,565 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mutqin BM - Sistem Kelulusan</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Mutqin BM - Sistem Manajemen Hafalan Pondok</title>
+    <!-- Chart.js for graphs -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <!-- SheetJS for Excel import -->
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.2/package/dist/xlsx.full.min.js"></script>
+    <!-- html2pdf for certificate export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        body { background: #e8f5e9; font-family: 'Segoe UI', sans-serif; }
-        .navbar { background: #1a472a; }
-        .navbar-brand, .nav-link { color: white !important; }
-        .card { border-radius: 20px; margin-bottom: 20px; }
-        .card-header { background: #2d6a4f; color: white; border-radius: 20px 20px 0 0; }
-        .btn-mutqin { background: #2d6a4f; color: white; border-radius: 40px; }
-        .stat-card { background: white; border-radius: 20px; padding: 20px; text-align: center; }
-        .login-card { max-width: 400px; margin: auto; background: white; border-radius: 30px; overflow: hidden; }
-        .logo-area { background: #2d6a4f; color: #ffd966; padding: 30px; text-align: center; }
-        .progress { height: 25px; border-radius: 20px; }
-        .sertifikat { background: #fef7e0; border: 15px solid #b8860b; border-radius: 20px; padding: 30px; font-family: 'Times New Roman'; }
-        .footer { background: #1a472a; color: white; text-align: center; padding: 15px; margin-top: 30px; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: #f0f7f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Login Container */
+        .login-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 30px;
+            box-shadow: 0 20px 35px rgba(0, 32, 0, 0.1);
+            width: 380px;
+            text-align: center;
+            margin: 20px;
+        }
+
+        .logo-area {
+            margin-bottom: 20px;
+        }
+
+        .logo-preview {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 3px solid #2e7d32;
+            margin-bottom: 10px;
+        }
+
+        .pesantren-name {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #1b5e20;
+        }
+
+        .login-container input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #c8e6c9;
+            border-radius: 40px;
+            background: #f9fff9;
+        }
+
+        .btn {
+            background: #2e7d32;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 40px;
+            cursor: pointer;
+            font-weight: bold;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        /* Main App (hidden by default) */
+        .app {
+            display: none;
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Header & Sidebar */
+        .dashboard {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .sidebar {
+            width: 260px;
+            background: #1b3b1a;
+            color: white;
+            min-height: 100vh;
+            padding: 20px;
+            position: sticky;
+            top: 0;
+        }
+
+        .sidebar h2 {
+            text-align: center;
+            border-bottom: 1px solid #4caf50;
+            padding-bottom: 10px;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            margin-top: 30px;
+        }
+
+        .sidebar li {
+            padding: 12px;
+            margin: 5px 0;
+            cursor: pointer;
+            border-radius: 30px;
+            transition: 0.2s;
+        }
+
+        .sidebar li.active, .sidebar li:hover {
+            background: #2e7d32;
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 20px;
+            background: #f5fcf5;
+        }
+
+        .stats {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 25px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 15px;
+            border-radius: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            flex: 1;
+            min-width: 150px;
+            text-align: center;
+        }
+
+        .student-table {
+            background: white;
+            border-radius: 24px;
+            padding: 15px;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #e0f2e0;
+        }
+
+        .btn-sm {
+            background: #2e7d32;
+            padding: 5px 12px;
+            font-size: 12px;
+            width: auto;
+        }
+
+        .form-card {
+            background: white;
+            padding: 20px;
+            border-radius: 24px;
+            margin-top: 20px;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .criteria-group {
+            border: 1px solid #c8e6c9;
+            padding: 15px;
+            border-radius: 20px;
+            margin-bottom: 20px;
+        }
+
+        .select-grade {
+            margin-left: 10px;
+            padding: 5px;
+        }
+
+        .certificate-preview {
+            background: #fffef7;
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        @media (max-width: 800px) {
+            .sidebar { width: 100%; min-height: auto; }
+        }
+        button:active { transform: scale(0.98);}
+        .upload-area { border: 2px dashed #2e7d32; padding: 15px; border-radius: 20px; text-align: center; margin-bottom: 20px;}
     </style>
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg">
-    <div class="container">
-        <a class="navbar-brand" href="#"><i class="bi bi-mortarboard-fill"></i> Mutqin BM</a>
-        <div class="collapse navbar-collapse">
-            <ul class="navbar-nav ms-auto" id="navMenu"></ul>
+<!-- LOGIN PAGE -->
+<div id="loginPage" class="login-container">
+    <div class="logo-area">
+        <img id="loginLogo" class="logo-preview" src="https://via.placeholder.com/80?text=Logo" alt="Logo">
+        <div class="pesantren-name" id="loginPesantrenName">PONDOK PESANTREN<br>BAHRUL MAGHFIROH</div>
+    </div>
+    <h3>Mutqin BM</h3>
+    <p>Standar Kelulusan</p>
+    <input type="text" id="username" placeholder="Username" value="admin">
+    <input type="password" id="password" placeholder="Password" value="admin123">
+    <button class="btn" onclick="handleLogin()">Login <i class="fas fa-sign-in-alt"></i></button>
+    <div style="margin-top: 12px; font-size:12px">🔒 default: admin / admin123</div>
+    <hr style="margin:15px 0">
+    <div class="upload-area">
+        <i class="fas fa-upload"></i> Upload Logo & Profile (optional)<br>
+        <input type="file" id="uploadLogo" accept="image/*" onchange="updateLogo(event)">
+        <input type="text" id="pesantrenNameInput" placeholder="Nama Pesantren" value="PONDOK PESANTREN BAHRUL MAGHFIROH">
+        <input type="text" id="kyaiName" placeholder="Nama Pengasuh" value="Ust. Drs. H. Abbul Malik, Lc., M.M.Pd.">
+        <input type="text" id="madinHead" placeholder="Kepala Madin" value="Ust. H. Muhammad Amin">
+        <button class="btn" style="background:#1565C0;" onclick="saveProfile()">Simpan Profil</button>
+    </div>
+</div>
+
+<!-- MAIN APP -->
+<div id="mainApp" class="app">
+    <div class="dashboard">
+        <div class="sidebar">
+            <h2>Mutqin BM</h2>
+            <ul>
+                <li class="active" onclick="showPage('dashboardPage')"><i class="fas fa-tachometer-alt"></i> Dashboard</li>
+                <li onclick="showPage('studentsPage')"><i class="fas fa-users"></i> Data Santri</li>
+                <li onclick="showPage('hafalanPage')"><i class="fas fa-book-quran"></i> Input Hafalan</li>
+                <li onclick="showPage('certificatePage')"><i class="fas fa-certificate"></i> Sertifikat</li>
+                <li onclick="showPage('importPage')"><i class="fas fa-file-excel"></i> Import Excel</li>
+                <li onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</li>
+            </ul>
+        </div>
+        <div class="main-content">
+            <!-- DASHBOARD -->
+            <div id="dashboardPage">
+                <div class="stats">
+                    <div class="stat-card"><i class="fas fa-user-graduate"></i><br><h2 id="totalSantri">0</h2><p>Total Santri</p></div>
+                    <div class="stat-card"><i class="fas fa-check-circle"></i><br><h2 id="lulusCount">0</h2><p>Sudah Lulus</p></div>
+                    <div class="stat-card"><i class="fas fa-spinner"></i><br><h2 id="prosesCount">0</h2><p>Sedang Proses</p></div>
+                </div>
+                <div class="form-card">
+                    <h3>Progress Hafalan Keseluruhan</h3>
+                    <canvas id="progressChart" width="400" height="200" style="max-height:250px"></canvas>
+                    <p id="progressPercent">0%</p>
+                </div>
+                <div class="student-table">
+                    <h3>5 Santri Terbaru</h3>
+                    <table id="recentTable"><thead><tr><th>Nama</th><th>Status</th></tr></thead><tbody></tbody></table>
+                </div>
+            </div>
+
+            <!-- DATA SANTRI -->
+            <div id="studentsPage" style="display:none">
+                <div class="form-card">
+                    <h3>Daftar Semua Santri</h3>
+                    <button class="btn btn-sm" onclick="exportToExcelReport()"><i class="fas fa-download"></i> Export PDF Laporan</button>
+                    <div style="overflow-x:auto; margin-top:15px">
+                        <table id="allSantriTable"><thead><tr><th>Nama</th><th>Kelas</th><th>Status Kelulusan</th><th>Aksi</th></tr></thead><tbody></tbody></table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- INPUT HAFALAN (Detailed) -->
+            <div id="hafalanPage" style="display:none">
+                <div class="form-card">
+                    <h3>Input Capaian Hafalan Santri</h3>
+                    <select id="selectStudentHafalan" style="padding:10px; width:100%; margin-bottom:20px"></select>
+                    <div class="grid-2">
+                        <!-- Surat Pilihan -->
+                        <div class="criteria-group">
+                            <h4>📖 Hafalan Surat Pilihan</h4>
+                            <div><input type="checkbox" id="surahYasin"> Yasin <select id="gradeYasin"><option>Mumtaz</option><option>Jayyid Jiddan</option><option>Jayyid</option><option>Belum</option></select></div>
+                            <div><input type="checkbox" id="surahWaqiah"> Al-Waqiah <select id="gradeWaqiah"><option>Mumtaz</option><option>Jayyid Jiddan</option><option>Jayyid</option><option>Belum</option></select></div>
+                            <div><input type="checkbox" id="surahMulk"> Al-Mulk <select id="gradeMulk"><option>Mumtaz</option><option>Jayyid Jiddan</option><option>Jayyid</option><option>Belum</option></select></div>
+                            <button class="btn btn-sm" onclick="checkAndMarkCompleteSurat()">✓ Centang semua jika Mumtaz & Simpan</button>
+                        </div>
+                        <!-- Hafalan Aurad -->
+                        <div class="criteria-group">
+                            <h4>📿 Hafalan Aurad & Doa</h4>
+                            <div><input type="checkbox" id="wirid"> Wirid setelah shalat <select id="gradeWirid"><option>Jayyid Jiddan</option><option>Jayyid</option><option>Belum</option></select></div>
+                            <div><input type="checkbox" id="doaShalat"> Doa setelah shalat <select id="gradeDoaShalat"><option>Jayyid Jiddan</option><option>Jayyid</option><option>Belum</option></select></div>
+                            <div><input type="checkbox" id="tahlilRingkas"> Tahlil Ringkas <select id="gradeTahlilR"><option>Jayyid Jiddan</option><option>Jayyid</option><option>Belum</option></select></div>
+                            <div><input type="checkbox" id="tahlilLengkap"> Tahlil Lengkap <select id="gradeTahlilL"><option>Jayyid Jiddan</option><option>Jayyid</option><option>Belum</option></select></div>
+                            <div><input type="checkbox" id="doaTahlil"> Doa Tahlil <select id="gradeDoaTahlil"><option>Jayyid Jiddan</option><option>Jayyid</option><option>Belum</option></select></div>
+                            <div><input type="checkbox" id="tawasul"> Tawasul <select id="gradeTawasul"><option>Jayyid Jiddan</option><option>Jayyid</option><option>Belum</option></select></div>
+                        </div>
+                        <div class="criteria-group">
+                            <h4>🧎 Praktik & Lainnya</h4>
+                            <div><input type="checkbox" id="praktekJenazah"> Praktek Shalat & Jenazah <select id="gradeJenazah"><option>Jayyid</option><option>Jayyid Jiddan</option><option>Mumtaz</option></select></div>
+                            <div><input type="checkbox" id="hafalJuz30"> Hafal Juz 30 (Amma - Annas) <select id="gradeJuz30"><option>Ahsan</option><option>Jayyid Jiddan</option><option>Jayyid</option></select></div>
+                            <div><input type="checkbox" id="khotibBilal"> Praktek Khotib & Bilal <select id="gradeKhotib"><option>Ahsan</option><option>Jayyid Jiddan</option></select></div>
+                            <div><input type="checkbox" id="madinUla"> Lulus Madin Ula</div>
+                            <div><input type="checkbox" id="madinWustho"> Lulus Madin Wustho</div>
+                            <div><input type="checkbox" id="sikapAdab"> Sikap & Adab (sholat jamaah, madin formal)</div>
+                        </div>
+                    </div>
+                    <button class="btn" onclick="saveStudentHafalan()"><i class="fas fa-save"></i> SIMPAN Semua Hafalan</button>
+                </div>
+            </div>
+
+            <!-- SERTIFIKAT -->
+            <div id="certificatePage" style="display:none">
+                <div class="form-card">
+                    <h3>Buat & Download Sertifikat</h3>
+                    <select id="certStudentSelect" onchange="previewCertificate()" style="padding:10px"></select>
+                    <div id="certificatePreview" class="certificate-preview" style="margin-top:20px; background:white; padding:20px; border:1px solid #ddd;"></div>
+                    <button class="btn" onclick="downloadCertificatePDF()"><i class="fas fa-download"></i> Download PDF Sertifikat</button>
+                </div>
+            </div>
+
+            <!-- IMPORT EXCEL -->
+            <div id="importPage" style="display:none">
+                <div class="form-card">
+                    <h3>📂 Upload Data Santri (Excel/CSV)</h3>
+                    <input type="file" id="excelInput" accept=".xlsx, .xls, .csv">
+                    <button class="btn" onclick="importExcelSantri()">Import & Tambah Masal</button>
+                    <p>Format tabel header: Nama, Kelas (opsional)</p>
+                </div>
+            </div>
         </div>
     </div>
-</nav>
+</div>
 
-<div class="container mt-4" id="app"></div>
-
-<div class="footer">© 2026 Mutqin BM - Ponpes Bahrul Maghfiroh</div>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-// DATA
-let user = null;
-let santri = [
-    { id:1, nis:"001", nama:"Ahmad Fauzan", kelas:"Kelas 5", wali:"Bapak Ahmad", progress:94, lulus:true },
-    { id:2, nis:"002", nama:"Salma Azizah", kelas:"Kelas 4", wali:"Ibu Salma", progress:68, lulus:false },
-    { id:3, nis:"003", nama:"Mohammad Luqman", kelas:"Kelas 2", wali:"Bapak Luqman", progress:45, lulus:false },
-    { id:4, nis:"004", nama:"Yusuf Ramadhan", kelas:"Kelas 6", wali:"Bapak Yusuf", progress:30, lulus:false },
-    { id:5, nis:"005", nama:"M. Faris", kelas:"Kelas 5", wali:"Ibu Faris", progress:72, lulus:false },
-    { id:6, nis:"006", nama:"Waisin", kelas:"Kelas 3", wali:"-", progress:51, lulus:false },
-    { id:7, nis:"007", nama:"Magilah", kelas:"Kelas 3", wali:"-", progress:51, lulus:false },
-    { id:8, nis:"008", nama:"Monalisa", kelas:"Kelas 4", wali:"-", progress:51, lulus:false }
-];
-
-let hafalan = {};
-santri.forEach(s => { hafalan[s.id] = { yasin: s.id==1, waqiah: s.id==1, mulk: s.id==1, aurad: s.id==1?"Mumtaz":"Jayyid", juz30: s.id==1?"Ahsan":"Jayyid", madin: s.id==1, adab: s.id==1 }; });
-
-function save() { localStorage.setItem('santri', JSON.stringify(santri)); localStorage.setItem('hafalan', JSON.stringify(hafalan)); }
-function load() {
-    if(localStorage.getItem('santri')) santri = JSON.parse(localStorage.getItem('santri'));
-    if(localStorage.getItem('hafalan')) hafalan = JSON.parse(localStorage.getItem('hafalan'));
-}
-load();
-
-function updateProgress() {
-    santri.forEach(s => {
-        let h = hafalan[s.id];
-        let prog = 0;
-        if(h.yasin) prog += 15;
-        if(h.waqiah) prog += 15;
-        if(h.mulk) prog += 15;
-        if(h.aurad == "Mumtaz") prog += 15;
-        else if(h.aurad == "Jayyid Jiddan") prog += 12;
-        else if(h.aurad == "Jayyid") prog += 10;
-        if(h.juz30 == "Mumtaz") prog += 15;
-        else if(h.juz30 == "Ahsan") prog += 13;
-        else if(h.juz30 == "Jayyid Jiddan") prog += 11;
-        else if(h.juz30 == "Jayyid") prog += 9;
-        if(h.madin) prog += 10;
-        if(h.adab) prog += 10;
-        s.progress = Math.min(100, prog);
-        s.lulus = s.progress >= 75;
-    });
-    save();
-}
-
-let page = 'login';
-let chart;
-
-function render() {
-    let html = '';
-    if(page == 'login') {
-        html = `
-            <div class="row justify-content-center mt-5">
-                <div class="col-md-5">
-                    <div class="login-card">
-                        <div class="logo-area">
-                            <h3>PONDOK PESANTREN</h3>
-                            <h1>BAHRUL MAGHFIROH</h1>
-                            <hr>
-                            <h1>Mutqin BM</h1>
-                            <p>Standar Kelulusan</p>
-                        </div>
-                        <div class="p-4">
-                            <h5 class="text-center">Login</h5>
-                            <input type="text" id="username" class="form-control mb-2" placeholder="Username">
-                            <input type="password" id="password" class="form-control mb-3" placeholder="Password">
-                            <button class="btn btn-mutqin w-100" onclick="login()">Login</button>
-                            <div class="text-center mt-2 small">admin/admin | ustadz/ustadz</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        `;
-    } else if(page == 'dashboard') {
-        updateProgress();
-        let total = santri.length;
-        let lulus = santri.filter(s=>s.lulus).length;
-        let proses = santri.filter(s=>!s.lulus && s.progress>40).length;
-        let belum = santri.filter(s=>s.progress<=40).length;
-        let top5 = [...santri].sort((a,b)=>b.progress-a.progress).slice(0,5);
-        
-        html = `
-            <div class="row g-3 mb-4">
-                <div class="col-md-3 col-6"><div class="stat-card"><i class="bi bi-people fs-1"></i><h2>${total}</h2><p>Total Santri</p></div></div>
-                <div class="col-md-3 col-6"><div class="stat-card bg-success text-white"><i class="bi bi-check-circle fs-1"></i><h2>${lulus}</h2><p>Sudah Lulus</p></div></div>
-                <div class="col-md-3 col-6"><div class="stat-card bg-warning"><i class="bi bi-hourglass fs-1"></i><h2>${proses}</h2><p>Proses</p></div></div>
-                <div class="col-md-3 col-6"><div class="stat-card bg-secondary text-white"><i class="bi bi-clock fs-1"></i><h2>${belum}</h2><p>Belum Lulus</p></div></div>
-            </div>
-            <div class="row">
-                <div class="col-md-6"><div class="card"><div class="card-header">Progress Hafalan</div><div class="card-body"><canvas id="progressChart"></canvas></div></div></div>
-                <div class="col-md-6"><div class="card"><div class="card-header">Status Kelulusan</div><div class="card-body"><canvas id="statusChart"></canvas></div></div></div>
-            </div>
-            <div class="card"><div class="card-header">Rekap Santri</div><div class="card-body table-responsive"><table class="table table-bordered"><thead class="table-success"><tr><th>Nama</th><th>Kelas</th><th>Progress</th><th>Status</th></tr></thead><tbody>
-                ${santri.map(s => `<tr><td>${s.nama}</td><td>${s.kelas}</td><td><div class="progress"><div class="progress-bar" style="width:${s.progress}%">${s.progress}%</div></div></td><td>${s.lulus ? '<span class="badge bg-success">LULUS</span>' : '<span class="badge bg-warning">PROSES</span>'}</td></tr>`).join('')}
-            </tbody></table></div></div>
-        `;
-        setTimeout(() => {
-            if(chart) chart.destroy();
-            let ctx = document.getElementById('progressChart')?.getContext('2d');
-            if(ctx) chart = new Chart(ctx, { type: 'bar', data: { labels: top5.map(s=>s.nama), datasets: [{ label: 'Progress', data: top5.map(s=>s.progress), backgroundColor: '#2d6a4f' }] } });
-        }, 100);
-    } else if(page == 'santri') {
-        html = `
-            <div class="card"><div class="card-header">Data Santri <button class="btn btn-sm btn-light float-end" onclick="tambah()">+ Tambah</button></div>
-            <div class="card-body table-responsive"><table class="table table-bordered"><thead class="table-success"><tr><th>NIS</th><th>Nama</th><th>Kelas</th><th>Progress</th><th>Status</th><th>Aksi</th></tr></thead><tbody>
-                ${santri.map(s => `<tr><td>${s.nis}</td><td>${s.nama}</td><td>${s.kelas}</td><td><div class="progress" style="height:20px"><div class="progress-bar" style="width:${s.progress}%">${s.progress}%</div></div></td><td>${s.lulus ? 'Lulus' : 'Proses'}</td><td><button class="btn btn-sm btn-primary" onclick="edit(${s.id})">Edit</button> <button class="btn btn-sm btn-danger" onclick="hapus(${s.id})">Hapus</button></td></tr>`).join('')}
-            </tbody></table></div></div>
-        `;
-    } else if(page == 'hafalan') {
-        html = `
-            <div class="card"><div class="card-header">Input Hafalan</div>
-            <div class="card-body">
-                <select id="pilihSantri" class="form-select mb-3" onchange="loadHafalan(this.value)"><option value="">Pilih Santri</option>${santri.map(s=>`<option value="${s.id}">${s.nama}</option>`).join('')}</select>
-                <div id="formHafalan"></div>
-            </div></div>
-        `;
-    } else if(page == 'sertifikat') {
-        html = `
-            <div class="card"><div class="card-header">Cetak Sertifikat</div>
-            <div class="card-body">
-                <select id="pilihSertif" class="form-select mb-3"><option value="">Pilih Santri Lulus</option>${santri.filter(s=>s.lulus).map(s=>`<option value="${s.id}">${s.nama}</option>`).join('')}</select>
-                <button class="btn btn-mutqin w-100" onclick="cetak()">Cetak PDF</button>
-                <div id="preview" class="sertifikat mt-4 text-center"></div>
-            </div></div>
-        `;
-    }
-    
-    document.getElementById('app').innerHTML = html;
-    
-    let nav = document.getElementById('navMenu');
-    if(user) {
-        nav.innerHTML = `
-            <li class="nav-item"><a class="nav-link" href="#" onclick="page='dashboard';render()">Dashboard</a></li>
-            <li class="nav-item"><a class="nav-link" href="#" onclick="page='santri';render()">Santri</a></li>
-            <li class="nav-item"><a class="nav-link" href="#" onclick="page='hafalan';render()">Hafalan</a></li>
-            <li class="nav-item"><a class="nav-link" href="#" onclick="page='sertifikat';render()">Sertifikat</a></li>
-            <li class="nav-item"><a class="nav-link text-danger" href="#" onclick="user=null;page='login';render()">Logout</a></li>
-        `;
-    } else {
-        nav.innerHTML = '';
-    }
-}
-
-function login() {
-    let u = document.getElementById('username').value;
-    let p = document.getElementById('password').value;
-    if((u=='admin' && p=='admin') || (u=='ustadz' && p=='ustadz')) {
-        user = { username: u };
-        page = 'dashboard';
-        render();
-    } else { alert("Login gagal!"); }
-}
-
-function tambah() {
-    let nama = prompt("Nama:");
-    if(!nama) return;
-    let kelas = prompt("Kelas:");
-    let newId = Math.max(...santri.map(s=>s.id),0)+1;
-    santri.push({ id:newId, nis:"BM"+newId, nama, kelas, wali:"-", progress:0, lulus:false });
-    hafalan[newId] = { yasin:false, waqiah:false, mulk:false, aurad:"Jayyid", juz30:"Jayyid", madin:false, adab:false };
-    save();
-    render();
-}
-
-function hapus(id) {
-    if(confirm("Hapus?")) {
-        santri = santri.filter(s=>s.id!==id);
-        delete hafalan[id];
-        save();
-        render();
-    }
-}
-
-function edit(id) {
-    let s = santri.find(s=>s.id==id);
-    let h = hafalan[id];
-    let html = `
-        <div class="modal fade" id="modalEdit" tabindex="-1">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header bg-success text-white"><h5>Edit ${s.nama}</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
-                    <div class="modal-body">
-                        <label><input type="checkbox" id="yasin" ${h.yasin?'checked':''}> Yasin Selesai</label><br>
-                        <label><input type="checkbox" id="waqiah" ${h.waqiah?'checked':''}> Al Waqiah</label><br>
-                        <label><input type="checkbox" id="mulk" ${h.mulk?'checked':''}> Al Mulk</label><br>
-                        <label>Aurad: <select id="aurad"><option ${h.aurad=='Mumtaz'?'selected':''}>Mumtaz</option><option ${h.aurad=='Jayyid'?'selected':''}>Jayyid</option></select></label><br>
-                        <label>Juz 30: <select id="juz"><option ${h.juz30=='Ahsan'?'selected':''}>Ahsan</option><option ${h.juz30=='Jayyid'?'selected':''}>Jayyid</option></select></label><br>
-                        <label><input type="checkbox" id="madin" ${h.madin?'checked':''}> Lulus Madin</label><br>
-                        <label><input type="checkbox" id="adab" ${h.adab?'checked':''}> Adab</label>
-                    </div>
-                    <div class="modal-footer"><button class="btn btn-primary" onclick="simpanEdit(${id})">Simpan</button><button class="btn btn-secondary" data-bs-dismiss="modal">Batal</button></div>
-                </div>
-            </div>
-        </div>
-    `;
-    let div = document.createElement('div');
-    div.innerHTML = html;
-    document.body.appendChild(div);
-    let modal = new bootstrap.Modal(div.querySelector('.modal'));
-    modal.show();
-    div.addEventListener('hidden.bs.modal', () => div.remove());
-    window.simpanEdit = function(sid) {
-        hafalan[sid].yasin = document.getElementById('yasin').checked;
-        hafalan[sid].waqiah = document.getElementById('waqiah').checked;
-        hafalan[sid].mulk = document.getElementById('mulk').checked;
-        hafalan[sid].aurad = document.getElementById('aurad').value;
-        hafalan[sid].juz30 = document.getElementById('juz').value;
-        hafalan[sid].madin = document.getElementById('madin').checked;
-        hafalan[sid].adab = document.getElementById('adab').checked;
-        updateProgress();
-        save();
-        modal.hide();
-        render();
+    // Data Store
+    let students = []; // { id, name, kelas, hafalan: {...}, isGraduated }
+    let profile = {
+        logo: "https://via.placeholder.com/80?text=Logo",
+        pesantrenName: "PONDOK PESANTREN BAHRUL MAGHFIROH",
+        kyai: "Ust. Drs. H. Abbul Malik, Lc., M.M.Pd.",
+        kepalaMadin: "Ust. H. Muhammad Amin"
     };
-}
+    let nextId = 100;
 
-function loadHafalan(id) {
-    if(!id) return;
-    let h = hafalan[id];
-    document.getElementById('formHafalan').innerHTML = `
-        <div class="alert alert-info">
-            <label><input type="checkbox" id="hf_yasin" ${h.yasin?'checked':''}> Yasin Selesai</label><br>
-            <label><input type="checkbox" id="hf_waqiah" ${h.waqiah?'checked':''}> Al Waqiah</label><br>
-            <label><input type="checkbox" id="hf_mulk" ${h.mulk?'checked':''}> Al Mulk</label><br>
-            <label>Aurad: <select id="hf_aurad"><option ${h.aurad=='Mumtaz'?'selected':''}>Mumtaz</option><option ${h.aurad=='Jayyid'?'selected':''}>Jayyid</option></select></label><br>
-            <label>Juz 30: <select id="hf_juz"><option ${h.juz30=='Ahsan'?'selected':''}>Ahsan</option><option ${h.juz30=='Jayyid'?'selected':''}>Jayyid</option></select></label><br>
-            <label><input type="checkbox" id="hf_madin" ${h.madin?'checked':''}> Lulus Madin</label><br>
-            <label><input type="checkbox" id="hf_adab" ${h.adab?'checked':''}> Adab</label><br>
-            <button class="btn btn-mutqin mt-2" onclick="simpanHafalan(${id})">Simpan</button>
-        </div>
-    `;
-}
-
-function simpanHafalan(id) {
-    hafalan[id].yasin = document.getElementById('hf_yasin').checked;
-    hafalan[id].waqiah = document.getElementById('hf_waqiah').checked;
-    hafalan[id].mulk = document.getElementById('hf_mulk').checked;
-    hafalan[id].aurad = document.getElementById('hf_aurad').value;
-    hafalan[id].juz30 = document.getElementById('hf_juz').value;
-    hafalan[id].madin = document.getElementById('hf_madin').checked;
-    hafalan[id].adab = document.getElementById('hf_adab').checked;
-    updateProgress();
-    save();
-    alert("Tersimpan!");
-    page='hafalan';
-    render();
-}
-
-function cetak() {
-    let id = document.getElementById('pilihSertif').value;
-    if(!id) { alert("Pilih santri"); return; }
-    let s = santri.find(s=>s.id==parseInt(id));
-    let h = hafalan[s.id];
-    let win = window.open();
-    win.document.write(`
-        <div style="background:#fef7e0; border:15px solid #b8860b; padding:30px; font-family:'Times New Roman'; text-align:center;">
-            <h2 style="color:#2d6a4f;">PONDOK PESANTREN BAHRUL MAGHFIROH</h2>
-            <h1 style="color:#b8860b;">SERTIFIKAT KELULUSAN</h1>
-            <h3>Program Mutqin BM</h3>
-            <hr>
-            <h1 style="font-size:48px;">${s.nama}</h1>
-            <h2 style="color:green;">LULUS</h2>
-            <table style="width:100%; margin:20px 0;" border="1">
-                <tr><th>Kriteria</th><th>Nilai</th></tr>
-                <tr><td>Hafal Surat Yasin, Waqiah, Al Mulk</td><td>${h.yasin&&h.waqiah&&h.mulk?'Mumtaz':'Belum'}</td></tr>
-                <tr><td>Hafal Tawasul, Tahlil, Istighosah</td><td>${h.aurad}</td></tr>
-                <tr><td>Praktik Sholat & Pengurusan Jenazah</td><td>Jayyid</td></tr>
-                <tr><td>Hafal Juz 30</td><td>${h.juz30}</td></tr>
-                <tr><td>Lulus Madin Ula & Wustho</td><td>${h.madin?'✔ Lulus':'✖'}</td></tr>
-                <tr><td>Sikap & Adab</td><td>${h.adab?'✔ Baik':'✖'}</td></tr>
-            </table>
-            <div style="margin-top:40px; display:flex; justify-content:space-between;">
-                <div>Pengasuh,<br><br><u>Ust. Drs. H. Abbul Malik</u></div>
-                <div>Ketua Tahfizh,<br><br><u>Ust. H. Muhammad Amin</u></div>
-            </div>
-            <div style="margin-top:20px;">No: BM/${s.id}/2026</div>
-        </div>
-    `);
-    win.document.close();
-    win.print();
-}
-
-render();
+    // Load from localStorage
+    function loadData() {
+        const stored = localStorage.getItem("mutqinBMData");
+        if(stored) {
+            let data = JSON.parse(stored);
+            students = data.students;
+            profile = data.profile;
+            nextId = data.nextId || 100;
+        } else {
+            // dummy data
+            students = [
+                { id: 1, name: "Ahmad Fauzan", kelas: "3 TMI", hafalan: { suratYasin:{done:true,grade:"Mumtaz"}, suratWaqiah:{done:true,grade:"Mumtaz"}, suratMulk:{done:true,grade:"Mumtaz"}, wirid:{done:true,grade:"Jayyid Jiddan"}, doaShalat:{done:true}, tahlilRingkas:{done:true}, tahlilLengkap:{done:false}, doaTahlil:{done:true}, tawasul:{done:true}, jenazah:{done:true,grade:"Jayyid"}, juz30:{done:true,grade:"Ahsan"}, khotib:{done:true,grade:"Ahsan"}, madinUla:true, madinWustho:true, sikapAdab:true }, isGraduated: true },
+                { id: 2, name: "Salma Azizah", kelas: "2 TMI", hafalan: { suratYasin:{done:false}, suratWaqiah:{done:false} }, isGraduated: false }
+            ];
+        }
+        renderAll();
+    }
+    function saveToLocal() {
+        localStorage.setItem("mutqinBMData", JSON.stringify({ students, profile, nextId }));
+    }
+    function updateProfile() { saveToLocal(); renderAll(); }
+    function updateLogo(e) {
+        let file = e.target.files[0];
+        if(file) {
+            let reader = new FileReader();
+            reader.onload = function(ev) { profile.logo = ev.target.result; saveToLocal(); renderLoginLogo(); };
+            reader.readAsDataURL(file);
+        }
+    }
+    function saveProfile() {
+        profile.pesantrenName = document.getElementById("pesantrenNameInput").value;
+        profile.kyai = document.getElementById("kyaiName").value;
+        profile.kepalaMadin = document.getElementById("madinHead").value;
+        saveToLocal();
+        renderLoginLogo();
+        alert("Profil tersimpan!");
+    }
+    function renderLoginLogo() {
+        document.getElementById("loginLogo").src = profile.logo;
+        document.getElementById("loginPesantrenName").innerHTML = profile.pesantrenName.replace(/\n/g,"<br>");
+    }
+    function handleLogin() {
+        let user = document.getElementById("username").value;
+        let pass = document.getElementById("password").value;
+        if(user && pass) {
+            document.getElementById("loginPage").style.display = "none";
+            document.getElementById("mainApp").style.display = "block";
+            loadData();
+        } else alert("Masukkan username/password");
+    }
+    function logout() {
+        document.getElementById("mainApp").style.display = "none";
+        document.getElementById("loginPage").style.display = "block";
+    }
+    function showPage(pageId) {
+        document.querySelectorAll('.main-content > div').forEach(div => div.style.display = 'none');
+        document.getElementById(pageId).style.display = 'block';
+        if(pageId === 'dashboardPage') updateDashboardStats();
+        if(pageId === 'studentsPage') renderAllStudentsTable();
+        if(pageId === 'hafalanPage') populateStudentSelect();
+        if(pageId === 'certificatePage') { populateCertSelect(); previewCertificate(); }
+    }
+    function updateDashboardStats() {
+        let total = students.length;
+        let lulus = students.filter(s => s.isGraduated).length;
+        let proses = total - lulus;
+        document.getElementById("totalSantri").innerText = total;
+        document.getElementById("lulusCount").innerText = lulus;
+        document.getElementById("prosesCount").innerText = proses;
+        let overallProgress = total ? (lulus/total)*100 : 0;
+        document.getElementById("progressPercent").innerText = overallProgress.toFixed(1)+"%";
+        const ctx = document.getElementById('progressChart')?.getContext('2d');
+        if(window.myChart) window.myChart.destroy();
+        window.myChart = new Chart(ctx, { type: 'doughnut', data: { labels: ['Lulus','Proses'], datasets: [{ data: [lulus, proses], backgroundColor: ['#2e7d32','#ffb74d'] }] } });
+        let recent = students.slice(-5).reverse();
+        let tbody = document.querySelector("#recentTable tbody");
+        tbody.innerHTML = recent.map(s => `<tr><td>${s.name}</td><td>${s.isGraduated ? "✅ Lulus" : "📖 Proses"}</td></tr>`).join('');
+    }
+    function renderAllStudentsTable() {
+        let html = students.map(s => `<tr><td>${s.name}</td><td>${s.kelas || '-'}</td><td>${s.isGraduated ? "LULUS" : "Belum Lulus"}</td><td><button class="btn-sm" onclick="editStudentHafalan(${s.id})">Edit Hafalan</button></td></tr>`).join('');
+        document.querySelector("#allSantriTable tbody").innerHTML = html;
+    }
+    function populateStudentSelect() {
+        let select = document.getElementById("selectStudentHafalan");
+        select.innerHTML = students.map(s => `<option value="${s.id}">${s.name}</option>`).join('');
+        select.onchange = () => loadHafalanToForm(select.value);
+        if(students.length) loadHafalanToForm(students[0].id);
+    }
+    function loadHafalanToForm(studentId) {
+        let s = students.find(st => st.id == studentId);
+        if(!s) return;
+        let h = s.hafalan || {};
+        document.getElementById("surahYasin").checked = h.suratYasin?.done || false;
+        document.getElementById("gradeYasin").value = h.suratYasin?.grade || "Belum";
+        document.getElementById("surahWaqiah").checked = h.suratWaqiah?.done || false;
+        document.getElementById("gradeWaqiah").value = h.suratWaqiah?.grade || "Belum";
+        document.getElementById("surahMulk").checked = h.suratMulk?.done || false;
+        document.getElementById("gradeMulk").value = h.suratMulk?.grade || "Belum";
+        document.getElementById("wirid").checked = h.wirid?.done || false;
+        document.getElementById("gradeWirid").value = h.wirid?.grade || "Belum";
+        document.getElementById("doaShalat").checked = h.doaShalat?.done || false;
+        document.getElementById("gradeDoaShalat").value = h.doaShalat?.grade || "Belum";
+        document.getElementById("tahlilRingkas").checked = h.tahlilRingkas?.done || false;
+        document.getElementById("gradeTahlilR").value = h.tahlilRingkas?.grade || "Belum";
+        document.getElementById("tahlilLengkap").checked = h.tahlilLengkap?.done || false;
+        document.getElementById("gradeTahlilL").value = h.tahlilLengkap?.grade || "Belum";
+        document.getElementById("doaTahlil").checked = h.doaTahlil?.done || false;
+        document.getElementById("gradeDoaTahlil").value = h.doaTahlil?.grade || "Belum";
+        document.getElementById("tawasul").checked = h.tawasul?.done || false;
+        document.getElementById("gradeTawasul").value = h.tawasul?.grade || "Belum";
+        document.getElementById("praktekJenazah").checked = h.jenazah?.done || false;
+        document.getElementById("gradeJenazah").value = h.jenazah?.grade || "Jayyid";
+        document.getElementById("hafalJuz30").checked = h.juz30?.done || false;
+        document.getElementById("gradeJuz30").value = h.juz30?.grade || "Ahsan";
+        document.getElementById("khotibBilal").checked = h.khotib?.done || false;
+        document.getElementById("gradeKhotib").value = h.khotib?.grade || "Ahsan";
+        document.getElementById("madinUla").checked = h.madinUla || false;
+        document.getElementById("madinWustho").checked = h.madinWustho || false;
+        document.getElementById("sikapAdab").checked = h.sikapAdab || false;
+    }
+    function checkAndMarkCompleteSurat() {
+        let yasin = document.getElementById("surahYasin"); let waqiah = document.getElementById("surahWaqiah"); let mulk = document.getElementById("surahMulk");
+        let gY = document.getElementById("gradeYasin").value, gW = document.getElementById("gradeWaqiah").value, gM = document.getElementById("gradeMulk").value;
+        if(gY === "Mumtaz") yasin.checked = true;
+        if(gW === "Mumtaz") waqiah.checked = true;
+        if(gM === "Mumtaz") mulk.checked = true;
+        alert("Centang manual disesuaikan grade Mumtaz. Jangan lupa Simpan.");
+    }
+    function saveStudentHafalan() {
+        let sid = parseInt(document.getElementById("selectStudentHafalan").value);
+        let s = students.find(st => st.id === sid);
+        if(!s) return;
+        let h = {};
+        h.suratYasin = { done: document.getElementById("surahYasin").checked, grade: document.getElementById("gradeYasin").value };
+        h.suratWaqiah = { done: document.getElementById("surahWaqiah").checked, grade: document.getElementById("gradeWaqiah").value };
+        h.suratMulk = { done: document.getElementById("surahMulk").checked, grade: document.getElementById("gradeMulk").value };
+        h.wirid = { done: document.getElementById("wirid").checked, grade: document.getElementById("gradeWirid").value };
+        h.doaShalat = { done: document.getElementById("doaShalat").checked, grade: document.getElementById("gradeDoaShalat").value };
+        h.tahlilRingkas = { done: document.getElementById("tahlilRingkas").checked, grade: document.getElementById("gradeTahlilR").value };
+        h.tahlilLengkap = { done: document.getElementById("tahlilLengkap").checked, grade: document.getElementById("gradeTahlilL").value };
+        h.doaTahlil = { done: document.getElementById("doaTahlil").checked, grade: document.getElementById("gradeDoaTahlil").value };
+        h.tawasul = { done: document.getElementById("tawasul").checked, grade: document.getElementById("gradeTawasul").value };
+        h.jenazah = { done: document.getElementById("praktekJenazah").checked, grade: document.getElementById("gradeJenazah").value };
+        h.juz30 = { done: document.getElementById("hafalJuz30").checked, grade: document.getElementById("gradeJuz30").value };
+        h.khotib = { done: document.getElementById("khotibBilal").checked, grade: document.getElementById("gradeKhotib").value };
+        h.madinUla = document.getElementById("madinUla").checked;
+        h.madinWustho = document.getElementById("madinWustho").checked;
+        h.sikapAdab = document.getElementById("sikapAdab").checked;
+        s.hafalan = h;
+        // penentuan lulus: semua checklist kriteria utama
+        let lulus = (h.suratYasin.done && h.suratWaqiah.done && h.suratMulk.done && h.wirid.done && h.doaShalat.done && h.tahlilRingkas.done && h.tahlilLengkap.done && h.doaTahlil.done && h.tawasul.done && h.jenazah.done && h.juz30.done && h.khotib.done && h.madinUla && h.madinWustho && h.sikapAdab);
+        s.isGraduated = lulus;
+        saveToLocal();
+        alert("Data hafalan tersimpan! Status lulus: "+(lulus?"LULUS":"Belum lengkap"));
+        updateDashboardStats();
+        renderAllStudentsTable();
+    }
+    function editStudentHafalan(id) { showPage('hafalanPage'); setTimeout(()=>{ document.getElementById("selectStudentHafalan").value=id; loadHafalanToForm(id); },100);}
+    function importExcelSantri() {
+        let file = document.getElementById("excelInput").files[0];
+        if(!file) return;
+        let reader = new FileReader();
+        reader.onload = function(e) {
+            let data = new Uint8Array(e.target.result);
+            let workbook = XLSX.read(data, {type: 'array'});
+            let sheet = workbook.Sheets[workbook.SheetNames[0]];
+            let rows = XLSX.utils.sheet_to_json(sheet);
+            rows.forEach(row => {
+                let name = row["Nama"] || row["nama"] || row["Name"];
+                if(name) {
+                    students.push({ id: nextId++, name: name, kelas: row["Kelas"]||"", hafalan: {}, isGraduated: false });
+                }
+            });
+            saveToLocal();
+            alert(`Import selesai, ${rows.length} santri ditambahkan`);
+            renderAll();
+        };
+        reader.readAsArrayBuffer(file);
+    }
+    function populateCertSelect() { let sel = document.getElementById("certStudentSelect"); sel.innerHTML = students.map(s=>`<option value="${s.id}">${s.name}</option>`).join(''); sel.onchange = () => previewCertificate(); }
+    function previewCertificate() {
+        let id = document.getElementById("certStudentSelect").value;
+        let s = students.find(st => st.id == id);
+        if(!s) return;
+        let haf = s.hafalan || {};
+        let html = `<div style="text-align:center; font-family:'Times New Roman'">
+            <img src="${profile.logo}" width="70"><br>
+            <h2>${profile.pesantrenName}</h2>
+            <h3>SERTIFIKAT KELULUSAN</h3>
+            <p>Nomor: BM/${s.id}/2026</p>
+            <h1>${s.name}</h1>
+            <p>Telah menyelesaikan program <strong>MUTQIN BM</strong> sesuai standar kelulusan Pondok Bahrul Maghfiroh</p>
+            <p><strong>LULUS</strong> dengan capaian:</p>
+            <ul style="text-align:left">${haf.suratYasin?.done ? "<li>✅ Hafal Surat Yasin, Waqiah, Mulk (Mumtaz)</li>" : ""}
+            ${haf.wirid?.done ? "<li>✅ Hafal Tawasul, Tahlil, Istighosah, Doa</li>" : ""}
+            ${haf.jenazah?.done ? "<li>✅ Praktik Sholat & Pengurusan Jenazah</li>" : ""}
+            ${haf.juz30?.done ? "<li>✅ Hafal Juz 30 (Ahsan)</li>" : ""}
+            ${haf.khotib?.done ? "<li>✅ Praktik Khotib & Bilal</li>" : ""}
+            ${haf.madinUla ? "<li>✅ Lulus Madin Ula & Wustho</li>" : ""}
+            ${haf.sikapAdab ? "<li>✅ Sikap dan Adab Sholat Berjamaah</li>" : ""}</ul>
+            <p>Pengasuh: ${profile.kyai}<br>Kepala Dewan Tahfizh: ${profile.kepalaMadin}</p>
+        </div>`;
+        document.getElementById("certificatePreview").innerHTML = html;
+    }
+    function downloadCertificatePDF() { const element = document.getElementById("certificatePreview"); html2pdf().from(element).save("sertifikat_lulus.pdf"); }
+    function exportToExcelReport() { alert("Fitur laporan PDF bisa diunduh dari halaman Sertifikat atau menggunakan cetak halaman. Anda bisa gunakan Print dari browser."); window.print(); }
+    function renderAll() { updateDashboardStats(); renderAllStudentsTable(); if(document.getElementById("hafalanPage").style.display!=='none') populateStudentSelect(); if(document.getElementById("certificatePage").style.display!=='none') populateCertSelect(); }
+    window.onload = () => { renderLoginLogo(); };
 </script>
 </body>
 </html>
